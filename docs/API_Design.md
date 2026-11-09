@@ -1,7 +1,7 @@
 # MAKE MY EVENT
 ## REST API Design & Contract Specification — Version 1.0
 
-**Status:** Implementation design baseline — review required for nine policy defaults  
+**Status:** Reconciled implementation baseline; operational defaults still require phase-specific decisions
 **Date:** 9 November 2026  
 **Sources:** Final PRD v1.0; System Design & Architecture v1.0; Database Design v1.0  
 **Architecture:** TypeScript, single Next.js App Router / Node.js modular monolith, MongoDB Atlas + Mongoose, Zod  
@@ -27,18 +27,18 @@
 | Photos | Valid photo appears without human approval | Private R2 presigned PUT/GET, finalize verification | `photos` technical `uploadState`, no approval field | Upload intent → direct PUT → finalize → READY; authorized gallery and short read URLs |
 | Hosting & ops | Cost-aware, logs, backup/recovery | Vercel Hobby daily Cron, basic JSON logs | Audit, TTL, quota counters | One protected cron endpoint; management operations expose operational summaries |
 
-### 1.2 Inconsistencies and reconciliations
+### 1.2 Reconciled decisions and remaining defaults
 
-1. **Illustrative collection names differ.** System Design section 8 uses names such as `sessions`, `memberships`, `memberInvites`, `payments`, `accessCredentials`, `capabilitySessions`, `rateLimits` and a separate `scheduleItems`. Database Design uses the canonical `authSessions`, `weddingMemberships`, `membershipInvites`, `vendorPayments`, `accessLinks`, `portalSessions`, `rateLimitWindows`, and an embedded bounded `functions.scheduleItems` array. **Resolution:** this document follows the Database Design's 25 concrete collection names; amend the System Design's illustrative table in a later revision.
-2. **Outbox status naming differs.** System Design names `PROVIDER_ACCEPTED`, `RETRY_DUE`, `SUPPRESSED`; Database Design uses `SENT`, `DELIVERED`, `FAILED`, `BOUNCED`, `CANCELLED`. **Resolution:** persist the database vocabulary; expose `SENT` as *accepted by provider, not necessarily delivered*, `FAILED` with `retryable` and `nextAttemptAt`, and `CANCELLED` for suppressed jobs. `PROCESSING` stays internal.
-3. **Email must reuse the private guest link.** Link lookup requires one-way hashing, while reminders need to send the same URL again. **Proposed resolution:** store an AES-256-GCM-encrypted copy of the active capability secret in `accessLinks`, with envelope key material outside MongoDB; store a separate lookup hash. Decrypt only for authorized organizer copy/send or the email worker. Never put the token in an outbox payload, webhook, access log, or API audit entry. A later explicit policy approval is required before implementing this.
-4. **RSVP deadline levels.** PRD states organizer-configured deadline; Database Design adds function default with per-recipient override. **Resolution:** effective deadline = invitation override if set, else function default; omit or null means no guest edit deadline only if the product expressly permits it. Organizer overrides after a deadline are audited.
+1. **Collections and schedules:** Database Design's 25 collection names are canonical across all documents. `functions.scheduleItems[]` is bounded and embedded; there is no separate schedule collection.
+2. **Email states:** Persist only `QUEUED`, `PROCESSING`, `SENT`, `DELIVERED`, `FAILED`, `BOUNCED`, `CANCELLED`. `SENT` means accepted by provider, not delivered; `DELIVERED` requires provider confirmation. `FAILED` may be retryable with a future `sendAfter`; suppression uses `CANCELLED`.
+3. **Reusable private links:** Keep a one-way lookup hash and a separate AES-256-GCM-encrypted active secret in `accessLinks` where existing-URL reuse is needed. Store nonce, authentication tag and key version; key material stays outside MongoDB. Decrypt only for an authorized management copy action or email dispatch. Never put plaintext token or URL in an outbox payload, webhook, access log, or audit event.
+4. **RSVP deadlines and eligibility:** Effective deadline = invitation override if set, else function default. Authorized organizer correction after a deadline is audited. Function eligibility is `ACTIVE` or `REVOKED` independently of `PENDING`, `ACCEPTED`, or `DECLINED` RSVP; revocation preserves history but removes portal access and reminder eligibility.
 5. **Concurrent admin/finance changes.** DB design requires a transaction/guard for the last-admin rule and payment balance correctness. **Resolution:** APIs return `409 CONFLICT` on stale revisions or conflicting edits; serializable business mutations occur in transactions/guarded atomic writes.
 6. **Guest photo uploads have no human review.** All three documents agree; only technical validation precedes `READY`. The existing PRD screen label 'gallery management' is not an approval queue.
 7. **External signed GET URLs are not immediately revocable.** All three agree on short-lived URLs and the residual exposure window. **Resolution:** issue short expiry (proposed 30–60 seconds), never public bucket URLs, and reauthorize each signing request.
-8. **Open operational policies remain.** Retention lengths, photo size/storage caps, RSVP default/override, and email daily limits are not user-approved exact numbers. The API can specify validated ranges and configurable defaults without pretending these thresholds are finalized.
+8. **Open operational policies remain.** Retention lengths, photo size/storage caps, signed URL lifetimes, rate thresholds and email daily limits are not approved exact numbers. Keep them configurable and finalize before production.
 
-**Audit result:** The three documents are substantially aligned in product scope and overall architecture; items 1–3 and the open defaults must be reconciled before code is frozen. This document defines proposed contracts but does not silently edit prior files.
+**Audit result:** Product and architecture contracts are aligned. The operational values in item 8 remain phase-specific decisions and are not scaffold defaults.
 
 ## 2. API conventions
 
@@ -247,17 +247,17 @@ The API distinguishes **standalone posted expenses** from **vendor agreed charge
 | `GET /guests/{guestId}/function-invitations` | M | Function-wise eligibility, RSVP, attendee max, deadlines | `200` list |
 | `POST /guests/{guestId}/function-invitations` | M | Add eligible function with `functionId`, `maxAttendees`, optional deadline override/upload flag | `201` invitation |
 | `PATCH /function-invitations/{invitationId}` | M | Update `maxAttendees`, deadline override, upload permission; never silently reduce max below accepted count | `200` invitation |
-| `DELETE /function-invitations/{invitationId}` | M | Revoke one function's access without deleting unrelated guest RSVPs | `204` |
+| `DELETE /function-invitations/{invitationId}` | M | Set eligibility to `REVOKED` and `revokedAt`; retain this invitation's historical RSVP | `204` |
 | `PATCH /function-invitations/{invitationId}/rsvp` | M | Audited organizer override, even after deadline; `status`, `attendeeCount`, `reason` | `200` invitation |
 | `GET /rsvps/summary` | M | `functionId?` and groupings; invited recipients, accepted/declined/pending, confirmed people | `200` summary |
 | `POST /guests/{guestId}/links` | M | Create guest's unique private link if absent, return shareable URL to manager | `201` link |
 | `POST /guests/{guestId}/links/rotate` | M | Revoke old link/sessions, create new link and update encrypted resend secret | `201` replacement URL |
 | `DELETE /guests/{guestId}/links` | M | Revoke active guest link/sessions | `204` |
-| `POST /guests/{guestId}/links/reveal` | M | Explicit authorized copy action; decrypt active secret; `Cache-Control: no-store`, audited; **proposed D-03 design** | `200` private URL |
+| `POST /guests/{guestId}/links/reveal` | M | Explicit authorized copy action; decrypt active secret; `Cache-Control: no-store`, audited without secret | `200` private URL |
 
 **Guest eligibility invariant:** Each invited function has one `functionInvitations` record and unique `(weddingId, guestId, functionId)` index. The one guest URL opens a portal containing only those eligible function invitations. A guest can have one RSVP status and maximum per function, not one wedding-wide RSVP.
 
-**Proposed narrow revocation adjustment (requires database schema amendment):** A function invitation needs an eligibility state distinct from RSVP `PENDING|ACCEPTED|DECLINED` if removal must preserve history. Add `eligibilityStatus: ACTIVE|REVOKED` (or `revokedAt`) to `functionInvitations`; `DELETE` becomes a soft revoke. Every guest query and reminder filter must exclude revoked eligibility records. This is a **real schema gap identified by API design**, not an existing column to assume silently.
+**Function eligibility:** `functionInvitations.eligibilityStatus: ACTIVE|REVOKED` and `revokedAt?` are separate from RSVP status. `DELETE` is a soft revoke. All guest function, RSVP, gallery, signed media URL, livestream and reminder queries require active eligibility. Historical RSVP remains available to authorized managers and audit workflows.
 
 ### 9.1 Guest capability portal API
 
@@ -282,7 +282,7 @@ These routes use a guest cookie; **they never receive a raw private link token, 
 }
 ```
 
-**Server checks:** Resolve session to `guestId` and wedding, find `functionInvitations` by `_id`, `guestId`, `weddingId`, `eligibilityStatus=ACTIVE`; load active function; enforce `deadlineOverrideAt ?? function.rsvpDeadlineAt`; validate `1 <= attendeeCount <= maxAttendees` if accepted, exactly `0` if declined; atomically update only if `revision` matches, increment revision, set `respondedAt`. `PENDING` is an organizer-created state; a guest does not submit an arbitrary PENDING state. A legitimate deadline pass yields `409 RSVP_DEADLINE_PASSED` or `410` according to the uniform chosen mapping, documented for clients. **API v1 mapping: `409 RSVP_DEADLINE_PASSED`; `409 STALE_REVISION`; `422 ATTENDANCE_LIMIT_EXCEEDED`.**
+**Server checks:** Resolve session to `guestId` and wedding, find `functionInvitations` by `_id`, `guestId`, `weddingId`, `eligibilityStatus=ACTIVE`; load active function; enforce `deadlineOverrideAt ?? function.rsvpDeadlineAt`; validate `1 <= attendeeCount <= maxAttendees` if accepted, exactly `0` if declined; atomically update only if `revision` and active eligibility match, increment revision, set `respondedAt`. `PENDING` is an organizer-created state; a guest does not submit an arbitrary PENDING state. **API v1 mapping: `409 RSVP_DEADLINE_PASSED`; `409 STALE_REVISION`; `422 ATTENDANCE_LIMIT_EXCEEDED`.**
 
 **Sample response:**
 
@@ -359,7 +359,7 @@ Email requests create durable outbox jobs; external provider sending is **not** 
 
 **Reminder generation:** Use wedding timezone and `enabled`/`daysBeforeDeadline`/cooldown settings, `functionInvitations.status=PENDING`, ACTIVE eligibility and active guest/link, email presence, opt-out absence, and *future* effective deadline. Recheck immediately before Resend call. A daily cron may run with hour-level imprecision; do not promise exact reminder times. Sending 200 emails on a 100/day allowance requires backlog display and manual small-batch alternatives, not false delivery guarantees.
 
-**Link confidentiality:** The outbox contains `guestId`, `functionId?`, recipient email, safe template content, link ID reference, and dedupe key—**not the plaintext bearer URL**. The sender constructs the URL by decrypting the link secret only at dispatch. `POST /emails/invitations` may enqueue but must never return guest links to unauthorized users. A revoked link causes cancellation/skip, not a stale URL email.
+**Link confidentiality:** The outbox contains `guestId`, `functionId?`, recipient email, safe template content, link ID reference, and dedupe key—**not the plaintext bearer URL**. The sender constructs the URL by decrypting the active AES-256-GCM link secret only at dispatch using an external versioned key. `POST /emails/invitations` may enqueue but must never return guest links to unauthorized users. A revoked link or function invitation causes cancellation/skip, not a stale URL email. Never log the decrypted token, signed URL, encryption key, nonce or authenticated plaintext.
 
 **Webhooks:** If enabled, verify Resend's documented signing scheme against the raw request before parsing/trusting event data; save a unique provider event ID in `emailWebhookEvents`. Webhooks are for post-send statuses and bounce/suppression; sender success itself is recorded separately. If no webhooks are configured, do not show `DELIVERED` based merely on provider acceptance.
 
@@ -592,13 +592,13 @@ If a quota reservation itself fails because MongoDB is unavailable, fail closed 
 
 ## 18. Approval checklist and deliberate decisions
 
-The API contract is complete enough for review, but these policy defaults must be approved before implementation freeze. They are not additional product features.
+Approved decisions are marked below. The remaining entries specify phase-specific implementation or operational choices, not additional product features.
 
 | ID | Item | Recommended API/database resolution |
 |---|---|---|
-| **A-01** | Reusable private URL for reminders | Add `encryptedSecret`, encryption nonce and key version to `accessLinks` beside `tokenHash`; AES-256-GCM key managed outside DB; authorized reveal/send only |
-| **A-02** | Revoking one guest-function eligibility | Add `eligibilityStatus: ACTIVE|REVOKED` or `revokedAt` to `functionInvitations`; RSVP status remains independent |
-| **A-03** | RSVP deadlines | Function default `rsvpDeadlineAt`, optional per-invitation override; auditing late organizer correction |
+| **A-01 — approved** | Reusable private URL for reminders | `accessLinks` holds lookup hash plus AES-256-GCM ciphertext, unique nonce, authentication tag and key version; keys outside DB; authorized reveal/send only |
+| **A-02 — approved** | Revoking one guest-function eligibility | `functionInvitations.eligibilityStatus: ACTIVE|REVOKED` and `revokedAt?`; historical RSVP status remains independent |
+| **A-03 — approved** | RSVP deadlines | Function default `rsvpDeadlineAt`, optional per-invitation override; audit authorized late organizer correction |
 | **A-04** | Admin concurrency | Wedding membership version/guard in transaction; never lose last active admin |
 | **A-05** | Money correction | Integer paise, reject overpayment, `VOID` + corrected replacement rather than silent edits |
 | **A-06** | Media quotas and TTL | Choose per-upload/per-wedding caps and signed GET lifetime before deployment; e.g. 30–60s GET is provisional |
@@ -606,7 +606,7 @@ The API contract is complete enough for review, but these policy defaults must b
 | **A-08** | Function archive behavior | Archive instead of deleting referenced functions; invitations excluded from active guest views according to archive policy |
 | **A-09** | Account recovery with unverified signup emails | Use mailbox-proof reset flow with rate limits or controlled assistance; never allow unverified-email-only role joining |
 
-**Recommended change order:** Approve A-01 and A-02 first because they require small, concrete Database Design amendments; harmonize collection names and email status names in the System Design; then freeze the API and implement one module at a time.
+**Implementation order:** Build the minimal scaffold first, then implement one phase at a time. A-04's last-admin invariant and tenant checks are binding; choose and test the concurrency mechanism in Phase 1. A-05 preserves expense-only finance and is detailed in Phase 2. Keep A-06 and A-07 configurable until media/email phases and finalize before production. Clarify A-08 archive presentation and A-09 recovery procedure during their respective implementation work without weakening the PRD's access rules.
 
 ## 19. External references
 

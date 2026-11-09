@@ -225,9 +225,9 @@ The six phases are sequential **engineering milestones**, not six public launche
 - [ ] Google Places billing guardrails, privacy policy and Terms are ready; Vercel plan use aligns with product operation.
 - [ ] All critical flows pass browser-based end-to-end tests on mobile and desktop.
 
-## 11. Assumptions to verify during implementation
+## 11. Approved implementation direction and remaining limits
 
-These are implementation defaults rather than previously explicit user decisions: (a) RSVP deadline is configured per function, with organizer override; (b) each invitation has a separate maximum per function; (c) once-daily automatic reminders default off; (d) guest-upload permission can be separately disabled; (e) organizer invite tokens are single-use and short-lived; (f) valid photos publish immediately only **after** technical validation; (g) username/password accounts are the only management sign-in method; (h) Google Places data remains live/non-persistent except permitted place IDs; (i) venue coordinates are manually supplied rather than requiring geocoding.
+The following implementation direction is approved: the RSVP deadline defaults at the function level with an optional per-invitation override; an authorized organizer correction after a deadline is audited. Each invitation has a separate maximum and guest-upload permission per function. Once-daily automatic reminders default off. Organizer invite tokens are single-use and short-lived. Valid photos publish immediately only **after** technical validation. Email/password is the only management sign-in method. Google Places discovery data remains live rather than a permanent listing cache, except permitted place IDs; organizer-entered venue coordinates do not require geocoding. Exact operational limits and retention periods remain configurable and must be finalized before production.
 
 ## 12. External references and policy checks
 

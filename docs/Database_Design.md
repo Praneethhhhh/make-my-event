@@ -32,13 +32,15 @@ This document specifies the MongoDB persistence design needed to implement the a
 | Finance | Standalone expenses + vendor charges/payments; no budgets | Approved product rule |
 | Photography | Immediate publication after technical checks; no review queue | Approved product rule |
 | Email | Resend, Mongo outbox, bounded immediate sending, daily Vercel Cron | Approved architecture |
-| RSVP deadline | Function default with optional per-invitation override | **Proposed database default** |
+| RSVP deadline | Function default with optional per-invitation override; audited organizer correction | **Approved implementation decision** |
+| Function invitation eligibility | Explicit `ACTIVE` or `REVOKED`, separate from RSVP status | **Approved implementation decision** |
+| Reusable private links | Token lookup hash plus separately encrypted recoverable secret where the existing URL must be resent | **Approved implementation decision** |
 | Money | Integer minor units (`amountPaise`) in INR | **Proposed technical default** |
-| Schedule | Small bounded schedule array embedded in each function | **Proposed technical default** |
+| Schedule | Small bounded schedule array embedded in each function | **Approved implementation decision** |
 | Theme/settings | Bounded configuration embedded in wedding | **Proposed technical default** |
 | Delete policy | Soft-delete business entities, audit financial revisions | **Proposed technical default** |
 
-These proposed defaults are chosen for simplicity and can be revised without changing product scope.
+Approved decisions above are implementation contracts. Remaining technical defaults are chosen for simplicity and must be reviewed during the relevant phase without changing product scope.
 
 ## 2. Data-model principles
 
@@ -265,6 +267,8 @@ No hard-coded maximum of two administrators. Theme and settings are small bounde
 | `guestId` | ObjectId | Recipient |
 | `functionId` | ObjectId | Authorized function |
 | `status` | `PENDING \| ACCEPTED \| DECLINED` | RSVP state |
+| `eligibilityStatus` | `ACTIVE \| REVOKED`, default `ACTIVE` | Whether this guest may access this function; independent of historical RSVP |
+| `revokedAt?` | Date | When function eligibility was revoked |
 | `attendeeCount` | integer, default 0 | `0` when PENDING/DECLINED; `1..maxAttendees` when ACCEPTED |
 | `maxAttendees` | positive integer | Private organizer-set maximum |
 | `deadlineOverrideAt?` | Date | Optional override of function RSVP deadline |
@@ -273,16 +277,16 @@ No hard-coded maximum of two administrators. Theme and settings are small bounde
 | `revision` | nonnegative integer | Conditional update / optimistic concurrency |
 | `createdAt`, `updatedAt` | Date | Metadata |
 
-**Indexes:** unique `{ weddingId: 1, guestId: 1, functionId: 1 }`; `{ weddingId: 1, functionId: 1, status: 1 }`; `{ weddingId: 1, guestId: 1 }`.
+**Indexes:** unique `{ weddingId: 1, guestId: 1, functionId: 1 }`; `{ weddingId: 1, functionId: 1, eligibilityStatus: 1, status: 1 }`; `{ weddingId: 1, guestId: 1, eligibilityStatus: 1 }`.
 
-**Rules:** Guests can submit only through a valid guest capability, and only for a function invitation belonging to that guest. Compute `deadline = deadlineOverrideAt ?? function.rsvpDeadlineAt` on the server; reject late guest edits. Admins/organizers can override after deadline with audit. RSVP form and reminder queries **must read this collection**, not a copied `guest.rsvp` field. Accepted headcount is an integer from 1 through `maxAttendees`. Declined and pending headcount is 0. Guests who decline keep eligible viewing/photo/livestream access unless the invitation is explicitly removed.
+**Rules:** Guests can submit only through a valid guest capability and an `ACTIVE` function invitation belonging to that guest. Compute `deadline = deadlineOverrideAt ?? function.rsvpDeadlineAt` on the server; reject late guest edits. Admins/organizers can correct a locked RSVP after deadline with an audit event. RSVP form and reminder queries **must read this collection**, not a copied `guest.rsvp` field. Accepted headcount is an integer from 1 through `maxAttendees`. Declined and pending headcount is 0. Guests who decline keep eligible viewing/photo/livestream access unless eligibility is explicitly revoked.
 
 ### 7.3 RSVP consistency and aggregation
 
-- Per-function recipient counts: aggregation grouped by `functionId` and `status`.
+- Per-function current recipient counts: filter `eligibilityStatus: ACTIVE`, then aggregate by `functionId` and RSVP `status`. Historical reports may include revoked records when explicitly requested by an authorized manager.
 - Confirmed attendees: sum of `attendeeCount` for `ACCEPTED` invitations.
 - Show `invitedRecipients` and `confirmedPeople` separately; they are not interchangeable.
-- Use atomic `findOneAndUpdate({ _id, guestId, revision, ... })` with update-and-increment to avoid lost concurrent RSVP edits; check deadline and token scope inside the server path.
+- Use atomic `findOneAndUpdate({ _id, guestId, weddingId, eligibilityStatus: 'ACTIVE', revision, ... })` with update-and-increment to avoid lost concurrent RSVP edits; check deadline and token scope inside the server path.
 - Sending a reminder must **recheck** the current invitation state immediately before claiming/sending, so a newly accepted RSVP is not emailed accidentally.
 
 ### 7.4 Example invitation document
@@ -294,6 +298,7 @@ No hard-coded maximum of two administrators. Theme and settings are small bounde
   "guestId": "ObjectId(...)",
   "functionId": "ObjectId(...)",
   "status": "ACCEPTED",
+  "eligibilityStatus": "ACTIVE",
   "attendeeCount": 3,
   "maxAttendees": 5,
   "deadlineOverrideAt": null,
@@ -373,11 +378,11 @@ Money is stored as whole-number paise; display rupees using locale-aware formatt
 
 ### 9.1 `accessLinks`
 
-`weddingId`, `subjectType: GUEST|VENDOR`, `guestId?`, `vendorId?`, `tokenHash` (unique), `status: ACTIVE|REVOKED`, `createdAt`, `rotatedAt?`, `revokedAt?`, `expiresAt?`, `lastUsedAt?`, `createdByUserId`.
+`weddingId`, `subjectType: GUEST|VENDOR`, `guestId?`, `vendorId?`, `tokenHash` (unique), `encryptedSecret?`, `secretNonce?`, `secretAuthTag?`, `secretKeyVersion?`, `status: ACTIVE|REVOKED`, `createdAt`, `rotatedAt?`, `revokedAt?`, `expiresAt?`, `lastUsedAt?`, `createdByUserId`.
 
 **Indexes:** unique `{ tokenHash: 1 }`; `{ weddingId: 1, subjectType: 1, status: 1 }`; unique partial active `{ weddingId: 1, guestId: 1, status: 1 }` for GUEST and similarly vendor, if policy is *one active link per recipient*. If the app supports several simultaneous links later, remove this limit deliberately.
 
-Create cryptographically secure random secrets (at least 256 bits); store **only** the digest. The private URL contains the raw secret once when generated and is copyable at creation time. If an organizer needs to retrieve a link later, either regenerate it or keep the secret encrypted under a separately managed key; **never** pretend a hash is reversible. Recommended v1 behavior: regenerate to obtain a new shareable URL, or securely store an encrypted copy if resend must reuse the exact URL. **Because the PRD requires reminder emails to contain the existing link**, the final implementation must choose a protected, encrypted token-retrieval design *or* issue a new token safely on resend. Do not leave that contradiction unresolved in code.
+Create cryptographically secure random secrets (at least 256 bits). Store a one-way `tokenHash` for lookup and validation. Where an existing private URL must be copied or resent, also store the same secret separately encrypted with AES-256-GCM. Store a unique nonce, authentication tag, and key version with the ciphertext; keep encryption keys outside MongoDB and source control. Authorized management copy actions and the email sender may decrypt only the currently active link. Outbox rows, logs, audit metadata, webhooks, analytics, and ordinary portal responses must never contain plaintext secrets or signed URLs. Rotate/revoke old links and portal sessions together. Key rotation requires a controlled re-encryption procedure; loss of an old key makes its encrypted secrets unrecoverable, so key backup and access control are operational requirements. A stolen link still grants its scoped capability until revocation, and authorized reveal must use `no-store` responses and audit without recording the secret.
 
 ### 9.2 `portalSessions`
 
@@ -429,7 +434,7 @@ Create cryptographically secure random secrets (at least 256 bits); store **only
 
 For `INVITATION` and `RSVP_REMINDER`, `weddingId` and `guestId` are mandatory; for `PASSWORD_RESET`, the job may be platform-scoped with no wedding and must never use guest-portal templates. Use **atomic lease claiming** (`findOneAndUpdate` with status, due date and expired lease guard). Batches have a hard limit. A sender rechecks guest existence, link validity, RSVP status and reminder eligibility before sending. Retry temporary errors with exponential backoff; mark permanent errors and bounce suppression. A deterministic reminder dedupe key can combine `guestId + functionId + scheduled-window`.
 
-**Critical design note — link contents:** Email workers must be able to include a valid invitation URL without storing raw tokens in the outbox. Recommended solution: keep an encrypted copy of the current guest link secret in `accessLinks` (envelope encryption key held outside MongoDB), retrieve/decrypt only at send time, and never put it into logs or persisted email payloads. This is a **technical choice pending explicit approval**; alternative is generate/rotate on send, which can invalidate previously shared links and is less friendly to guests. See Decision D-03.
+**Link contents:** Email workers retrieve and decrypt the current active guest link secret from `accessLinks` only at dispatch. `emailOutbox` stores a link reference, never the plaintext token or URL. The sender rechecks link status immediately before sending. This approved decision reuses the existing URL without rotating links on each reminder; see D-03.
 
 ### 10.2 `emailWebhookEvents`
 
@@ -471,7 +476,7 @@ Google permits storing place IDs; most other Places content is subject to cachin
 | `taskComments` | `{ weddingId: 1, taskId: 1, createdAt: 1 }` | Task discussion |
 | `guests` | `{ weddingId: 1, displayName: 1 }` | Guest directory |
 | `functionInvitations` | `{ weddingId: 1, guestId: 1, functionId: 1 }` | Unique RSVP per function |
-| `functionInvitations` | `{ weddingId: 1, functionId: 1, status: 1 }` | RSVP summary and pending filters |
+| `functionInvitations` | `{ weddingId: 1, functionId: 1, eligibilityStatus: 1, status: 1 }` | Current RSVP summary and pending filters |
 | `vendors` | `{ weddingId: 1, category: 1, name: 1 }` | Vendor directory |
 | `vendorAssignments` | `{ weddingId: 1, vendorId: 1, functionId: 1 }` | Unique assignment |
 | `vendorCharges` | `{ weddingId: 1, vendorId: 1, status: 1 }` | Vendor balances |
@@ -494,12 +499,12 @@ Google permits storing place IDs; most other Places content is subject to cachin
 |---|---|---|
 | List management functions | `functions.find({ weddingId: member.weddingId, status: 'ACTIVE' })` | Validated member session |
 | Update a task | `tasks.findOneAndUpdate({ _id: taskId, weddingId })` | Member, then business rules |
-| Guest portal functions | Function-invitation records filtered by `guestId` + `weddingId`, then joined to functions | Valid portal session |
-| Update RSVP | `functionInvitations.findOneAndUpdate({ _id, weddingId, guestId, revision })` | Guest portal session + deadline |
+| Guest portal functions | `ACTIVE` function-invitation records filtered by `guestId` + `weddingId`, then joined to active functions | Valid portal session |
+| Update RSVP | `functionInvitations.findOneAndUpdate({ _id, weddingId, guestId, eligibilityStatus: 'ACTIVE', revision })` | Guest portal session + deadline |
 | Vendor portal charges | `vendorCharges.find({ weddingId, vendorId, status: 'ACTIVE' })` | Vendor portal session |
 | Show vendor paid | Aggregate `vendorPayments` by vendor/charge; check charge tenant | Vendor portal scope |
 | Photo gallery | `photos.find({ weddingId, functionId, uploadState: 'READY' })` | Function invitation check before issuing media URLs |
-| Email reminder candidates | `functionInvitations.find({ weddingId, functionId, status: 'PENDING' })` + guest valid email/settings | Worker authorized internally |
+| Email reminder candidates | `functionInvitations.find({ weddingId, functionId, eligibilityStatus: 'ACTIVE', status: 'PENDING' })` + guest valid email/settings | Worker authorized internally |
 
 **Critical rule:** Never accept `weddingId` from a client as sufficient authority. An ID reference for a task, function, guest, payment, or photo is not proof of ownership. Validate the whole reference chain to the tenant.
 
@@ -515,11 +520,11 @@ Find valid unexpired unused membership invite by token digest; atomically mark c
 
 ### 14.3 Create guest and function invitations
 
-Create guest, then N function-invitation documents after verifying selected function IDs share `weddingId`. Prefer one transaction to avoid half-created invitations. Unique guest/function index stops accidental duplicates. Generate one active guest link scoped to the guest, not one link per function.
+Create guest, then N `ACTIVE` function-invitation documents after verifying selected function IDs share `weddingId`. Prefer one transaction to avoid half-created invitations. Unique guest/function index stops accidental duplicates. Generate one active guest link scoped to the guest, not one link per function. Revoking one function invitation sets `eligibilityStatus: REVOKED` and `revokedAt` without changing its historical RSVP; all guest access and reminder queries exclude it.
 
 ### 14.4 Submit RSVP
 
-Resolve private guest portal session; load matching `functionInvitations`; compute deadline and maximum; validate `status/attendeeCount`; atomically update with `revision` predicate. No change after deadline from guest portal. No write to cached global attendee counts is required. Reporting aggregates are recalculated on demand at initial scale.
+Resolve private guest portal session; load matching `ACTIVE` `functionInvitations`; compute deadline and maximum; validate `status/attendeeCount`; atomically update with `revision` and active eligibility predicates. No change after deadline from guest portal; authorized organizer correction after a deadline records an audit event. No write to cached global attendee counts is required. Reporting aggregates are recalculated on demand at initial scale.
 
 ### 14.5 Post vendor payment
 
@@ -527,7 +532,7 @@ Resolve management wedding; verify charge and vendor both belong to wedding; val
 
 ### 14.6 Send invitation and reminder
 
-Persist `emailOutbox` job with deterministic dedupe identity; process a bounded immediate batch when user requests sending. Daily Vercel Cron atomically claims due jobs and generates pending-only reminders, respecting local deadlines, configured days-before offset, opt-outs, quotas, and send cooldowns. Before actual provider call, recheck RSVP eligibility. Resend provider success updates status, while webhook messages can later set DELIVERED/BOUNCED. A sender crash after provider acceptance remains an at-least-once risk; provider idempotency keys must be stable across retries.
+Persist `emailOutbox` job with deterministic dedupe identity; process a bounded immediate batch when user requests sending. Daily Vercel Cron atomically claims due jobs and generates pending-only reminders, respecting active function eligibility, local deadlines, configured days-before offset, opt-outs, quotas, and send cooldowns. Before actual provider call, recheck eligibility and link validity. Resend provider acceptance sets `SENT`, never `DELIVERED` without provider confirmation; webhook messages can later set `DELIVERED`/`BOUNCED`. A sender crash after provider acceptance remains an at-least-once risk; provider idempotency keys must be stable across retries.
 
 ### 14.7 Upload and publish photo without approval
 
@@ -576,6 +581,7 @@ type FunctionInvitation = {
   guestId: Types.ObjectId;
   functionId: Types.ObjectId;
   status: 'PENDING' | 'ACCEPTED' | 'DECLINED';
+  eligibilityStatus: 'ACTIVE' | 'REVOKED';
   attendeeCount: number;        // zero unless ACCEPTED
   maxAttendees: number;         // private organizer setting
   deadlineOverrideAt?: Date;
@@ -610,6 +616,7 @@ type FunctionInvitation = {
 | Unverified email | Account claiming same email cannot join by email alone; requires invite token |
 | Token revocation | Link and existing portal sessions stop working after revocation |
 | Guest RSVP | No uninvited function access; count bound and deadline enforced in backend |
+| Function revocation | Revoked invitation retains historical RSVP but no longer grants function, photo, livestream or RSVP access and receives no reminder |
 | RSVP concurrency | Two updates with same revision cannot silently overwrite each other |
 | Payment concurrency | Repeated or parallel requests cannot duplicate payment or exceed agreed charge |
 | Financial totals | Standalone expenses + posted vendor payments counted once, voids excluded |
@@ -632,20 +639,20 @@ type FunctionInvitation = {
 | **P5 — Media** | `photos`, R2 references, media quota counters | Upload-finish and private gallery access tests pass |
 | **P6 — Production** | Index migrations, audit retention, data cleanup, backups/restore, query reviews | Release, privacy and operational gates passed |
 
-## 19. Open decisions before implementation freeze
+## 19. Decision register and remaining implementation defaults
 
 | ID | Decision | Recommended resolution |
 |---|---|---|
-| **D-01** | RSVP deadline granularity | Function default with invitation-level override |
-| **D-02** | Guest photo upload control | `uploadAllowed` per function invitation; organizers always manage photos |
-| **D-03** | Reuse guest link in later Resend reminders | Encrypt recoverable active link secret using deployment-managed key; hash for lookup; never log or place in email outbox |
+| **D-01 — approved** | RSVP deadline granularity | Function default with invitation-level override; audited organizer correction |
+| **D-02 — approved** | Guest photo upload control | `uploadAllowed` per function invitation; organizers always manage photos |
+| **D-03 — approved** | Reuse guest link in later Resend reminders | AES-256-GCM encrypted active link secret with external versioned key; separate hash for lookup; never log or place plaintext in email outbox |
 | **D-04** | Admin changes under concurrency | Wedding-level membership version/guard in transaction |
 | **D-05** | Money recording policy | Integer paise; prevent overpayment; void-and-replace corrections |
 | **D-06** | Retention lengths | Document privacy policy and service limits before real launch |
 | **D-07** | Photo quotas | Decide per-upload size, per-wedding cumulative storage, and formats after R2 load tests |
 | **D-08** | Email sending caps | Hard daily/monthly platform cap and per-wedding soft cap; show queue backlog |
 
-**Recommendation:** Approve these eight technical defaults with the Database Design, rather than allowing Codex to improvise them during implementation. They do not expand the agreed MVP feature set.
+**Decision status:** D-01 through D-03 are approved. Embedded function schedules and independent function-invitation eligibility are also approved. Any default value for guest upload permission is set in the media phase. D-04's last-admin invariant is binding, while its concurrency mechanism must be chosen and tested in Phase 1. D-05's expense-only scope is binding; correction mechanics remain an implementation detail. D-06 through D-08 require configurable operational values and final approval before production.
 
 ## 20. References and design verification
 
