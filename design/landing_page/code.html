@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#141d1c", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#dfe4dc", "surface-tint": "#36675c", "inverse-on-surface": "#e8f3f1", "primary-fixed": "#baeddf", "surface": "#f1fcfa", "on-secondary-fixed": "#321201", "inverse-primary": "#9ed1c4", "error-container": "#ffdad6", "surface-dim": "#d1dcda", "outline-variant": "#c0c8c5", "on-primary-fixed": "#00201b", "on-surface-variant": "#404946", "surface-bright": "#f1fcfa", "background": "#f1fcfa", "on-secondary-container": "#794b32", "secondary": "#825339", "inverse-surface": "#283231", "tertiary": "#363b36", "on-tertiary-fixed-variant": "#434842", "surface-container-low": "#ebf6f4", "secondary-fixed-dim": "#f7b999", "error": "#ba1a1a", "tertiary-container": "#4d524c", "on-secondary": "#ffffff", "on-error-container": "#93000a", "on-tertiary-container": "#c0c5bd", "on-error": "#ffffff", "secondary-fixed": "#ffdbca", "tertiary-fixed-dim": "#c3c8c0", "primary-container": "#28594f", "primary-fixed-dim": "#9ed1c4", "on-surface": "#141d1c", "primary": "#0b4138", "on-tertiary": "#ffffff", "surface-variant": "#dae5e3", "secondary-container": "#fdbe9e", "outline": "#707976", "on-primary-fixed-variant": "#1d4f45", "surface-container-high": "#dfeae8", "on-primary-container": "#9bcec1", "on-primary": "#ffffff", "surface-container": "#e5f0ee", "on-tertiary-fixed": "#181d18", "surface-container-highest": "#dae5e3", "on-secondary-fixed-variant": "#673c24" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "margin": "2rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "space-md": "1rem", "space-sm": "0.5rem", "gutter": "1.5rem" }, "fontFamily": { "label-md": ["Manrope"], "body-md": ["Manrope"], "headline-sm": ["Manrope"], "body-lg": ["Manrope"], "label-lg": ["Manrope"], "headline-lg": ["Newsreader"], "body-sm": ["Manrope"], "headline-md": ["Newsreader"], "display-lg-mobile": ["Newsreader"], "display-lg": ["Newsreader"], "label-sm": ["Manrope"] }, "fontSize": { "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }] } } } }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md"><img alt="Make My Event Logo - Connected Moments" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCQ-TWWO4QRCH4GqqE_G_0QSaA15Vit8SabPjSVNa7cs5Y1yAd29_6-BbhcpEs6_6QwteM8-yk3lLCzp74mI-QTJbslz2ZaxwRy9fV2wVLLTnRcL2Dn-qOMGY_jppijWp2GdQtXL1BTtTZKCR8pU3sDOWOPQ81BfUfAeDCe6uVBrF7tehfHYAJoE_3U6CkXkMlHTIVSIDhtZPwbGoCYi9pd_gB2jJTlQLy6uyQoOvgB"/><span class="font-headline-sm text-headline-sm font-semibold tracking-wider text-primary uppercase">Make My Event</span></div><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-primary font-label-lg text-label-lg font-semibold"><a aria-current="page" class="transition-colors text-primary font-label-lg text-label-lg font-semibold" data-path="features" href="#">Features</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="guest-experience" href="#">Guest Experience</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="sign-in" href="#">Sign In</a></nav><div class="flex items-center gap-space-md"><a class="inline-flex items-center justify-center px-space-lg py-space-sm bg-primary-container text-on-primary font-label-lg text-label-lg rounded-lg hover:bg-primary transition-colors shadow-[0_1px_3px_rgba(32,42,41,0.06)]" data-path="create-your-event" href="#">Create Your Event</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-280px)]"><div class="flex flex-col w-full">
+<!-- HERO SECTION -->
+<section class="relative w-full max-w-7xl mx-auto px-margin pt-space-xl pb-24 flex flex-col items-center text-center">
+<!-- Eyebrow Tracker -->
+<div class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container shadow-sm mb-space-lg">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant font-semibold">ONE PLACE FOR EVERY EVENT DETAIL</span>
+</div>
+<!-- Editorial Headline -->
+<h1 class="font-display-lg text-display-lg max-w-4xl text-on-surface tracking-tight leading-tight mb-space-md">
+      One place to plan, organize and celebrate.
+    </h1>
+<!-- Supporting Narrative -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-space-xl">
+      Bring your functions, guests, tasks, expenses, and memorable moments together in one beautifully organized space.
+    </p>
+<!-- CTAs & Reassurance -->
+<div class="flex flex-col sm:flex-row items-center gap-space-md mb-space-lg">
+<a class="inline-flex items-center justify-center px-space-xl py-3.5 rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary transition-all duration-200" data-path="create-your-event" href="#">
+        Create Your Event
+      </a>
+<a class="inline-flex items-center justify-center px-space-xl py-3.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg shadow-sm hover:bg-surface-container transition-all duration-200" href="#features">
+        Explore Features
+      </a>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+<span>Simple for organizers. Effortless for guests.</span>
+</div>
+<!-- LAYERED INTERFACE COMPOSITION -->
+<div class="relative w-full mt-16 max-w-5xl">
+<!-- Organizer Desktop Workspace -->
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-xl p-space-lg sm:p-8 text-left transition-all duration-300">
+<!-- Dashboard Top Header Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-lg gap-space-md">
+<div class="space-y-1">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-md text-headline-md text-on-surface font-medium">Aarav &amp; Meera's Celebration</span>
+<span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-label-sm text-label-sm uppercase">Active Itinerary</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> Feb 18–21, 2027
+              <span class="text-outline-variant">•</span>
+<span class="material-symbols-outlined text-[14px]">location_on</span> Udaipur Palace, Rajasthan
+              <span class="text-outline-variant">•</span> 4 Functions Scheduled
+            </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-3 py-1.5 rounded-lg">Sync ID: #UDR-9428</span>
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-primary font-label-md text-label-md">AM</div>
+</div>
+</div>
+<!-- 4 Core Metric Tiles -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-space-md py-space-md">
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">Next Function</span>
+<p class="font-headline-sm text-headline-sm text-on-surface">Sangeet Gala</p>
+<p class="font-label-md text-label-md text-secondary font-medium">Tonight, 7:00 PM IST</p>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">RSVPs Received</span>
+<p class="font-headline-sm text-headline-sm text-on-surface">195 <span class="text-body-sm font-normal text-on-surface-variant">/ 210</span></p>
+<div class="w-full bg-surface-variant h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-primary h-full rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">Spend Settled</span>
+<p class="font-headline-sm text-headline-sm text-on-surface">₹14,50,000</p>
+<p class="font-label-md text-label-md text-on-surface-variant font-normal">8 Vendor advances cleared</p>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant tracking-wider">Action Items</span>
+<p class="font-headline-sm text-headline-sm text-on-surface">3 Pending</p>
+<p class="font-label-md text-label-md text-secondary font-medium">Sound Check &amp; Floral Sign-off</p>
+</div>
+</div>
+<!-- Timeline / Function Ribbon -->
+<div class="mt-space-lg pt-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-surface-variant">Run-of-Show Schedule</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">Live Stage Tracking</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-space-sm text-left">
+<div class="p-space-sm bg-surface-container rounded-lg">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day 1 • 4:00 PM</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold truncate">Engagement</p>
+<span class="inline-block mt-1 font-label-sm text-label-sm text-primary">Completed</span>
+</div>
+<div class="p-space-sm bg-surface-container rounded-lg">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day 2 • 11:00 AM</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold truncate">Haldi &amp; Mehendi</p>
+<span class="inline-block mt-1 font-label-sm text-label-sm text-primary">Completed</span>
+</div>
+<div class="p-space-sm bg-secondary-fixed/50 rounded-lg">
+<span class="font-label-sm text-label-sm text-secondary font-bold">Day 2 • 7:00 PM</span>
+<p class="font-label-lg text-label-lg text-on-secondary-fixed font-bold truncate">Sangeet Gala</p>
+<span class="inline-block mt-1 font-label-sm text-label-sm text-secondary font-semibold">Active Cue</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg opacity-80">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day 3 • 4:30 PM</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold truncate">Sunset Pheras</p>
+<span class="inline-block mt-1 font-label-sm text-label-sm text-on-surface-variant">Upcoming</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg opacity-80">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day 4 • 8:00 PM</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold truncate">Royal Reception</p>
+<span class="inline-block mt-1 font-label-sm text-label-sm text-on-surface-variant">Upcoming</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Overlapping Floating Guest Invitation Card -->
+<div class="hidden sm:block absolute -bottom-10 -right-6 w-80 bg-surface-container-lowest rounded-xl shadow-2xl p-space-lg text-left">
+<!-- Brand Header Bar -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<img alt="Make My Event Logo - Connected Moments" class="w-6 h-6 object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCQ-TWWO4QRCH4GqqE_G_0QSaA15Vit8SabPjSVNa7cs5Y1yAd29_6-BbhcpEs6_6QwteM8-yk3lLCzp74mI-QTJbslz2ZaxwRy9fV2wVLLTnRcL2Dn-qOMGY_jppijWp2GdQtXL1BTtTZKCR8pU3sDOWOPQ81BfUfAeDCe6uVBrF7tehfHYAJoE_3U6CkXkMlHTIVSIDhtZPwbGoCYi9pd_gB2jJTlQLy6uyQoOvgB"/>
+<span class="font-label-sm text-label-sm font-semibold text-primary uppercase tracking-wider">Make My Event</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Guest Portal</span>
+</div>
+<div class="py-space-sm">
+<p class="font-headline-sm text-headline-sm text-on-surface mb-0.5">Dear Rohan &amp; Family</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">You are joyfully invited to celebrate with us.</p>
+</div>
+<div class="space-y-space-sm py-space-sm">
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low">
+<div class="space-y-0.5">
+<p class="font-label-md text-label-md text-on-surface font-semibold">Sangeet Gala</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Tonight • Jagmandir Island</p>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-label-sm text-label-sm font-bold uppercase">Attending</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low">
+<div class="space-y-0.5">
+<p class="font-label-md text-label-md text-on-surface font-semibold">Sunset Pheras</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Tomorrow • Zenana Mahal</p>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-label-sm text-label-sm font-bold uppercase">Attending</span>
+</div>
+</div>
+<div class="pt-space-sm flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">navigation</span> Venue Directions
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 Guests Logged</span>
+</div>
+</div>
+</div>
+</section>
+<!-- THE PROBLEM SECTION -->
+<section class="w-full bg-surface-container-low py-24">
+<div class="max-w-7xl mx-auto px-margin">
+<div class="max-w-2xl mb-space-xl">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">The Logistics Challenge</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-space-xs">
+          Big celebrations. Too many moving parts. One simpler way.
+        </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+<!-- Challenge 1 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">checklist</span>
+</div>
+<div class="space-y-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Scattered tasks and responsibilities</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              To-dos, vendor follow-ups, and urgent stage cues get buried across disorganized messaging groups and spreadsheets.
+            </p>
+</div>
+</div>
+<!-- Challenge 2 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">mark_email_unread</span>
+</div>
+<div class="space-y-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Guest invitations and unanswered RSVPs</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Constant friction deciphering headcount, dietary constraints, and distinct guest eligibility per individual sub-ceremony.
+            </p>
+</div>
+</div>
+<!-- Challenge 3 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+<div class="space-y-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Expenses and vendor disbursements</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Organizers struggle to reconcile initial advance deposits, staging milestones, and settled cash handovers on cue day.
+            </p>
+</div>
+</div>
+<!-- Challenge 4 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">schedule</span>
+</div>
+<div class="space-y-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Function schedules and shifting details</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Last-minute room changes, timing shifts, and dress code updates never reach attendees smoothly in physical itineraries.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ASYMMETRICAL BENTO GRID: PRODUCT FEATURES -->
+<section class="w-full py-24 max-w-7xl mx-auto px-margin" id="features">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Elevated Choreography</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-space-xs mb-space-sm">
+        Everything important, thoughtfully organized.
+      </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+        Architected for luxury planners, hospitality leads, and family coordinators balancing granular complexity.
+      </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg">
+<!-- 1. Multi-Function Management (Large Span 8) -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm p-space-lg sm:p-8 flex flex-col justify-between">
+<div class="mb-space-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Ceremony Architecture</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">Multi-Function Event Management</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Configure individual celebrations, dress aesthetics, GPS coordinates, and private guest rosters per function.</p>
+</div>
+<!-- Interface Mock -->
+<div class="bg-surface-container-low rounded-lg p-space-md space-y-space-sm">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-lowest rounded-lg shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded bg-secondary-fixed/50 flex items-center justify-center text-secondary font-bold font-headline-sm text-headline-sm">01</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">Haldi &amp; Chooda Ceremony</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Courtyard East • Dress: Vibrant Yellow &amp; Florals</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-primary font-semibold">10:30 AM</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">85 Guests</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-lowest rounded-lg shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center text-primary font-bold font-headline-sm text-headline-sm">02</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">Sangeet Musical Night</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Grand Pavilion • Dress: Black Tie Indian Glamour</p>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-secondary font-semibold">07:00 PM</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">210 Guests</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Kanban Board (Span 4) -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Execution Rhythm</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">Collaborative Tasks</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Assign duties to family heads, wedding coordinators, and production partners.</p>
+</div>
+<div class="space-y-space-sm mt-space-md">
+<div class="p- space-sm p-3 bg-surface-container rounded-lg">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm text-secondary font-bold uppercase">To Do</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Urgent</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Sound engineer mic testing</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Assigned: Kabir (AV Director)</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm text-primary font-bold uppercase">In Progress</span>
+<span class="font-label-sm text-label-sm text-primary">Stage</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Floral stage installation sign-off</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Assigned: Sonia M.</p>
+</div>
+</div>
+</div>
+<!-- 3. Guest Rosters & RSVPs (Span 5) -->
+<div class="md:col-span-5 bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Private Guest Registry</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">Guest Invitations &amp; RSVPs</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Real-time confirmation metrics with discrete function-level access control.</p>
+</div>
+<div class="mt-space-md overflow-hidden rounded-lg bg-surface-container-low">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase">
+<tr>
+<th class="p-2.5">Guest Head</th>
+<th class="p-2.5">Parties</th>
+<th class="p-2.5">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<tr>
+<td class="p-2.5 font-label-md text-label-md text-on-surface font-medium">Kabir &amp; Priya Sen</td>
+<td class="p-2.5 text-on-surface-variant">2 Adults</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-label-sm text-label-sm">Confirmed</span></td>
+</tr>
+<tr>
+<td class="p-2.5 font-label-md text-label-md text-on-surface font-medium">Vikram Singhania</td>
+<td class="p-2.5 text-on-surface-variant">4 Family</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-label-sm text-label-sm">Confirmed</span></td>
+</tr>
+<tr>
+<td class="p-2.5 font-label-md text-label-md text-on-surface font-medium">Ananya Roy</td>
+<td class="p-2.5 text-on-surface-variant">1 Guest</td>
+<td class="p-2.5"><span class="px-2 py-0.5 rounded bg-secondary-fixed/50 text-secondary font-label-sm text-label-sm">Pending</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- 4. Actual Expense Ledger (Span 4) -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Financial Clarity</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">Expense Tracking</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Record actual disbursements, verify vendor balances, and keep accounts clear.</p>
+</div>
+<div class="mt-space-md space-y-space-sm bg-surface-container-low p-space-md rounded-lg">
+<div class="flex justify-between items-center text-body-sm text-body-sm">
+<span class="font-medium text-on-surface">Catering Advance (50%)</span>
+<span class="font-semibold text-primary">₹6,00,000</span>
+</div>
+<div class="flex justify-between items-center text-body-sm text-body-sm">
+<span class="font-medium text-on-surface">Florals &amp; Decor Stage</span>
+<span class="font-semibold text-primary">₹3,50,000</span>
+</div>
+<div class="flex justify-between items-center text-body-sm text-body-sm">
+<span class="font-medium text-on-surface">Sound &amp; Lighting Console</span>
+<span class="font-semibold text-primary">₹1,80,000</span>
+</div>
+<div class="pt-2 border-t border-surface-variant flex justify-between items-center font-label-md text-label-md text-on-surface">
+<span>Total Logged</span>
+<span class="font-bold text-secondary">₹11,30,000</span>
+</div>
+</div>
+</div>
+<!-- 5. Vendor Discovery (Span 3) -->
+<div class="md:col-span-3 bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Trusted Network</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">Vendor Directory</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Keep supplier phone numbers, contracts, and timing requirements aligned.</p>
+</div>
+<div class="mt-space-md space-y-space-sm">
+<div class="p-2.5 bg-surface-container rounded-lg flex items-center justify-between">
+<div class="truncate">
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">Royal Decorators Co.</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Stage Setup &amp; Flora</p>
+</div>
+<span class="text-secondary font-label-sm text-label-sm font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">star</span>4.9
+            </span>
+</div>
+<div class="p-2.5 bg-surface-container rounded-lg flex items-center justify-between">
+<div class="truncate">
+<p class="font-label-md text-label-md text-on-surface font-semibold truncate">Heritage Sound &amp; Light</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Acoustics Lead</p>
+</div>
+<span class="text-secondary font-label-sm text-label-sm font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">star</span>4.8
+            </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- GUEST EXPERIENCE SECTION -->
+<section class="w-full bg-surface-container-low py-24">
+<div class="max-w-7xl mx-auto px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+<!-- Editorial Text Column -->
+<div class="lg:col-span-6 space-y-space-lg">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Designed for Attendees</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">
+            A personal invitation. A beautiful experience.
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+            Guests access their personalized portal through a secure private link. No account creation or app download required.
+          </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-primary font-label-lg text-label-lg font-semibold">
+<span class="material-symbols-outlined text-[18px]">lock_open</span> Zero-Friction Access
+              </div>
+<p class="font-body-md text-body-md text-on-surface-variant">Instant entry via magic token. No passwords, app downloads, or complex hurdles.</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-primary font-label-lg text-label-lg font-semibold">
+<span class="material-symbols-outlined text-[18px]">event_seat</span> Tailored Function Schedules
+              </div>
+<p class="font-body-md text-body-md text-on-surface-variant">Attendees only view the ceremonies they are exclusively invited to celebrate.</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-secondary font-label-lg text-label-lg font-semibold">
+<span class="material-symbols-outlined text-[18px]">styler</span> Curated Dress Codes
+              </div>
+<p class="font-body-md text-body-md text-on-surface-variant">Visual guidelines and palettes so your guests always feel completely in place.</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-secondary font-label-lg text-label-lg font-semibold">
+<span class="material-symbols-outlined text-[18px]">near_me</span> Direct GPS Directions
+              </div>
+<p class="font-body-md text-body-md text-on-surface-variant">Single-tap routes straight to gates, valet parking zones, and private halls.</p>
+</div>
+</div>
+</div>
+<!-- Authentic Mobile UI Mockup -->
+<div class="lg:col-span-6 flex justify-center">
+<div class="w-full max-w-sm bg-surface-container-lowest rounded-2xl shadow-xl p-space-lg space-y-space-md">
+<div class="flex items-center justify-between pb-space-sm border-b border-surface-container">
+<div class="flex items-center gap-2">
+<img alt="Make My Event Logo - Connected Moments" class="w-6 h-6 object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCQ-TWWO4QRCH4GqqE_G_0QSaA15Vit8SabPjSVNa7cs5Y1yAd29_6-BbhcpEs6_6QwteM8-yk3lLCzp74mI-QTJbslz2ZaxwRy9fV2wVLLTnRcL2Dn-qOMGY_jppijWp2GdQtXL1BTtTZKCR8pU3sDOWOPQ81BfUfAeDCe6uVBrF7tehfHYAJoE_3U6CkXkMlHTIVSIDhtZPwbGoCYi9pd_gB2jJTlQLy6uyQoOvgB"/>
+<span class="font-label-sm text-label-sm font-bold text-primary uppercase">Make My Event</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-fixed/30 px-2 py-0.5 rounded">VIP Guest</span>
+</div>
+<div class="text-center py-space-sm space-y-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Official Invitation</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">The Sen Family</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Udaipur Royal Celebrations</p>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl space-y-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">TONIGHT • 7:00 PM</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">Sangeet Musical Night</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">music_note</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dress Code: Royal Emerald &amp; Metallic Copper Attire</p>
+<div class="flex gap-2 pt-2">
+<button class="flex-1 py-2 bg-primary text-on-primary rounded font-label-md text-label-md font-semibold">Will Attend</button>
+<button class="px-3 py-2 bg-surface-container text-on-surface rounded font-label-md text-label-md">Details</button>
+</div>
+</div>
+<div class="p-space-md bg-surface-container rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary">explore</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Jagmandir Island Pier</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">open_in_new</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- HOW IT WORKS SECTION -->
+<section class="w-full py-24 max-w-7xl mx-auto px-margin">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Frictionless Path</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-space-xs">
+        Three intentional steps from concept to toast.
+      </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-xl">
+<!-- Step 01 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<span class="font-headline-lg text-headline-lg text-primary font-serif font-light">01</span>
+<div class="space-y-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Create &amp; Schedule</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Input your celebration framework, split dates into discrete ceremonies, set locations, and articulate aesthetic dress guides.
+          </p>
+</div>
+</div>
+<!-- Step 02 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<span class="font-headline-lg text-headline-lg text-secondary font-serif font-light">02</span>
+<div class="space-y-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Coordinate &amp; Track</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Delegate responsibilities to family members, record genuine supplier payments, and keep everyone executing on schedule.
+          </p>
+</div>
+</div>
+<!-- Step 03 -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm space-y-space-md">
+<span class="font-headline-lg text-headline-lg text-primary font-serif font-light">03</span>
+<div class="space-y-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Celebrate &amp; Connect</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Distribute private access tokens to guests, receive immediate headcounts, and enjoy your moments with absolute logistical peace.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- TRUST & PRIVACY ACCORDION -->
+<section class="w-full bg-surface-container-low py-24">
+<div class="max-w-4xl mx-auto px-margin">
+<div class="text-center mb-12">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Privacy Architecture</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-space-xs">
+          Thoughtful experiences. Private by design.
+        </h2>
+</div>
+<div class="space-y-space-sm" id="accordion-container">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<button class="w-full p-space-md sm:p-space-lg text-left flex items-center justify-between font-headline-sm text-headline-sm text-on-surface font-medium focus:outline-none" onclick="toggleAccordion('acc-1')" type="button">
+<span>Private Guest Tokens</span>
+<span class="material-symbols-outlined transition-transform duration-200" id="icon-acc-1">expand_more</span>
+</button>
+<div class="px-space-md sm:px-space-lg pb-space-lg hidden font-body-md text-body-md text-on-surface-variant" id="acc-1">
+            Every invite is uniquely tokenized. Guests click their private link and arrive immediately at their customized portal without creating accounts or risking public indexation.
+          </div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<button class="w-full p-space-md sm:p-space-lg text-left flex items-center justify-between font-headline-sm text-headline-sm text-on-surface font-medium focus:outline-none" onclick="toggleAccordion('acc-2')" type="button">
+<span>Function-Specific Visibility Control</span>
+<span class="material-symbols-outlined transition-transform duration-200" id="icon-acc-2">expand_more</span>
+</button>
+<div class="px-space-md sm:px-space-lg pb-space-lg hidden font-body-md text-body-md text-on-surface-variant" id="acc-2">
+            Intimate rituals stay intimate. Attendees only discover timing and venue details for the specific events they are invited to attend, preventing social friction.
+          </div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<button class="w-full p-space-md sm:p-space-lg text-left flex items-center justify-between font-headline-sm text-headline-sm text-on-surface font-medium focus:outline-none" onclick="toggleAccordion('acc-3')" type="button">
+<span>Organizer Permission Controls</span>
+<span class="material-symbols-outlined transition-transform duration-200" id="icon-acc-3">expand_more</span>
+</button>
+<div class="px-space-md sm:px-space-lg pb-space-lg hidden font-body-md text-body-md text-on-surface-variant" id="acc-3">
+            Segregate sensitive financial disbursements and contracts from extended wedding committee volunteers. Granular permissions maintain executive privacy.
+          </div>
+</div>
+<!-- Item 4 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<button class="w-full p-space-md sm:p-space-lg text-left flex items-center justify-between font-headline-sm text-headline-sm text-on-surface font-medium focus:outline-none" onclick="toggleAccordion('acc-4')" type="button">
+<span>Zero Guest Signup Barrier</span>
+<span class="material-symbols-outlined transition-transform duration-200" id="icon-acc-4">expand_more</span>
+</button>
+<div class="px-space-md sm:px-space-lg pb-space-lg hidden font-body-md text-body-md text-on-surface-variant" id="acc-4">
+            Elderly relatives and busy international guests never have to install an app or remember passwords. One tap delivers every answer instantly.
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- FINAL CTA SECTION -->
+<section class="w-full max-w-7xl mx-auto px-margin py-20">
+<div class="bg-primary text-on-primary rounded-2xl p-space-xl sm:p-20 text-center relative overflow-hidden shadow-xl">
+<div class="relative z-10 max-w-3xl mx-auto space-y-space-md">
+<h2 class="font-display-lg text-display-lg font-serif">
+          Make room for the moments that matter.
+        </h2>
+<p class="font-body-lg text-body-lg text-inverse-on-surface max-w-xl mx-auto">
+          Less coordination across scattered tools. More clarity for everyone involved.
+        </p>
+<div class="pt-space-md">
+<a class="inline-flex items-center justify-center px-space-xl py-4 rounded-lg bg-surface text-on-surface font-label-lg text-label-lg shadow-lg hover:bg-surface-container-lowest transition-colors" data-path="create-your-event" href="#">
+            Create Your Event
+          </a>
+</div>
+</div>
+</div>
+</section>
+<script>
+    function toggleAccordion(id) {
+      var content = document.getElementById(id);
+      var icon = document.getElementById('icon-' + id);
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low"><div class="max-w-7xl mx-auto px-margin py-space-xl"><div class="flex flex-col md:flex-row items-start justify-between gap-space-xl"><div class="max-w-sm flex flex-col gap-space-sm"><div class="flex items-center gap-space-md"><img alt="Make My Event Logo - Connected Moments" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCQ-TWWO4QRCH4GqqE_G_0QSaA15Vit8SabPjSVNa7cs5Y1yAd29_6-BbhcpEs6_6QwteM8-yk3lLCzp74mI-QTJbslz2ZaxwRy9fV2wVLLTnRcL2Dn-qOMGY_jppijWp2GdQtXL1BTtTZKCR8pU3sDOWOPQ81BfUfAeDCe6uVBrF7tehfHYAJoE_3U6CkXkMlHTIVSIDhtZPwbGoCYi9pd_gB2jJTlQLy6uyQoOvgB"/><span class="font-headline-sm text-headline-sm text-primary font-semibold tracking-wider uppercase">Make My Event</span></div><p class="font-body-md text-body-md text-on-surface-variant">The elevated event choreography and guest management platform for coordinators, hospitality leaders, and bespoke celebration designers.</p></div><nav class="flex flex-wrap items-center gap-x-space-lg gap-y-space-sm" data-active-classes="text-primary font-label-md text-label-md font-semibold"><a aria-current="page" class="transition-colors text-primary font-label-md text-label-md font-semibold" data-path="features" href="#">Features</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="sign-in" href="#">Sign In</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy" href="#">Privacy</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="terms" href="#">Terms</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="support" href="#">Support</a></nav></div><div class="mt-space-xl pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><p>© 2025 Make My Event Inc. All rights reserved.</p><p class="text-outline">Refined Event Orchestration Platform</p></div></div></footer></body></html>
