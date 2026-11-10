@@ -34,4 +34,14 @@ This is one TypeScript Next.js App Router application. Future REST Route Handler
 
 Read the documents in this order for decisions: [PRD](docs/PRD.md) for product behavior; [System Design](docs/System_Design.md) for architecture; [Database Design](docs/Database_Design.md) for persistence; [API Design](docs/API_Design.md) for endpoint contracts; and [implementation tokens](design/IMPLEMENTATION_TOKENS.md) for visual styling. The original Stitch files under `design/` are preserved as references.
 
-The homepage is a framework and design-token check, not the full marketing experience. Authentication, wedding management, guests, finance, vendors, email, and media are not implemented yet.
+The public landing page and management account registration, sign-in, session restoration and sign-out are implemented. Wedding management, guests, finance, vendors, email and media remain future increments.
+
+## Authentication tests
+
+Run `pnpm test` to run the validation tests, build the app, and execute the API and browser suite. Use `pnpm test:unit` for validation alone or `pnpm test:auth` for the built application tests.
+
+The authentication suite starts its own Next.js production server on port 3100 and a temporary local MongoDB replica set. It overrides the application's database URI for that server. Test fixtures clear only the temporary database's account, session and rate-limit records before and after each test.
+
+The first run downloads a MongoDB binary and requires network access. Browser tests use installed Microsoft Edge by default. To use Playwright Chromium, run `pnpm exec playwright install chromium` and set `PLAYWRIGHT_CHANNEL=chromium`. Test configuration and scenarios live in `playwright.config.ts` and `src/modules/auth/tests/`.
+
+If automatic MongoDB download is interrupted, you can set `MONGOMS_SYSTEM_BINARY` to a compatible local `mongod` executable before running the suite. The tests pin MongoDB 8.2.6 for reproducibility. Browser traces, screenshots and video recording are disabled to keep entered credentials out of those artifacts.

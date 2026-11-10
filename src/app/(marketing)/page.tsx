@@ -1,3 +1,4 @@
+import Link from "next/link";
 import LandingDetails from "./landing-details";
 import "./landing.css";
 
@@ -20,7 +21,9 @@ function Brand() {
 
 function EventCreationStatus() {
   return (
-    <span className="event-creation-status">Event creation coming soon</span>
+    <Link className="landing-button primary" href="/register">
+      Create an account
+    </Link>
   );
 }
 
@@ -140,7 +143,7 @@ export default function HomePage() {
             <a href="#features">Features</a>
             <a href="#how-it-works">How It Works</a>
             <a href="#guest-experience">Guest Experience</a>
-            <button disabled>Sign In</button>
+            <Link href="/sign-in">Sign In</Link>
           </nav>
           <EventCreationStatus />
         </div>

@@ -27,3 +27,5 @@
 - Use strict TypeScript, `@/*` aliases, ESLint and Prettier. Name feature folders and source files in kebab case, with Next.js reserved filenames unchanged. Validate untrusted input at boundaries, return safe DTOs and stable error codes, and keep business rules in services.
 - Run `pnpm format:check`, `pnpm lint`, `pnpm typecheck` and `pnpm build` for scaffold changes. Add meaningful tenant, role and capability tests with the relevant feature phase. Preserve existing docs, design exports and Git history; do not commit secrets.
 - Before using a Next.js API, read the relevant version-matched guide under `node_modules/next/dist/docs/`. The project maintains this file directly; `agentRules: false` prevents development runs from rewriting it.
+
+- Include standard form interactions as part of feature delivery, including accessible password visibility controls, autocomplete, validation feedback, loading states and prevention of duplicate submissions. Verify these interactions during review.

@@ -10,3 +10,7 @@ next-env.d.ts
 !.env.example
 *.log
 !.gitignore
+
+# Local browser test output
+/test-results/
+/playwright-report/

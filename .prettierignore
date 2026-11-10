@@ -4,3 +4,6 @@ next-env.d.ts
 pnpm-lock.yaml
 docs/**
 design/**
+
+test-results
+playwright-report
