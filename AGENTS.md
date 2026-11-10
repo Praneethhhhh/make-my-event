@@ -1,5 +1,7 @@
 # Make My Event development guidance
 
+- Use the Stitch MCP server for UI design work. Follow `design/IMPLEMENTATION_TOKENS.md` when translating Stitch designs into application styles.
+
 - Read `docs/PRD.md`, `docs/System_Design.md`, `docs/Database_Design.md`, `docs/API_Design.md`, and `design/IMPLEMENTATION_TOKENS.md` before changing the affected area. Product behavior follows PRD; architecture follows System Design; stored data and collection names follow Database Design; HTTP contracts follow API Design; visual tokens follow the implementation token document.
 - Keep one Next.js App Router, Node.js, TypeScript modular monolith. Place REST handlers in `src/app/api/v1`; put feature models, validation, repositories, services, DTOs and feature tests together under `src/modules/<feature>`. Add shared server code only when used.
 - A wedding is a tenant. Derive `weddingId` from a validated server-side management membership or narrow guest/vendor capability. Scope every wedding-owned query and mutation accordingly; verify referenced records belong to the same wedding. Never trust a client-supplied ID as authority.
