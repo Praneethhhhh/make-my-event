@@ -1,4 +1,5 @@
 # MAKE MY EVENT
+
 ## System Design & Architecture — Version 1.0
 
 **Status:** Proposed implementation architecture aligned with PRD v1.0; implementation requires security and release validation  
@@ -6,7 +7,9 @@
 **Architecture:** TypeScript modular monolith; Next.js App Router, Node.js Route Handlers, REST, Mongoose/MongoDB Atlas  
 **Third-party services:** Cloudflare R2 (private media), Resend (transactional email), Google Places API (New) (vendor discovery), Vercel (hosting and daily Cron)
 
-> **Key architecture decision:** A **single deployable Next.js monolith** contains presentation, API routes, application services, domain rules and persistence adapters. Weddings are independent tenants; accounts belong to at most one wedding in v1. Guests and vendors use private links instead of accounts. There is no Redis, Kafka, separate Express backend or authentication provider.
+> **Key architecture decision:** A **single deployable Next.js monolith** contains presentation, API routes, application services, domain rules and persistence adapters. Weddings are independent tenants; accounts may have multiple wedding memberships with independent roles. Guests and vendors use private links instead of accounts. There is no Redis, Kafka, separate Express backend or authentication provider.
+
+**12 November 2026 implementation amendment:** Explicit per-tab wedding selection and admin-revealed/manual invitation codes replace the former single-wedding/email-only assumptions. See [the implementation and migration plan](MULTI_WEDDING_AND_INVITATION_CODES_PLAN.md). The development database migration is applied; other environments require the guarded migration before enabling new writers.
 
 ## 1. Scope, architectural drivers and constraints
 
@@ -18,21 +21,21 @@
 
 ## 2. Technology decisions
 
-| Layer | Choice | Why / important caveat |
-|---|---|---|
-| Runtime and frontend | Next.js App Router on Node.js, TypeScript | One web app and one deployable; server/client components as appropriate |
-| APIs | REST via `app/api/**/route.ts` | Clear endpoint boundaries; no direct database access from clients |
-| Domain logic | Feature modules + application services | Avoid putting business rules directly into route handlers or React components |
-| Validation | Zod | Validate and normalize all untrusted request input and provider responses |
-| Storage | MongoDB Atlas via Mongoose | Document flexibility with deliberate references, indexes and transactions where necessary |
-| Admin authentication | Custom email/password and DB-backed opaque sessions | No auth provider or Google OAuth; must implement security controls rigorously |
-| Guest/vendor authz | High-entropy URL capability token exchanged for limited cookie | Narrow scope, revocation and expiry, no accounts |
-| Images | Private Cloudflare R2 Standard, direct presigned PUT/short-lived GET | Cost-sensitive; do not make gallery publicly addressable |
-| Email | Resend + MongoDB outbox | Immediate bounded batch on request, daily cron for backlog/reminders |
-| Jobs | Vercel Cron (daily) + bounded request-time processing | Vercel Hobby cron runs once daily with ~hour-level precision |
-| Nearby discovery | Google Places API (New) server proxy | Requires enabled Google billing, restrictions, field masks, quotas and attributions |
-| Hosting | Vercel, initially Hobby if compliant with noncommercial personal use | Free tier imposes invocation/duration quotas and policy limits |
-| Observability | JSON application logs + Mongo audit entries | No external observability tool in v1 |
+| Layer                | Choice                                                               | Why / important caveat                                                                    |
+| -------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Runtime and frontend | Next.js App Router on Node.js, TypeScript                            | One web app and one deployable; server/client components as appropriate                   |
+| APIs                 | REST via `app/api/**/route.ts`                                       | Clear endpoint boundaries; no direct database access from clients                         |
+| Domain logic         | Feature modules + application services                               | Avoid putting business rules directly into route handlers or React components             |
+| Validation           | Zod                                                                  | Validate and normalize all untrusted request input and provider responses                 |
+| Storage              | MongoDB Atlas via Mongoose                                           | Document flexibility with deliberate references, indexes and transactions where necessary |
+| Admin authentication | Custom email/password and DB-backed opaque sessions                  | No auth provider or Google OAuth; must implement security controls rigorously             |
+| Guest/vendor authz   | High-entropy URL capability token exchanged for limited cookie       | Narrow scope, revocation and expiry, no accounts                                          |
+| Images               | Private Cloudflare R2 Standard, direct presigned PUT/short-lived GET | Cost-sensitive; do not make gallery publicly addressable                                  |
+| Email                | Resend + MongoDB outbox                                              | Immediate bounded batch on request, daily cron for backlog/reminders                      |
+| Jobs                 | Vercel Cron (daily) + bounded request-time processing                | Vercel Hobby cron runs once daily with ~hour-level precision                              |
+| Nearby discovery     | Google Places API (New) server proxy                                 | Requires enabled Google billing, restrictions, field masks, quotas and attributions       |
+| Hosting              | Vercel, initially Hobby if compliant with noncommercial personal use | Free tier imposes invocation/duration quotas and policy limits                            |
+| Observability        | JSON application logs + Mongo audit entries                          | No external observability tool in v1                                                      |
 
 **Explicit change from earlier discussion:** There is **no Better Auth, Auth.js, Firebase Auth, Supabase Auth or Google sign-in**. Custom auth is an intentional owner decision, not a security-free shortcut.
 
@@ -79,7 +82,7 @@ src/
     api/internal/cron/daily/...  # protected cron handler
   modules/
     auth/           # password, session, recovery, CSRF
-    memberships/    # join token, roles, one-wedding membership
+    memberships/    # invitation codes, roles, multiple wedding memberships
     weddings/       # tenant setup / profile / functions / schedules
     tasks/          # list/kanban/tasks/comments
     expenses/       # payments/charges/expense calculations
@@ -98,17 +101,21 @@ src/
     integrations/   # R2, Resend, Google adapters
 ```
 
-A Route Handler validates input and access, calls an application service, maps service errors to HTTP. Services enforce business invariants; repositories query using server-supplied tenant context. The frontend never sends a trusted `weddingId` to select its own tenant.
+A Route Handler validates input and access, calls an application service, maps service errors to HTTP. Services enforce business invariants; repositories query using server-supplied tenant context. The frontend may identify the desired wedding, but that ID is only a candidate: the server validates exact active membership before deriving tenant context.
 
 ## 5. Tenant model and authorization
 
-**Canonical persisted tenant key:** `weddingId: ObjectId`. A single wedding is a tenant; different weddings can co-exist. The application user can have **at most one active** `weddingMembership` in v1. Member role is `ADMIN` or `ORGANIZER`; authorization is always derived from the validated session/membership record rather than the browser.
+**Canonical persisted tenant key:** `weddingId: ObjectId`. Each wedding is a separate tenant. One account may have multiple ACTIVE memberships, unique by wedding/account pair. `ADMIN`/`ORGANIZER` belongs to that specific membership, never the account globally.
 
 - All wedding-scoped collection reads/writes include a `weddingId` filter or follow a parent reference already verified to be part of the same wedding.
 - Where APIs accept a child ID (function, guest, vendor, photo), load it with the `weddingId`/authorized parent relationship. Never `findById(id)` then assume it belongs to the tenant.
 - Manager role access to wedding data is shared; **membership mutations remain admin-only**.
 - For guests/vendors, resolve the token to one invited guest or vendor record, and compute function/resource access from that record. A `guestId` or `vendorId` in a URL is never sufficient authorization.
-- In database indexes, include `weddingId` for tenant-scoped lists and uniqueness; use a unique membership index on user ID to enforce the current single-wedding rule.
+- Keep unique `(weddingId,userId)` membership pairs and add non-unique `(userId,status,weddingId)` listing access; remove the former unique active-user restriction only through the coordinated migration plan. Preserve removed-membership history.
+
+Management URLs contain `/weddings/{weddingId}/...`; account selection is `/weddings`. Existing tenant-owned APIs require `X-Wedding-Id`, authenticated identity, the exact ACTIVE membership and ACTIVE wedding. Never use `findOne({userId,status:ACTIVE})` to choose a tenant. A session authenticates the account, not a global selected wedding or role. Context-free exceptions are authentication, account wedding listing, wedding creation and invitation redemption. Guest/vendor capabilities continue deriving their own narrow context and ignore management selection.
+
+Switching changes only the current tab URL. Scope frontend requests, caches, revisions and drafts to that wedding; cancel/ignore stale responses, warn on dirty forms and never retarget retries. Missing context fails explicitly; unauthorized/removed contexts fail closed and do not fall back to another membership. Membership removal/demotion is local to the wedding: deny subsequent requests there while retaining unrelated access and sessions. Serialize authorization-sensitive mutations and membership changes using the same wedding lock; preserve the last admin per wedding. Account logout, disable and security recovery remain account-level operations.
 
 Example: `find({ weddingId: ctx.weddingId, functionId: requestedFunction })`, after validating that function also belongs to `ctx.weddingId`.
 
@@ -119,8 +126,8 @@ Example: `find({ weddingId: ctx.weddingId, functionId: requestedFunction })`, af
 - User registers with email/password; the system normalizes email and enforces unique email in accounts. **No email verification gate in v1.**
 - Hash password with **Argon2id** with a unique salt and configurable parameters consistent with current OWASP guidance. Do not use SHA-256 alone, reversible encryption or home-grown hashing.
 - Login compares password securely and uses generic responses so email existence is not exposed. Throttle login/signup by IP and account identity, including temporary progressive lockouts.
-- **Do not automatically join a wedding based on a claimed email address.** Wedding invitation is a separate signed/unguessable single-use token, subject to expiry and revocation.
-- First authenticated account may create a new wedding and becomes initial admin. An unassigned user can instead redeem a valid invite token; a user already in a wedding cannot join another in v1.
+- **Do not automatically join a wedding based on a claimed email address.** A management invitation requires a separate admin-issued single-use code, delivered manually or by email, subject to recipient matching, expiry and revocation.
+- Any authenticated account may create another wedding as its first admin or redeem a code for another wedding. One membership per wedding/account prevents duplicate joins; memberships in other weddings are not a rejection condition. Fresh sign-in always opens the wedding selector, including the one-card and empty states.
 - Password reset may be implemented through a time-limited emailed recovery link, but proving access to a mailbox for reset is not the same as requiring email verification at signup. Rate-limit issuance; invalidate old sessions after reset. If safe recovery cannot be guaranteed for unverified contact details, provide controlled admin-assisted recovery rather than insecure shortcuts.
 
 ### 6.2 Sessions and CSRF
@@ -129,80 +136,85 @@ Example: `find({ weddingId: ctx.weddingId, functionId: requestedFunction })`, af
 - Set cookie `__Host-mme_session` with `HttpOnly; Secure; SameSite=Lax` (or Strict after user-flow verification); `Path=/`, no Domain. Rotate on login/privilege change; expire and invalidate on logout.
 - Authorize protected mutations server-side. Use **Origin/Referer allowlist checking and anti-CSRF protection** for cookie-authenticated unsafe requests; SameSite is defense in depth, not the only control.
 - Enforce safe account recovery, password reset and role-change flows. Never store credentials in `localStorage`.
-- Validate `weddingMembership` and revocation status on sensitive management operations; revoke sessions as part of member removal.
+- Validate the exact selected `weddingMembership` and revocation status on every management operation. Removing/changing one membership must not revoke account sessions used in unrelated weddings. Rotate only the current session when accepting a code; keep identity-level logout/recovery semantics separate.
 
 ### 6.3 Membership invitation
 
-Admin generates single-use invite with target role, `weddingId`, optional intended email, expiry and random secret hash. It may be copied manually or delivered by Resend. Invitee may register/sign in and redeem; a matching email string alone does not authorize membership. Redemption checks unused/unexpired token, session, one-wedding restriction and admin-issued role. Record audit event and invalidate token atomically.
+The target UI uses the selected Team roster, optional email composer, private code-reveal dialog and account-level `/weddings/join`. Composer text is bounded plain text; the sender appends fixed security instructions. Admin member mutations use revision preconditions and a wedding transaction lock; count remaining admins inside it before removal/demotion. Joining consumes the invitation and creates/reactivates its unique wedding/account pair atomically; joins to other weddings are allowed. Wedding creation uses explicit idempotency keys, not the obsolete one-active-user index, to prevent duplicate retry-created weddings. Audit actions without secrets.
+
+An admin supplies recipient email, role and MANUAL or EMAIL delivery. Manual creation works without Resend or email quota; EMAIL preserves the current sender/quota checks and failures. The authenticated recipient enters the same 12-character code regardless of delivery method. Possession of the code plus matching account email authorizes joining, not a claim of verified mailbox ownership. Reveal/copy is a separate admin-only CSRF-protected, rate-limited, audited no-store POST; ordinary creation/list responses never contain a code. Keep keyed verification and versioned AES-GCM recoverable ciphertext for the entire active invitation lifetime, even after successful email. Decrypt only for authorized reveal or dispatch. Clear ciphertext on consume/revoke/reissue; expiry checks reject use immediately and bounded cleanup removes expired ciphertext. A legacy invitation whose ciphertext was previously deleted needs explicit replacement, not hash recovery. Keys remain outside MongoDB, secrets stay out of logs/outbox/browser storage/URLs, and client display is masked/cleared on close, timeout or switch. Redemption retains strict account/source/recipient limits and attempt caps. Reissue invalidates prior unused codes for that wedding/recipient only; management capability links remain unsupported.
 
 ## 7. Guest/vendor private links and capability sessions
 
-- Issue each guest/vendor a unique 256-bit-or-equivalent random token; keep `sha256(token)` in `accessCredentials`, with `principalType`, record ID, `weddingId`, creation, revocation and optional expiry.
+- Issue each guest/vendor a unique 256-bit-or-equivalent random token; keep its lookup hash in `accessLinks` with subject type/ID, `weddingId`, status, creation and optional expiry. Where the existing URL must be resent or copied, also keep a separately AES-256-GCM-encrypted secret, nonce, authentication tag and key version. Encryption keys remain outside MongoDB and source control.
 - Initial `GET /invite/{token}` or `/vendor/{token}` validates the token **without mutating** RSVP/task state (email link scanners may prefetch). Return a first-party page and exchange to a narrow, short-lived, `HttpOnly` capability cookie; then redirect to a clean URL that omits the secret to reduce history/referrer leakage.
-- Restrict guest cookie to that guest's authorized invitation set; restrict vendor cookie to that vendor, own charges/assignments and permitted task status changes. Apply CSRF/Origin checks to mutations even for capability-cookie sessions.
+- Restrict the guest cookie to that guest's `ACTIVE` function invitations; RSVP status does not determine function eligibility. Revocation preserves the historical RSVP but removes function, photo, livestream and RSVP access and reminder eligibility. Restrict the vendor cookie to that vendor, own charges/assignments and permitted task status changes. Apply CSRF/Origin checks to mutations even for capability-cookie sessions.
 - Since guests may open links on different devices, link reuse is allowed until revoked; rotating/revoking old secret immediately blocks new exchanges and should invalidate existing capability sessions through server-side credential version or revocation checks.
 - Avoid embedding raw private tokens in analytics, image URLs, externally loaded links, logs or email tracking redirects. Apply `Referrer-Policy: no-referrer` to secret-bearing entry pages and disable token-bearing URL prefetching from the app where possible.
 - Anyone who possesses the link can access its scoped data. This limitation is an explicit product tradeoff, not full identity verification.
+- Only an authorized management copy action or email sender may decrypt an active link. Use `no-store` on reveal responses and audit the action without the secret. Never place plaintext URLs in `emailOutbox`, logs, audit metadata, analytics or webhooks. Rotation/revocation invalidates linked portal sessions. Versioned key rotation needs controlled re-encryption and protected key backups; losing a key makes its encrypted links unrecoverable.
 
 ## 8. MongoDB document model, integrity and indexes
 
 All IDs below are ObjectIds; timestamps are stored in UTC. Wedding timezone is stored explicitly (default `Asia/Kolkata`) for display and RSVP reminder decisions. Currency defaults to INR; **store monetary amounts as integer minor units (paise)** to avoid floating-point errors.
 
-| Collection | Important fields | Indexes / constraints |
-|---|---|---|
-| `users` | `emailNormalized`, `passwordHash`, `displayName`, `createdAt` | unique `emailNormalized` |
-| `sessions` | `userId`, token verifier hash, `expiresAt`, revoked | hashed verifier index; TTL on expiry (do not trust TTL for immediate security) |
-| `weddings` | title, couple, timezone, type/theme, dates, settings | `_id`; optional status |
-| `memberships` | `weddingId`, `userId`, `role`, status | unique `userId` (v1), unique (`weddingId`,`userId`), compound tenant lookups |
-| `memberInvites` | `weddingId`, role, tokenHash, optional email, expires, used | unique tokenHash, TTL expiry |
-| `functions` | `weddingId`, title, `startsAt`, `endsAt`, venue with lat/lng, `rsvpDeadline` | (`weddingId`,`startsAt`) |
-| `scheduleItems` | `weddingId`, `functionId`, time, label, notes | (`functionId`,time) |
-| `tasks` | `weddingId`, `functionId?`, assigneeType/id, status, due | (`weddingId`,status,due), (`weddingId`,assigneeId) |
-| `taskComments` | `weddingId`, `taskId`, author, body, mentionedUserIds | (`weddingId`,`taskId`,`createdAt`) |
-| `expenses` | `weddingId`, `functionId?`, amountMinor, paidDate, note | (`weddingId`,`functionId`,`paidDate`) |
-| `vendors` | `weddingId`, name, category, organizer-entered contacts, `googlePlaceId?` | (`weddingId`,category), optional (`weddingId`,`googlePlaceId`) |
-| `vendorAssignments` | `weddingId`, `vendorId`, `functionId`, responsibilities | (`weddingId`,`vendorId`,`functionId`) |
-| `vendorCharges` | `weddingId`, `vendorId`, `functionId?`, agreedMinor | (`weddingId`,`vendorId`) |
-| `payments` | `weddingId`, `vendorChargeId`, amountMinor, date, note | (`weddingId`,`vendorChargeId`,`paidAt`) |
-| `guests` | `weddingId`, name, optional email, message, linkId | (`weddingId`,email) nonunique |
-| `functionInvitations` | `weddingId`, `guestId`, `functionId`, status, maxAttendees, attendeeCount, updatedAt | unique (`weddingId`,`guestId`,`functionId`); (`weddingId`,`functionId`,status) |
-| `accessCredentials` | `weddingId`, principal type/id, tokenHash, revokedAt, version | unique tokenHash; (`weddingId`,principalType,principalId) |
-| `capabilitySessions` | accessCredentialId, random verifier hash, expiry | verifier index and TTL |
-| `photos` | `weddingId`, `functionId`, uploader ref/type, r2Key, bytes, mime, state, created | (`weddingId`,`functionId`,`createdAt`), (`weddingId`,state) |
-| `emailOutbox` | `weddingId`, recipient, invitation/metadata IDs, state, dueAt, attempts, idempotencyKey, lease | unique idempotencyKey; (`state`,`dueAt`), lease expiry |
-| `reminderHistory` | `weddingId`, invitationId, reminderWindow, emailOutboxId | unique (`invitationId`,`reminderWindow`) |
-| `rateLimits` | scope/key hash, bucketStart, count, expiresAt | unique scope/key/bucket; TTL |
-| `auditEvents` | `weddingId`, actor, action, objectRef, createdAt, safe metadata | (`weddingId`,`createdAt`) |
+| Collection            | Important fields                                                                                                                           | Indexes / constraints                                                                                |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `users`               | `emailNormalized`, `passwordHash`, `displayName`, `createdAt`                                                                              | unique `emailNormalized`                                                                             |
+| `authSessions`        | `userId`, `tokenHash`, `expiresAt`, `revokedAt?`                                                                                           | unique token hash; TTL on expiry (do not trust TTL for immediate security)                           |
+| `passwordResetTokens` | `userId`, `tokenHash`, `expiresAt`, `usedAt?`                                                                                              | unique token hash; TTL on expiry                                                                     |
+| `weddings`            | title, couple, timezone, type/theme, dates, settings                                                                                       | `_id`; optional status                                                                               |
+| `weddingMemberships`  | `weddingId`, `userId`, `role`, `status`                                                                                                    | partial unique active `userId`; tenant/role lookups                                                  |
+| `membershipInvites`   | `weddingId`, role, intended email, MANUAL/EMAIL method, keyed verifier, encrypted active code, expiry, consumption                         | unique verifier; cleanup expiry; scoped idempotency                                                  |
+| `functions`           | `weddingId`, name, `startsAt`, `endsAt`, venue with lat/lng, `rsvpDeadlineAt`, bounded embedded `scheduleItems[]`                          | (`weddingId`,`startsAt`); no schedule collection                                                     |
+| `tasks`               | `weddingId`, `functionId?`, assigneeType/id, status, due                                                                                   | (`weddingId`,status,due), (`weddingId`,assigneeId)                                                   |
+| `taskComments`        | `weddingId`, `taskId`, author, body, mentionedUserIds                                                                                      | (`weddingId`,`taskId`,`createdAt`)                                                                   |
+| `expenses`            | `weddingId`, `functionId?`, `amountPaise`, `paidAt`, status                                                                                | (`weddingId`,`status`,`paidAt`)                                                                      |
+| `vendors`             | `weddingId`, name, category, organizer-entered contacts, `googlePlaceId?`                                                                  | (`weddingId`,category), optional (`weddingId`,`googlePlaceId`)                                       |
+| `vendorAssignments`   | `weddingId`, `vendorId`, `functionId`, responsibilities                                                                                    | (`weddingId`,`vendorId`,`functionId`)                                                                |
+| `vendorCharges`       | `weddingId`, `vendorId`, `functionId?`, `amountPaise`, status                                                                              | (`weddingId`,`vendorId`,`status`)                                                                    |
+| `vendorPayments`      | `weddingId`, `vendorId`, `chargeId`, `amountPaise`, `paidAt`, status                                                                       | (`weddingId`,`chargeId`,`status`,`paidAt`)                                                           |
+| `guests`              | `weddingId`, `displayName`, optional `emailNormalized`, personal message                                                                   | (`weddingId`,`emailNormalized`) nonunique                                                            |
+| `functionInvitations` | `weddingId`, `guestId`, `functionId`, RSVP status, independent `eligibilityStatus`, `maxAttendees`, `attendeeCount`, `deadlineOverrideAt?` | unique (`weddingId`,`guestId`,`functionId`); (`weddingId`,`functionId`,`eligibilityStatus`,`status`) |
+| `accessLinks`         | `weddingId`, subject type/ID, `tokenHash`, optional encrypted secret/key version, status                                                   | unique token hash; tenant/subject lookups                                                            |
+| `portalSessions`      | `linkId`, `sessionTokenHash`, expiry                                                                                                       | unique verifier hash; TTL                                                                            |
+| `photos`              | `weddingId`, `functionId`, uploader ref/type, `storageKey`, bytes, mime, `uploadState`                                                     | (`weddingId`,`functionId`,`uploadState`,`visibleAt`)                                                 |
+| `emailOutbox`         | `weddingId?`, recipient, safe references/template data, `status`, `sendAfter`, attempts, `dedupeKey`, lease                                | unique dedupe key; (`status`,`sendAfter`,`leaseUntil`)                                               |
+| `emailWebhookEvents`  | provider event ID, type, timestamps                                                                                                        | unique provider event ID when webhooks are enabled                                                   |
+| `rateLimitWindows`    | key hash, window start, count, expiry                                                                                                      | unique key/window; TTL                                                                               |
+| `serviceUsage`        | service, scope, period and quota counts                                                                                                    | unique service/scope/period                                                                          |
+| `idempotencyRecords`  | principal, operation, key, request hash, expiry                                                                                            | unique principal/operation/key; TTL                                                                  |
+| `auditEvents`         | `weddingId`, actor, action, objectRef, createdAt, safe metadata                                                                            | (`weddingId`,`createdAt`)                                                                            |
 
-**Modeling rules:** Keep function invitations, tasks, photos and payments as referenced collections (not infinitely growing embedded wedding arrays). Use small embedding only for bounded fields such as venue or configured schedule labels if appropriate. Enforce ref-to-tenant matching before writes. Where two records must change consistently, use a MongoDB transaction; otherwise use single-document atomic operations with guards.
+**Modeling rules:** This table follows the canonical Database Design collection inventory; reminder deduplication uses `emailOutbox.dedupeKey` and does not create a `reminderHistory` collection. Keep function invitations, tasks, photos and payments as referenced collections. Embed only bounded value objects, including `functions.scheduleItems[]`. Enforce ref-to-tenant matching before writes. Where two records must change consistently, use a MongoDB transaction; otherwise use single-document atomic operations with guards.
 
-**Money correctness:** `sum(payments.amountMinor)` must not exceed agreed charges unless explicitly supported by business rules; choose rejection/organizer correction in v1. `paidActual = sum(standalonePaidExpenses) + sum(vendorPayments)`; unpaid vendor charges appear only as commitments/outstanding. Negative values, duplicate transaction IDs and invalid currencies are rejected.
+**Money correctness:** Posted `vendorPayments.amountPaise` against a charge must not exceed its agreed `amountPaise`; reject or make an authorized correction. `paidActual = sum(POSTED expenses.amountPaise) + sum(POSTED vendorPayments.amountPaise)`; unpaid vendor charges appear only as outstanding, not actual spending. Negative values, duplicate transaction IDs and invalid currencies are rejected. All same-wedding admins and organizers can see the same financial records; only admins control membership and roles.
 
 ## 9. REST API resource layout (illustrative)
 
 All routes live under `/api/v1`, use JSON, Zod input validation, consistent errors (`code`, `message`, `requestId`, optional `details`), and do not expose Mongoose raw documents.
 
-| Method/path | Identity | Purpose |
-|---|---|---|
-| `POST /auth/register`, `/auth/login`, `/auth/logout` | Public/management | Custom signup/login/logout; rate limited |
-| `POST /auth/password-reset/request`, `/confirm` | Public | Recovery token flow |
-| `POST /weddings`, `GET/PATCH /wedding` | Management | Create/read/update own wedding |
-| `POST/GET /members/invitations`, `POST /members/redeem` | Admin/redemption | Invite and join management |
-| `GET /members`, `PATCH/DELETE /members/{id}` | Admin | Membership role and revocation |
-| `GET/POST /functions`, `GET/PATCH/DELETE /functions/{id}` | Management | Function CRUD, schedule/venue nested resources |
-| `GET/POST /tasks`, `PATCH /tasks/{id}`, `POST /tasks/{id}/comments` | Management | Task + comment workflows |
-| `GET/POST /expenses`, `GET/POST /vendor-charges`, `POST /vendor-charges/{id}/payments` | Management | Finance records and totals |
-| `GET/POST /vendors`, `PATCH /vendors/{id}`, `POST /vendors/{id}/access/rotate` | Management | Vendor directory and private links |
-| `POST /vendors/search-nearby`, `POST /vendors/search-text` | Management | Google Places proxy with quotas/attribution |
-| `GET/POST /guests`, `PATCH /guests/{id}`, `POST /guests/{id}/access/rotate` | Management | Guest records and link generation |
-| `GET /rsvps/summary`, `PATCH /rsvps/{id}` | Management | Summaries/organizer overrides |
-| `POST /invitations/send`, `POST /reminders/send`, `GET /emails/status` | Management | Resend queue and follow-up |
-| `GET/PATCH /settings` | Management | Wedding/invitation/reminder settings, role restrictions |
-| `GET /guest/functions`, `PUT /guest/rsvp/{functionInvitationId}` | Guest capability | Only eligible function data and RSVP |
-| `GET /vendor/me`, `PATCH /vendor/tasks/{id}/complete` | Vendor capability | Own assignments and task completion |
-| `POST /media/upload-intents`, `POST /media/finalize`, `GET /media`, `GET /media/{id}/read-url` | Role/capability | Protected photo workflow |
-| `DELETE /media/{id}`, `PATCH /media/{id}/function` | Management | Delete / retag image |
-| `GET /internal/cron/daily` | Cron secret only | Daily reminders and outbox drain |
+| Method/path                                                                                               | Identity                | Purpose                                                                             |
+| --------------------------------------------------------------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------- |
+| `POST /auth/register`, `/auth/login`, `/auth/logout`                                                      | Public/management       | Custom signup/login/logout; rate limited                                            |
+| `POST /auth/password-reset/request`, `/confirm`                                                           | Public                  | Recovery token flow                                                                 |
+| `GET/POST /weddings`, `GET/PATCH /wedding`                                                                | Management              | List/create weddings; explicit validated context for selected-wedding reads/updates |
+| `POST/GET /member-invitations`, `POST /member-invitations/redeem`, `POST /member-invitations/{id}/reveal` | Scoped admin/redemption | Manual/email invitations, controlled reveal and joining additional weddings         |
+| `GET /members`, `PATCH/DELETE /members/{id}`                                                              | Admin                   | Membership role and revocation                                                      |
+| `GET/POST /functions`, `GET/PATCH/DELETE /functions/{id}`                                                 | Management              | Function CRUD, schedule/venue nested resources                                      |
+| `GET/POST /tasks`, `PATCH /tasks/{id}`, `POST /tasks/{id}/comments`                                       | Management              | Task + comment workflows                                                            |
+| `GET/POST /expenses`, `GET/POST /vendor-charges`, `POST /vendor-charges/{id}/payments`                    | Management              | Finance records and totals                                                          |
+| `GET/POST /vendors`, `PATCH /vendors/{id}`, `POST /vendors/{id}/access/rotate`                            | Management              | Vendor directory and private links                                                  |
+| `POST /vendors/search-nearby`, `POST /vendors/search-text`                                                | Management              | Google Places proxy with quotas/attribution                                         |
+| `GET/POST /guests`, `PATCH /guests/{id}`, `POST /guests/{id}/access/rotate`                               | Management              | Guest records and link generation                                                   |
+| `GET /rsvps/summary`, `PATCH /rsvps/{id}`                                                                 | Management              | Summaries/organizer overrides                                                       |
+| `POST /invitations/send`, `POST /reminders/send`, `GET /emails/status`                                    | Management              | Resend queue and follow-up                                                          |
+| `GET/PATCH /settings`                                                                                     | Management              | Wedding/invitation/reminder settings, role restrictions                             |
+| `GET /guest/functions`, `PUT /guest/rsvp/{functionInvitationId}`                                          | Guest capability        | Only eligible function data and RSVP                                                |
+| `GET /vendor/me`, `PATCH /vendor/tasks/{id}/complete`                                                     | Vendor capability       | Own assignments and task completion                                                 |
+| `POST /media/upload-intents`, `POST /media/finalize`, `GET /media`, `GET /media/{id}/read-url`            | Role/capability         | Protected photo workflow                                                            |
+| `DELETE /media/{id}`, `PATCH /media/{id}/function`                                                        | Management              | Delete / retag image                                                                |
+| `GET /internal/cron/daily`                                                                                | Cron secret only        | Daily reminders and outbox drain                                                    |
 
 Tokens should be exchanged at `/invite/{token}` and `/vendor/{token}` pages, not passed as permanent path parameters to all operational APIs. Every route uses centralized rate limits and access guards.
 
@@ -224,7 +236,7 @@ Tokens should be exchanged at `/invite/{token}` and `/vendor/{token}` pages, not
 
 ### 11.1 Design
 
-`emailOutbox` is a durable queue in MongoDB, not a separate broker. A row includes `dedupeKey`, recipient, invitation/reminder type, safe template data, nextAttemptAt, state, attempts, `leaseOwner`, `leaseUntil`, providerMessageId and error category. Job processing atomically claims pending jobs whose due time has arrived; short leases and idempotency prevent concurrent execution from sending duplicates. Exact once-only delivery cannot be guaranteed across external API/network failures; system targets **at-least-once processing with strong duplicate suppression**.
+`emailOutbox` is a durable queue in MongoDB, not a separate broker. A row includes `dedupeKey`, recipient, invitation/reminder type, safe template data and link reference without plaintext URL, `sendAfter`, `status`, `attemptCount`, `claimedBy`, `leaseUntil`, `providerMessageId` and safe error code. Job processing atomically claims pending jobs whose due time has arrived; short leases and idempotency prevent concurrent execution from sending duplicates. Exact once-only delivery cannot be guaranteed across external API/network failures; system targets **at-least-once processing with strong duplicate suppression**.
 
 ### 11.2 Immediate invitation path
 
@@ -236,14 +248,14 @@ Tokens should be exchanged at `/invite/{token}` and `/vendor/{token}` pages, not
 ### 11.3 Vercel Cron daily path
 
 - A single daily cron endpoint authenticated using a strong `CRON_SECRET` bearer header runs reminder eligibility checks and drains due email jobs within a bounded time/quantity.
-- Determine eligible reminders using the wedding timezone, function invitation's pending state, deadline, active link, email present, opt-out status and reminder dedupe window. Auto-reminders default disabled.
+- Determine eligible reminders using the wedding timezone, function invitation's `ACTIVE` eligibility and `PENDING` RSVP, effective deadline, active link, email present, opt-out status and reminder dedupe window. Auto-reminders default disabled.
 - Job creation and claiming are atomic/idempotent; abort sending when Resend account-wide allowance or per-wedding cap is reached. Delayed messages do not count as sent.
 - Vercel Hobby supports **once-daily Cron with roughly hourly precision**, so reminders cannot promise exact send times. If reminders are overdue or deadline has passed by actual processing time, skip appropriately.
 - A daily job run may not clear a 200-recipient backlog immediately on Resend Free (100 per day); display queue position/status, preserve pending messages and communicate expected daily throughput without promising delivery timing.
 
 ### 11.4 Delivery states and failures
 
-`QUEUED -> PROCESSING -> PROVIDER_ACCEPTED -> DELIVERED (if provider reports)` or `RETRY_DUE / FAILED / SUPPRESSED`. Record attempts; use limited exponential backoff and jitter; validate Resend response/webhook signatures if webhooks are configured. Do not automatically retry permanently invalid addresses or unsubscribed recipients. Protect transactional mail sender reputation and avoid duplicating manual reminders too frequently.
+The only persisted statuses are `QUEUED`, `PROCESSING`, `SENT`, `DELIVERED`, `FAILED`, `BOUNCED`, and `CANCELLED`. A successful provider acceptance moves `PROCESSING -> SENT`; `SENT` is not proof of delivery. Only confirmed provider delivery moves to `DELIVERED`. Retryable failures use `FAILED` with a future `sendAfter` or atomically return to `QUEUED`; suppressed or revoked sends use `CANCELLED`. Record attempts, use bounded backoff, and verify webhook signatures if configured. Do not automatically retry permanently invalid addresses or unsubscribed recipients. Exact retention and quotas are configurable and finalized before production.
 
 ## 12. Private Cloudflare R2 media workflow (no manual moderation)
 
@@ -261,17 +273,17 @@ Tokens should be exchanged at `/invite/{token}` and `/vendor/{token}` pages, not
 
 Use MongoDB atomic per-window counters (e.g. `findOneAndUpdate` with unique scope/key/window and `$inc`), TTL cleanup, and expiry checked directly. A single Vercel instance's memory is **not** a shared rate-limit store. Route-level middleware can do cheap prechecks, but the service/route handler must enforce final authorization and limits.
 
-| Risk surface | Suggested starting controls (tune by testing) |
-|---|---|
-| Signup / login | IP + normalized email limits, generic responses, progressively slower after failures |
-| Password reset / member invites | Per IP/account/wedding cooldowns, one-use tokens |
-| Guest link exchange | IP and credential-ID throttles, 404/410 without information leakage |
-| RSVP writes | Per guest link + function; e.g. no more than 12 mutations/hour |
-| Vendor task completion | Per vendor link, idempotent completion, low write cap |
-| Photo upload intents | Per token + per wedding daily quotas, max size, per-file validation |
-| Google Places search | Admin-only; per user/wedding and platform caps, strict field masks |
-| Email send | Per wedding and global Resend allowance, queue depth and cooldown checks |
-| Cron endpoint | Bearer secret, one-at-a-time lock, request/method checks |
+| Risk surface                    | Suggested starting controls (tune by testing)                                        |
+| ------------------------------- | ------------------------------------------------------------------------------------ |
+| Signup / login                  | IP + normalized email limits, generic responses, progressively slower after failures |
+| Password reset / member invites | Per IP/account/wedding cooldowns, one-use tokens                                     |
+| Guest link exchange             | IP and credential-ID throttles, 404/410 without information leakage                  |
+| RSVP writes                     | Per guest link + function; e.g. no more than 12 mutations/hour                       |
+| Vendor task completion          | Per vendor link, idempotent completion, low write cap                                |
+| Photo upload intents            | Per token + per wedding daily quotas, max size, per-file validation                  |
+| Google Places search            | Admin-only; per user/wedding and platform caps, strict field masks                   |
+| Email send                      | Per wedding and global Resend allowance, queue depth and cooldown checks             |
+| Cron endpoint                   | Bearer secret, one-at-a-time lock, request/method checks                             |
 
 Apply security headers, secure cookie policies, careful input encoding and output escaping. Use CSRF protection on unsafe cookie-authenticated requests. Monitor severe repeated failures through structured logs without logging secrets.
 
@@ -296,34 +308,34 @@ Apply security headers, secure cookie policies, careful input encoding and outpu
 
 ## 15. Reliability and failure scenarios
 
-| Failure | Expected behavior |
-|---|---|
-| MongoDB unavailable | Return friendly error; do not claim RSVP/payment saved; logs identify safe incident code |
-| Duplicate RSVP submission | Idempotent update with authorized invitation and deadline checks |
-| Concurrent financial edits | Atomic version checks / transaction for related charge/payment; safe retry/conflict UI |
-| Duplicate cron invocation | Global cron lease, idempotent job creation and atomic claims |
-| Resend quota exhausted | Hold queued mail until next allowance; show queued status and do not mark sent |
-| Invalid email / provider outage | Mark retry or permanent failure; organizer sees status |
-| Google billing/API unavailable | Show unavailable and allow manual vendor registration; do not retry aggressively |
-| R2 upload abandoned | Temporary object cleanup; gallery remains clean |
-| R2 validation fails | Remove/quarantine media; do not publish; notify uploader |
-| R2 private signed GET forwarded | Remains usable only until short expiry; revoke future issuance |
-| Guest/vendor link stolen | Admin rotates link; reject old access sessions; audit revocation |
-| Duplicate function invitation | Unique index prevents duplicate recipient-function RSVP records |
+| Failure                            | Expected behavior                                                                                                                 |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| MongoDB unavailable                | Return friendly error; do not claim RSVP/payment saved; logs identify safe incident code                                          |
+| Duplicate RSVP submission          | Idempotent update with authorized invitation and deadline checks                                                                  |
+| Concurrent financial edits         | Atomic version checks / transaction for related charge/payment; safe retry/conflict UI                                            |
+| Duplicate cron invocation          | Global cron lease, idempotent job creation and atomic claims                                                                      |
+| Resend quota exhausted             | Hold queued mail until next allowance; show queued status and do not mark sent                                                    |
+| Invalid email / provider outage    | Mark retry or permanent failure; organizer sees status                                                                            |
+| Google billing/API unavailable     | Show unavailable and allow manual vendor registration; do not retry aggressively                                                  |
+| R2 upload abandoned                | Temporary object cleanup; gallery remains clean                                                                                   |
+| R2 validation fails                | Remove/quarantine media; do not publish; notify uploader                                                                          |
+| R2 private signed GET forwarded    | Remains usable only until short expiry; revoke future issuance                                                                    |
+| Guest/vendor link stolen           | Admin rotates link; reject old access sessions; audit revocation                                                                  |
+| Duplicate function invitation      | Unique index prevents duplicate recipient-function RSVP records                                                                   |
 | Account's unverified email misused | No email-only tenant joining or automatic account linking; sensitive recovery demands mailbox proof or controlled admin procedure |
 
 ## 16. Test plan and six-phase implementation mapping
 
 **Testing stack suggestion:** Vitest (domain/service logic), API integration tests using isolated test database, Playwright (critical browser flows). Include Zod validation tests, custom-auth threat cases, cross-tenant fixture pairs, duplicate-delivery and photo-permission regressions. Avoid API keys in automated tests; mock external providers by contract.
 
-| Phase | Architecture work and test gates |
-|---|---|
-| **P1 — Foundation** | Next.js monolith, Mongoose, sessions/custom auth, role membership, wedding tenant context, wedding/functions, Zod, baseline rate limiting; auth/tenant tests |
-| **P2 — Organizer & vendors** | Tasks, expenses/payments, vendor restricted tokens, Places backend adapter and search UI, quotas and attribution; financial and cross-tenant/vendor tests |
-| **P3 — Guests & RSVP** | Guest capability exchange, invitation/function records, RSVP writes and deadline/limit checks, mobile portal; negative token/permission tests |
-| **P4 — Email & cron** | Resend outbox, immediate small batches, once-daily cron, manual/auto reminders and settings; retry/idempotency/quota tests |
-| **P5 — Photos & UI** | R2 presigned upload/read, client compression and finalization validation, instant gallery, organizer delete/retag, themes and YouTube; media privacy tests |
-| **P6 — Production** | Threat model review, performance tests, backup-restore drill, failure drills, secrets audits, staged deployment and public release gates |
+| Phase                        | Architecture work and test gates                                                                                                                                                                            |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **P1 — Foundation**          | Next.js monolith, Mongoose, custom auth, multiple memberships, per-tab wedding context, manual/email code reveal, scoped revocation, wedding/functions and migration; auth/tenant/context/concurrency tests |
+| **P2 — Organizer & vendors** | Tasks, expenses/payments, vendor restricted tokens, Places backend adapter and search UI, quotas and attribution; financial and cross-tenant/vendor tests                                                   |
+| **P3 — Guests & RSVP**       | Guest capability exchange, invitation/function records, RSVP writes and deadline/limit checks, mobile portal; negative token/permission tests                                                               |
+| **P4 — Email & cron**        | Resend outbox, immediate small batches, once-daily cron, manual/auto reminders and settings; retry/idempotency/quota tests                                                                                  |
+| **P5 — Photos & UI**         | R2 presigned upload/read, client compression and finalization validation, instant gallery, organizer delete/retag, themes and YouTube; media privacy tests                                                  |
+| **P6 — Production**          | Threat model review, performance tests, backup-restore drill, failure drills, secrets audits, staged deployment and public release gates                                                                    |
 
 ### Minimum production readiness gate
 
@@ -337,17 +349,21 @@ Apply security headers, secure cookie policies, careful input encoding and outpu
 
 ## 17. Decision record and implementation assumptions
 
-| ADR | Decision | Status |
-|---|---|---|
-| ADR-001 | Modular monolith: one Next.js/Node.js deployment; REST handlers | Chosen |
-| ADR-002 | MongoDB Atlas + Mongoose, Zod validation | Chosen |
-| ADR-003 | Custom email/password; no auth provider, OAuth or signup email verification | Chosen |
-| ADR-004 | Secure DB-backed opaque management sessions; capability links for guests/vendors | Chosen; implementation policy described above |
-| ADR-005 | Multi-tenant wedding ownership, one wedding per member in v1 | Chosen |
-| ADR-006 | Resend + MongoDB outbox + bounded immediate batches + Vercel daily cron | Chosen |
-| ADR-007 | Cloudflare R2 private compressed images, no manual photo moderation | Chosen |
-| ADR-008 | Google Places (New) vendor discovery, no booking, billing/quota/policy controls | Chosen |
-| ADR-009 | Only basic application logs and durable audit trail | Chosen |
-| ADR-010 | Per-function RSVP deadline, upload permission toggles, link exchange cookies, and baseline rate thresholds | Proposed technical defaults; can adjust without changing product scope |
+| ADR     | Decision                                                                                                                                                          | Status                                                                              |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| ADR-001 | Modular monolith: one Next.js/Node.js deployment; REST handlers                                                                                                   | Chosen                                                                              |
+| ADR-002 | MongoDB Atlas + Mongoose, Zod validation                                                                                                                          | Chosen                                                                              |
+| ADR-003 | Custom email/password; no auth provider, OAuth or signup email verification                                                                                       | Chosen                                                                              |
+| ADR-004 | Secure DB-backed opaque management sessions; capability links for guests/vendors                                                                                  | Chosen; implementation policy described above                                       |
+| ADR-005 | Multiple wedding memberships per account; explicit per-tab wedding context, exact membership validation and independent roles                                     | Implemented 12 November 2026                                                        |
+| ADR-006 | Resend + MongoDB outbox + bounded immediate batches + Vercel daily cron                                                                                           | Chosen                                                                              |
+| ADR-007 | Cloudflare R2 private compressed images, no manual photo moderation                                                                                               | Chosen                                                                              |
+| ADR-008 | Google Places (New) vendor discovery, no booking, billing/quota/policy controls                                                                                   | Chosen                                                                              |
+| ADR-009 | Only basic application logs and durable audit trail                                                                                                               | Chosen                                                                              |
+| ADR-010 | Function-default RSVP deadline with optional invitation override and audited organizer correction; independent invitation eligibility; embedded function schedule | Approved implementation decisions                                                   |
+| ADR-011 | Hash private link tokens for lookup; keep AES-256-GCM encrypted, versioned recoverable secret for existing-URL resend, with keys outside MongoDB                  | Approved implementation decision                                                    |
+| ADR-012 | Management invitation codes support manual delivery and optional email; admin-only reveal retains encrypted code for its active lifetime                          | Implemented 12 November 2026; supersedes email-only/pending-delivery-only retention |
+
+Exact retention periods, photo/storage and email quotas, signed URL lifetimes, and rate thresholds remain configurable operational defaults to settle in their relevant phase before production. The last-admin rule and tenant isolation are binding; their concurrency and query implementations must be tested in Phase 1.
 
 **End of System Design & Architecture — Make My Event v1.0**

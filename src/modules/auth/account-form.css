@@ -1,0 +1,57 @@
+.account-panel {
+  animation: account-enter 220ms ease-out both;
+}
+.account-page input {
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+  min-width: 0;
+}
+.account-page input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.account-page input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+.account-page button {
+  transition:
+    background-color 150ms ease,
+    opacity 150ms ease;
+  cursor: pointer;
+}
+.account-page button:disabled {
+  cursor: wait;
+}
+.account-page button[type="submit"]:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+.account-page a:focus-visible,
+.account-page button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+.field-error {
+  color: var(--color-danger);
+  font-size: 14px;
+  line-height: 1.5;
+}
+@keyframes account-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .account-panel {
+    animation: none;
+  }
+  .account-page input,
+  .account-page button {
+    transition: none;
+  }
+}

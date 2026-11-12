@@ -1,0 +1,18 @@
+:root {
+  --color-canvas: #f7f5f0;
+  --color-surface: #ffffff;
+  --color-surface-muted: #dfe4dc;
+  --color-text: #202a29;
+  --color-text-muted: #5a6664;
+  --color-primary: #28594f;
+  --color-primary-hover: #1e433b;
+  --color-accent: #b98265;
+  --color-accent-text: #825339;
+  --color-border: #e6e4dc;
+  --color-border-strong: #d5d3cb;
+  --color-success: #2d7a5d;
+  --color-warning: #c88228;
+  --color-danger: #b53d35;
+  --font-interface: var(--font-manrope), Arial, Helvetica, sans-serif;
+  --font-editorial: var(--font-newsreader), Georgia, "Times New Roman", serif;
+}

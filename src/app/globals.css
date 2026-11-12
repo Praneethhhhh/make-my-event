@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+html {
+  background: var(--color-canvas);
+}
+
+body {
+  color: var(--color-text);
+  font-family: var(--font-interface);
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}

@@ -1,0 +1,17 @@
+node_modules/
+.pnpm-store/
+.next/
+.vercel/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+.env*
+!.env.example
+*.log
+!.gitignore
+
+# Local browser test output
+/test-results/
+/playwright-report/
+/.local-backups/
