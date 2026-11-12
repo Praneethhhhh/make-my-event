@@ -1,4 +1,4 @@
-import { WeddingSetup } from "@/modules/weddings/wedding-setup";
-export default function WeddingDetailsPage() {
-  return <WeddingSetup editing />;
+import { redirect } from "next/navigation";
+export default function Page() {
+  redirect("/weddings");
 }

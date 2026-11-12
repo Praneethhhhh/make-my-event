@@ -3,6 +3,7 @@ import {
   failure,
   reply,
   sessionCookieName,
+  validMutation,
 } from "@/modules/auth/auth-http";
 import { currentUser } from "@/modules/auth/registration-service";
 import { membershipForUser } from "./wedding-service";
@@ -11,23 +12,31 @@ import mongoose from "mongoose";
 import { createHash } from "node:crypto";
 import { WeddingScheduleError } from "./schedule-error";
 import { StaleWeddingScheduleError } from "./stale-schedule-error";
+import { WeddingAccessError } from "./wedding-access";
 
 export async function manager(request: Request, mutate = false) {
   if (mutate) {
-    const origin = process.env.APP_ORIGIN || new URL(request.url).origin;
-    const token = cookieValue(request, "mme_csrf");
-    if (
-      request.headers.get("origin") !== origin ||
-      !/^[a-f0-9]{64}$/.test(token) ||
-      request.headers.get("x-csrf-token") !== token
-    )
+    if (!validMutation(request))
       return failure(403, "CSRF_INVALID", "Refresh the page and try again.");
   }
   const user = await currentUser(cookieValue(request, sessionCookieName));
   if (!user) return failure(401, "AUTH_REQUIRED", "Please sign in.");
-  const membership = await membershipForUser(user.id);
+  const weddingId = request.headers.get("x-wedding-id");
+  if (!weddingId)
+    return failure(
+      400,
+      "WEDDING_CONTEXT_REQUIRED",
+      "Choose a wedding to continue.",
+    );
+  if (!/^[a-f0-9]{24}$/.test(weddingId))
+    return failure(400, "VALIDATION_ERROR", "Invalid wedding selection.");
+  const membership = await membershipForUser(user.id, weddingId);
   if (!membership)
-    return failure(404, "WEDDING_REQUIRED", "Create your wedding to continue.");
+    return failure(
+      404,
+      "RESOURCE_NOT_FOUND",
+      "This wedding is unavailable or your access has changed. Return to Your weddings.",
+    );
   if (mutate) {
     const windowMs = 15 * 60 * 1000;
     const now = Date.now();
@@ -119,6 +128,8 @@ export async function input<T>(request: Request, schema: z.ZodType<T>) {
 }
 
 export function unavailable(error?: unknown) {
+  if (error instanceof WeddingAccessError)
+    return failure(404, "RESOURCE_NOT_FOUND", error.message);
   if (error instanceof StaleWeddingScheduleError)
     return reply(409, {
       error: {

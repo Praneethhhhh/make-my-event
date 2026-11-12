@@ -1,3 +1,4 @@
+import { scopedGet, weddingRoute } from "../../auth/tests/fixtures";
 import { test, expect } from "../../auth/tests/fixtures";
 import { ceremony, onboard, profile, write } from "./fixtures";
 
@@ -41,7 +42,7 @@ test("create and edit reject a stale wedding revision without changing functions
   expect((await database.collection("functions").findOne({}))!.revision).toBe(
     1,
   );
-  const missing = await request.get("/api/v1/wedding");
+  const missing = await scopedGet(request, "/api/v1/wedding");
   expect(missing.status()).toBe(200);
 });
 
@@ -52,12 +53,12 @@ for (const width of [390, 1440]) {
   }) => {
     await page.setViewportSize({ width, height: 900 });
     await onboard(page.request);
-    await page.goto("/wedding/functions");
+    await page.goto(await weddingRoute(page.request, "functions"));
     await page.getByLabel("Function name").fill("Family ceremony");
     await page.getByRole("radio", { name: "Rose", exact: true }).check();
     await page.getByLabel("Start date and time").fill("2027-02-19T10:00");
     const other = await page.context().newPage();
-    await other.goto("/wedding/details");
+    await other.goto(await weddingRoute(other.request, "details"));
     await other.getByLabel("Wedding time zone").fill("America/New_York");
     await other
       .getByRole("button", { name: "Save changes", exact: true })

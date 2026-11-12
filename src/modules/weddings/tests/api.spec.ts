@@ -1,3 +1,9 @@
+import { scopedGet } from "../../auth/tests/fixtures";
+import {
+  creationKey,
+  selectWedding,
+  scopeHeaders,
+} from "../../auth/tests/fixtures";
 import {
   account,
   expect,
@@ -19,13 +25,17 @@ const wedding = {
 
 async function create(api: APIRequestContext, data: unknown = wedding) {
   const csrf = await api.get("/api/v1/auth/csrf");
-  return api.post("/api/v1/weddings", {
+  const response = await api.post("/api/v1/weddings", {
     headers: {
       Origin: origin,
+      "Idempotency-Key": creationKey(api),
       "X-CSRF-Token": (await csrf.json()).data.token,
     },
     data,
   });
+  if (response.ok())
+    selectWedding(api, (await response.json()).data.wedding.id);
+  return response;
 }
 
 test("creates one wedding and its first administrator atomically", async ({
@@ -71,11 +81,8 @@ test("creates one wedding and its first administrator atomically", async ({
     status: "ACTIVE",
   });
   const me = await (await request.get("/api/v1/auth/me")).json();
-  expect(me.data.membership).toEqual({
-    weddingId: storedWedding!._id.toHexString(),
-    role: "ADMIN",
-  });
-  const current = await request.get("/api/v1/wedding");
+  expect(me.data.weddingCount).toBe(1);
+  const current = await scopedGet(request, "/api/v1/wedding");
   expect(current.status()).toBe(200);
   expect((await current.json()).data.role).toBe("ADMIN");
 });
@@ -143,7 +150,11 @@ test("wedding creation and editing persist correct midnight-gap boundaries", asy
   expect(stored!.endsAt.toISOString()).toBe("2018-11-05T01:59:59.999Z");
   const csrf = await request.get("/api/v1/auth/csrf");
   const edited = await request.patch("/api/v1/wedding", {
-    headers: { Origin: origin, "X-CSRF-Token": (await csrf.json()).data.token },
+    headers: {
+      ...(await scopeHeaders(request)),
+      Origin: origin,
+      "X-CSRF-Token": (await csrf.json()).data.token,
+    },
     data: {
       ...wedding,
       startsOn: "2018-11-03",
@@ -164,7 +175,7 @@ test("concurrent submissions cannot create duplicate memberships or orphan weddi
   await mutation(request, "register", account);
   const responses = await Promise.all([create(request), create(request)]);
   expect(responses.map((response) => response.status()).sort()).toEqual([
-    201, 409,
+    201, 201,
   ]);
   expect(await database.collection("weddings").countDocuments()).toBe(1);
   expect(await database.collection("weddingMemberships").countDocuments()).toBe(

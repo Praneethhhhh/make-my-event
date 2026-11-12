@@ -1,10 +1,4 @@
-import {
-  cookieValue,
-  failure,
-  reply,
-  sessionCookieName,
-} from "@/modules/auth/auth-http";
-import { currentUser } from "@/modules/auth/registration-service";
+import { failure, reply } from "@/modules/auth/auth-http";
 import { currentWedding } from "@/modules/weddings/wedding-service";
 import { updateWedding } from "@/modules/weddings/wedding-service";
 import {
@@ -25,7 +19,12 @@ export async function PATCH(request: Request) {
     );
     if (parsed instanceof Response) return parsed;
     const { revision, ...profile } = parsed;
-    const wedding = await updateWedding(auth.weddingId, profile, revision);
+    const wedding = await updateWedding(
+      auth.weddingId,
+      profile,
+      revision,
+      auth.userId,
+    );
     return wedding
       ? reply(200, { data: { wedding } })
       : failure(
@@ -40,9 +39,9 @@ export async function PATCH(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const user = await currentUser(cookieValue(request, sessionCookieName));
-    if (!user) return failure(401, "AUTH_REQUIRED", "Please sign in.");
-    const result = await currentWedding(user.id);
+    const auth = await manager(request);
+    if (auth instanceof Response) return auth;
+    const result = await currentWedding(auth.userId, auth.weddingId);
     return result
       ? reply(200, { data: result })
       : failure(404, "WEDDING_REQUIRED", "Create your wedding to continue.");

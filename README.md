@@ -1,6 +1,10 @@
 # Make My Event
 
-Make My Event is a responsive wedding and event organizer for individuals and families. This repository currently contains the project design documents and a minimal Next.js application shell. Product features will be developed incrementally across the six phases in [the PRD](docs/PRD.md).
+Make My Event is a responsive wedding and event organizer for individuals and families. The application includes authentication, multiple wedding memberships, wedding setup/details, functions and organizing-team invitations by manual code or optional email. See [project status](docs/PROJECT_STATUS.md) for implemented behavior and verification, and [the PRD](docs/PRD.md) for the six-phase product scope.
+
+After sign-in, open `/weddings` to create, join or select a wedding. Management pages use `/weddings/{weddingId}/...`; role/access checks use that exact wedding. Team admins can generate a manual invitation without Resend setup, reveal/copy its active code and share it with the intended recipient. Joining is available even when the account belongs to other weddings. See [the feature contract and migration plan](docs/MULTI_WEDDING_AND_INVITATION_CODES_PLAN.md).
+
+For an existing pre-multi-wedding database, stop old app writers first and run `node scripts/migrate-multi-wedding.mjs` to inspect, then `node scripts/migrate-multi-wedding.mjs --apply` for the guarded migration before restarting the new version. It creates an ignored private EJSON/gzip snapshot in `.local-backups/`, preserves records, removes only the recognized old unique active-user index and migrates recoverable invitation ciphertext. Keep the invitation encryption secret stable. Never commit/share backups. After multiple memberships exist, do not roll back to the old index/app without deliberate reconciliation. Manual invitation mode needs `INVITATION_CODE_SECRET`, but no Resend credentials or verified domain; actual email still requires a valid Resend sender.
 
 ## Local setup
 
@@ -14,6 +18,8 @@ pnpm dev
 ```
 
 Open the URL printed by Next.js (normally `http://localhost:3000`). The scaffold homepage needs no environment variables or external service accounts. `.env.example` will gain documented placeholders as integrations are implemented; put real values in an ignored local `.env.local` file.
+
+Local development uses Webpack (`next dev --webpack`) to avoid repeated Turbopack rebuilds/reloads observed on the Windows G: workspace. Production builds retain the existing `pnpm build` command.
 
 ## Checks
 

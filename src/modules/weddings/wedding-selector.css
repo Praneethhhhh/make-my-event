@@ -1,0 +1,146 @@
+.wedding-selector {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 24px;
+}
+.selector-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.selector-heading h1 {
+  font-family: var(--font-editorial);
+  font-size: 40px;
+  margin: 8px 0;
+}
+.selector-heading p {
+  color: var(--color-text-muted);
+}
+.selector-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.selector-search {
+  margin: 32px 0;
+}
+.selector-search label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.selector-search > div {
+  display: flex;
+  gap: 12px;
+}
+.selector-search input {
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  padding: 12px;
+  background: white;
+  max-width: 480px;
+  width: 100%;
+  min-width: 0;
+}
+.wedding-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.wedding-choice-card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: white;
+  padding: 24px;
+  overflow-wrap: anywhere;
+}
+.wedding-choice-card h2 {
+  font-size: 24px;
+  margin: 16px 0;
+}
+.wedding-choice-card p {
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+.wedding-switcher {
+  position: relative;
+  margin-left: auto;
+  max-width: min(360px, 100%);
+}
+.wedding-switcher summary {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+.wedding-switcher nav {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  max-height: 60dvh;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 24px #202a291a;
+}
+.wedding-switcher a {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+.wedding-switcher a[aria-current="page"] {
+  background: var(--color-surface-muted);
+}
+.wedding-switcher small {
+  display: block;
+  color: var(--color-text-muted);
+}
+.wedding-header {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.wedding-page .wedding-header {
+  height: auto;
+  min-height: 72px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.wedding-page a.primary-action,
+.wedding-page a.secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .wedding-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .wedding-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wedding-selector {
+    padding: 24px 16px;
+  }
+  .selector-heading h1 {
+    font-size: 32px;
+  }
+  .wedding-switcher {
+    order: 3;
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}

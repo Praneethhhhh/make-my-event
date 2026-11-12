@@ -27,17 +27,16 @@ for (const width of [390, 1440]) {
       await page
         .getByRole("button", { name: "Create account", exact: true })
         .click();
+      await expect(page).toHaveURL(/\/weddings$/);
       await expect(
-        page.getByRole("heading", { name: "Welcome, Test Family" }),
+        page.getByRole("heading", { name: "Your weddings" }),
       ).toBeVisible();
       await page.reload();
       await expect(
-        page.getByRole("heading", { name: "Welcome, Test Family" }),
+        page.getByRole("heading", { name: "Your weddings" }),
       ).toBeVisible();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
-      await page
-        .getByRole("link", { name: "Already registered? Sign in" })
-        .click();
+      await page.getByRole("link", { name: "Sign In", exact: true }).click();
       await expect(
         page.getByRole("heading", { name: "Welcome back" }),
       ).toBeVisible();
@@ -60,12 +59,13 @@ for (const width of [390, 1440]) {
       );
       await page.getByLabel("Password", { exact: true }).fill(account.password);
       await page.getByRole("button", { name: "Sign in", exact: true }).click();
+      await expect(page).toHaveURL(/\/weddings$/);
       await expect(
-        page.getByRole("heading", { name: "Welcome, Test Family" }),
+        page.getByRole("heading", { name: "Your weddings" }),
       ).toBeVisible();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
       await expect(
-        page.getByRole("heading", { name: "Welcome back" }),
+        page.getByRole("link", { name: "Sign In", exact: true }),
       ).toBeVisible();
       expect(await database.collection("users").countDocuments()).toBe(1);
       expect(

@@ -1,5 +1,4 @@
-import { WeddingCreated } from "@/modules/weddings/wedding-created";
-
-export default function WeddingCreatedPage() {
-  return <WeddingCreated confirmation />;
+import { redirect } from "next/navigation";
+export default function Page() {
+  redirect("/weddings");
 }

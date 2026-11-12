@@ -55,3 +55,20 @@ export function clientSource(request: Request) {
   if (!source) throw new Error("Trusted client address unavailable.");
   return source;
 }
+
+export function validMutation(request: Request) {
+  const url = new URL(request.url);
+  const origins = process.env.APP_ORIGIN
+    ? [process.env.APP_ORIGIN]
+    : process.env.NODE_ENV === "development"
+      ? ["localhost", "127.0.0.1"].map(
+          (host) => `http://${host}${url.port ? `:${url.port}` : ""}`,
+        )
+      : [url.origin];
+  const token = cookieValue(request, "mme_csrf");
+  return (
+    origins.includes(request.headers.get("origin") ?? "") &&
+    /^[a-f0-9]{64}$/.test(token) &&
+    request.headers.get("x-csrf-token") === token
+  );
+}

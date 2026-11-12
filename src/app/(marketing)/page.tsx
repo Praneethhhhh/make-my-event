@@ -1,6 +1,7 @@
 import Link from "next/link";
 import LandingDetails from "./landing-details";
 import "./landing.css";
+import { accountNavigation } from "@/modules/auth/account-navigation";
 
 const schedule = [
   ["Day 1 • 4:00 PM", "Engagement", "Completed"],
@@ -19,10 +20,14 @@ function Brand() {
   );
 }
 
-function EventCreationStatus() {
+function EventCreationStatus({
+  navigation,
+}: {
+  navigation: Awaited<ReturnType<typeof accountNavigation>>;
+}) {
   return (
-    <Link className="landing-button primary" href="/register">
-      Create an account
+    <Link className="landing-button primary" href={navigation.href}>
+      {navigation.label}
     </Link>
   );
 }
@@ -133,7 +138,8 @@ function WeddingPreview() {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const navigation = await accountNavigation();
   return (
     <div className="landing">
       <header className="masthead">
@@ -143,9 +149,17 @@ export default function HomePage() {
             <a href="#features">Features</a>
             <a href="#how-it-works">How It Works</a>
             <a href="#guest-experience">Guest Experience</a>
-            <Link href="/sign-in">Sign In</Link>
           </nav>
-          <EventCreationStatus />
+          <div
+            className={`masthead-account-actions ${navigation.state === "guest" ? "guest-actions" : ""}`}
+          >
+            {navigation.state === "guest" && (
+              <Link className="masthead-sign-in" href="/sign-in">
+                Sign In
+              </Link>
+            )}
+            <EventCreationStatus navigation={navigation} />
+          </div>
         </div>
       </header>
       <main>
@@ -157,7 +171,7 @@ export default function HomePage() {
             RSVPs, and keep track of tasks and payments together.
           </p>
           <div className="hero-actions">
-            <EventCreationStatus />
+            <EventCreationStatus navigation={navigation} />
             <a className="landing-button secondary" href="#features">
               Explore Features
             </a>
@@ -172,7 +186,7 @@ export default function HomePage() {
         <section className="closing">
           <h2>Make room for the moments that matter.</h2>
           <p>Bring everyone planning your wedding together.</p>
-          <EventCreationStatus />
+          <EventCreationStatus navigation={navigation} />
         </section>
       </main>
       <footer className="landing-footer">

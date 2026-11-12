@@ -1,94 +1,113 @@
+import { z } from "zod";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import {
   cookieValue,
+  sessionCookieName,
+  validMutation,
   failure,
   reply,
-  sessionCookieName,
 } from "@/modules/auth/auth-http";
 import { currentUser } from "@/modules/auth/registration-service";
-import { createWedding } from "@/modules/weddings/wedding-service";
+import {
+  createWedding,
+  listWeddings,
+} from "@/modules/weddings/wedding-service";
 import { weddingInput } from "@/modules/weddings/wedding-validation";
-
-export async function POST(request: Request) {
-  const localPort = new URL(request.url).port;
-  const allowedOrigins = process.env.APP_ORIGIN
-    ? [process.env.APP_ORIGIN]
-    : process.env.NODE_ENV === "development"
-      ? ["localhost", "127.0.0.1"].map(
-          (host) => "http://" + host + (localPort ? ":" + localPort : ""),
+import { input, unavailable } from "@/modules/weddings/management-http";
+function signature(value: string, token: string, search = "") {
+  return createHmac("sha256", token)
+    .update(`wedding-cursor:${value}:${search}`)
+    .digest("hex");
+}
+export async function GET(request: Request) {
+  try {
+    const token = cookieValue(request, sessionCookieName);
+    const user = await currentUser(token);
+    if (!user) return failure(401, "AUTH_REQUIRED", "Please sign in.");
+    const parsed = z
+      .strictObject({
+        search: z.string().trim().max(100).default(""),
+        cursor: z.string().max(100).optional(),
+        limit: z.coerce.number().int().min(1).max(100).default(20),
+      })
+      .safeParse(Object.fromEntries(new URL(request.url).searchParams));
+    if (!parsed.success)
+      return failure(
+        422,
+        "VALIDATION_ERROR",
+        "Invalid wedding search or page.",
+      );
+    let after = "";
+    if (parsed.data.cursor) {
+      const [id, mac] = parsed.data.cursor.split(".");
+      if (
+        !id ||
+        !mac ||
+        !/^[a-f0-9]{24}$/.test(id) ||
+        !/^[a-f0-9]{64}$/.test(mac) ||
+        !timingSafeEqual(
+          Buffer.from(mac, "hex"),
+          Buffer.from(signature(id, token, parsed.data.search), "hex"),
         )
-      : [new URL(request.url).origin];
-  const csrf = cookieValue(request, "mme_csrf");
-  if (
-    !allowedOrigins.includes(request.headers.get("origin") ?? "") ||
-    !/^[a-f0-9]{64}$/.test(csrf) ||
-    request.headers.get("x-csrf-token") !== csrf
-  )
-    return failure(403, "CSRF_INVALID", "Refresh the page and try again.");
-  if (!request.headers.get("content-type")?.startsWith("application/json"))
-    return failure(415, "VALIDATION_ERROR", "Expected JSON.");
-
-  let user;
-  try {
-    user = await currentUser(cookieValue(request, sessionCookieName));
-  } catch {
-    return failure(
-      503,
-      "SERVICE_UNAVAILABLE",
-      "Wedding setup is temporarily unavailable. Please try again.",
-    );
-  }
-  if (!user) return failure(401, "AUTH_REQUIRED", "Please sign in.");
-
-  let payload: unknown;
-  try {
-    const reader = request.body?.getReader();
-    const chunks: Uint8Array[] = [];
-    let size = 0;
-    if (!reader) throw new Error();
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      size += value.byteLength;
-      if (size > 16384) {
-        await reader.cancel();
-        return failure(413, "VALIDATION_ERROR", "Request is too large.");
-      }
-      chunks.push(value);
+      )
+        return failure(
+          400,
+          "VALIDATION_ERROR",
+          "This page expired. Refresh your weddings.",
+        );
+      after = id;
     }
-    payload = JSON.parse(Buffer.concat(chunks).toString("utf8"));
-  } catch {
-    return failure(400, "VALIDATION_ERROR", "Invalid request.");
-  }
-  const parsed = weddingInput.safeParse(payload);
-  if (!parsed.success)
-    return reply(422, {
-      error: {
-        code: "VALIDATION_ERROR",
-        message: "Check the highlighted fields and try again.",
-        details: {
-          fields: Object.fromEntries(
-            parsed.error.issues.map((issue) => [
-              issue.path.join("."),
-              issue.message,
-            ]),
-          ),
-        },
+    const result = await listWeddings(
+      user.id,
+      parsed.data.search,
+      after,
+      parsed.data.limit,
+    );
+    const next = result.page.nextCursor;
+    return reply(200, {
+      ...result,
+      page: {
+        ...result.page,
+        nextCursor: next
+          ? `${next}.${signature(next, token, parsed.data.search)}`
+          : null,
       },
     });
+  } catch (error) {
+    return unavailable(error);
+  }
+}
+export async function POST(request: Request) {
   try {
-    const result = await createWedding(user.id, parsed.data);
-    if (result.status === "membership-limit")
+    if (!validMutation(request))
+      return failure(403, "CSRF_INVALID", "Refresh the page and try again.");
+    const user = await currentUser(cookieValue(request, sessionCookieName));
+    if (!user) return failure(401, "AUTH_REQUIRED", "Please sign in.");
+    const key = z.uuid().safeParse(request.headers.get("idempotency-key"));
+    if (!key.success)
+      return failure(
+        422,
+        "VALIDATION_ERROR",
+        "Refresh the wedding form and try again.",
+      );
+    const parsed = await input(request, weddingInput);
+    if (parsed instanceof Response) return parsed;
+    const result = await createWedding(user.id, parsed, key.data);
+    if (result.status === "limited")
+      return failure(
+        429,
+        "RATE_LIMITED",
+        "Too many wedding creation attempts. Please try again later.",
+        { "Retry-After": String(result.retryAfter) },
+      );
+    if (result.status === "idempotency-conflict")
       return failure(
         409,
-        "MEMBERSHIP_LIMIT",
-        "Your account already belongs to a wedding.",
+        "IDEMPOTENCY_CONFLICT",
+        "This creation attempt changed or is no longer available. Start a new wedding form.",
       );
     return reply(201, { data: { wedding: result.wedding } });
-  } catch {
-    return failure(
-      503,
-      "SERVICE_UNAVAILABLE",
-      "Wedding setup is temporarily unavailable. Please try again.",
-    );
+  } catch (error) {
+    return unavailable(error);
   }
 }

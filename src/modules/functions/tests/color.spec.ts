@@ -1,3 +1,4 @@
+import { scopedGet } from "../../auth/tests/fixtures";
 import { test, expect } from "../../auth/tests/fixtures";
 import { onboard, write, ceremony } from "./fixtures";
 
@@ -46,8 +47,8 @@ test("existing colorless records retain the copper accent without a database rew
   await database
     .collection("functions")
     .updateOne({}, { $unset: { color: "" } });
-  const list = (await (await request.get("/api/v1/functions")).json()).data
-    .functions;
+  const list = (await (await scopedGet(request, "/api/v1/functions")).json())
+    .data.functions;
   expect(list[0].color).toBe("copper");
   expect(
     (await database.collection("functions").findOne({}))!.color,

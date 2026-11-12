@@ -1,3 +1,4 @@
+import { scopedGet } from "../../auth/tests/fixtures";
 import { test, expect, origin } from "../../auth/tests/fixtures";
 import { onboard, write, ceremony, profile } from "./fixtures";
 
@@ -63,7 +64,8 @@ test("wedding dates cannot exclude an existing function; archiving permits the c
     ).status(),
   ).toBe(200);
   expect(
-    (await (await request.get("/api/v1/functions")).json()).data.functions,
+    (await (await scopedGet(request, "/api/v1/functions")).json()).data
+      .functions,
   ).toEqual([]);
   expect((await database.collection("functions").findOne({}))!.status).toBe(
     "ARCHIVED",

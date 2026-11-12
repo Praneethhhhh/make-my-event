@@ -1,4 +1,4 @@
-import { FunctionsPage } from "@/modules/functions/functions-page";
+import { redirect } from "next/navigation";
 export default function Page() {
-  return <FunctionsPage />;
+  redirect("/weddings");
 }

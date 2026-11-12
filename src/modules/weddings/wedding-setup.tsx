@@ -1,6 +1,7 @@
 "use client";
+import { useWeddingClient } from "@/modules/weddings/wedding-scope";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { weddingInput } from "./wedding-validation";
 import { WeddingHeader } from "./wedding-shell";
@@ -31,7 +32,9 @@ const commonTimeZones = [
 ] as const;
 
 export function WeddingSetup({ editing = false }: { editing?: boolean }) {
+  const { fetch, prefix, markClean } = useWeddingClient();
   const router = useRouter();
+  const creationKey = useRef<string | null>(null);
   const [displayName, setDisplayName] = useState("");
   const [busy, setBusy] = useState(false);
   const [fields, setFields] = useState<Record<string, string>>({});
@@ -43,24 +46,34 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
   const [notice, setNotice] = useState("");
 
   useEffect(() => {
-    fetch("/api/v1/auth/me", { cache: "no-store" })
+    const controller = new AbortController();
+    const options = { cache: "no-store", signal: controller.signal } as const;
+    fetch("/api/v1/auth/me", options)
       .then(async (response) => {
+        if (controller.signal.aborted) return;
         if (response.status === 401) return router.replace("/sign-in");
         if (!response.ok) throw new Error();
         const body = await response.json();
-        if (body.data.membership && !editing) return router.replace("/wedding");
+
         if (editing) {
-          if (!body.data.membership) return router.replace("/wedding/setup");
-          const current = await fetch("/api/v1/wedding", { cache: "no-store" });
+          const current = await fetch("/api/v1/wedding", options);
           if (!current.ok) throw new Error();
           const wedding = (await current.json()).data.wedding;
+          if (controller.signal.aborted) return;
           setExisting(wedding);
           setDescription(wedding.description ?? "");
         }
-        setDisplayName(body.data.user.displayName);
+        if (!controller.signal.aborted) {
+          setError("");
+          setDisplayName(body.data.user.displayName);
+        }
       })
-      .catch(() => setError("Could not load wedding setup. Try again."));
-  }, [router, editing]);
+      .catch(() => {
+        if (!controller.signal.aborted)
+          setError("Could not load wedding setup. Try again.");
+      });
+    return () => controller.abort();
+  }, [router, editing, fetch]);
 
   function clearField(name: string) {
     setFields((current) => {
@@ -136,6 +149,12 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
           method: editing ? "PATCH" : "POST",
           headers: {
             "Content-Type": "application/json",
+            ...(!editing
+              ? {
+                  "Idempotency-Key": (creationKey.current ??=
+                    crypto.randomUUID()),
+                }
+              : {}),
             "X-CSRF-Token": (await csrf.json()).data.token,
           },
           body: JSON.stringify({
@@ -146,13 +165,17 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
       );
       const body = await response.json();
       if (response.ok) {
-        if (!editing) return router.push("/wedding/created");
+        markClean();
+        if (!editing) return router.push(`/weddings/${body.data.wedding.id}`);
         setExisting(body.data.wedding);
         setNotice("Wedding details saved.");
         return;
       }
       setFields(body.error?.details?.fields ?? {});
       setError(body.error?.message ?? "Could not create the wedding.");
+      const firstField = Object.keys(body.error?.details?.fields ?? {})[0];
+      if (firstField)
+        (form.elements.namedItem(firstField) as HTMLElement | null)?.focus();
     } catch {
       setError("Could not reach wedding setup. Please try again.");
     } finally {
@@ -181,6 +204,13 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
         </div>
       )}
       <section className="wedding-intro">
+        {!editing && (
+          <p>
+            <Link href="/weddings/join">
+              Already invited? Join a wedding instead →
+            </Link>
+          </p>
+        )}
         <p>{editing ? "YOUR CELEBRATION" : "WEDDING SETUP"}</p>
         <h1>{editing ? "Wedding details" : "Create your wedding"}</h1>
         <span>
@@ -323,7 +353,7 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
                 instants. Their displayed local times will change; review each
                 function afterward.
               </p>
-              <Link href="/wedding/functions">Review functions →</Link>
+              <Link href={`${prefix}/functions`}>Review functions →</Link>
             </>
           ) : (
             <>
@@ -377,7 +407,7 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
           {error && <p role="alert">{error}</p>}
           {notice && <p role="status">{notice}</p>}
           {editing && (
-            <Link href="/wedding" className="secondary-action">
+            <Link href={prefix} className="secondary-action">
               Cancel
             </Link>
           )}

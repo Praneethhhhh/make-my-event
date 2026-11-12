@@ -47,8 +47,8 @@ test("registration persists normalized identity and hashed credentials, with no 
   );
   expect(JSON.stringify(body)).not.toContain(cookie.value);
   expect(
-    (await (await request.get("/api/v1/auth/me")).json()).data.membership,
-  ).toBeNull();
+    (await (await request.get("/api/v1/auth/me")).json()).data.weddingCount,
+  ).toBe(0);
   expect(await database.collection("weddingMemberships").countDocuments()).toBe(
     0,
   );

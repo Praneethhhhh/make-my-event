@@ -8,6 +8,7 @@ import {
 import { WeddingScheduleError } from "@/modules/weddings/schedule-error";
 import { StaleWeddingScheduleError } from "@/modules/weddings/stale-schedule-error";
 import { functionColor } from "./function-colors";
+import { verifyMembership } from "@/modules/weddings/wedding-access";
 
 async function collection() {
   await mongoose.connect(process.env.MONGODB_URI!, {
@@ -65,6 +66,7 @@ export async function saveFunction(
         { session, returnDocument: "after" },
       );
     if (!wedding) return { status: "missing" } as const;
+    await verifyMembership(mongoose.connection.db!, session, weddingId, userId);
     if (
       id &&
       (!/^[a-f0-9]{24}$/.test(id) ||
@@ -163,6 +165,15 @@ export async function archiveFunction(
     weddingId: new mongoose.Types.ObjectId(weddingId),
   };
   return mongoose.connection.transaction(async (session) => {
+    const wedding = await mongoose.connection
+      .db!.collection("weddings")
+      .findOneAndUpdate(
+        { _id: filter.weddingId, status: "ACTIVE" },
+        { $inc: { membershipVersion: 1 } },
+        { session },
+      );
+    if (!wedding) return "missing";
+    await verifyMembership(mongoose.connection.db!, session, weddingId, userId);
     const record = await functions.findOne(filter, { session });
     if (!record) return "missing";
     if (record.status === "ARCHIVED") return "archived";

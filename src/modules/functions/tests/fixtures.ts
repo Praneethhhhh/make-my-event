@@ -1,5 +1,11 @@
 import type { APIRequestContext } from "@playwright/test";
 import { account, mutation, origin } from "../../auth/tests/fixtures";
+import {
+  scopeHeaders,
+  scopedGet,
+  creationKey,
+  selectWedding,
+} from "../../auth/tests/fixtures";
 export const profile = {
   title: "Pavithra & Manish’s Wedding",
   coupleNames: { first: "Pavithra", second: "Manish" },
@@ -29,7 +35,7 @@ export async function write(
     typeof data === "object" &&
     !("weddingRevision" in data)
   ) {
-    const current = await api.get("/api/v1/wedding");
+    const current = await scopedGet(api, "/api/v1/wedding");
     data = {
       ...data,
       weddingRevision: current.ok()
@@ -37,11 +43,20 @@ export async function write(
         : 1,
     };
   }
-  return api.fetch("/api/v1/" + path, {
+  const response = await api.fetch("/api/v1/" + path, {
     method,
     data,
-    headers: { Origin: origin, "X-CSRF-Token": (await csrf.json()).data.token },
+    headers: {
+      ...(path === "weddings"
+        ? { "Idempotency-Key": creationKey(api) }
+        : await scopeHeaders(api)),
+      Origin: origin,
+      "X-CSRF-Token": (await csrf.json()).data.token,
+    },
   });
+  if (path === "weddings" && response.ok())
+    selectWedding(api, (await response.json()).data.wedding.id);
+  return response;
 }
 export async function onboard(api: APIRequestContext, email = account.email) {
   await mutation(api, "register", { ...account, email }, email);

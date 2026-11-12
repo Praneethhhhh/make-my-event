@@ -1,3 +1,4 @@
+import { weddingRoute } from "../../auth/tests/fixtures";
 import { test, expect } from "../../auth/tests/fixtures";
 import { onboard } from "./fixtures";
 
@@ -8,7 +9,7 @@ for (const width of [390, 1440]) {
   }) => {
     await page.setViewportSize({ width, height: 900 });
     await onboard(page.request);
-    await page.goto("/wedding/functions");
+    await page.goto(await weddingRoute(page.request, "functions"));
     expect(await page.evaluate(() => window.innerWidth)).toBe(width);
     await expect(
       page.getByRole("heading", { name: "Your celebration starts here" }),

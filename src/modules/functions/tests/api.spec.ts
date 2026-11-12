@@ -1,3 +1,4 @@
+import { scopedGet } from "../../auth/tests/fixtures";
 import { test, expect, origin } from "../../auth/tests/fixtures";
 import { ceremony, onboard, profile, write } from "./fixtures";
 import { localDateTimeToUtc } from "@/modules/weddings/zoned-date";
@@ -43,8 +44,8 @@ test("function creation, validation and revision-protected editing", async ({
   ]) {
     expect((await write(request, "functions", invalid)).status()).toBe(422);
   }
-  const list = (await (await request.get("/api/v1/functions")).json()).data
-    .functions;
+  const list = (await (await scopedGet(request, "/api/v1/functions")).json())
+    .data.functions;
   expect(list).toHaveLength(1);
   expect(list[0].name).toBe("Haldi ceremony");
   expect(await database.collection("functions").countDocuments()).toBe(1);
@@ -62,7 +63,8 @@ test("tenant isolation, removed memberships and organizer access", async ({
   try {
     await onboard(second, "other@example.invalid");
     expect(
-      (await (await second.get("/api/v1/functions")).json()).data.functions,
+      (await (await scopedGet(second, "/api/v1/functions")).json()).data
+        .functions,
     ).toEqual([]);
     expect(
       (
@@ -104,7 +106,7 @@ test("tenant isolation, removed memberships and organizer access", async ({
     await database
       .collection("weddingMemberships")
       .updateOne({ userId: user!._id }, { $set: { status: "REMOVED" } });
-    expect((await second.get("/api/v1/functions")).status()).toBe(404);
+    expect((await scopedGet(second, "/api/v1/functions")).status()).toBe(404);
     expect((await write(second, "functions", ceremony)).status()).toBe(404);
   } finally {
     await second.dispose();

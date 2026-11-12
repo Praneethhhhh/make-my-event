@@ -43,7 +43,7 @@ for (const width of [390, 1440]) {
     await page.getByRole("button", { name: /Create wedding/ }).click();
 
     await expect(
-      page.getByRole("heading", { name: "Your wedding workspace is ready" }),
+      page.getByRole("heading", { name: "Pavithra & Manish’s Wedding" }),
     ).toBeVisible();
     await expect(
       page.getByText("Pavithra & Manish’s Wedding", { exact: true }).first(),
@@ -57,25 +57,14 @@ for (const width of [390, 1440]) {
         () => document.documentElement.scrollWidth > innerWidth,
       ),
     ).toBe(false);
-    await page.goto("/wedding/setup");
-    await expect(page).toHaveURL(/\/wedding$/);
-    await expect(page.getByText("WEDDING OVERVIEW")).toBeVisible();
+    await page.goto("/weddings/new");
     await expect(
-      page.getByRole("heading", { name: "Pavithra & Manish’s Wedding" }),
+      page.getByRole("heading", { name: "Create your wedding" }),
     ).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: "Go to wedding overview" }),
-    ).toHaveCount(0);
-
     await page.goto("/sign-in");
+    await expect(page).toHaveURL(/\/weddings$/);
     await expect(
-      page.getByText("Continue to your wedding workspace."),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "Open your wedding" }),
-    ).toHaveAttribute("href", "/wedding");
-    await expect(
-      page.getByRole("link", { name: "Create your wedding" }),
-    ).toHaveCount(0);
+      page.getByRole("link", { name: "Open wedding", exact: true }),
+    ).toHaveCount(1);
   });
 }

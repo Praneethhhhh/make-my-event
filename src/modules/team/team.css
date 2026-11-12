@@ -1,0 +1,275 @@
+.team-workspace {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+.team-heading {
+  margin-bottom: 32px;
+}
+.team-heading h1 {
+  font-family: var(--font-editorial);
+  font-size: 40px;
+  margin: 8px 0;
+}
+.team-heading p,
+.team-note,
+.team-panel > p {
+  color: var(--color-text-muted);
+}
+.team-count {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: white;
+  font-size: 13px;
+}
+.team-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.team-panel {
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  min-width: 0;
+}
+.team-panel h2 {
+  font-size: 22px;
+  margin: 0 0 20px;
+}
+.team-panel p {
+  font-size: 14px;
+}
+.team-member {
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  overflow-wrap: anywhere;
+}
+.team-member > .team-member-actions {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.team-member-actions small {
+  flex-basis: 100%;
+  color: var(--color-text-muted);
+}
+.team-dialog .wedding-field {
+  margin: 20px 0;
+}
+.team-join {
+  max-width: 680px;
+}
+.team-join h1 {
+  font-family: var(--font-editorial);
+  font-size: 36px;
+  margin-bottom: 24px;
+}
+.team-join .wedding-field {
+  margin: 24px 0;
+}
+.team-invitation {
+  flex-wrap: wrap;
+}
+.team-invitation > div {
+  flex: 1 1 70%;
+}
+.team-member > div {
+  flex: 1;
+  min-width: 0;
+}
+.team-member p {
+  margin: 4px 0 0;
+  color: var(--color-text-muted);
+}
+.team-avatar {
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+.team-role,
+.team-you {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 5px 8px;
+  background: var(--color-surface-muted);
+  display: inline-block;
+}
+.team-you {
+  color: var(--color-primary);
+  margin-left: 4px;
+}
+.team-note {
+  font-size: 12px !important;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+.team-section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.team-section-heading h2 {
+  margin: 0;
+}
+.team-invitation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  overflow-wrap: anywhere;
+}
+.team-invitation > div {
+  min-width: 0;
+}
+.team-invitation strong {
+  display: block;
+  margin-bottom: 8px;
+}
+.team-invitation p {
+  color: var(--color-text-muted);
+  margin: 8px 0;
+}
+.team-invitation small {
+  color: var(--color-primary);
+}
+.team-danger {
+  color: var(--color-danger);
+}
+.team-empty {
+  padding: 24px 0;
+}
+.team-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.team-form legend {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.team-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+.team-choice:has(input:checked) {
+  border-color: var(--color-primary);
+  background: #28594f08;
+}
+.team-choice input {
+  accent-color: var(--color-primary);
+  margin-top: 4px;
+}
+.team-choice small {
+  display: block;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.team-form .wedding-field {
+  margin: 24px 0;
+}
+.team-form button {
+  margin-top: 8px;
+}
+.team-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+.team-notice {
+  padding: 16px;
+  background: var(--color-surface-muted);
+  border-radius: 8px;
+  font-size: 14px;
+}
+.team-skeleton {
+  height: 48px;
+  margin: 16px 0;
+  border-radius: 8px;
+  background: var(--color-surface-muted);
+}
+.team-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 28px;
+  max-width: 480px;
+  width: calc(100% - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  background: var(--color-surface);
+  box-shadow: 0 24px 64px rgb(32 42 41 / 18%);
+  color: var(--color-text);
+}
+.team-dialog::backdrop {
+  background: rgb(32 42 41 / 48%);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.team-dialog.team-composer {
+  max-width: 620px;
+}
+.team-dialog p {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 767px) {
+  .team-workspace {
+    padding: 24px 16px;
+  }
+  .team-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .team-panel {
+    padding: 20px;
+  }
+  .team-heading h1 {
+    font-size: 32px;
+  }
+  .team-member {
+    flex-wrap: wrap;
+  }
+  .team-member .team-role {
+    margin-left: 48px;
+  }
+  .team-member > div {
+    flex-basis: calc(100% - 48px);
+  }
+  .team-invitation {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}

@@ -1,4 +1,5 @@
 "use client";
+import { useWeddingClient } from "@/modules/weddings/wedding-scope";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,7 @@ import "./functions.css";
 import { functionColors, functionColor } from "./function-colors";
 
 export function FunctionsPage() {
+  const { fetch, markClean } = useWeddingClient();
   const router = useRouter();
   const [context, setContext] = useState<{
     displayName: string;
@@ -35,30 +37,39 @@ export function FunctionsPage() {
   const [formZone, setFormZone] = useState<string | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const options = { cache: "no-store", signal: controller.signal } as const;
     Promise.all([
-      fetch("/api/v1/auth/me", { cache: "no-store" }),
-      fetch("/api/v1/wedding", { cache: "no-store" }),
-      fetch("/api/v1/functions", { cache: "no-store" }),
+      fetch("/api/v1/auth/me", options),
+      fetch("/api/v1/wedding", options),
+      fetch("/api/v1/functions", options),
     ])
       .then(async ([me, wedding, list]) => {
+        if (controller.signal.aborted) return;
         if (me.status === 401) return router.replace("/sign-in");
-        if (wedding.status === 404) return router.replace("/wedding/setup");
+        if (wedding.status === 404) return undefined;
         if (!me.ok || !wedding.ok || !list.ok) throw new Error();
         const profile = (await wedding.json()).data.wedding;
+        const account = (await me.json()).data;
+        const items = (await list.json()).data.functions;
+        if (controller.signal.aborted) return;
+        setError("");
         setContext({
-          displayName: (await me.json()).data.user.displayName,
+          displayName: account.user.displayName,
           title: profile.title,
           timeZone: profile.timeZone,
           startsOn: profile.startsOn,
           endsOn: profile.endsOn,
           revision: profile.revision,
         });
-        setFunctions((await list.json()).data.functions);
+        setFunctions(items);
       })
-      .catch(() =>
-        setError("Could not load functions. Reload the page to try again."),
-      );
-  }, [router]);
+      .catch(() => {
+        if (!controller.signal.aborted)
+          setError("Could not load functions. Reload the page to try again.");
+      });
+    return () => controller.abort();
+  }, [router, fetch]);
 
   function changeForm(item: FunctionDto | null) {
     setFormZone(context?.timeZone ?? null);
@@ -235,6 +246,7 @@ export function FunctionsPage() {
         return;
       }
       const saved: FunctionDto = body.data.function;
+      markClean();
       setFunctions((current) =>
         [...current.filter((item) => item.id !== saved.id), saved].sort(
           (a, b) => a.startsAt.localeCompare(b.startsAt),

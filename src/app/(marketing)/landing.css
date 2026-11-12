@@ -52,6 +52,16 @@
   font-size: 14px;
   font-weight: 600;
 }
+.masthead-account-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.masthead-sign-in {
+  white-space: nowrap;
+}
 .landing button:disabled {
   cursor: not-allowed;
 }
@@ -332,6 +342,15 @@
   .masthead-inner {
     padding: 12px 16px;
     min-height: 64px;
+    flex-wrap: wrap;
+  }
+  .masthead-account-actions {
+    margin-left: auto;
+    min-width: 0;
+  }
+  .masthead-account-actions.guest-actions {
+    width: 100%;
+    justify-content: space-between;
   }
   .masthead nav {
     display: none;
