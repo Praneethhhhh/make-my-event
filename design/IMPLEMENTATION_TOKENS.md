@@ -40,6 +40,8 @@ These values consolidate the warm ivory/forest/copper prose and screenshots. The
 
 ## Core component guidance
 
+Function-specific accents use a controlled palette: Forest `#28594F`, Copper `#B98265`, Marigold `#C18B2D`, Rose `#AE6473`, Plum `#80618D` and Slate `#607D8B`. These decorate only the function card’s top border and small title marker; surfaces remain white and status text retains its semantic styling. The required selector uses named radio swatches, a selected check indicator and visible keyboard focus, with no default on a new function. The implementation palette lives in `src/modules/functions/function-colors.ts` and does not replace brand or status tokens.
+
 - Primary button: forest background, white text, Manrope semibold, 8px radius; hover uses `--color-primary-hover`.
 - Secondary button: white surface, charcoal text, strong border.
 - Input: white surface, fine border, charcoal text, forest focus ring.

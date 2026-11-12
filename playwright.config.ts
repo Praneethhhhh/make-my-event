@@ -1,6 +1,6 @@
 import { defineConfig } from "@playwright/test";
 export default defineConfig({
-  testDir: "./src/modules/auth/tests",
+  testDir: "./src/modules",
   workers: 1,
   fullyParallel: false,
   timeout: 60000,

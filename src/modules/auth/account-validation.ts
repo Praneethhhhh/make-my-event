@@ -73,3 +73,14 @@ export const userDto = z.object({
   email: z.email(),
 });
 export const userResponse = z.object({ data: z.object({ user: userDto }) });
+export const currentUserResponse = z.object({
+  data: z.object({
+    user: userDto,
+    membership: z
+      .object({
+        weddingId: z.string().regex(/^[a-f0-9]{24}$/),
+        role: z.enum(["ADMIN", "ORGANIZER"]),
+      })
+      .nullable(),
+  }),
+});

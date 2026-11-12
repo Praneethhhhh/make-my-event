@@ -33,11 +33,27 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
     const connection = await mongoose.createConnection(uri).asPromise();
     const db = connection.db!;
     try {
-      for (const name of ["users", "authSessions", "rateLimitWindows"])
+      for (const name of [
+        "users",
+        "authSessions",
+        "rateLimitWindows",
+        "weddings",
+        "weddingMemberships",
+        "functions",
+        "auditEvents",
+      ])
         await db.collection(name).deleteMany({});
       await provide(db);
     } finally {
-      for (const name of ["users", "authSessions", "rateLimitWindows"])
+      for (const name of [
+        "users",
+        "authSessions",
+        "rateLimitWindows",
+        "weddings",
+        "weddingMemberships",
+        "functions",
+        "auditEvents",
+      ])
         await db.collection(name).deleteMany({});
       await connection.close();
     }

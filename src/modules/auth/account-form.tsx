@@ -4,6 +4,7 @@ import {
   registration,
   loginInput,
   userResponse,
+  currentUserResponse,
   passwordProblem,
   passwordPersonalInputs,
 } from "./account-validation";
@@ -16,6 +17,7 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [identity, setIdentity] = useState({ displayName: "", email: "" });
   const [name, setName] = useState("");
+  const [hasMembership, setHasMembership] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(true);
   function clearInputError(field: string) {
@@ -31,9 +33,11 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
     const controller = new AbortController();
     fetch("/api/v1/auth/me", { signal: controller.signal, cache: "no-store" })
       .then(async (r) => {
-        if (r.ok)
-          setName(userResponse.parse(await r.json()).data.user.displayName);
-        else if (r.status !== 401) throw new Error();
+        if (r.ok) {
+          const session = currentUserResponse.parse(await r.json()).data;
+          setName(session.user.displayName);
+          setHasMembership(!!session.membership);
+        } else if (r.status !== 401) throw new Error();
       })
       .catch(() => {
         if (!controller.signal.aborted)
@@ -56,6 +60,7 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
       });
       if (!r.ok) throw new Error();
       setName("");
+      setHasMembership(false);
     } catch {
       setError("Could not sign out. Try again.");
     } finally {
@@ -105,9 +110,19 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
       );
       const result = await response.json();
       if (response.ok) {
+        let membership = null;
+        if (signIn) {
+          const sessionResponse = await fetch("/api/v1/auth/me", {
+            cache: "no-store",
+          });
+          if (!sessionResponse.ok) throw new Error();
+          membership = currentUserResponse.parse(await sessionResponse.json())
+            .data.membership;
+        }
         setPasswordVisible(false);
         setPassword("");
         setName(userResponse.parse(result).data.user.displayName);
+        setHasMembership(!!membership);
       } else {
         if (result.error?.details?.fields)
           setFields(result.error.details.fields);
@@ -135,11 +150,21 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
           </h1>
           {name ? (
             <div>
-              <p>You are signed in. Wedding setup is coming next.</p>
+              <p>
+                {hasMembership
+                  ? "You are signed in. Continue to your wedding workspace."
+                  : "You are signed in. Continue by creating your wedding workspace."}
+              </p>
+              <Link
+                href={hasMembership ? "/wedding" : "/wedding/setup"}
+                className="mt-4 inline-block rounded-lg bg-[var(--color-primary)] p-3 text-white"
+              >
+                {hasMembership ? "Open your wedding" : "Create your wedding"}
+              </Link>
               <button
                 disabled={busy}
                 onClick={signOut}
-                className="mt-4 rounded-lg border p-3"
+                className="mt-4 ml-3 rounded-lg border p-3"
               >
                 Sign out
               </button>

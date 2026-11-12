@@ -170,6 +170,12 @@ Function records embed a bounded `scheduleItems[]` array; **there is no separate
 
 **Business restrictions:** A function cannot be physically deleted if referenced by invitations, tasks, vendor charges, payments or photographs. Archiving is the default supported removal path. The service validates event time order, numeric latitude between -90 and 90 and longitude between -180 and 180, allowed YouTube URL patterns, and wedding-owned cover-photo references. Function status impacts guest displays consistently; explicit invitations are never automatically created for new functions.
 
+Function creation/editing also enforces the inclusive wedding date range in the wedding’s selected time zone. Wedding profile edits must not exclude any ACTIVE function’s start or end. Both paths serialize through the wedding document within MongoDB transactions to prevent concurrent date edits from bypassing the invariant. Range conflicts return `422 WEDDING_DATE_CONFLICT` with field feedback. Archive requests include the function `revision`; stale requests return 409, foreign IDs return 404, and repeated successful archive requests are idempotent. Archiving retains the record and its references, records an audit event and excludes it from the active management schedule.
+
+Function POST/PATCH bodies must also include `weddingRevision`, obtained from `GET /wedding`. This is separate from the function’s edit `revision`. Inside the same scheduling transaction, a mismatch returns `409 STALE_WEDDING_SCHEDULE` with the current wedding `revision`, `startsOn`, `endsOn`, `timeZone` and `title`, without saving the function. Clients refresh guidance, preserve entered local values and require another explicit submission after review; never silently retry a UTC conversion made using an obsolete zone. `weddingRevision` is a write precondition, not a stored function attribute or tenant authority.
+
+Function POST/PATCH also requires `color`, chosen from `forest`, `copper`, `marigold`, `rose`, `plum` or `slate`; missing/unknown values return 422 with inline field feedback. Responses include the saved color. Older records without a color read as copper without an automatic database rewrite. The color decorates only the card border and a small title marker; cards retain white surfaces.
+
 **Dashboard money:** `paidActual = SUM(POSTED expenses.amountPaise) + SUM(POSTED vendorPayments.amountPaise)`. Outstanding charges remain separate; avoid double counting. Vendors' personal balances must never be returned by guest dashboards.
 
 ## 6. Task and comment endpoints

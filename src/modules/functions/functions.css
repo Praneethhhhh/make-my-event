@@ -1,0 +1,207 @@
+.functions-workspace {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+.functions-heading {
+  margin-bottom: 32px;
+}
+.functions-heading h1 {
+  font-family: var(--font-editorial), serif;
+  font-size: 40px;
+  margin: 8px 0;
+}
+.functions-heading p {
+  color: var(--color-text-muted);
+}
+.functions-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 32px;
+  align-items: start;
+}
+.function-list h2,
+.function-editor h2 {
+  font-size: 20px;
+  margin: 0 0 24px;
+}
+.function-list h2 span {
+  color: var(--color-text-muted);
+}
+.function-tile,
+.function-editor {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: white;
+  padding: 24px;
+  box-shadow: 0 2px 8px #202a2905;
+  min-width: 0;
+}
+.function-tile {
+  margin-bottom: 16px;
+  overflow-wrap: anywhere;
+  border-top: 3px solid var(--color-accent);
+}
+.function-tile h3 {
+  font-size: 22px;
+  margin: 8px 0 16px;
+}
+.function-color-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.function-color-picker {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+  min-width: 0;
+}
+.function-color-picker legend {
+  font-size: 13px;
+  font-weight: 600;
+}
+.function-color-picker > p {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 8px 0 16px;
+}
+.function-color-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.function-color-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid var(--color-border);
+  padding: 10px 8px;
+  border-radius: 8px;
+}
+.function-color-option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: white;
+}
+.color-swatch > span {
+  visibility: hidden;
+}
+.function-color-option:has(input:checked) {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+.function-color-option input:checked + .color-swatch > span {
+  visibility: visible;
+}
+.function-color-option:has(input:focus-visible) {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+.function-color-picker > .wedding-error {
+  color: var(--color-danger);
+}
+@media (max-width: 420px) {
+  .function-color-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.function-tile p {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  white-space: pre-wrap;
+}
+.function-tile .function-status {
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.empty-functions {
+  text-align: center;
+  padding: 48px 24px;
+}
+.empty-functions > span {
+  color: var(--color-accent);
+  font-size: 32px;
+}
+.function-editor .wedding-field {
+  margin-bottom: 20px;
+}
+.function-editor label {
+  font-weight: 600;
+  font-size: 13px;
+}
+.function-editor input,
+.function-editor textarea {
+  min-width: 0;
+  width: 100%;
+}
+.function-editor details {
+  border-block: 1px solid var(--color-border);
+  padding: 16px 0;
+  margin: 24px 0;
+}
+.function-editor summary {
+  cursor: pointer;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.function-editor summary span {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+.zone-notice,
+.save-notice {
+  padding: 12px;
+  background: var(--color-surface-muted);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.zone-notice {
+  margin-bottom: 24px;
+}
+.function-editor summary span {
+  margin-left: 8px;
+}
+.function-form-actions {
+  display: flex;
+  gap: 12px;
+}
+.remove-function {
+  color: var(--color-danger);
+  margin-left: 8px;
+  margin-top: 8px;
+}
+@media (max-width: 767px) {
+  .functions-workspace {
+    padding: 24px 16px;
+  }
+  .functions-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .function-editor,
+  .function-tile {
+    padding: 20px;
+  }
+  .functions-heading h1 {
+    font-size: 32px;
+  }
+}

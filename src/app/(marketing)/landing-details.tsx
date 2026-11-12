@@ -35,7 +35,7 @@ const features = [
     copy: "Give every family member on the organizing team a clear next step.",
     rows: [
       ["Sound check", "Kabir · To do"],
-      ["Floral arrangements", "Meera · In progress"],
+      ["Floral arrangements", "Pavithra · In progress"],
     ],
   },
   {
@@ -153,7 +153,7 @@ export default function LandingDetails() {
               <span className="brand-mark" aria-hidden="true" />
               <small>Wedding invitation</small>
               <h3>The Sen Family</h3>
-              <p>Aarav &amp; Meera’s celebration</p>
+              <p>Pavithra &amp; Manish’s celebration</p>
             </div>
             <div className="invitation-event">
               <small>Tonight · 7:00 PM IST</small>

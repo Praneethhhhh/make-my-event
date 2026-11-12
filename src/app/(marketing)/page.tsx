@@ -71,7 +71,7 @@ function WeddingPreview() {
         <div className="preview-header between">
           <div>
             <div className="celebration-title">
-              <h2>Aarav &amp; Meera&apos;s Celebration</h2>
+              <h2>Pavithra &amp; Manish&apos;s Celebration</h2>
               <span className="badge">Active Itinerary</span>
             </div>
             <ul className="metadata">

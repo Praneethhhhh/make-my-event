@@ -215,6 +215,7 @@ No hard-coded maximum of two administrators. Theme and settings are small bounde
 |---|---|---|
 | `weddingId` | ObjectId, required | Tenant |
 | `name`, `description?` | bounded strings | Event identity |
+| `color` | `forest \| copper \| marigold \| rose \| plum \| slate` | Required organizer-selected function card accent on creation/edit; legacy colorless records display copper until saved |
 | `startsAt`, `endsAt?` | UTC Dates | Function times |
 | `venue` | embedded object | Name, address, city, state, postal code?, directions notes |
 | `venue.latitude`, `venue.longitude` | numbers? | `-90..90`, `-180..180` respectively |

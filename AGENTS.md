@@ -24,6 +24,9 @@
 
 ## Implementation and verification
 
+- Follow the user’s focused-testing preference: add meaningful tests alongside each feature and run only the tests affected by the change during normal development. Do not defer all test writing until the end, and do not run the entire application suite automatically after every feature, small edit or fix.
+- For small visual changes, use focused browser checks. For authentication, tenant access, security or shared business-logic changes, broaden checks to the affected consumers as needed. Reserve full-suite runs for major milestones, merge/release checkpoints or demonstrated wider regression risk; briefly state why a broader run is needed. Avoid repeating passing checks unless subsequent changes or failures justify it.
+- Record what was actually verified and any deferred coverage in `docs/PROJECT_STATUS.md`. Documentation-only updates need only focused document/format checks, not application tests or builds.
 - Use strict TypeScript, `@/*` aliases, ESLint and Prettier. Name feature folders and source files in kebab case, with Next.js reserved filenames unchanged. Validate untrusted input at boundaries, return safe DTOs and stable error codes, and keep business rules in services.
 - Run `pnpm format:check`, `pnpm lint`, `pnpm typecheck` and `pnpm build` for scaffold changes. Add meaningful tenant, role and capability tests with the relevant feature phase. Preserve existing docs, design exports and Git history; do not commit secrets.
 - Before using a Next.js API, read the relevant version-matched guide under `node_modules/next/dist/docs/`. The project maintains this file directly; `agentRules: false` prevents development runs from rewriting it.

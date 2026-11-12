@@ -69,6 +69,8 @@ The first registrant creates a wedding and becomes an administrator; a second pa
 
 - Manage couple/host names, wedding title, tradition, dates, description, header/cover image and invitation theme.
 - Create/edit/archive functions with descriptions, start/end times, multiple activities (e.g., ceremony, rituals, meal), dress code and guest instructions.
+- The wedding start/end dates define the inclusive overall schedule in its selected time zone. Every active function’s start and optional end must fall within that range. Reject wedding date or zone changes that would exclude an active function; move or archive the affected function first.
+- A function requires an organizer-selected accent color when created or edited. Apply it to a restrained border/marker on a white card, not the entire card background. Keep visible card actions concise: Edit and Remove.
 - Each function has venue name, address, optional city/state, **latitude and longitude**, Google Maps directions URL and optional entry/landmark notes.
 - Show changes immediately to invited guests and assigned vendors. Organizers may edit after invitations were issued.
 
