@@ -6,26 +6,26 @@
 
 Make My Event serves individuals and families organizing their own celebrations. Use the existing custom, four-part connected-moments symbol shown in `design/logo/screen.png`; do not replace it with a generic icon or redesign it during scaffolding. Obtain or prepare a production-ready transparent/vector asset in a separate visual implementation task. The reference screenshot itself is not a final transparent web logo.
 
-The interface combines a calm editorial welcome with dense, legible operational work. All admins and organizers of one wedding see the same operational and financial records. UI copy says *actual expenses*, *payments* and *outstanding balances*, not budgets. Live Google Places results may show permitted ratings with attribution; saved internal vendor records must not retain Google ratings or reviews.
+The interface combines a calm editorial welcome with dense, legible operational work. All admins and organizers of one wedding see the same operational and financial records. UI copy says _actual expenses_, _payments_ and _outstanding balances_, not budgets. Live Google Places results may show permitted ratings with attribution; saved internal vendor records must not retain Google ratings or reviews.
 
 ## Semantic colors
 
-| Token | Value | Usage |
-|---|---|---|
-| `--color-canvas` | `#F7F5F0` | Marketing and management canvas, warm ivory |
-| `--color-surface` | `#FFFFFF` | Cards, forms, dialogs and work areas |
-| `--color-surface-muted` | `#DFE4DC` | Inset groups and quiet status backgrounds |
-| `--color-text` | `#202A29` | Primary text, charcoal |
-| `--color-text-muted` | `#5A6664` | Secondary text and metadata |
-| `--color-primary` | `#28594F` | Main actions, focus and active navigation |
-| `--color-primary-hover` | `#1E433B` | Main action hover |
-| `--color-accent` | `#B98265` | Restrained copper accent |
-| `--color-accent-text` | `#825339` | Deeper copper for small text on ivory |
-| `--color-border` | `#E6E4DC` | Fine dividers and card borders |
-| `--color-border-strong` | `#D5D3CB` | Structural dividers and controls |
-| `--color-success` | `#2D7A5D` | Confirmed or successful state |
-| `--color-warning` | `#C88228` | Pending or attention state |
-| `--color-danger` | `#B53D35` | Errors and destructive actions |
+| Token                   | Value     | Usage                                       |
+| ----------------------- | --------- | ------------------------------------------- |
+| `--color-canvas`        | `#F7F5F0` | Marketing and management canvas, warm ivory |
+| `--color-surface`       | `#FFFFFF` | Cards, forms, dialogs and work areas        |
+| `--color-surface-muted` | `#DFE4DC` | Inset groups and quiet status backgrounds   |
+| `--color-text`          | `#202A29` | Primary text, charcoal                      |
+| `--color-text-muted`    | `#5A6664` | Secondary text and metadata                 |
+| `--color-primary`       | `#28594F` | Main actions, focus and active navigation   |
+| `--color-primary-hover` | `#1E433B` | Main action hover                           |
+| `--color-accent`        | `#B98265` | Restrained copper accent                    |
+| `--color-accent-text`   | `#825339` | Deeper copper for small text on ivory       |
+| `--color-border`        | `#E6E4DC` | Fine dividers and card borders              |
+| `--color-border-strong` | `#D5D3CB` | Structural dividers and controls            |
+| `--color-success`       | `#2D7A5D` | Confirmed or successful state               |
+| `--color-warning`       | `#C88228` | Pending or attention state                  |
+| `--color-danger`        | `#B53D35` | Errors and destructive actions              |
 
 These values consolidate the warm ivory/forest/copper prose and screenshots. The mint `#F1FCFA` and `#0B4138` values in generated Stitch frontmatter and CDN configuration are reference-export discrepancies, not a second application palette. Use the deeper copper token for small text; check contrast in each actual component context.
 
@@ -50,3 +50,11 @@ Function-specific accents use a controlled palette: Forest `#28594F`, Copper `#B
 - Status labels must use text as well as color. Do not label a provider-accepted email as delivered.
 
 The scaffold implements these semantic CSS custom properties in `src/styles/tokens.css`. Tailwind utility use should reference the same tokens. Do not load Tailwind from a CDN in production.
+
+## Premium experience revision — 13 November 2026
+
+Retain the canonical palette and fonts. Marketing display headlines may scale from 56px mobile to 78px desktop with tight editorial leading; management controls and dense information keep the existing readable scale. Use the user-selected Stitch illustrations. Do not substitute generated wedding photography without a new request. Light ambient shadows and 160–650ms entrance/hover effects are allowed; avoid neon, pointer trails, continuous motion and elaborate gradients. Respect reduced motion. Account navigation is a single name/avatar popover with separated groups; destructive controls use the danger token and an explicitly labeled confirmation dialog.
+
+## Supplied artwork and motion — 13 November 2026
+
+Hero uses the centered universal celebration illustration with native eager JPEG rendering and whole-image contain framing; do not animate or clip its container. The palace scene contains detail to every edge and must keep its full 1200:896 aspect ratio. The centered wedding illustration belongs in the closing panel. Source pixels remain unchanged. Route headings slide into place and panels reveal without keying or remounting workspace children; the entire page and illustration container are excluded from compositing animations. Press feedback is short and cancellable. Content remains readable without animation or JavaScript. Reduced-motion preferences disable decorative navigation/reveal/press motion and stop the loading spinner.

@@ -17,6 +17,14 @@
 
 Implemented migration tooling stores a private BSON-preserving snapshot before applying changes. Wedding creation uses the canonical `idempotencyRecords` collection and a persisted 10-attempt/account/15-minute quota. Expired invitation ciphertext cleanup is bounded to 100 records per selected-wedding invitation-list read; no scheduled cleanup worker is claimed by this milestone.
 
+## Account credential updates — 13 November 2026
+
+`users.profileRevision` is an optional positive integer, legacy default 1, incremented on name/password updates for optimistic concurrency. `users.authSerial` is an optional monotonically increasing login coordination counter; successful logins write it while checking the verified password hash inside their session-creation transaction. Password changes write the same user document, set Argon2id passwordHash/passwordChangedAt/updatedAt, revoke prior authSessions and insert the new current session atomically. This serializes password changes against old-password logins. No new collections are added. Email identity and wedding memberships remain unchanged; no mailbox verification is implied. Profile DTOs expose only id/displayName/email/revision.
+
+## 13 November 2026 — explicit full-tenant erasure
+
+Administrator-confirmed wedding deletion uses the canonical collection inventory, not dynamically discovered names. The transaction serializes on the wedding document, revalidates its administrator and revision/title, deletes all weddingId-owned domain, authorization, email, scoped usage, replay and audit records, and finally removes the wedding document. No wedding audit row is reinserted after this explicit erasure. Global identities/sessions and unrelated weddings survive. `src/modules/weddings/wedding-deletion.ts` maintains the explicit cascade inventory; future tenant collections must join it. Photo-bearing deletion is refused until external R2 cleanup is implemented. Already sent email and historical backup copies are outside this application's active-data deletion transaction. This action never runs automatically during migration or verification against retained user data.
+
 ## 1. Purpose, scope, and decisions
 
 This document specifies the MongoDB persistence design needed to implement the approved product: collections, fields, relationships, indexes, validation and consistency rules, tenant isolation, authentication/session records, RSVPs, expenses, email jobs, private photos, data lifecycles, and test cases.
@@ -97,7 +105,7 @@ flowchart TD
     W --> AU[Audit events]
 ```
 
-**Cardinality overview:** Wedding 1:N functions, memberships, guests, vendors, tasks, expenses, photos, outbox rows; user 0:1 active membership; guest 1:N function invitations; function 1:N function invitations, tasks and photos; vendor 1:N assignments and charges; charge 1:N payments; access link 1:N short-lived portal sessions. A photographer is a vendor with authorized upload scope, not an independently authenticated user.
+**Cardinality overview:** Wedding 1:N functions, memberships, guests, vendors, tasks, expenses, photos, outbox rows; user 0:N wedding memberships, with one row per wedding/user pair; guest 1:N function invitations; function 1:N function invitations, tasks and photos; vendor 1:N assignments and charges; charge 1:N payments; access link 1:N short-lived portal sessions. A photographer is a vendor with authorized upload scope, not an independently authenticated user.
 
 ## 4. Collection inventory
 
@@ -678,3 +686,13 @@ The following authoritative documentation supports the operational constraints u
 ---
 
 **End of Database Design Document — Make My Event v1.0**
+
+Deletion replay protection: creation idempotency rows become anonymous tombstones containing only their opaque key hash and deletion timestamp. Account, wedding and payload references are removed. This prevents an old creation retry from recreating an explicitly deleted wedding; a fresh creation key still permits a new wedding.
+
+### Invitation delivery and deletion coordination — 13 November 2026
+
+The `emailOutbox.status = PROCESSING` row is also the durable wedding-deletion reservation. Creation inserts it under the wedding lock; deletion checks it under the same lock. Only the sender’s final tenant update may release it by setting a terminal status. Stale PROCESSING reservations require outcome reconciliation; they must not be silently expired while a provider call can still begin.
+
+### Invitation redemption session fencing — 13 November 2026
+
+Redemption transactionally consumes the exact authenticated, active, unexpired current session before accepting the code or minting a replacement. Password changes and logout write that same row, so a paused request authenticated earlier receives 401 AUTH_REQUIRED after revocation; invitation/membership changes roll back and no replacement cookie is sent. If redemption commits first, a subsequent password change revokes its newly created session. Session rotation is single-use: parallel redemptions sharing one old cookie may require retry with the fresh session, while independently authenticated sessions can join separate weddings concurrently. Other legitimate sessions are not revoked by redemption itself.

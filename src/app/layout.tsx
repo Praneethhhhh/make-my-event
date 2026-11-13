@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Newsreader } from "next/font/google";
 import "./globals.css";
+import { ExperienceMotion } from "@/modules/experience/experience-motion";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const newsreader = Newsreader({
@@ -18,7 +19,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${newsreader.variable}`}>
-      <body>{children}</body>
+      <body>
+        <ExperienceMotion>{children}</ExperienceMotion>
+      </body>
     </html>
   );
 }

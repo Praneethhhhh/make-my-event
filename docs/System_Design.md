@@ -11,6 +11,16 @@
 
 **12 November 2026 implementation amendment:** Explicit per-tab wedding selection and admin-revealed/manual invitation codes replace the former single-wedding/email-only assumptions. See [the implementation and migration plan](MULTI_WEDDING_AND_INVITATION_CODES_PLAN.md). The development database migration is applied; other environments require the guarded migration before enabling new writers.
 
+## Profile/session consistency — 13 November 2026
+
+Global account profile lives under the auth module and requires authenticated account authority rather than wedding membership. Name/password mutations write-lock the current live session, compare the user profile revision and update in a MongoDB transaction. Password changes hash outside the transaction after persisted attempt limits/current-password validation; credential/session replacement commits atomically. Login rechecks the verified hash while writing the user coordination counter in its session transaction, preventing a delayed old-password verification from creating access after password revocation. Current browser receives a new cookie; other sessions are revoked. Read-only email avoids changing invitation binding without a verified ownership flow.
+
+## 13 November 2026 — account navigation and tenant deletion
+
+Wedding scope remains URL-local even though its navigation is consolidated into the name/avatar popover. No mutable global selected-wedding state is introduced. Escape/outside click close the menu; destructive deletion uses a separate typed-confirmation modal. Reduced motion disables decorative transitions.
+
+Permanent tenant deletion locks the same wedding document as membership/function/profile writes and rechecks administrator authority within the transaction. All canonical wedding-owned MongoDB rows, including code ciphertext and creation replay records, are removed atomically. Accounts and other weddings remain accessible. Previously accepted email cannot be unsent. Photo-bearing records block deletion until the future media integration provides external object cleanup; successful deletion must not falsely claim external erasure. Future workers must validate the tenant still exists before dispatch and must not upsert orphan tenant rows after deletion.
+
 ## 1. Scope, architectural drivers and constraints
 
 **Use case:** Up to ~200 guest recipients per wedding in the initial deployment, modest concurrent traffic, multiple wedding tenants, organizers with full shared same-wedding data, guests/vendors with narrow capabilities. Optimize for low operational cost, clean engineering boundaries, and maintainability over speculative scale.
@@ -367,3 +377,13 @@ Apply security headers, secure cookie policies, careful input encoding and outpu
 Exact retention periods, photo/storage and email quotas, signed URL lifetimes, and rate thresholds remain configurable operational defaults to settle in their relevant phase before production. The last-admin rule and tenant isolation are binding; their concurrency and query implementations must be tested in Phase 1.
 
 **End of System Design & Architecture — Make My Event v1.0**
+
+Deletion replay protection: creation idempotency rows become anonymous tombstones containing only their opaque key hash and deletion timestamp. Account, wedding and payload references are removed. This prevents an old creation retry from recreating an explicitly deleted wedding; a fresh creation key still permits a new wedding.
+
+### Invitation delivery and deletion coordination — 13 November 2026
+
+Invitation creation reserves a PROCESSING outbox row while holding the wedding write lock. Deletion acquires that same lock and refuses to erase any tenant with a PROCESSING delivery. The sender marks its outbox terminal only after provider work and all preceding tenant writes finish. Therefore deletion winning first prevents invitation creation, and delivery winning first blocks deletion until it settles. Do not hold a MongoDB transaction across external HTTP. Already accepted messages cannot be recalled. A crashed sender may leave a PROCESSING reservation; reconcile its termination/outcome before clearing it rather than using an unsafe automatic expiry.
+
+### Invitation redemption session fencing — 13 November 2026
+
+Redemption transactionally consumes the exact authenticated, active, unexpired current session before accepting the code or minting a replacement. Password changes and logout write that same row, so a paused request authenticated earlier receives 401 AUTH_REQUIRED after revocation; invitation/membership changes roll back and no replacement cookie is sent. If redemption commits first, a subsequent password change revokes its newly created session. Session rotation is single-use: parallel redemptions sharing one old cookie may require retry with the fresh session, while independently authenticated sessions can join separate weddings concurrently. Other legitimate sessions are not revoked by redemption itself.

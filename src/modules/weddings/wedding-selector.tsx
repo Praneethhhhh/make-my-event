@@ -81,23 +81,6 @@ export function WeddingSelector() {
       setBusy(false);
     }
   }
-  async function signOut() {
-    if (busy) return;
-    setBusy(true);
-    try {
-      const csrf = await fetch("/api/v1/auth/csrf", { cache: "no-store" });
-      if (!csrf.ok) throw new Error();
-      const response = await fetch("/api/v1/auth/logout", {
-        method: "POST",
-        headers: { "X-CSRF-Token": (await csrf.json()).data.token },
-      });
-      if (!response.ok) throw new Error();
-      window.location.replace("/");
-    } catch {
-      setError("Couldn’t sign out. Try again.");
-      setBusy(false);
-    }
-  }
   function submit(event: FormEvent) {
     event.preventDefault();
     if (busy) return;
@@ -115,7 +98,7 @@ export function WeddingSelector() {
           <div>
             <p>YOUR CELEBRATIONS</p>
             <h1>Your weddings</h1>
-            <p>Choose a wedding to plan with its organizing team.</p>
+            <p>Your celebrations, together.</p>
           </div>
           <div className="selector-actions">
             <Link className="primary-action" href="/weddings/new">
@@ -124,13 +107,6 @@ export function WeddingSelector() {
             <Link className="secondary-action" href="/weddings/join">
               Join with code
             </Link>
-            <button
-              className="secondary-action"
-              onClick={() => void signOut()}
-              disabled={busy}
-            >
-              Sign out
-            </button>
           </div>
         </div>
         <form className="selector-search" onSubmit={submit}>

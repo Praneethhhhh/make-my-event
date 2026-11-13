@@ -185,7 +185,7 @@ for (const width of [390, 1440]) {
       .getByRole("button", { name: "Save function", exact: true })
       .click();
     await expect(other.getByRole("status")).toHaveText("Function saved.");
-    await page.getByLabel("Switch wedding", { exact: true }).click();
+    await page.getByLabel("Account menu", { exact: true }).click();
     await page
       .getByRole("navigation", { name: "Choose wedding" })
       .getByRole("link", { name: /Second family wedding/ })
@@ -196,6 +196,7 @@ for (const width of [390, 1440]) {
     await expect(page.getByLabel("Wedding title")).toHaveValue(
       "Unsaved first-wedding draft",
     );
+    await page.getByRole("button", { name: "Account menu" }).click();
     await page
       .getByRole("navigation", { name: "Choose wedding" })
       .getByRole("link", { name: /Second family wedding/ })

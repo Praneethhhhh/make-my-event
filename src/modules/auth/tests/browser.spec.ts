@@ -12,7 +12,7 @@ for (const width of [390, 1440]) {
     }) => {
       await page.goto("/");
       await page
-        .getByRole("link", { name: "Create an account", exact: true })
+        .getByRole("link", { name: "Create your wedding" })
         .first()
         .click();
       await page.getByLabel("Your name").fill(account.displayName);
@@ -35,11 +35,17 @@ for (const width of [390, 1440]) {
       await expect(
         page.getByRole("heading", { name: "Your weddings" }),
       ).toBeVisible();
+      await page.getByRole("button", { name: "Account menu" }).click();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
       await page.getByRole("link", { name: "Sign In", exact: true }).click();
       await expect(
         page.getByRole("heading", { name: "Welcome back" }),
       ).toBeVisible();
+      await page.screenshot({
+        path: `.next/premium-signin-${width}.png`,
+        fullPage: true,
+        animations: "disabled",
+      });
       await expect(
         page.getByRole("button", { name: "Sign in", exact: true }),
       ).toBeEnabled();
@@ -63,6 +69,7 @@ for (const width of [390, 1440]) {
       await expect(
         page.getByRole("heading", { name: "Your weddings" }),
       ).toBeVisible();
+      await page.getByRole("button", { name: "Account menu" }).click();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
       await expect(
         page.getByRole("link", { name: "Sign In", exact: true }),

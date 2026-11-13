@@ -82,17 +82,21 @@ export function WeddingCreated({
     <main className="wedding-page">
       <WeddingHeader displayName={displayName} />
       <WorkspaceNav active="overview" />
-      <div className="wedding-progress">
-        <span>✓ Account created</span>
-        <i>•</i>
-        <span>✓ Wedding setup</span>
-        <i>•</i>
-        <strong>Workspace ready</strong>
-      </div>
-      <section className="created-card">
-        <div className="success-icon" aria-hidden="true">
-          ✓
+      {confirmation && (
+        <div className="wedding-progress">
+          <span>✓ Account created</span>
+          <i>•</i>
+          <span>✓ Wedding setup</span>
+          <i>•</i>
+          <strong>Workspace ready</strong>
         </div>
+      )}
+      <section className="created-card">
+        {confirmation && (
+          <div className="success-icon" aria-hidden="true">
+            ✓
+          </div>
+        )}
         <p className="created-eyebrow">
           {confirmation ? "WEDDING CREATED" : "WEDDING OVERVIEW"}
         </p>
@@ -102,7 +106,7 @@ export function WeddingCreated({
         <p>
           {confirmation
             ? `${wedding.title} now has a private place for your family to plan together.`
-            : "Your private family workspace is ready for the next planning step."}
+            : "Your celebration, at a glance."}
         </p>
         <dl className="wedding-summary">
           <div>
@@ -157,6 +161,7 @@ export function WeddingCreated({
               <b>2</b>
               <h3>Add venue details</h3>
               <p>Attach locations, directions and arrival notes.</p>
+              <Link href={`${prefix}/functions`}>Edit venues →</Link>
             </article>
             <article>
               <b>3</b>

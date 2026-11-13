@@ -102,16 +102,21 @@ export async function createWedding(
     .digest("hex");
   const attempts = mongoose.connection.db!.collection<{
     _id: string;
-    userId: mongoose.Types.ObjectId;
-    operation: string;
-    requestHash: string;
-    weddingId: mongoose.Types.ObjectId;
-    createdAt: Date;
+    userId?: mongoose.Types.ObjectId;
+    operation?: string;
+    requestHash?: string;
+    weddingId?: mongoose.Types.ObjectId;
+    createdAt?: Date;
+    deletedAt?: Date;
   }>("idempotencyRecords");
   const replay = async () => {
     const attempt = await attempts.findOne({ _id: keyHash });
     if (!attempt) return null;
-    if (attempt.requestHash !== requestHash)
+    if (
+      attempt.deletedAt ||
+      !attempt.weddingId ||
+      attempt.requestHash !== requestHash
+    )
       return { status: "idempotency-conflict" } as const;
     const existing = await weddings.findOne({
       _id: attempt.weddingId,

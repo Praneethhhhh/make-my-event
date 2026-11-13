@@ -178,7 +178,15 @@ export async function login(
   if (!valid || !user || user.status !== "ACTIVE")
     return { status: "invalid" } as const;
   const token = secret();
-  await mongoose.connection.transaction(async (session) => {
+  const created = await mongoose.connection.transaction(async (session) => {
+    // Serialize verified logins against password changes. A hash verified before
+    // a password change must not mint a fresh session after revocation commits.
+    const locked = await users.findOneAndUpdate(
+      { _id: user._id, status: "ACTIVE", passwordHash: user.passwordHash },
+      { $inc: { authSerial: 1 } },
+      { session, returnDocument: "after" },
+    );
+    if (!locked) return false;
     await sessions.insertOne(
       {
         userId: user._id,
@@ -196,7 +204,9 @@ export async function login(
         { $set: { revokedAt: now } },
         { session },
       );
+    return true;
   });
+  if (!created) return { status: "invalid" } as const;
   return {
     status: "created",
     token,

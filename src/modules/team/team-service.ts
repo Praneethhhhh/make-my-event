@@ -385,6 +385,8 @@ export async function createInvitation(
       $set: { emailStatus: sent.status },
     },
   );
+  // Keep this terminal update last: wedding deletion waits on PROCESSING rows
+  // until provider work and every preceding tenant write have finished.
   await db.collection("emailOutbox").updateOne(
     { _id: record._id },
     {
@@ -493,6 +495,27 @@ export async function redeemInvitation(
   }
   try {
     return await mongoose.connection.transaction(async (session) => {
+      // Consume the exact authenticated session inside the rotation transaction.
+      // Password changes/logout write this row too: a paused, revoked request
+      // must not consume the invitation or mint a replacement session.
+      const activeSession = await db
+        .collection("authSessions")
+        .findOneAndUpdate(
+          {
+            userId: objectId(userId),
+            tokenHash: digest(currentToken),
+            revokedAt: null,
+            expiresAt: { $gt: new Date() },
+          },
+          { $set: { revokedAt: new Date() } },
+          { session, returnDocument: "after" },
+        );
+      if (!activeSession)
+        throw new TeamError(
+          401,
+          "AUTH_REQUIRED",
+          "Your session changed. Please sign in again before joining.",
+        );
       const user = await db
         .collection("users")
         .findOneAndUpdate(
@@ -580,15 +603,6 @@ export async function redeemInvitation(
         candidate._id,
       );
       const now = new Date();
-      await db.collection("authSessions").updateMany(
-        {
-          userId: objectId(userId),
-          tokenHash: digest(currentToken),
-          revokedAt: null,
-        },
-        { $set: { revokedAt: now } },
-        { session },
-      );
       await db.collection("authSessions").insertOne(
         {
           userId: objectId(userId),

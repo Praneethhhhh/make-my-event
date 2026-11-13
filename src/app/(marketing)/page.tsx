@@ -1,199 +1,248 @@
+import Image from "next/image";
 import Link from "next/link";
-import LandingDetails from "./landing-details";
 import "./landing.css";
 import { accountNavigation } from "@/modules/auth/account-navigation";
-
-const schedule = [
-  ["Day 1 • 4:00 PM", "Engagement", "Completed"],
-  ["Day 2 • 11:00 AM", "Haldi & Mehendi", "Completed"],
-  ["Day 2 • 7:00 PM", "Sangeet Gala", "Up next"],
-  ["Day 3 • 4:30 PM", "Sunset Pheras", "Upcoming"],
-  ["Day 4 • 8:00 PM", "Royal Reception", "Upcoming"],
+const ceremonies = [
+  {
+    day: "18",
+    month: "FEB",
+    name: "Haldi",
+    time: "10:00 AM",
+    place: "The courtyard",
+    color: "#c18b2d",
+  },
+  {
+    day: "19",
+    month: "FEB",
+    name: "Sangeet",
+    time: "7:00 PM",
+    place: "The garden",
+    color: "#ae6473",
+  },
+  {
+    day: "20",
+    month: "FEB",
+    name: "Wedding",
+    time: "9:30 AM",
+    place: "The mandap",
+    color: "#28594f",
+  },
 ];
-
-function Brand() {
-  return (
-    <span className="brand">
-      <span className="brand-mark" aria-hidden="true" />
-      Make My Event
-    </span>
-  );
-}
-
-function EventCreationStatus({
-  navigation,
-}: {
-  navigation: Awaited<ReturnType<typeof accountNavigation>>;
-}) {
-  return (
-    <Link className="landing-button primary" href={navigation.href}>
-      {navigation.label}
-    </Link>
-  );
-}
-
-function GuestInvitation() {
-  return (
-    <aside
-      className="guest-card"
-
-      aria-label="Sample guest invitation"
-    >
-      <div className="between">
-        <Brand />
-        <small>Guest Portal</small>
-      </div>
-      <h3>Dear Rohan &amp; Family</h3>
-      <p>You are joyfully invited to celebrate with us.</p>
-      {[
-        ["Sangeet Gala", "Tonight • Jagmandir Island"],
-        ["Sunset Pheras", "Tomorrow • Zenana Mahal"],
-      ].map(([name, location]) => (
-        <div className="guest-function between" key={name}>
-          <div>
-            <strong>{name}</strong>
-            <small>{location}</small>
-          </div>
-          <span className="badge">Attending</span>
-        </div>
-      ))}
-      <div className="between guest-foot">
-        <span>↗ Venue Directions</span>
-        <small>Party of 2</small>
-      </div>
-    </aside>
-  );
-}
-
-function WeddingPreview() {
-  return (
-    <section
-      className="wedding-preview"
-      id="preview"
-      aria-label="Sample wedding workspace"
-    >
-      <div className="workspace-card">
-        <div className="preview-header between">
-          <div>
-            <div className="celebration-title">
-              <h2>Pavithra &amp; Manish&apos;s Celebration</h2>
-              <span className="badge">Active Itinerary</span>
-            </div>
-            <ul className="metadata">
-              <li>Feb 18–21, 2027</li>
-              <li>Udaipur Palace, Rajasthan</li>
-              <li>{schedule.length} functions scheduled</li>
-            </ul>
-          </div>
-          <div className="sync">
-            <small>Sample wedding</small>
-            <b>AM</b>
-          </div>
-        </div>
-        <dl className="metrics">
-          <div>
-            <dt>Next Function</dt>
-            <dd>Sangeet Gala</dd>
-            <dd className="note accent">Tonight, 7:00 PM IST</dd>
-          </div>
-          <div>
-            <dt>Sangeet attendance</dt>
-            <dd>
-              195 <small>people attending</small>
-            </dd>
-            <dd>
-              <span className="note">12 invitations awaiting a reply</span>
-            </dd>
-          </div>
-          <div>
-            <dt>Actual expenses paid</dt>
-            <dd>₹14,50,000</dd>
-            <dd className="note">Includes 8 vendor advances</dd>
-          </div>
-          <div>
-            <dt>Wedding tasks</dt>
-            <dd>3 Pending</dd>
-            <dd className="note accent">Sound Check &amp; Floral Sign-off</dd>
-          </div>
-        </dl>
-        <div className="between schedule-heading">
-          <h3>Wedding schedule</h3>
-          <small>All times in IST</small>
-        </div>
-        <ol className="schedule">
-          {schedule.map(([time, name, status]) => (
-            <li
-              key={name}
-              className={status === "Up next" ? "active-cue" : undefined}
-            >
-              <small>{time}</small>
-              <strong>{name}</strong>
-              <small>{status}</small>
-            </li>
-          ))}
-        </ol>
-      </div>
-      <GuestInvitation />
-    </section>
-  );
-}
-
 export default async function HomePage() {
   const navigation = await accountNavigation();
+  const cta =
+    navigation.state === "guest" ? "Create your wedding" : navigation.label;
   return (
     <div className="landing">
       <header className="masthead">
-        <div className="masthead-inner">
-          <Brand />
-          <nav aria-label="Main navigation">
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#guest-experience">Guest Experience</a>
-          </nav>
-          <div
-            className={`masthead-account-actions ${navigation.state === "guest" ? "guest-actions" : ""}`}
-          >
-            {navigation.state === "guest" && (
-              <Link className="masthead-sign-in" href="/sign-in">
-                Sign In
-              </Link>
-            )}
-            <EventCreationStatus navigation={navigation} />
-          </div>
+        <Link
+          href="/weddings"
+          className="landing-brand"
+          aria-label="Make My Event — Your weddings"
+        >
+          <Image src="/brand-mark.png" alt="" width={36} height={36} />
+          <span>Make My Event</span>
+        </Link>
+        <nav aria-label="Main navigation">
+          <a href="#preview">The experience</a>
+          <a href="#features">Made for you</a>
+        </nav>
+        <div className="masthead-account-actions">
+          {navigation.state === "guest" && (
+            <Link href="/sign-in" className="masthead-sign-in">
+              Sign In
+            </Link>
+          )}
+          <Link className="landing-button primary" href={navigation.href}>
+            {cta}
+            <span aria-hidden="true">↗</span>
+          </Link>
         </div>
       </header>
       <main>
         <section className="hero" aria-labelledby="hero-title">
-          <p className="eyebrow">For families planning a wedding</p>
-          <h1 id="hero-title">One place to plan, organize and celebrate.</h1>
-          <p className="intro">
-            Plan your wedding with your family. Share the schedule, collect
-            RSVPs, and keep track of tasks and payments together.
-          </p>
-          <div className="hero-actions">
-            <EventCreationStatus navigation={navigation} />
-            <a className="landing-button secondary" href="#features">
-              Explore Features
-            </a>
+          <div className="hero-copy">
+            <p className="eyebrow">FOR THE MOMENTS THAT MATTER</p>
+            <h1 id="hero-title">
+              Every moment.
+              <br />
+              <em>Beautifully</em>
+              <br />
+              together.
+            </h1>
+            <p className="intro">
+              A shared place for your family to plan the celebration.
+            </p>
+            <div className="hero-actions">
+              <Link className="landing-button primary" href={navigation.href}>
+                {cta}
+                <span aria-hidden="true">↗</span>
+              </Link>
+              <a href="#preview" className="text-link">
+                Take a little look <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+            <p className="reassurance">
+              <span aria-hidden="true">✧</span> Your people. Your plans. Your
+              celebration.
+            </p>
           </div>
-          <p className="reassurance">
-            <span aria-hidden="true">✓</span> Simple for organizers. Effortless
-            for guests.
-          </p>
+          <div className="hero-visual">
+            {/* Render the complete hero eagerly without optimizer/decode JavaScript. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="hero-artwork"
+              src="/images/celebration-pixels.jpg"
+              alt="Pixel-art couple celebrating beneath a leafy arch with confetti"
+              width={1376}
+              height={768}
+              loading="eager"
+              decoding="sync"
+              fetchPriority="high"
+            />
+            <p className="artwork-caption">A little more being present.</p>
+          </div>
         </section>
-        <WeddingPreview />
-        <LandingDetails />
+        <section
+          id="preview"
+          className="experience"
+          aria-labelledby="preview-title"
+        >
+          <div className="experience-copy">
+            <p className="eyebrow">ONE BEAUTIFUL SHARED SPACE</p>
+            <h2 id="preview-title">
+              All the days.
+              <br />
+              <em>One celebration.</em>
+            </h2>
+            <p>
+              From the first Haldi to the final goodbye. Keep the times, places
+              and people together.
+            </p>
+            <a href="#features" className="text-link">
+              Thoughtfully simple <span aria-hidden="true">↘</span>
+            </a>
+            <figure className="palace-scene">
+              <Image
+                src="/images/palace-celebration.jpg"
+                alt="A detailed voxel-art palace courtyard filled with a wedding celebration"
+                width={1200}
+                height={896}
+                sizes="(max-width: 760px) 100vw, 40vw"
+              />
+            </figure>
+          </div>
+          <div
+            className="sample-workspace"
+            aria-label="Sample wedding workspace"
+          >
+            <div className="sample-top">
+              <span className="sample-badge">ILLUSTRATIVE PREVIEW</span>
+              <span aria-hidden="true">✧</span>
+            </div>
+            <h3>Pavithra &amp; Manish</h3>
+            <p>18–21 February 2027 · Asia/Kolkata</p>
+            <div className="sample-divider" />
+            <div className="sample-timeline">
+              {ceremonies.map((item) => (
+                <div
+                  className="sample-event"
+                  key={item.name}
+                  style={{ borderLeftColor: item.color }}
+                >
+                  <div className="sample-date">
+                    <strong>{item.day}</strong>
+                    <small>{item.month}</small>
+                  </div>
+                  <div>
+                    <h4>{item.name}</h4>
+                    <p>{item.place}</p>
+                  </div>
+                  <time>{item.time}</time>
+                </div>
+              ))}
+            </div>
+            <div className="sample-foot">
+              <span className="mini-avatars" aria-hidden="true">
+                <b>P</b>
+                <b>M</b>
+                <b>+1</b>
+              </span>
+              <span>Better, with your people.</span>
+              <span aria-hidden="true">↗</span>
+            </div>
+          </div>
+        </section>
+        <section
+          className="features"
+          id="features"
+          aria-labelledby="features-title"
+        >
+          <p className="eyebrow">LESS TO JUGGLE. MORE TO ENJOY.</p>
+          <h2 id="features-title">Made for your kind of together.</h2>
+          <div className="feature-grid">
+            {[
+              [
+                "01",
+                "The whole celebration",
+                "Every function, time and venue. In its own place.",
+                "◷",
+              ],
+              [
+                "02",
+                "Your people, together",
+                "Invite family organizers. Give everyone the right access.",
+                "♧",
+              ],
+              [
+                "03",
+                "Every detail in place",
+                "Directions, dress codes and little notes that matter.",
+                "✧",
+              ],
+            ].map(([n, title, copy, icon]) => (
+              <article key={n}>
+                <div className="feature-ornament" aria-hidden="true">
+                  {icon}
+                </div>
+                <small>{n}</small>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
         <section className="closing">
-          <h2>Make room for the moments that matter.</h2>
-          <p>Bring everyone planning your wedding together.</p>
-          <EventCreationStatus navigation={navigation} />
+          <div className="closing-copy">
+            <p className="eyebrow">LET THE CELEBRATION BEGIN</p>
+            <h2>
+              Plan with love.
+              <br />
+              <em>Celebrate with everyone.</em>
+            </h2>
+            <Link className="landing-button light" href={navigation.href}>
+              {cta}
+              <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+          <div className="closing-artwork">
+            <Image
+              src="/images/wedding-pixels.jpg"
+              alt="Pixel-art wedding couple beneath a decorated arch"
+              width={1376}
+              height={768}
+              sizes="(max-width: 760px) 100vw, 35vw"
+            />
+          </div>
         </section>
       </main>
       <footer className="landing-footer">
-        <Brand />
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#guest-experience">Guest Experience</a>
+        <Link href="/weddings" className="landing-brand">
+          <Image src="/brand-mark.png" alt="" width={28} height={28} />
+          <span>Make My Event</span>
+        </Link>
+        <p>A little more together.</p>
+        <a href="#hero-title">Back to top ↑</a>
       </footer>
     </div>
   );

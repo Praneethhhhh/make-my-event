@@ -13,6 +13,16 @@
 
 > **Product promise.** Make My Event lets a small wedding organizing team coordinate functions, tasks, actual expenses, vendor discovery and assignments, guest invitations and RSVPs, photographs, and livestream links. Admins and organizers use authenticated management tools; guests and vendors use private links with no accounts.
 
+## Account profile — 13 November 2026
+
+Signed-in managers open `/account` from the clickable name/Your account heading in the account popover. They can update their globally shared display name and change password using their current password, strong new password and matching confirmation. Email is visible and read-only until verified email-change support exists. Account edits do not change wedding membership or roles. A password change signs out other devices and renews this browser's session. Independent visibility controls, live strength feedback, duplicate-submit prevention, inline errors and unsaved-edit confirmation are required.
+
+## 13 November 2026 product amendment — premium experience and wedding deletion
+
+The public landing page uses a photographic editorial composition and concise copy. Current product claims cover weddings, function details and private organizing teams; sample previews are labeled. Workspace brand navigation opens Your weddings. The name/avatar opens one grouped menu for switching weddings, account navigation and sign-out; generic family-organizer subtitles are removed. Motion is restrained and honors reduced motion.
+
+Only an active administrator may permanently delete a wedding from Wedding details. Exact-title confirmation and current revision are required. Deletion removes the entire tenant's stored records, including archived functions and all team access; management accounts, sessions and other weddings remain. This explicit full-tenant erasure differs from ordinary function archiving. Previously sent messages cannot be recalled. Current media integration is not delivered; deletion refuses photo-bearing records until external-object cleanup exists. Backup retention is a separate operational policy.
+
 ## 1. Summary and success criteria
 
 Make My Event is a focused, multi-tenant event-management application. Within a single wedding workspace, its administrators and organizers collaborate over the **same** operational records. A guest receives a unique invitation link (optionally sent via Resend email) and sees only invited functions. A vendor receives a unique restricted link and sees only assigned responsibilities and its own financial status. Both guest and vendor portals are mobile-first. The organizer experience is a responsive productivity dashboard.

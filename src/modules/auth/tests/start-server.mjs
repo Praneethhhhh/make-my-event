@@ -3,7 +3,20 @@ import { spawn } from "node:child_process";
 import { mkdir, writeFile, rm } from "node:fs/promises";
 import { createServer } from "node:http";
 const capturedEmails = new Map();
+let releaseHeldDelivery;
 const emailMock = createServer(async (request, response) => {
+  if (request.method === "GET" && request.url === "/__delivery-status") {
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify({ processing: !!releaseHeldDelivery }));
+    return;
+  }
+  if (request.method === "GET" && request.url === "/__delivery-release") {
+    releaseHeldDelivery?.();
+    releaseHeldDelivery = undefined;
+    response.writeHead(204);
+    response.end();
+    return;
+  }
   if (request.method === "GET") {
     response.writeHead(200, { "Content-Type": "application/json" });
     response.end(
@@ -17,6 +30,11 @@ const emailMock = createServer(async (request, response) => {
   for await (const chunk of request) body += chunk;
   const input = JSON.parse(body || "{}");
   capturedEmails.set(input.to?.[0], input);
+  if (input.to?.[0] === "held-delivery@example.invalid") {
+    await new Promise((resolve) => {
+      releaseHeldDelivery = resolve;
+    });
+  }
   response.writeHead(input.to?.[0] === "fail@example.invalid" ? 422 : 200, {
     "Content-Type": "application/json",
   });

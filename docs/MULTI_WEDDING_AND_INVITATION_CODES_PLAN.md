@@ -86,7 +86,7 @@ Implement migration, context-aware backend, selector/switcher, invitation reveal
 Required focused tests before calling the feature ready:
 
 1. One account creates/joins weddings A and B; roles differ; membership lists include only authorized active weddings. Zero/one/many picker states and direct scoped routes work after reload and fresh sign-in.
-2. Concurrent duplicate join to A yields one pair; simultaneous joins to A and B both succeed. Rejoining a removed pair reuses its row. Concurrent creation using one idempotency key creates one wedding; different keys permit intentional separate weddings.
+2. Concurrent duplicate join to A yields one pair; simultaneous joins to A and B from independent active sessions both succeed. Rejoining a removed pair reuses its row. Concurrent creation using one idempotency key creates one wedding; different keys permit intentional separate weddings.
 3. A foreign wedding or child ID, omitted header, mismatched header/child references, stale role and removed membership cannot read/write/reveal. The client request helper binds its header to the current scoped URL; a browser route or Referer is not server authorization evidence. Admin A has no admin power in B. Existing date-range, zone/revision and archive invariants hold independently in both weddings.
 4. Two tabs editing different weddings retain their original targets while one tab switches/joins/creates another wedding. Old async responses, retries, optimistic data and dirty drafts never cross context. Removing access in A leaves B usable and does not globally log out the account.
 5. Without any Resend configuration, an admin generates and reveals/copies a manual code; intended recipient signs up/signs in, joins the right wedding once and can select it. Same-code sharing still works after successful email, failed email or provider uncertainty. Manual actions consume no email quota and make no provider calls.
@@ -95,3 +95,5 @@ Required focused tests before calling the feature ready:
 8. Run affected unit, integration and Chrome flows, including desktop/mobile UI. This tenant-model migration justifies an application-wide regression checkpoint at completion. Record exact checks and real-provider limitations; no real email is required for the fully functional manual workflow.
 
 **Completion boundary:** The complete manual-code and multi-wedding workflow is implemented for user review. Migration was applied to development after a private backup. Live arbitrary-recipient email still requires a verified sending domain; manual delivery has no email dependency.
+
+Security clarification: each successful redemption consumes and rotates its exact current session transactionally. Concurrent requests using the same old cookie can receive 401 and must retry using an active session; revoked credentials never receive a rotation grace period.

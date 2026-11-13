@@ -161,6 +161,7 @@ export function WeddingScope({
               </p>
               <Link
                 href="/weddings"
+                className="primary-action wedding-access-return"
                 onClick={() => {
                   dirty.current = false;
                 }}

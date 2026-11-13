@@ -9,6 +9,7 @@ import "./wedding.css";
 import { WorkspaceNav } from "./workspace-nav";
 import Link from "next/link";
 import type { z } from "zod";
+import { DeleteWedding } from "./delete-wedding";
 
 const traditions = [
   ["HINDU", "Hindu"],
@@ -44,6 +45,7 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
     (z.infer<typeof weddingInput> & { revision: number }) | null
   >(null);
   const [notice, setNotice] = useState("");
+  const [role, setRole] = useState<"ADMIN" | "ORGANIZER" | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -58,8 +60,10 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
         if (editing) {
           const current = await fetch("/api/v1/wedding", options);
           if (!current.ok) throw new Error();
-          const wedding = (await current.json()).data.wedding;
+          const profile = (await current.json()).data;
+          const wedding = profile.wedding;
           if (controller.signal.aborted) return;
+          setRole(profile.role);
           setExisting(wedding);
           setDescription(wedding.description ?? "");
         }
@@ -84,22 +88,6 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
     });
     setError("");
     setNotice("");
-  }
-
-  async function signOut() {
-    setBusy(true);
-    try {
-      const csrf = await fetch("/api/v1/auth/csrf", { cache: "no-store" });
-      const response = await fetch("/api/v1/auth/logout", {
-        method: "POST",
-        headers: { "X-CSRF-Token": (await csrf.json()).data.token },
-      });
-      if (!response.ok) throw new Error();
-      router.replace("/");
-    } catch {
-      setError("Could not sign out. Try again.");
-      setBusy(false);
-    }
   }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -216,7 +204,7 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
         <span>
           {editing
             ? "Keep your celebration information up to date."
-            : "Start with the essentials. You can add functions, venues and your organizing team next."}
+            : "The essentials, then the celebrations."}
         </span>
       </section>
       <form
@@ -235,7 +223,7 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
             onChange={clearField}
             placeholder="Pavithra & Manish’s Wedding"
             defaultValue={existing?.title}
-            help="This name will appear on invitations and your family schedule."
+            help="The name your family sees."
           />
           <div className="field-row">
             <Field
@@ -346,18 +334,16 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
         <aside className="next-panel">
           {editing ? (
             <>
-              <h2>Keep everyone in sync</h2>
-              <p>Update the essentials as your plans take shape.</p>
+              <h2>Your celebration, in sync.</h2>
               <p>
-                Changing the wedding time zone preserves existing function
-                instants. Their displayed local times will change; review each
-                function afterward.
+                A time-zone change keeps function instants unchanged. Review
+                their new local times afterward.
               </p>
               <Link href={`${prefix}/functions`}>Review functions →</Link>
             </>
           ) : (
             <>
-              <h2>What happens next?</h2>
+              <h2>Make it yours.</h2>
               <ol>
                 <li>
                   <b>1</b>
@@ -387,7 +373,6 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
                   </div>
                 </li>
               </ol>
-              <p>You’ll configure these after creating your wedding.</p>
             </>
           )}
         </aside>
@@ -396,14 +381,6 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
             editing ? "wedding-actions profile-edit-actions" : "wedding-actions"
           }
         >
-          <button
-            type="button"
-            className="secondary-action"
-            onClick={signOut}
-            disabled={busy}
-          >
-            Sign out
-          </button>
           {error && <p role="alert">{error}</p>}
           {notice && <p role="status">{notice}</p>}
           {editing && (
@@ -422,6 +399,9 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
           </button>
         </div>
       </form>
+      {editing && role === "ADMIN" && existing && (
+        <DeleteWedding title={existing.title} revision={existing.revision} />
+      )}
     </main>
   );
 }

@@ -383,7 +383,7 @@ test("reveal has its own persistent cap, CSRF and cross-wedding protections", as
   expect(Number(limited.headers()["retry-after"])).toBeGreaterThan(0);
 });
 
-test("concurrent joins to different weddings succeed while duplicate target joins stay single", async ({
+test("concurrent joins to different weddings succeed from independent active sessions", async ({
   request,
   playwright,
   database,
@@ -398,11 +398,20 @@ test("concurrent joins to different weddings succeed while duplicate target join
   const codeB = (await (await reveal(request, b.id, second.id)).json()).data
     .code;
   const helper = await playwright.request.newContext({ baseURL: origin });
+  const secondSession = await playwright.request.newContext({
+    baseURL: origin,
+  });
   try {
     await mutation(helper, "register", { ...account, email }, "parallel");
+    await mutation(
+      secondSession,
+      "login",
+      { email, password: account.password },
+      "parallel-second-session",
+    );
     const results = await Promise.all([
       call(helper, "member-invitations/redeem", { email, code: codeA }),
-      call(helper, "member-invitations/redeem", { email, code: codeB }),
+      call(secondSession, "member-invitations/redeem", { email, code: codeB }),
     ]);
     expect(results.map((response) => response.status())).toEqual([200, 200]);
     const user = await database
@@ -416,6 +425,7 @@ test("concurrent joins to different weddings succeed while duplicate target join
     expect((await helper.get("/api/v1/auth/me")).status()).toBe(200);
   } finally {
     await helper.dispose();
+    await secondSession.dispose();
   }
 });
 

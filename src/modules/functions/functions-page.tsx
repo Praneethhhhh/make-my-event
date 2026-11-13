@@ -351,10 +351,7 @@ export function FunctionsPage() {
         <header className="functions-heading">
           <p>{context.title}</p>
           <h1>Wedding functions</h1>
-          <p>
-            All times in {context.timeZone}. Bring each part of your celebration
-            together.
-          </p>
+          <p>Times shown in {context.timeZone}.</p>
         </header>
         <div className="functions-columns">
           <section className="function-list" aria-label="Scheduled functions">

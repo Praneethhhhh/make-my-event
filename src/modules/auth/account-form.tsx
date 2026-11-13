@@ -277,12 +277,9 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
             Make My Event
           </p>
           <h2 className="font-[family-name:var(--font-editorial)] text-4xl">
-            Plan your wedding together.
+            A little more together.
           </h2>
-          <p>
-            Your organizing account brings the family’s schedules, tasks and
-            invitations into one place.
-          </p>
+          <p>Your people. Your celebration.</p>
         </aside>
       </div>
     </main>

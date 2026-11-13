@@ -548,7 +548,7 @@ export function TeamPage() {
         <header className="team-heading">
           <p>{context.title}</p>
           <h1>Your organizing team</h1>
-          <p>Invite trusted family members to plan together.</p>
+          <p>Your people, planning together.</p>
           <span className="team-count">
             {members.length} active{" "}
             {members.length === 1 ? "member" : "members"}

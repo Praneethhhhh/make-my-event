@@ -14,6 +14,17 @@
 
 **12 November 2026 implementation amendment:** Multiple wedding memberships, explicit per-tab wedding context and admin-revealed/manual invitation codes supersede the former one-wedding/email-only contracts. These account, wedding-context and management-invitation contracts are implemented; other feature sections retain their future-phase scope. See [the full migration/delivery plan](MULTI_WEDDING_AND_INVITATION_CODES_PLAN.md).
 
+## Account profile contracts — 13 November 2026
+
+- `GET /api/v1/account`: authenticated account, context-free; safe `{data:{user:{id,displayName,email,revision}}}`, no-store.
+- `PATCH /api/v1/account`: CSRF and active session; strict `{displayName,revision}`, existing normalized 1–120 character name validation. Persisted limit 20/account/15 minutes. Email, userId and role are not writable.
+- `POST /api/v1/account/password`: CSRF and active session; strict `{currentPassword,newPassword,confirmPassword,revision}`. Existing 15–128 character/strength policy, matching confirmation and a different password. Persisted limit 5/account/15 minutes before password verification; 429 includes Retry-After. Wrong current password is 422 CURRENT_PASSWORD_INVALID with field feedback, stale version 409 STALE_REVISION and missing/revoked session 401.
+- Both mutations revalidate/lock the current session and compare profile revision transactionally. Password replacement revokes all previous sessions and sets a newly rotated host-prefixed production cookie for the current browser. Tokens/hashes/passwords are excluded from ordinary responses and logs. An old-password login racing the change cannot mint surviving access.
+
+## 13 November 2026 — permanent wedding deletion
+
+`DELETE /api/v1/wedding` requires an authenticated active ADMIN in the exact X-Wedding-Id context, CSRF, mutation throttling and JSON `{revision, confirmationTitle}`. Exact current title and revision are checked under the wedding transaction lock, with administrator membership revalidated there. Success is no-store 204; organizer is 403, inaccessible tenant 404, malformed input 422, stale revision/title 409 STALE_REVISION. Existing photo records produce 409 MEDIA_CLEANUP_REQUIRED until object cleanup is implemented. The cascade removes only rows belonging to that wedding in the canonical tenant collections, then the wedding itself. Users, account sessions, other tenants and platform anonymous quota counters are retained. No code-bearing response or deletion payload is logged. UI returns to `/weddings` after confirmed success.
+
 ## 1. Verification against the three source documents
 
 ### 1.1 Alignment matrix
@@ -644,3 +655,13 @@ Approved decisions are marked below. The remaining entries specify phase-specifi
 - OWASP Password Storage: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 
 **End of REST API Design & Contract Specification — Make My Event v1.0**
+
+Deletion replay protection: creation idempotency rows become anonymous tombstones containing only their opaque key hash and deletion timestamp. Account, wedding and payload references are removed. This prevents an old creation retry from recreating an explicitly deleted wedding; a fresh creation key still permits a new wedding.
+
+### Invitation delivery and deletion coordination — 13 November 2026
+
+Permanent deletion also returns `409 INVITATION_DELIVERY_IN_PROGRESS` with `Retry-After: 5` while the selected wedding has a PROCESSING email-outbox reservation. The existing deletion dialog retains confirmation and displays the retry guidance.
+
+### Invitation redemption session fencing — 13 November 2026
+
+Redemption transactionally consumes the exact authenticated, active, unexpired current session before accepting the code or minting a replacement. Password changes and logout write that same row, so a paused request authenticated earlier receives 401 AUTH_REQUIRED after revocation; invitation/membership changes roll back and no replacement cookie is sent. If redemption commits first, a subsequent password change revokes its newly created session. Session rotation is single-use: parallel redemptions sharing one old cookie may require retry with the fresh session, while independently authenticated sessions can join separate weddings concurrently. Other legitimate sessions are not revoked by redemption itself.

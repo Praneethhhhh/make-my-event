@@ -55,3 +55,57 @@
     transition: none;
   }
 }
+.account-page {
+  position: relative;
+}
+.account-page > .account-panel {
+  box-shadow: 0 18px 70px #202a290a;
+  border-radius: 20px;
+}
+.account-page aside {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-canvas) url("/images/celebration-pixels.jpg") center
+    10% / 125% auto no-repeat;
+  color: var(--color-text);
+  min-height: 500px;
+  align-content: end;
+}
+.account-page aside p {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-accent-text);
+}
+.account-page aside h2 {
+  font-size: 46px;
+  line-height: 1.05;
+  max-width: 280px;
+  font-weight: 400;
+}
+.account-page aside p:last-child {
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
+}
+.account-page section {
+  background: #fffefb;
+}
+.account-page button[type="submit"] {
+  font-weight: 600;
+  min-height: 48px;
+}
+.account-page input {
+  background: white;
+  border-color: var(--color-border-strong);
+}
+@media (max-width: 767px) {
+  .account-page aside {
+    display: none;
+  }
+  .account-page {
+    max-width: 520px;
+  }
+  .account-page > .account-panel {
+    border-radius: 16px;
+  }
+}

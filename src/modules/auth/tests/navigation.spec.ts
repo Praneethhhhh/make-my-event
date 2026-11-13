@@ -13,7 +13,7 @@ for (const width of [390, 1440]) {
       page.getByRole("link", { name: "Your weddings", exact: true }),
     ).toHaveCount(3);
     await expect(
-      page.getByRole("link", { name: "Create an account", exact: true }),
+      page.getByRole("link", { name: "Create your wedding" }),
     ).toHaveCount(0);
     await expect(
       page.getByRole("link", { name: "Sign In", exact: true }),
@@ -37,13 +37,15 @@ for (const width of [390, 1440]) {
         page.getByRole("heading", { name: "Welcome, Test Family" }),
       ).toHaveCount(0);
     }
-    const guest = await browser.newContext();
+    const guest = await browser.newContext({
+      viewport: { width, height: 900 },
+    });
     try {
       const guestPage = await guest.newPage();
       await guestPage.goto("http://127.0.0.1:3100/");
       await expect(
-        guestPage.getByRole("link", { name: "Create an account", exact: true }),
-      ).toHaveCount(3);
+        guestPage.getByRole("link", { name: "Create your wedding" }),
+      ).toHaveCount(width === 390 ? 2 : 3);
       await expect(
         guestPage.getByRole("link", { name: "Your weddings", exact: true }),
       ).toHaveCount(0);
@@ -55,8 +57,8 @@ for (const width of [390, 1440]) {
       .updateMany({}, { $set: { revokedAt: new Date() } });
     await page.goto("/");
     await expect(
-      page.getByRole("link", { name: "Create an account", exact: true }),
-    ).toHaveCount(3);
+      page.getByRole("link", { name: "Create your wedding" }),
+    ).toHaveCount(width === 390 ? 2 : 3);
     await expect(
       page.getByRole("link", { name: "Sign In", exact: true }),
     ).toBeVisible();
