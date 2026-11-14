@@ -1,4 +1,4 @@
-import { WeddingCreated } from "@/modules/weddings/wedding-created";
+import { WorkspaceDashboard } from "@/modules/operations/workspace-dashboard";
 export default function Page() {
-  return <WeddingCreated />;
+  return <WorkspaceDashboard />;
 }

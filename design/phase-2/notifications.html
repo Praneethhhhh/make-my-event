@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event - Notifications Center</title>
+<!-- Google Fonts: Newsreader & Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#9ed1c4",
+            "surface-dim": "#d1dcda",
+            "outline-variant": "#c0c8c5",
+            "on-primary-container": "#9bcec1",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#9ed1c4",
+            "on-surface-variant": "#404946",
+            "secondary": "#825339",
+            "surface-bright": "#f1fcfa",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201b",
+            "inverse-surface": "#283231",
+            "secondary-fixed-dim": "#f7b999",
+            "surface-container-highest": "#dae5e3",
+            "secondary-fixed": "#ffdbca",
+            "on-primary-fixed-variant": "#1d4f45",
+            "on-tertiary-fixed-variant": "#434842",
+            "inverse-on-surface": "#e8f3f1",
+            "on-surface": "#141d1c",
+            "tertiary-container": "#4d524c",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#321201",
+            "error": "#ba1a1a",
+            "primary-fixed": "#baeddf",
+            "on-tertiary-fixed": "#181d18",
+            "surface-container-low": "#ebf6f4",
+            "primary-container": "#28594f",
+            "on-secondary-fixed-variant": "#673c24",
+            "surface-tint": "#36675c",
+            "surface-container-high": "#dfeae8",
+            "surface": "#f1fcfa",
+            "background": "#f1fcfa",
+            "tertiary-fixed": "#dfe4dc",
+            "on-secondary-container": "#794b32",
+            "on-tertiary-container": "#c0c5bd",
+            "secondary-container": "#fdbe9e",
+            "on-error": "#ffffff",
+            "surface-container": "#e5f0ee",
+            "tertiary": "#363b36",
+            "outline": "#707976",
+            "on-background": "#141d1c",
+            "surface-variant": "#dae5e3",
+            "primary": "#0b4138"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Newsreader"],
+            "body-md": ["Manrope"],
+            "headline-md": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "label-lg": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "label-md": ["Manrope"],
+            "display-lg": ["Newsreader"],
+            "headline-sm": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "body-sm": ["Manrope"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-active {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Custom subtle paper feel */
+    body {
+      background-color: #F7F5F0;
+      color: #141D1C;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F7F5F0] font-body-md text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TOP SHELL / APP BAR -->
+<header class="sticky top-0 z-50 flex items-center justify-between w-full px-6 lg:px-8 py-3.5 bg-surface-container-lowest/95 backdrop-blur-sm shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<!-- Brand & Event Identity Group -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<span class="text-headline-md font-headline-md font-medium text-primary tracking-tight">Make My Event</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-label-sm font-label-sm bg-tertiary-fixed text-tertiary tracking-wider uppercase">Enterprise</span>
+</div>
+<div class="h-5 w-px bg-outline-variant/40 hidden md:block"></div>
+<!-- Wedding Switcher Anchor -->
+<div class="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="favorite">favorite</span>
+<div class="flex flex-col">
+<span class="text-label-md font-label-md font-semibold text-on-surface leading-tight">Pavithra &amp; Manish</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">Feb 2027 · Umaid Bhawan Palace</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-base ml-1" data-icon="unfold_more">unfold_more</span>
+</div>
+</div>
+<!-- Central Navigation Links (Shared Component Anchor) -->
+<nav class="hidden xl:flex items-center gap-7">
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors text-label-md font-label-md" href="#">Itinerary</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors text-label-md font-label-md" href="#">Guests &amp; RSVPs</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors text-label-md font-label-md" href="#">Vendors</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors text-label-md font-label-md" href="#">Run of Show</a>
+<a class="text-primary font-semibold border-b-2 border-primary pb-1 text-label-md font-label-md flex items-center gap-1.5" href="#">
+<span>Notifications</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</a>
+</nav>
+<!-- Trailing Action Cluster with ACTIVE Bell Popover Anchor -->
+<div class="flex items-center gap-3 relative">
+<!-- Save Draft Trailing Action from JSON -->
+<button class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-outline-variant/50 text-label-md font-label-md font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-base" data-icon="history">history</span>
+<span>Save Draft</span>
+</button>
+<!-- Help Outline Icon -->
+<button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Help &amp; Documentation">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<!-- NOTIFICATIONS BELL (Open/Active State) -->
+<div class="relative" id="bell-container">
+<button aria-expanded="true" class="relative w-9 h-9 rounded-lg flex items-center justify-center bg-primary-container text-on-primary shadow-sm transition-all duration-150 active:scale-[0.98]" id="bell-trigger" title="Workspace Notifications">
+<span class="material-symbols-outlined fill-active" data-icon="notifications">notifications</span>
+<span class="absolute -top-1 -right-1 w-4 h-4 bg-secondary text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-surface-container-lowest">
+            3
+          </span>
+</button>
+<!-- FLOATING BELL POPOVER DOCKED UNDER BELL ICON -->
+<div class="absolute right-0 top-12 w-[390px] sm:w-[420px] bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-[0_12px_32px_-4px_rgba(32,42,41,0.12),0_4px_12px_-2px_rgba(32,42,41,0.06)] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200" id="notification-popover">
+<!-- Popover Header -->
+<div class="p-4 border-b border-outline-variant/30 flex items-center justify-between bg-surface-bright/50">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-sm text-on-surface font-semibold tracking-tight">Notifications</h3>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-bold bg-secondary-fixed text-on-secondary-fixed">3 unread</span>
+</div>
+<button class="text-label-sm font-label-sm text-secondary hover:text-primary transition-colors font-semibold">
+              Mark all as read
+            </button>
+</div>
+<!-- Popover Filter Pills -->
+<div class="px-4 py-2 bg-surface-container-low/60 border-b border-outline-variant/20 flex gap-2">
+<button class="px-2.5 py-1 rounded-md text-label-sm font-label-sm bg-surface-container-lowest font-semibold text-primary shadow-[0_1px_2px_rgba(0,0,0,0.04)] border border-outline-variant/30">
+              Unread (3)
+            </button>
+<button class="px-2.5 py-1 rounded-md text-label-sm font-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container-lowest/50 transition-colors">
+              All History
+            </button>
+</div>
+<!-- Popover List Items -->
+<div class="max-h-[380px] overflow-y-auto divide-y divide-outline-variant/20">
+<!-- Item 1: Unread Mention -->
+<div class="p-3.5 hover:bg-surface-container-low/40 transition-colors cursor-pointer bg-primary-fixed/5 relative group">
+<div class="flex items-start gap-3">
+<span class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0" title="Unread alert"></span>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-xs shrink-0">
+                  MS
+                </div>
+<div class="flex-1 min-w-0">
+<p class="text-body-sm font-body-sm text-on-surface leading-snug">
+<span class="font-semibold text-primary">Manish Sharma</span> mentioned you on <span class="font-semibold italic text-secondary">"Bridal entry umbrella coordination"</span>
+</p>
+<p class="mt-1 text-body-sm text-on-surface-variant bg-surface-container-low p-2 rounded-md border-l-2 border-secondary font-mono text-[11px] leading-relaxed">
+                    "@Pavithra Iyer Florist confirmed gold tassel accents will arrive by 8 AM."
+                  </p>
+<div class="mt-1.5 flex items-center gap-2 text-[11px] text-outline font-label-sm">
+<span>12 mins ago</span>
+<span>•</span>
+<span class="text-primary font-medium">Tasks</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2: Unread Financial -->
+<div class="p-3.5 hover:bg-surface-container-low/40 transition-colors cursor-pointer bg-primary-fixed/5 relative group">
+<div class="flex items-start gap-3">
+<span class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0" title="Unread alert"></span>
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs shrink-0">
+<span class="material-symbols-outlined text-sm" data-icon="payments">payments</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-body-sm font-body-sm text-on-surface leading-snug">
+<span class="font-semibold text-on-surface">Lakshmi Sundaram</span> recorded a payment of <span class="font-bold text-primary">₹1,80,000</span> to <span class="font-medium">Heritage Sound &amp; Light</span>
+</p>
+<div class="mt-1.5 flex items-center gap-2 text-[11px] text-outline font-label-sm">
+<span>1 hour ago</span>
+<span>•</span>
+<span class="text-secondary font-medium">Finance</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 3: Unread Vendor Note -->
+<div class="p-3.5 hover:bg-surface-container-low/40 transition-colors cursor-pointer bg-primary-fixed/5 relative group">
+<div class="flex items-start gap-3">
+<span class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0" title="Unread alert"></span>
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-tertiary flex items-center justify-center font-bold text-xs shrink-0">
+<span class="material-symbols-outlined text-sm" data-icon="storefront">storefront</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-body-sm font-body-sm text-on-surface leading-snug">
+<span class="font-semibold text-on-surface">Royal Decorators Co.</span> updated function responsibility notes for <span class="font-medium text-primary">Haldi mandap</span>
+</p>
+<div class="mt-1.5 flex items-center gap-2 text-[11px] text-outline font-label-sm">
+<span>3 hours ago</span>
+<span>•</span>
+<span class="text-on-surface-variant font-medium">Vendors</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 4: Read Item -->
+<div class="p-3.5 hover:bg-surface-container-low/40 transition-colors cursor-pointer opacity-75">
+<div class="flex items-start gap-3">
+<span class="w-2 h-2 rounded-full bg-transparent mt-1.5 shrink-0"></span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-xs shrink-0">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-body-sm font-body-sm text-on-surface leading-snug">
+                    Vedic Wedding Ceremony schedule updated to <span class="font-semibold">9:30 AM</span>
+</p>
+<div class="mt-1 flex items-center gap-2 text-[11px] text-outline font-label-sm">
+<span>Yesterday</span>
+<span>•</span>
+<span>Functions</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Popover Footer -->
+<div class="p-3 bg-surface-container-low border-t border-outline-variant/30 text-center">
+<a class="text-label-sm font-label-sm text-primary hover:text-primary-container font-semibold inline-flex items-center gap-1 group" href="#workspace-view">
+<span>View all notifications in workspace</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Avatar Anchor -->
+<div class="flex items-center ml-2 pl-2 border-l border-outline-variant/30">
+<div class="w-8 h-8 rounded-full bg-secondary/15 text-secondary border border-secondary/30 flex items-center justify-center font-bold text-xs">
+          PI
+        </div>
+</div>
+</div>
+</header>
+<!-- MAIN WORKSPACE CONTENT CANVAS (Behind & beneath popover) -->
+<main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8" id="workspace-view">
+<!-- Editorial Event Hero Banner with Palace Inspiration -->
+<div class="relative overflow-hidden rounded-2xl bg-surface-container-lowest border border-outline-variant/40 shadow-[0_1px_3px_rgba(32,42,41,0.04),0_4px_12px_rgba(32,42,41,0.02)]">
+<div class="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+<!-- Text Narrative Content -->
+<div class="lg:col-span-8 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+<div>
+<div class="flex flex-wrap items-center gap-2.5 mb-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-label-sm font-label-sm bg-primary/10 text-primary border border-primary/20 tracking-wider font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span>
+                LIVE RUN-OF-SHOW LOGISTICS
+              </span>
+<span class="text-label-sm text-on-surface-variant font-medium">Jodhpur Royal Heritage Edition</span>
+</div>
+<h1 class="text-display-lg-mobile md:text-headline-lg font-headline-lg text-primary tracking-tight font-medium">
+              Workspace Notifications &amp; Mentions
+            </h1>
+<p class="mt-2 text-body-lg font-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+              Audit trail, vendor assignment handoffs, budget authorisations, and critical run-of-show cues for the wedding celebrations.
+            </p>
+</div>
+<!-- Quick State Toggle Bar & Operational Timestamp -->
+<div class="mt-8 pt-6 border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Preview State:</span>
+<div class="inline-flex p-1 bg-surface-container rounded-lg border border-outline-variant/30 text-label-sm font-label-sm">
+<button class="px-2.5 py-1 rounded-md bg-surface-container-lowest text-primary font-semibold shadow-sm">Active Unread</button>
+<button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface transition-colors">Empty State</button>
+<button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface transition-colors">With Network Alert</button>
+</div>
+</div>
+<div class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>Syncing with 6 coordinators on ground</span>
+</div>
+</div>
+</div>
+<!-- Palace Heritage Visual Card (Image from Inspiration Context) -->
+<div class="lg:col-span-4 relative min-h-[220px] lg:min-h-full border-t lg:border-t-0 lg:border-l border-outline-variant/30 overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out" data-alt="A grand, sunlit sandstone courtyard of an authentic royal palace in Rajasthan with intricately carved arches, stone jali latticework, and fresh marigold garland decorations. A stylish couple in traditional bridal attire radiates regal warmth. The warm ivory, deep emerald green, and burnished copper color palette evokes dignified high-end celebration stationery and editorial hospitality luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJQK1XfQ0JuqOzn9WjGslTcKp_BfgGIKr4QVGgUpj_cswKtFIooIkzHdC3gm3ONzZMHOj7CRNpISwSwKcDTTWid8vrgboycQINx0Uh4PYo7ls3rxZJNz9VwKzR07zaO_jDOrnV0zOkEHWKhw9VBhIItvv-fz_hcMly36Q2tYMezcdF51rxSGRC_A2aS5EpeY-sMZbFWzYlWXNYyC5OMvMbDpQ4nAZVXGvCkaRNbQpD9L2QdiF1rACEzJT7djJIzu3PvPmw9bFRg54"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
+<span class="text-[11px] uppercase tracking-widest font-bold text-secondary-fixed">Heritage Venue Lead</span>
+<p class="text-sm font-headline-md italic font-light">Umaid Bhawan Central Courtyard Setup</p>
+</div>
+</div>
+</div>
+</div>
+<!-- GLANCE CARDS: 4-COLUMN BENTO METRICS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metric 1: Mentions -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] relative overflow-hidden group hover:border-secondary/40 transition-colors">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Unresolved Mentions</span>
+<div class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="alternate_email">alternate_email</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg text-on-surface font-semibold">5</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">Requires your review</span>
+</div>
+<p class="mt-1 text-body-sm text-on-surface-variant">Bridal entry, sangeet cue sheet, &amp; guest transport</p>
+<div class="absolute left-0 bottom-0 top-0 w-1 bg-secondary"></div>
+</div>
+<!-- Metric 2: Financials -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] relative overflow-hidden group hover:border-primary/40 transition-colors">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Financial Authorisations</span>
+<div class="w-8 h-8 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg text-primary font-semibold">₹3,40,000</span>
+</div>
+<p class="mt-1 text-body-sm text-on-surface-variant">2 vendor stage disbursements awaiting sign-off</p>
+<div class="absolute left-0 bottom-0 top-0 w-1 bg-primary"></div>
+</div>
+<!-- Metric 3: Vendor Sync -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Vendor Operational Sync</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="sync">sync</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg text-on-surface font-semibold">14 / 16</span>
+<span class="text-label-sm font-label-sm text-primary font-semibold">88% onboarded</span>
+</div>
+<p class="mt-1 text-body-sm text-on-surface-variant">Royal Decorators &amp; Sound team on schedule</p>
+</div>
+<!-- Metric 4: Run of Show Flags -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm font-bold text-on-surface-variant uppercase tracking-wider">Run of Show Flags</span>
+<div class="w-8 h-8 rounded-lg bg-error-container/40 text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="flag">flag</span>
+</div>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg text-on-surface font-semibold">1 Cue</span>
+<span class="text-label-sm font-label-sm text-error font-semibold">Vedic Muhurtham</span>
+</div>
+<p class="mt-1 text-body-sm text-on-surface-variant">Purohit arrival timing adjusted by 15 mins</p>
+</div>
+</div>
+<!-- MAIN NOTIFICATIONS WORKSPACE SECTION -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-[0_1px_3px_rgba(32,42,41,0.04),0_4px_12px_rgba(32,42,41,0.02)] overflow-hidden">
+<!-- Section Controls Bar: Tabs & Batch Actions -->
+<div class="p-4 sm:p-5 border-b border-outline-variant/30 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-bright/30">
+<!-- Filter Tabs -->
+<div class="flex flex-wrap items-center gap-1 sm:gap-2">
+<button class="px-3.5 py-1.5 rounded-lg text-label-md font-label-md font-semibold bg-primary-container text-white shadow-sm flex items-center gap-1.5">
+<span>Unread</span>
+<span class="px-1.5 py-0.2 rounded-full bg-white/20 text-white text-[10px]">3</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+            All Notifications (18)
+          </button>
+<button class="px-3.5 py-1.5 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1">
+<span>Mentions Only</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+            Finance &amp; Payments (6)
+          </button>
+</div>
+<!-- Quick Batch Actions -->
+<div class="flex items-center gap-2 self-end md:self-auto">
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md font-semibold text-primary hover:bg-primary/10 transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-base" data-icon="done_all">done_all</span>
+<span>Mark all as read</span>
+</button>
+<div class="h-4 w-px bg-outline-variant/40"></div>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+            Clear read alerts
+          </button>
+</div>
+</div>
+<!-- DETAILED NOTIFICATIONS RICH CARD FEED -->
+<div class="divide-y divide-outline-variant/30">
+<!-- Notification Card 1: Critical Mention -->
+<article class="p-5 sm:p-6 bg-primary-fixed/5 hover:bg-surface-container-low/40 transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-4 relative">
+<!-- Copper highlight cue for priority run-of-show handoff -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<div class="flex items-start gap-4">
+<!-- Actor Avatar -->
+<div class="w-11 h-11 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
+              MS
+            </div>
+<!-- Content Body -->
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-bold text-on-surface font-headline-sm text-base">Manish Sharma</span>
+<span class="text-body-sm text-on-surface-variant">mentioned you in a comment on</span>
+<a class="font-semibold text-primary hover:underline flex items-center gap-1 text-body-sm" href="#">
+<span>Task #104: Bridal entry floral umbrella</span>
+<span class="material-symbols-outlined text-xs" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+<!-- Mention Comment Box -->
+<div class="bg-surface-container-lowest p-3.5 rounded-lg border border-outline-variant/40 shadow-xs max-w-3xl">
+<p class="text-body-md text-on-surface leading-relaxed">
+<span class="text-secondary font-semibold">@Pavithra Iyer</span> Florist confirmed gold tassel accents will arrive by 8 AM. Can you verify if the heritage fabric drape matches the groom's sherwani dupatta?
+                </p>
+</div>
+<!-- Metadata & Tags -->
+<div class="flex flex-wrap items-center gap-3 pt-1 text-label-sm font-label-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-secondary/10 text-secondary border border-secondary/20">
+<span class="material-symbols-outlined text-xs" data-icon="church">church</span>
+                  Vedic Muhurtham
+                </span>
+<span class="text-on-surface-variant">Today, 11:24 AM IST</span>
+<span class="text-outline-variant">•</span>
+<span class="text-outline">Assigned to: Decor &amp; Production</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex sm:flex-col items-center sm:items-end gap-2 shrink-0 pt-2 sm:pt-0">
+<button class="px-3.5 py-1.5 rounded-lg bg-primary-container text-white text-label-md font-label-md font-semibold hover:bg-primary transition-colors shadow-xs">
+              View Task
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+              Mark as read
+            </button>
+</div>
+</article>
+<!-- Notification Card 2: Financial Authorization Sign-off -->
+<article class="p-5 sm:p-6 bg-primary-fixed/5 hover:bg-surface-container-low/40 transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex items-start gap-4">
+<div class="w-11 h-11 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
+              LS
+            </div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-bold text-on-surface font-headline-sm text-base">Lakshmi Sundaram</span>
+<span class="text-body-sm text-on-surface-variant">recorded vendor disbursement</span>
+<span class="font-semibold text-secondary text-body-sm">Heritage Sound &amp; Light</span>
+</div>
+<div class="bg-surface-container-lowest p-3.5 rounded-lg border border-outline-variant/40 shadow-xs max-w-3xl flex items-center justify-between gap-4">
+<div>
+<div class="text-headline-sm font-headline-sm text-primary font-bold">₹1,80,000</div>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Tranche 2: Sangeet acoustic rig &amp; courtyard architectural uplighters.</p>
+</div>
+<span class="px-2.5 py-1 rounded bg-primary/10 text-primary text-label-sm font-semibold uppercase tracking-wider">
+                  Payment Logged
+                </span>
+</div>
+<div class="flex flex-wrap items-center gap-3 pt-1 text-label-sm font-label-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-tertiary-fixed text-tertiary">
+<span class="material-symbols-outlined text-xs" data-icon="receipt_long">receipt_long</span>
+                  Invoice #HSL-2027-08
+                </span>
+<span class="text-on-surface-variant">Today, 10:15 AM IST</span>
+<span class="text-outline-variant">•</span>
+<span class="text-outline">Approved by: Finance Lead</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-center sm:items-end gap-2 shrink-0 pt-2 sm:pt-0">
+<button class="px-3.5 py-1.5 rounded-lg border border-secondary text-secondary hover:bg-secondary hover:text-white transition-colors text-label-md font-label-md font-semibold">
+              Review Invoice
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+              Mark as read
+            </button>
+</div>
+</article>
+<!-- Notification Card 3: Vendor Responsibility Adjustment -->
+<article class="p-5 sm:p-6 bg-primary-fixed/5 hover:bg-surface-container-low/40 transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-4 relative">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-outline-variant"></div>
+<div class="flex items-start gap-4">
+<div class="w-11 h-11 rounded-full bg-tertiary-fixed text-tertiary flex items-center justify-center font-bold text-sm shrink-0 shadow-sm">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-bold text-on-surface font-headline-sm text-base">Royal Decorators Co.</span>
+<span class="text-body-sm text-on-surface-variant">updated logistics blueprint for</span>
+<span class="font-semibold text-on-surface text-body-sm">Haldi Mandap Marigold Canopies</span>
+</div>
+<div class="bg-surface-container-lowest p-3.5 rounded-lg border border-outline-variant/40 shadow-xs max-w-3xl">
+<p class="text-body-md text-on-surface">
+                  "Yellow floral tassels load-in shifted to 6:30 AM to accommodate early soundcheck at Zenana Courtyard."
+                </p>
+</div>
+<div class="flex flex-wrap items-center gap-3 pt-1 text-label-sm font-label-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-xs" data-icon="deck">deck</span>
+                  Morning Haldi
+                </span>
+<span class="text-on-surface-variant">Today, 08:40 AM IST</span>
+<span class="text-outline-variant">•</span>
+<span class="text-outline">Vendor Operations</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-center sm:items-end gap-2 shrink-0 pt-2 sm:pt-0">
+<button class="px-3.5 py-1.5 rounded-lg border border-outline-variant/60 text-on-surface hover:bg-surface-container transition-colors text-label-md font-label-md font-semibold">
+              View Decor Plan
+            </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+              Mark as read
+            </button>
+</div>
+</article>
+<!-- Notification Card 4: Historical / Read Item -->
+<article class="p-5 sm:p-6 opacity-70 hover:opacity-100 hover:bg-surface-container-low/20 transition-all flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+<div class="flex items-start gap-4">
+<div class="w-11 h-11 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold text-sm shrink-0">
+<span class="material-symbols-outlined" data-icon="access_time">access_time</span>
+</div>
+<div class="space-y-1.5">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-bold text-on-surface font-headline-sm text-base">Run of Show Desk</span>
+<span class="text-body-sm text-on-surface-variant">published schedule revision</span>
+</div>
+<p class="text-body-md text-on-surface-variant">
+                Vedic Wedding Ceremony schedule updated to <strong class="text-on-surface">9:30 AM</strong> following consultation with Panditji regarding the Shubh Muhurat window.
+              </p>
+<div class="flex items-center gap-3 text-label-sm font-label-sm text-outline">
+<span>Yesterday at 4:18 PM IST</span>
+<span>•</span>
+<span>Functions Itinerary</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/40 text-on-surface-variant hover:text-on-surface text-label-md font-label-md font-medium">
+              View Timeline
+            </button>
+</div>
+</article>
+</div>
+<!-- Feed Pagination / Load More Footer -->
+<div class="p-4 sm:p-5 bg-surface-container-low border-t border-outline-variant/30 flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Showing 4 of 18 wedding notifications</span>
+<button class="px-4 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant/40 hover:bg-surface-container transition-colors text-label-md font-label-md font-semibold text-primary">
+          Load Historical Archive
+        </button>
+</div>
+</div>
+</main>
+<!-- Interactive Popover Behavior Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bellTrigger = document.getElementById('bell-trigger');
+      const popover = document.getElementById('notification-popover');
+
+      if (bellTrigger && popover) {
+        bellTrigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isHidden = popover.classList.contains('hidden');
+          if (isHidden) {
+            popover.classList.remove('hidden');
+            bellTrigger.setAttribute('aria-expanded', 'true');
+          } else {
+            popover.classList.add('hidden');
+            bellTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!popover.contains(e.target) && !bellTrigger.contains(e.target)) {
+            popover.classList.add('hidden');
+            bellTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    });
+  </script>
+</body></html>

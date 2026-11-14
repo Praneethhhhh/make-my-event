@@ -83,6 +83,17 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
         "membershipInvites",
         "emailOutbox",
         "idempotencyRecords",
+        "tasks",
+        "taskComments",
+        "notifications",
+        "vendors",
+        "vendorAssignments",
+        "vendorCharges",
+        "vendorPayments",
+        "expenses",
+  "expensePayments",
+        "accessLinks",
+        "portalSessions",
       ])
         await db.collection(name).deleteMany({});
       await provide(db);
@@ -98,6 +109,17 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
         "membershipInvites",
         "emailOutbox",
         "idempotencyRecords",
+        "tasks",
+        "taskComments",
+        "notifications",
+        "vendors",
+        "vendorAssignments",
+        "vendorCharges",
+        "vendorPayments",
+        "expenses",
+  "expensePayments",
+        "accessLinks",
+        "portalSessions",
       ])
         await db.collection(name).deleteMany({});
       await connection.close();

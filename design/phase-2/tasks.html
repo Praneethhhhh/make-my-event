@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event - Dedicated Tasks Management Workspace</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#9ed1c4",
+            "surface-dim": "#d1dcda",
+            "outline-variant": "#c0c8c5",
+            "on-primary-container": "#9bcec1",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#9ed1c4",
+            "on-surface-variant": "#404946",
+            "secondary": "#825339",
+            "surface-bright": "#f1fcfa",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201b",
+            "inverse-surface": "#283231",
+            "secondary-fixed-dim": "#f7b999",
+            "surface-container-highest": "#dae5e3",
+            "secondary-fixed": "#ffdbca",
+            "on-primary-fixed-variant": "#1d4f45",
+            "on-tertiary-fixed-variant": "#434842",
+            "inverse-on-surface": "#e8f3f1",
+            "on-surface": "#141d1c",
+            "tertiary-container": "#4d524c",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#321201",
+            "error": "#ba1a1a",
+            "primary-fixed": "#baeddf",
+            "on-tertiary-fixed": "#181d18",
+            "surface-container-low": "#ebf6f4",
+            "primary-container": "#28594f",
+            "on-secondary-fixed-variant": "#673c24",
+            "surface-tint": "#36675c",
+            "surface-container-high": "#dfeae8",
+            "surface": "#f1fcfa",
+            "background": "#f1fcfa",
+            "tertiary-fixed": "#dfe4dc",
+            "on-secondary-container": "#794b32",
+            "on-tertiary-container": "#c0c5bd",
+            "secondary-container": "#fdbe9e",
+            "on-error": "#ffffff",
+            "surface-container": "#e5f0ee",
+            "tertiary": "#363b36",
+            "outline": "#707976",
+            "on-background": "#141d1c",
+            "surface-variant": "#dae5e3",
+            "primary": "#0b4138"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Newsreader"],
+            "body-md": ["Manrope"],
+            "headline-md": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "label-lg": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "label-md": ["Manrope"],
+            "display-lg": ["Newsreader"],
+            "headline-sm": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "body-sm": ["Manrope"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c0c8c5;
+      border-radius: 4px;
+    }
+    .paper-shadow {
+      box-shadow: 0 1px 3px rgba(32, 42, 41, 0.04), 0 4px 12px rgba(32, 42, 41, 0.02);
+    }
+    .drawer-shadow {
+      box-shadow: 0 12px 32px -4px rgba(32, 42, 41, 0.08), 0 4px 12px -2px rgba(32, 42, 41, 0.04);
+    }
+  </style>
+</head>
+<body class="bg-[#F7F5F0] text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-secondary-container selection:text-on-secondary-fixed">
+<!-- TOP NAVIGATION BAR (Anchored Shell from Design System) -->
+<header class="sticky top-0 z-50 flex items-center justify-between w-full px-6 lg:px-8 py-3.5 bg-surface-container-lowest/95 backdrop-blur-sm shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<!-- Brand & Workspace Switcher -->
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-2">
+<span class="text-headline-md font-headline-md font-medium text-primary tracking-tight">Make My Event</span>
+</div>
+<div class="hidden sm:flex items-center text-outline-variant">
+<span class="text-xs">/</span>
+</div>
+<div class="hidden sm:flex items-center space-x-2.5 px-3 py-1.5 rounded-lg bg-[#DFE4DC]/50 border border-outline-variant/40">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold tracking-wide">Pavithra &amp; Manish · Feb 2027</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant cursor-pointer">unfold_more</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center space-x-8 font-label-md text-label-md">
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Overview</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Functions</a>
+<a class="border-b-2 border-primary text-primary font-semibold pb-1" href="#">Tasks</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Vendors</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Finance</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Team</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="#">Wedding details</a>
+</nav>
+<!-- Trailing Icon Actions & Profile -->
+<div class="flex items-center space-x-3.5">
+<button class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-[10px] font-bold text-on-secondary ring-2 ring-surface-container-lowest">3</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Help &amp; Documentation">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+<div class="h-5 w-px bg-outline-variant/40 mx-1"></div>
+<!-- User Menu -->
+<button class="flex items-center space-x-2.5 pl-1.5 pr-2 py-1 rounded-full hover:bg-surface-container-high/40 transition-colors group">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center shadow-sm">
+          PI
+        </div>
+<div class="hidden xl:flex flex-col text-left">
+<span class="font-label-md text-label-md font-semibold text-on-surface group-hover:text-primary transition-colors">Pavithra Iyer</span>
+<span class="text-[10px] text-on-surface-variant leading-none">Family Host Admin</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</button>
+</div>
+</header>
+<!-- SUBHEADER & CONTROLS SECTION -->
+<section class="w-full max-w-[1440px] mx-auto px-6 lg:px-8 pt-8 pb-5">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[#E6E4DC]">
+<div class="space-y-1.5 max-w-2xl">
+<div class="flex items-center space-x-3">
+<span class="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm uppercase bg-secondary-fixed/50 text-secondary border border-secondary/20">
+            Run-of-Show Logistics
+          </span>
+<span class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> 9 Total Active Tasks
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Wedding Tasks &amp; Run-of-Show Operations
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Assign responsibilities, track milestones across ceremony days, and coordinate family organizers with synchronized real-time backstage cue management.
+        </p>
+</div>
+<!-- Action & Switcher Controls -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- View Switcher -->
+<div class="inline-flex p-1 bg-[#DFE4DC]/60 rounded-xl border border-outline-variant/40">
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">view_list</span>
+<span>List View</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-lowest font-label-md text-label-md text-primary font-semibold shadow-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">view_kanban</span>
+<span>Kanban Board</span>
+</button>
+</div>
+<!-- Primary Action -->
+<button class="px-4 py-2 bg-primary text-on-primary rounded-[10px] font-label-lg text-label-lg font-semibold hover:bg-primary-container transition-all active:scale-[0.98] shadow-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ New Task</span>
+</button>
+</div>
+</div>
+<!-- FILTER BAR -->
+<div class="flex flex-wrap items-center justify-between gap-4 pt-4">
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Filter Member -->
+<div class="relative">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-[#E6E4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">group</span>
+<span>Assigned: <strong class="font-semibold text-primary">All 4 Members</strong></span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</button>
+</div>
+<!-- Filter Function -->
+<div class="relative">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-[#E6E4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">celebration</span>
+<span>Function: <strong class="font-semibold text-primary">All Events</strong></span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</button>
+</div>
+<!-- Filter Priority -->
+<div class="relative">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-[#E6E4DC] text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">flag</span>
+<span>Priority: <strong class="font-semibold text-primary">All</strong></span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</button>
+</div>
+<!-- Reset Button -->
+<button class="text-on-surface-variant hover:text-primary font-label-md text-label-md underline underline-offset-4 px-2 py-1">
+          Reset filters
+        </button>
+</div>
+<!-- Quick Metrics Counter -->
+<div class="flex items-center gap-4 text-body-sm font-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> 3 High Priority
+        </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span> 4 Completed
+        </span>
+</div>
+</div>
+</section>
+<!-- MAIN KANBAN BOARD & RIGHT-SIDE TASK INSPECTOR -->
+<main class="w-full max-w-[1440px] mx-auto px-6 lg:px-8 py-4 flex-1 pb-16">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- KANBAN BOARD CONTAINER (7 Columns on large screens when inspector is open) -->
+<div class="lg:col-span-7 xl:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- COLUMN 1: TO DO (3 Tasks) -->
+<div class="flex flex-col bg-[#F1EFEA]/70 rounded-2xl p-3.5 border border-[#E6E4DC]">
+<div class="flex items-center justify-between pb-3 px-1.5">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-outline-variant"></span>
+<h2 class="font-label-lg text-label-lg font-semibold text-on-surface">To Do</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest border border-[#E6E4DC] font-label-sm text-label-sm text-on-surface-variant">3</span>
+</div>
+<div class="space-y-3">
+<!-- Task 1 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border border-[#E6E4DC] paper-shadow hover:border-primary/40 transition-all cursor-pointer group">
+<div class="flex items-start justify-between gap-2 mb-2">
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-[#DFE4DC] text-on-surface-variant font-bold">
+                  Sangeet Gala
+                </span>
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-secondary-fixed/50 text-secondary border border-secondary/25 font-bold">
+                  High
+                </span>
+</div>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-snug mb-3">
+                Confirm acoustic mic check for Sangeet performances
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">calendar_today</span>
+<span class="text-xs">Feb 18</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-5 h-5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold flex items-center justify-center">MS</div>
+<span class="text-xs truncate max-w-[80px]">Manish S.</span>
+</div>
+</div>
+</article>
+<!-- Task 2 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border border-[#E6E4DC] paper-shadow hover:border-primary/40 transition-all cursor-pointer group">
+<div class="flex items-start justify-between gap-2 mb-2">
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-[#DFE4DC] text-on-surface-variant font-bold">
+                  Hospitality
+                </span>
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-[#DFE4DC] text-on-surface-variant font-bold">
+                  Medium
+                </span>
+</div>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-snug mb-3">
+                Coordinate guest welcome hampers at Leela lobby
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-on-surface-variant">calendar_today</span>
+<span class="text-xs">Feb 18</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-5 h-5 rounded-full bg-primary-container text-on-primary text-[10px] font-bold flex items-center justify-center">LS</div>
+<span class="text-xs truncate max-w-[80px]">Lakshmi S.</span>
+</div>
+</div>
+</article>
+<!-- Task 3 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border-l-[3px] border-l-secondary border border-[#E6E4DC] paper-shadow hover:border-primary/40 transition-all cursor-pointer group">
+<div class="flex items-start justify-between gap-2 mb-2">
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-[#DFE4DC] text-on-surface-variant font-bold">
+                  Muhurtham
+                </span>
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-error-container text-on-error-container border border-error/20 font-bold">
+                  Urgent
+                </span>
+</div>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-snug mb-3">
+                Inspect mandap floral canopy stability
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">calendar_today</span>
+<span class="text-xs font-semibold text-on-surface">Feb 19</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-5 h-5 rounded-full bg-primary text-on-primary text-[10px] font-bold flex items-center justify-center">PI</div>
+<span class="text-xs truncate max-w-[80px]">Pavithra I.</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- COLUMN 2: IN PROGRESS (2 Tasks - Includes Selected Task) -->
+<div class="flex flex-col bg-[#F1EFEA]/70 rounded-2xl p-3.5 border border-[#E6E4DC]">
+<div class="flex items-center justify-between pb-3 px-1.5">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<h2 class="font-label-lg text-label-lg font-semibold text-on-surface">In Progress</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed/40 border border-secondary/20 font-label-sm text-label-sm text-secondary font-bold">2</span>
+</div>
+<div class="space-y-3">
+<!-- Task 4 (ACTIVE / SELECTED STATE) -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border-2 border-primary ring-2 ring-primary/10 drawer-shadow transition-all cursor-pointer relative">
+<div class="absolute -top-2.5 right-3 bg-primary text-on-primary text-[10px] font-label-sm uppercase px-2 py-0.5 rounded-full tracking-wider">
+                Viewing
+              </div>
+<div class="flex items-start justify-between gap-2 mb-2">
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-secondary-fixed/50 text-secondary border border-secondary/20 font-bold">
+                  Phoolon Ki Chaadar
+                </span>
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-secondary-fixed/50 text-secondary border border-secondary/25 font-bold">
+                  Milestone
+                </span>
+</div>
+<h3 class="font-body-md text-body-md font-bold text-on-surface leading-snug mb-3">
+                Finalize bridal entry umbrella coordination
+              </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-3">
+                Coordinate with cousins and florist for the floral phoolon ki chaadar. Ensure handle grips are padded.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC] font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1 text-xs">
+<span class="material-symbols-outlined text-[15px]">chat_bubble_outline</span> 4
+                  </span>
+<span class="flex items-center gap-1 text-xs">
+<span class="material-symbols-outlined text-[15px]">alternate_email</span> 3
+                  </span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-5 h-5 rounded-full bg-primary text-on-primary text-[10px] font-bold flex items-center justify-center">PI</div>
+<span class="text-xs font-semibold">Pavithra I.</span>
+</div>
+</div>
+</article>
+<!-- Task 5 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border border-[#E6E4DC] paper-shadow hover:border-primary/40 transition-all cursor-pointer group">
+<div class="flex items-start justify-between gap-2 mb-2">
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-[#DFE4DC] text-on-surface-variant font-bold">
+                  Darbar Hall
+                </span>
+<span class="px-2 py-0.5 rounded-[6px] font-label-sm text-label-sm uppercase bg-secondary-fixed/50 text-secondary border border-secondary/25 font-bold">
+                  High
+                </span>
+</div>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-snug mb-3">
+                Verify generator backup for Darbar Hall sound system
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">attach_file</span>
+<span class="text-xs">1 diagram</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-5 h-5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold flex items-center justify-center">MS</div>
+<span class="text-xs truncate max-w-[80px]">Manish S.</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- COLUMN 3: COMPLETED (4 Tasks) -->
+<div class="flex flex-col bg-[#F1EFEA]/70 rounded-2xl p-3.5 border border-[#E6E4DC]">
+<div class="flex items-center justify-between pb-3 px-1.5">
+<div class="flex items-center space-x-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<h2 class="font-label-lg text-label-lg font-semibold text-on-surface">Completed</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest border border-[#E6E4DC] font-label-sm text-label-sm text-primary font-bold">4</span>
+</div>
+<div class="space-y-3 opacity-90">
+<!-- Completed Task 1 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border border-[#E6E4DC] paper-shadow hover:opacity-100 transition-all cursor-pointer">
+<div class="flex items-center space-x-2 text-primary mb-1.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold">Confirmed</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface/80 line-through leading-snug mb-2.5">
+                Finalize catering headcount with Leela banquet team
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-xs">By Pavithra</span>
+<span class="text-xs">Feb 16</span>
+</div>
+</article>
+<!-- Completed Task 2 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border border-[#E6E4DC] paper-shadow hover:opacity-100 transition-all cursor-pointer">
+<div class="flex items-center space-x-2 text-primary mb-1.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold">Ritual Ready</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface/80 line-through leading-snug mb-2.5">
+                Distribute priest ritual supply list to elders
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-xs">By Lakshmi</span>
+<span class="text-xs">Feb 15</span>
+</div>
+</article>
+<!-- Completed Task 3 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border border-[#E6E4DC] paper-shadow hover:opacity-100 transition-all cursor-pointer">
+<div class="flex items-center space-x-2 text-primary mb-1.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold">Locked</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface/80 line-through leading-snug mb-2.5">
+                Coordinate couple golden hour portrait slot
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-xs">By Manish</span>
+<span class="text-xs">Feb 14</span>
+</div>
+</article>
+<!-- Completed Task 4 -->
+<article class="bg-surface-container-lowest p-4 rounded-[14px] border border-[#E6E4DC] paper-shadow hover:opacity-100 transition-all cursor-pointer">
+<div class="flex items-center space-x-2 text-primary mb-1.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold">Paid &amp; Booked</span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface/80 line-through leading-snug mb-2.5">
+                Lock vintage car rental for Baraat entrance
+              </h3>
+<div class="flex items-center justify-between pt-2 border-t border-[#E6E4DC]/60 font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-xs">By Manish</span>
+<span class="text-xs">Feb 12</span>
+</div>
+</article>
+</div>
+</div>
+</div>
+<!-- TASK DETAIL INSPECTOR / SLIDE-OVER DRAWER (5 Columns on right) -->
+<aside class="lg:col-span-5 xl:col-span-5 bg-surface-container-lowest rounded-2xl border border-[#E6E4DC] drawer-shadow overflow-hidden flex flex-col">
+<!-- Inspector Top Header -->
+<div class="p-5 border-b border-[#E6E4DC] flex items-center justify-between bg-surface-bright/40">
+<div class="flex items-center space-x-3">
+<span class="px-2.5 py-0.5 rounded-[6px] text-label-sm font-label-sm uppercase bg-[#DFE4DC] text-on-surface font-semibold tracking-wider">
+              #RO-104
+            </span>
+<div class="flex items-center space-x-1.5 text-xs text-on-surface-variant font-label-md">
+<span>Muhurtham Ceremony</span>
+<span>·</span>
+<span class="text-secondary font-medium">Stage 03 Backstage</span>
+</div>
+</div>
+<div class="flex items-center space-x-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Copy Link">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="More Options">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Close Panel">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<div class="p-6 space-y-6 max-h-[calc(100vh-240px)] overflow-y-auto custom-scrollbar">
+<!-- Title & Editorial Heading -->
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight mb-2">
+              Finalize bridal entry umbrella coordination
+            </h2>
+<div class="flex flex-wrap items-center gap-2 pt-1">
+<!-- Status Pill -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed/50 text-secondary border border-secondary/25 text-label-sm font-label-sm font-bold uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                In Progress
+              </div>
+<!-- Priority Pill -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed/30 text-secondary border border-secondary/20 text-label-sm font-label-sm font-bold uppercase">
+<span class="material-symbols-outlined text-[14px]">flag</span>
+                Milestone / High
+              </div>
+</div>
+</div>
+<!-- Metadata Grid -->
+<div class="grid grid-cols-2 gap-4 p-4 rounded-xl bg-[#F7F5F0] border border-[#E6E4DC]">
+<div>
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Primary Owner</span>
+<div class="flex items-center space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary text-[10px] font-bold flex items-center justify-center">PI</div>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Pavithra Iyer</span>
+</div>
+</div>
+<div>
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-on-surface-variant block mb-1">Due Date &amp; Cue</span>
+<div class="flex items-center space-x-1.5 text-on-surface font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span>
+<span>19 Feb · 09:15 AM</span>
+</div>
+</div>
+</div>
+<!-- Description Section -->
+<div class="space-y-2">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-bold">Operational Brief</h3>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+              Coordinate with cousins and florist for the floral phoolon ki chaadar. Ensure handle grips are padded with raw silk ribbon and fresh tuberoses are misted 30 mins before the grand procession starts.
+            </p>
+</div>
+<!-- Visual Reference Image inspired by Jaipur Palace aesthetic -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-bold">Visual Reference &amp; Palette</h3>
+<span class="text-[11px] font-label-sm text-secondary font-semibold">Jaipur Courtyard Entry</span>
+</div>
+<div class="relative rounded-xl overflow-hidden border border-[#E6E4DC] group">
+<img class="w-full h-44 object-cover object-center group-hover:scale-[1.02] transition-transform duration-500" data-alt="An opulent Indian royal wedding couple standing in a historic sandstone Rajasthani palace courtyard with intricate arched jharokhas and marigold flower garlands. The bride wears a traditional crimson red and gold embroidered lehenga with delicate bridal jewelry and sheer veil, while the groom wears an ivory sherwani and regal turban. The scene is illuminated in warm golden-hour light with an elegant, warm-toned editorial atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzkWPU4dkLO3SxA9hTiaSK_YJKue1Bqpiy5lquu7IjD_YtA2D0bDct_7fbzCeU-gnWqyKc86PLV-qHJoMQKV-taZuy8nd4v4VdZ2qZ1ft2iXI75RvNkTbnhcJRBDimHtkY_61UCEMBj45iyAR9GYq4X7bCohq3OIIiA_iZmGnY_PD-h6En3WyLPml6hOLOFsrMxwU7nsvY89y1SJ9Uh2Axy29_7DKOnQ87t_t8IU9frGxWQaj3FxXoAcb29sJQLZRLKbTtcJI65Cs"/>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent p-3 text-white flex items-center justify-between">
+<span class="text-xs font-label-md">Entry walkway arches &amp; floral tone matching</span>
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+</div>
+</div>
+</div>
+<!-- ACTIVITY & REAL-TIME COMMENTS SECTION -->
+<div class="pt-4 border-t border-[#E6E4DC] space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-sm text-on-surface">Activity &amp; Team Mentions</h3>
+<span class="text-xs font-label-md text-on-surface-variant">3 Family Members Active</span>
+</div>
+<!-- Comment Thread -->
+<div class="space-y-3.5">
+<!-- Comment 1 -->
+<div class="flex items-start space-x-3 text-sm">
+<div class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">MS</div>
+<div class="flex-1 bg-[#F7F5F0] p-3.5 rounded-xl border border-[#E6E4DC] space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Manish Sharma</span>
+<span class="text-[11px] text-on-surface-variant">25m ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-normal">
+                    Spoke to the sound lead. The live Shehnai instrumental cue will fade out at 09:22 AM as the chaadar passes the middle marble arch.
+                  </p>
+</div>
+</div>
+<!-- Comment 2 -->
+<div class="flex items-start space-x-3 text-sm">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">LS</div>
+<div class="flex-1 bg-[#F7F5F0] p-3.5 rounded-xl border border-[#E6E4DC] space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Lakshmi Sundaram</span>
+<span class="text-[11px] text-on-surface-variant">10m ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-normal">
+<span class="text-primary font-semibold bg-primary-fixed-dim/30 px-1.5 py-0.5 rounded">@Pavithra Iyer</span> Four cousins have confirmed they will assemble at the east suite corridor by 08:45 AM sharp!
+                  </p>
+</div>
+</div>
+</div>
+<!-- ACTIVE TEAM @MENTION PICKER DROPDOWN (Shown Interactive) -->
+<div class="rounded-xl border border-secondary/40 bg-surface-container-lowest p-3 shadow-md space-y-2">
+<div class="flex items-center justify-between px-1 text-[11px] font-label-sm text-secondary font-bold uppercase tracking-wider">
+<span>Select Team Member to Cue</span>
+<span class="text-on-surface-variant lowercase font-normal">press ↑↓ to navigate</span>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between p-2 rounded-lg bg-[#F7F5F0] hover:bg-surface-container-high/60 cursor-pointer transition-colors">
+<div class="flex items-center space-x-2.5">
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary text-[10px] font-bold flex items-center justify-center">PI</div>
+<div>
+<span class="font-label-md text-label-md font-bold text-on-surface block leading-tight">Pavithra Iyer</span>
+<span class="text-[11px] text-on-surface-variant">Family Admin (Bride)</span>
+</div>
+</div>
+<span class="text-[11px] font-label-sm text-secondary border border-secondary/30 px-1.5 py-0.5 rounded bg-secondary-fixed/20 font-bold">@pavithra</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-[#F7F5F0] cursor-pointer transition-colors">
+<div class="flex items-center space-x-2.5">
+<div class="w-6 h-6 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-bold flex items-center justify-center">MS</div>
+<div>
+<span class="font-label-md text-label-md font-bold text-on-surface block leading-tight">Manish Sharma</span>
+<span class="text-[11px] text-on-surface-variant">Run-of-Show Lead (Groom)</span>
+</div>
+</div>
+<span class="text-[11px] font-label-sm text-on-surface-variant border border-outline-variant/40 px-1.5 py-0.5 rounded">@manish</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg hover:bg-[#F7F5F0] cursor-pointer transition-colors">
+<div class="flex items-center space-x-2.5">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary text-[10px] font-bold flex items-center justify-center">LS</div>
+<div>
+<span class="font-label-md text-label-md font-bold text-on-surface block leading-tight">Lakshmi Sundaram</span>
+<span class="text-[11px] text-on-surface-variant">Guest Hospitality Lead</span>
+</div>
+</div>
+<span class="text-[11px] font-label-sm text-on-surface-variant border border-outline-variant/40 px-1.5 py-0.5 rounded">@lakshmi</span>
+</div>
+</div>
+</div>
+<!-- Notification Notice -->
+<div class="flex items-start space-x-2 p-2.5 rounded-lg bg-[#DFE4DC]/40 border border-[#E6E4DC] text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5">mark_chat_unread</span>
+<p class="text-xs leading-normal">
+                Tagged members will receive an in-app workspace notification and instant SMS cue alert.
+              </p>
+</div>
+<!-- Comment Input Box -->
+<div class="border border-[#E6E4DC] rounded-xl p-3 bg-surface-container-lowest focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10 transition-all">
+<textarea class="w-full text-body-md font-body-md text-on-surface placeholder:text-on-surface-variant/60 border-0 focus:ring-0 p-0 resize-none bg-transparent" placeholder="Write a cue update or type @ to mention organizers..." rows="2">@Lakshmi Sundaram please make sure the florist has 2 extra spray bottles ready.</textarea>
+<div class="flex items-center justify-between pt-2.5 border-t border-[#E6E4DC] mt-2">
+<div class="flex items-center space-x-1.5">
+<button class="px-2.5 py-1 rounded text-label-sm font-label-sm text-primary hover:bg-[#DFE4DC]/40 flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[15px]">alternate_email</span>
+<span>Mention</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-[#DFE4DC]/40 transition-colors">
+<span class="material-symbols-outlined text-[16px]">attach_file</span>
+</button>
+</div>
+<button class="px-3.5 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
+                  Post Comment
+                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Inspector Footer -->
+<div class="p-4 border-t border-[#E6E4DC] bg-[#F7F5F0] flex items-center justify-between text-xs text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+            Auto-saved 2 mins ago
+          </span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-[#B98265] text-secondary font-label-md text-label-md font-semibold hover:bg-secondary hover:text-on-secondary transition-all">
+              Publish Cue Card
+            </button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- WORKSPACE STATUS BANNER FOOTER -->
+<footer class="w-full bg-surface-container-lowest border-t border-[#E6E4DC] py-3.5 px-6 lg:px-8 mt-auto text-on-surface-variant text-body-sm font-body-sm">
+<div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+<div class="flex items-center space-x-3">
+<span class="inline-flex items-center gap-1.5 text-xs text-primary font-semibold">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          Backstage Sync Online
+        </span>
+<span class="text-outline-variant">·</span>
+<span class="text-xs">Udaivilas Palace Grounds · Jaipur</span>
+</div>
+<div class="flex items-center space-x-6 text-xs font-label-md">
+<span>Ceremony Date: Feb 18–20, 2027</span>
+<a class="text-primary hover:underline" href="#">Download Master Schedule (PDF)</a>
+</div>
+</div>
+</footer>
+</body></html>

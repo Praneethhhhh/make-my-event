@@ -1,0 +1,30 @@
+# Organizer workspace redesign — approved implementation
+
+Approved 14 November 2026. This supersedes the 13 November operations screen composition and finance/task UX. Preserve the homepage, Functions and Team visual language; vendors have no access and discovery remains deferred.
+
+## Phases and acceptance
+
+1. **Contracts and designs.** Update PRD/system/database/API/tokens and generate coordinated Stitch references. Canonical shell is grouped desktop sidebar and mobile drawer, one Dashboard at the wedding root, bell beside account. Dashboard has separate task metrics, finance metrics and vendor-directory navigation only.
+2. **Task ownership and notifications.** Every new/edited task requires an active organizing-team owner. Vendor is optional independent context, never owner. Existing ownerless/vendor-only rows remain readable and marked Needs an owner until explicitly assigned. Inline title/description/comment mentions store user IDs and character ranges, validate active membership, support keyboard/touch suggestions and multiple recipients. Assignment, including self-assignment, notifies; newly added mentions notify; same-save assignment+mention combines; revision/event keys prevent duplicates. Retain archived function links unchanged.
+3. **Navigation and scalable screens.** Server-side search, My tasks, owner/function/priority/status filters, paginated rows and accurate counts; compact Kanban with accessible status controls. Focused side/full-screen task editor, task detail/comments and recipient-only inbox. No fetch-all choices/payment arrays for unrelated pages. Choice pickers search/page on server.
+4. **Manual vendors.** Name, category, phones, status, notes and chosen controlled accent color only. Remove function-assignment actions/endpoints from delivered API; preserve historical rows and tenant cascade. Legacy vendor colors stay neutral until chosen explicitly.
+5. **Unified finance.** Expense means a real cost/obligation with optional vendor. Separate full/partial payments support both vendor and non-vendor costs. Two views Expenses/Payments and Actual paid/Outstanding totals; no function spending breakdown. Vendor balances fetch only after explicit request. Corrections preserve original entries and reasons; all money uses safe integer INR paise, idempotency and serialized overpayment protection.
+6. **Compatibility/migration and verification.** Read old paid expenses as settled obligations plus virtual payments; read old vendor charges/payments through a source-aware adapter so existing totals/history remain correct without silently modifying retained data. New obligations use expenses modelVersion 2 and expensePayments. A guarded migration provides dry-run reconciliation, backup before apply and transactional selected-wedding conversion; verify only on isolated fixtures during implementation. Never auto-assign legacy task owners. Run affected domain/API/browser tests, including isolation, revoked membership, mentions, stale edits, finance concurrency/replay/migration and deletion cascade. Visually inspect actual 390/768/1440px routes, populated data, dialogs, focus and overflow. Full suite reserved for release milestone.
+
+## Quality rules
+
+White/ivory surfaces, forest primary, restrained function/vendor accents, Manrope readable management copy, selective Newsreader headings. Short labels, compact rows, purposeful whitespace. No giant stacked record cards, repeated dashboard lists, fake metrics or giant poetic management headings. Subtle motion honors reduced motion. Edits preserve drafts on errors; dialogs trap focus, close before navigation and restore trigger focus. Current sidebar selection is URL-local; dirty protection and tenant authority remain intact across tabs.
+
+## Data rules
+
+Canonical collection names remain documented. Add expensePayments to cascade inventory/isolation checks. Legacy expenses, vendorCharges and vendorPayments remain supported until explicitly migrated; exclude migrated source rows from adapters to avoid double count. Charge/payment source is server-resolved and same-wedding validated. New writes lock the wedding and revalidate current membership. Removal of a member preserves task history and marks their ownership unavailable. A new assignment requires an active member. Notifications are scoped to selected wedding and intended recipient; removed task/comment targets expose no body preview.
+
+## Current status
+
+- Phases 1–5: implemented and verified locally, awaiting user review. Stitch references, current contracts, shared shell, human ownership/events, inline mentions, server search/pagination/choices, minimal color-accented vendors and unified finance are delivered. Functions/Team content is preserved.
+- Phase 6: compatible legacy reads and optional backup/reconciled migration implemented. Twenty-eight distinct affected cases passed across focused runs/reruns, including migration and populated deletion isolation. Chrome flows at 390/768/1440px, focus/drafts/errors and screenshots were checked. See PROJECT_STATUS.md for exact evidence and limitations.
+- Remaining: user code/visual review and deployment. Migration of retained data is optional and has not been applied; no real email or production deployment was performed. Full-application, Vercel, load and exhaustive accessibility/browser checks remain separate release work.
+
+## Follow-up refinement - 14 November 2026
+
+Supersedes the earlier finance entry/control and bell-polling presentation. Use one Add entry with unpaid-cost/already-paid choices, atomic paid purchase, contextual expense payment and reasoned Remove. Give Tasks explicit All/My/owner scope, proper empty/filter states and a normal-flow conversation with locked mentions and bottom composer. Notifications use date-grouped compact rows and separate Unread/All empty states; replace periodic polling with coalesced selected-wedding activity/focus/count refresh. Paired-state Stitch boards are saved in design/operations-refinements. Verification evidence belongs in PROJECT_STATUS.

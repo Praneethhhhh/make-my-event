@@ -1,5 +1,10 @@
 # Make My Event — Canonical Implementation Tokens
 
+**14 November 2026 approved redesign:** Approved redesign: grouped 224px desktop sidebar/mobile dialog drawer; short 28–32px management headings, compact 14–16px rows, white panels and subtle dividers. Bell and account form one right-aligned group. Functions/Team content retains its design. Vendor accents use the existing controlled function palette on border/marker only. Task forms use focused side/full-screen panels and inline @ listboxes. Dashboard separates task/finance summaries; finance uses Expenses/Payments with on-demand balances. Use restrained 160–350ms motion and reduced-motion fallbacks. See [implementation plan](../docs/OPERATIONS_REDESIGN_PLAN.md).
+
+**14 November 2026 product decision:** Vendors have no application access: no portal, private URLs, capability sessions, self-service task completion or vendor/photographer uploads. Administrators and organizers maintain vendor contacts, responsibilities, task status, charges and payments internally. Guest invitation access is unchanged. Google Places discovery remains deferred. Any earlier design exports or historical test notes describing vendor access are superseded.
+
+
 **Status:** Approved visual direction consolidated for implementation. The original Stitch exports in `design/` remain source references. This file governs application styling when their generated CSS or prose disagree.
 
 ## Brand and usage
@@ -58,3 +63,12 @@ Retain the canonical palette and fonts. Marketing display headlines may scale fr
 ## Supplied artwork and motion — 13 November 2026
 
 Hero uses the centered universal celebration illustration with native eager JPEG rendering and whole-image contain framing; do not animate or clip its container. The palace scene contains detail to every edge and must keep its full 1200:896 aspect ratio. The centered wedding illustration belongs in the closing panel. Source pixels remain unchanged. Route headings slide into place and panels reveal without keying or remounting workspace children; the entire page and illustration container are excluded from compositing animations. Press feedback is short and cancellable. Content remains readable without animation or JavaScript. Reduced-motion preferences disable decorative navigation/reveal/press motion and stop the loading spinner.
+
+
+## Organizer workspace · 14 November 2026
+
+References: design/operations-redesign/{dashboard,tasks,finance}.{png,html}. Keep the existing brand mark, font variables and six function colors; generated estate labels/settings/prototype controls are not product requirements. Desktop sidebar is 224px, grouped Planning/People/Management; mobile/tablet drawer replaces it at 960px. Account actions form one right-aligned cluster. Management headings use selective Newsreader, 13–14px body/rows and 11–12px metadata, with 44px interaction targets. Use white/ivory surfaces, restrained forest actions, copper attention and thin vendor accent borders. List rows stay compact; Kanban columns can scroll within their region on narrow screens. Focused editors are right-side native dialogs up to 580px, full screen on small devices, with a translucent blurred backdrop, draft-discard protection and focus restoration. Entrance/hover motion stays subtle and honors prefers-reduced-motion. Do not copy sample numbers, extra vendor lists or unrequested controls from generated designs.
+
+## Minimal operations states - 14 November 2026
+
+Use design/operations-refinements for the refined discussion, filters, Finance and paired empty/populated Stitch references. Keep canonical ivory/forest/copper tokens rather than generated teal substitutions. Do not copy preview switchers, invented role badges, payment notifications, markdown promises or permission controls from generated boards. One primary action per header; flat date-grouped notification rows, readable 14-16px message bodies, inline mention highlights and a bottom composer. Separate no-data, no-filter-match, loading and recoverable error states. Finance has one Add entry action with two explicit choices; contextual existing-expense payment always shows its payee and remaining balance.

@@ -79,8 +79,8 @@ const privacy = [
     "Admins and organizers in the same wedding share tasks, guest records and finances. Only admins can invite team members or change their roles.",
   ],
   [
-    "What can vendors see?",
-    "A vendor’s private link shows their own assignments, function details and payment status.",
+    "How are vendor details managed?",
+    "Your organizing team maintains vendor contacts, responsibilities and payment records privately. Vendors do not have application access.",
   ],
 ];
 

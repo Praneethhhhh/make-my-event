@@ -8,6 +8,7 @@ export const weddingOwnedCollections = [
   "functions",
   "tasks",
   "taskComments",
+  "notifications",
   "guests",
   "functionInvitations",
   "vendors",
@@ -15,6 +16,9 @@ export const weddingOwnedCollections = [
   "vendorCharges",
   "vendorPayments",
   "expenses",
+  "expensePayments",
+  // Retain cleanup of legacy vendor capabilities; vendor routes are removed.
+  // These collections also belong to the future guest invitation feature.
   "accessLinks",
   "portalSessions",
   "photos",

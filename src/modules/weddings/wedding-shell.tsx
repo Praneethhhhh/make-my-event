@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { useWeddingScope } from "./wedding-scope";
 import "./wedding-selector.css";
+import { NotificationBell } from "@/modules/operations/notification-bell";
 
 export function WeddingHeader({ displayName }: { displayName: string }) {
   const scope = useWeddingScope();
@@ -114,95 +115,98 @@ export function WeddingHeader({ displayName }: { displayName: string }) {
           <span>Celebrate together</span>
         </div>
       </Link>
-      <div
-        className="account-dropdown"
-        ref={panel}
-        onBlur={(event) => {
-          if (
-            event.relatedTarget &&
-            !event.currentTarget.contains(event.relatedTarget as Node)
-          )
-            setOpen(false);
-        }}
-      >
-        <button
-          ref={trigger}
-          className="account-trigger"
-          aria-label="Account menu"
-          aria-expanded={open}
-          aria-controls={id}
-          onClick={() => {
-            setLoading(true);
-            setOpen((value) => !value);
+      <div className="wedding-header-actions">
+        <NotificationBell />
+        <div
+          className="account-dropdown"
+          ref={panel}
+          onBlur={(event) => {
+            if (
+              event.relatedTarget &&
+              !event.currentTarget.contains(event.relatedTarget as Node)
+            )
+              setOpen(false);
           }}
         >
-          <span className="account-avatar" aria-hidden="true">
-            {initials || "ME"}
-          </span>
-          <strong>{displayName}</strong>
-          <span
-            aria-hidden="true"
-            className={open ? "chevron is-open" : "chevron"}
-          >
-            ⌄
-          </span>
-        </button>
-        {open && (
-          <nav
-            id={id}
-            className="account-popover"
-            aria-label="Choose wedding"
-            onClick={(event) => {
-              if ((event.target as HTMLElement).closest("a")) setOpen(false);
+          <button
+            ref={trigger}
+            className="account-trigger"
+            aria-label="Account menu"
+            aria-expanded={open}
+            aria-controls={id}
+            onClick={() => {
+              setLoading(true);
+              setOpen((value) => !value);
             }}
           >
-            <Link
-              href="/account"
-              className="account-panel-heading"
-              aria-label="Your account profile"
+            <span className="account-avatar" aria-hidden="true">
+              {initials || "ME"}
+            </span>
+            <strong>{displayName}</strong>
+            <span
+              aria-hidden="true"
+              className={open ? "chevron is-open" : "chevron"}
             >
-              <strong>{displayName}</strong>
-              <span>Your account</span>
-            </Link>
-            <div className="account-menu-group">
-              <p>YOUR WEDDINGS</p>
-              {loading && <span role="status">Loading weddings…</span>}
-              {weddings.map((wedding) => (
-                <Link
-                  key={wedding.id}
-                  href={`/weddings/${wedding.id}`}
-                  aria-current={
-                    scope?.weddingId === wedding.id ? "page" : undefined
-                  }
-                >
-                  <span>{wedding.title}</span>
-                  <small>
-                    {wedding.role === "ADMIN" ? "Administrator" : "Organizer"}
-                    {scope?.weddingId === wedding.id ? " · Current" : ""}
-                  </small>
-                </Link>
-              ))}
-            </div>
-            <div className="account-menu-group">
-              <Link href="/weddings">
-                Your weddings <span aria-hidden="true">↗</span>
+              ⌄
+            </span>
+          </button>
+          {open && (
+            <nav
+              id={id}
+              className="account-popover"
+              aria-label="Choose wedding"
+              onClick={(event) => {
+                if ((event.target as HTMLElement).closest("a")) setOpen(false);
+              }}
+            >
+              <Link
+                href="/account"
+                className="account-panel-heading"
+                aria-label="Your account profile"
+              >
+                <strong>{displayName}</strong>
+                <span>Your account</span>
               </Link>
-              <Link href="/weddings/new">Create wedding</Link>
-              <Link href="/weddings/join">Join with code</Link>
-            </div>
-            <div className="account-menu-group">
-              <button onClick={() => void signOut()} disabled={busy}>
-                {busy ? "Signing out…" : "Sign out"}
-                <span aria-hidden="true">↪</span>
-              </button>
-            </div>
-            {error && (
-              <p role="alert" className="account-menu-error">
-                {error}
-              </p>
-            )}
-          </nav>
-        )}
+              <div className="account-menu-group">
+                <p>YOUR WEDDINGS</p>
+                {loading && <span role="status">Loading weddings…</span>}
+                {weddings.map((wedding) => (
+                  <Link
+                    key={wedding.id}
+                    href={`/weddings/${wedding.id}`}
+                    aria-current={
+                      scope?.weddingId === wedding.id ? "page" : undefined
+                    }
+                  >
+                    <span>{wedding.title}</span>
+                    <small>
+                      {wedding.role === "ADMIN" ? "Administrator" : "Organizer"}
+                      {scope?.weddingId === wedding.id ? " · Current" : ""}
+                    </small>
+                  </Link>
+                ))}
+              </div>
+              <div className="account-menu-group">
+                <Link href="/weddings">
+                  Your weddings <span aria-hidden="true">↗</span>
+                </Link>
+                <Link href="/weddings/new">Create wedding</Link>
+                <Link href="/weddings/join">Join with code</Link>
+              </div>
+              <div className="account-menu-group">
+                <button onClick={() => void signOut()} disabled={busy}>
+                  {busy ? "Signing out…" : "Sign out"}
+                  <span aria-hidden="true">↪</span>
+                </button>
+              </div>
+              {error && (
+                <p role="alert" className="account-menu-error">
+                  {error}
+                </p>
+              )}
+            </nav>
+          )}
+        </div>
       </div>
     </header>
   );

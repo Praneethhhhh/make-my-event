@@ -15,6 +15,7 @@ type Scope = {
   prefix: string;
   fetch: typeof fetch;
   markClean: () => void;
+  markDirty: () => void;
 };
 const Context = createContext<Scope | null>(null);
 export function useWeddingScope() {
@@ -28,6 +29,7 @@ export function useWeddingClient() {
       prefix: "/weddings",
       fetch: globalThis.fetch,
       markClean: () => {},
+      markDirty: () => {},
     }
   );
 }
@@ -48,6 +50,9 @@ export function WeddingScope({
     () => ({
       weddingId,
       prefix: `/weddings/${weddingId}`,
+      markDirty: () => {
+        dirty.current = true;
+      },
       markClean: () => {
         dirty.current = false;
       },
@@ -60,7 +65,7 @@ export function WeddingScope({
               : input.url;
         const path = new URL(inputPath, window.location.origin).pathname;
         const tenant =
-          /^\/api\/v1\/(wedding(?:$|\?)|functions(?:\/|$|\?)|members(?:\/|$|\?)|member-invitations(?:\/|$|\?))/.test(
+          /^\/api\/v1\/(wedding(?:$|\?)|functions(?:\/|$|\?)|members(?:\/|$|\?)|member-invitations(?:\/|$|\?)|(?:operations|tasks|vendors|vendor-charges|vendor-payments|expenses|finance|notifications)(?:\/|$|\?))/.test(
             path,
           ) && !path.endsWith("/redeem");
         const controller = new AbortController();
@@ -91,6 +96,16 @@ export function WeddingScope({
             dirty.current = false;
             setLost(true);
           }
+          if (
+            tenant &&
+            response.ok &&
+            !path.startsWith("/api/v1/notifications")
+          )
+            window.dispatchEvent(
+              new CustomEvent("mme-wedding-activity", {
+                detail: { weddingId },
+              }),
+            );
           return response;
         } finally {
           requests.current.delete(controller);
@@ -146,6 +161,11 @@ export function WeddingScope({
           ) {
             event.preventDefault();
             event.stopPropagation();
+            // A mobile navigation drawer must not cover the destination after
+            // the shared layout's discard confirmation completes.
+            document
+              .querySelector<HTMLDialogElement>(".workspace-drawer[open]")
+              ?.close();
             setDestination(url.pathname + url.search + url.hash);
             dialog.current?.showModal();
           }

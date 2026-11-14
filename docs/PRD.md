@@ -1,5 +1,12 @@
 # MAKE MY EVENT
 
+**14 November 2026 approved redesign:** The approved organizer workspace redesign uses one Dashboard, grouped navigation, mandatory human task owner plus optional vendor, inline @ mentions and assignment notifications including self-assignment, minimal color-accented vendors without function assignment, and unified actual-cost Expenses/Payments. Dashboard is metrics/navigation only; finance has no function breakdown and vendor balances load on explicit request. See [implementation plan](OPERATIONS_REDESIGN_PLAN.md).
+
+**14 November 2026 product decision:** Vendors have no application access: no portal, private URLs, capability sessions, self-service task completion or vendor/photographer uploads. Administrators and organizers maintain vendor contacts, responsibilities, task status, charges and payments internally. Guest invitation access is unchanged. Google Places discovery remains deferred. Any earlier design exports or historical test notes describing vendor access are superseded.
+
+
+**13 November Phase 2 scope amendment:** Google Places / nearby vendor discovery is deferred by the product owner, with no key/billing/search integration required now. Historical discovery requirements below are future reference only, not this phase's acceptance gate. Deliver manual vendors, shared tasks/List/Kanban/comments/mentions, actual expenses/charges/payments and operational dashboard. Mentions create in-app recipient-only notifications: bell unread count, unread default, All history, author/date/time/context navigation and read/unread controls. No notification email/push. See [the delivery plan](PHASE_2_OPERATIONS_PLAN.md).
+
 ## Product Requirements Document — Version 1.0
 
 **Status:** Approved-direction implementation baseline; production readiness subject to the release gates below  
@@ -11,7 +18,7 @@
 
 **12 November 2026 implementation amendment:** Multiple weddings per account and admin-revealed, manually shareable invitation codes are implemented. The rules below describe the delivered product contract; actual verification and remaining dependencies are recorded in PROJECT_STATUS.md. See [the delivery plan](MULTI_WEDDING_AND_INVITATION_CODES_PLAN.md) for UX, migration and acceptance gates.
 
-> **Product promise.** Make My Event lets a small wedding organizing team coordinate functions, tasks, actual expenses, vendor discovery and assignments, guest invitations and RSVPs, photographs, and livestream links. Admins and organizers use authenticated management tools; guests and vendors use private links with no accounts.
+> **Product promise.** Make My Event lets a small wedding organizing team coordinate functions, tasks, actual expenses, manual vendor records and assignments, guest invitations and RSVPs, photographs, and livestream links. Admins and organizers use authenticated management tools; guests use private links with no accounts.
 
 ## Account profile — 13 November 2026
 
@@ -25,9 +32,9 @@ Only an active administrator may permanently delete a wedding from Wedding detai
 
 ## 1. Summary and success criteria
 
-Make My Event is a focused, multi-tenant event-management application. Within a single wedding workspace, its administrators and organizers collaborate over the **same** operational records. A guest receives a unique invitation link (optionally sent via Resend email) and sees only invited functions. A vendor receives a unique restricted link and sees only assigned responsibilities and its own financial status. Both guest and vendor portals are mobile-first. The organizer experience is a responsive productivity dashboard.
+Make My Event is a focused, multi-tenant event-management application. Within a single wedding workspace, its administrators and organizers collaborate over the **same** operational records. A guest receives a unique invitation link (optionally sent via Resend email) and sees only invited functions. Vendors are managed internally by the organizing team and have no separate access. The guest portal is mobile-first. The organizer experience is a responsive productivity dashboard.
 
-**Release success:** The organizing team can create a wedding; add functions and team members; search nearby vendors and record selected vendors; assign and complete tasks; track expenses and vendor balances; send personalized invitations, collect function-specific RSVPs and send reminders; upload and share function-scoped photographs; and provide eligible livestream embeds. The production environment must satisfy the security, cost, and recovery gates in Sections 9–11.
+**Release success:** The organizing team can create a wedding; add functions and team members; maintain manual vendor records; assign and complete tasks; track expenses and vendor balances; send personalized invitations, collect function-specific RSVPs and send reminders; upload and share function-scoped photographs; and provide eligible livestream embeds. The production environment must satisfy the security, cost, and recovery gates in Sections 9–11.
 
 ## 2. Core product rules (binding)
 
@@ -37,32 +44,32 @@ Make My Event is a focused, multi-tenant event-management application. Within a 
 | CPR-02 | One wedding has multiple management members; multiple administrators and organizers are supported.                                                                                                                     |
 | CPR-03 | All administrators and organizers in the **same** wedding can view and update the same management records; no private task or expense partitions.                                                                      |
 | CPR-04 | Only administrators may invite/remove management members or change roles. The last active administrator cannot be removed.                                                                                             |
-| CPR-05 | Guests and vendors have **no accounts**; each recipient uses a high-entropy, individually revocable private URL.                                                                                                       |
+| CPR-05 | Guests have **no accounts** and use revocable private invitation URLs. Vendors have no accounts, private links or application access.                                                                                                       |
 | CPR-06 | One wedding contains several independently configurable functions. Each guest's function eligibility and RSVP are separate.                                                                                            |
 | CPR-07 | Wedding-owned records are isolated using the wedding's tenant identifier; client-side hiding is never the access-control mechanism.                                                                                    |
 | CPR-08 | The finance module records **actual expenses, agreed vendor charges, payments, and outstanding amounts only**; no budgeting.                                                                                           |
 | CPR-09 | Wedding organizers manage their own wedding; there is no professional planner/client workspace model.                                                                                                                  |
 | CPR-10 | Photographs become gallery-visible **without human approval**, only after technical validation. Organizers retain removal and recategorization powers.                                                                 |
-| CPR-11 | Vendor discovery uses **Google Places API (New)** only for nearby/text search. There are no booking, quotes, marketplace payments, or lead-management features.                                                        |
+| CPR-11 | Vendor discovery is deferred. If reintroduced, use **Google Places API (New)** only for nearby/text search. There are no booking, quotes, marketplace payments, or lead-management features.                                                        |
 | CPR-12 | Management authentication is **custom email/password** with secure server-side sessions; no third-party auth provider, Google OAuth, or mandatory signup email verification in v1.                                     |
 
 **Terminology note:** This product calls its parent workspace a _wedding_; the technical design may use a generic `eventId` for this same tenant boundary. One workspace is not one function.
 
 ## 3. User roles and permissions
 
-| Capability                                   | Administrator | Organizer              | Guest private link     | Vendor private link             |
-| -------------------------------------------- | ------------- | ---------------------- | ---------------------- | ------------------------------- |
-| Management login and full same-wedding data  | Yes           | Yes                    | No                     | No                              |
-| Add/remove or change management members      | Yes           | No                     | No                     | No                              |
-| Manage functions, schedules, and venues      | Yes           | Yes                    | View invited only      | View assigned only              |
-| Manage tasks and comments                    | Yes           | Yes                    | No                     | Complete own assigned tasks     |
-| Record expense and vendor payments           | Yes           | Yes                    | No                     | View own relevant balances only |
-| Search Places and save own vendor record     | Yes           | Yes                    | No                     | No                              |
-| Invite guests, configure RSVP, send emails   | Yes           | Yes                    | No                     | No                              |
-| RSVP independently per invited function      | N/A via role  | N/A via role           | Yes, until deadline    | No                              |
-| Upload function-scoped photos                | Yes           | Yes                    | If invited and allowed | Photographer permission only    |
-| Delete/recategorize gallery photos           | Yes           | Yes                    | No                     | No                              |
-| Edit wedding-wide and communication settings | Yes           | Yes, except membership | No                     | No                              |
+| Capability                                   | Administrator | Organizer              | Guest private link     |
+| -------------------------------------------- | ------------- | ---------------------- | ---------------------- |
+| Management login and full same-wedding data  | Yes           | Yes                    | No                     |
+| Add/remove or change management members      | Yes           | No                     | No                     |
+| Manage functions, schedules, and venues      | Yes           | Yes                    | View invited only      |
+| Manage tasks and comments                    | Yes           | Yes                    | No                     |
+| Record expense and vendor payments           | Yes           | Yes                    | No                     |
+| Maintain internal vendor records     | Yes           | Yes                    | No                     |
+| Invite guests, configure RSVP, send emails   | Yes           | Yes                    | No                     |
+| RSVP independently per invited function      | N/A via role  | N/A via role           | Yes, until deadline    |
+| Upload function-scoped photos                | Yes           | Yes                    | If invited and allowed |
+| Delete/recategorize gallery photos           | Yes           | Yes                    | No                     |
+| Edit wedding-wide and communication settings | Yes           | Yes, except membership | No                     |
 
 An authenticated account may create a wedding and become its first administrator, even when already a member of other weddings. Admins invite co-admins/organizers by recipient email and role, choosing manual code sharing or email delivery. They may explicitly reveal/copy an active invitation code, including after successful or failed email. The invitee registers/signs in with the intended email and enters the single-use code; having memberships elsewhere does not block joining. Possession of the admin-issued code grants invitation authority; neither a claimed email nor manual delivery establishes mailbox verification. Management invitation links remain unsupported. Roles and last-admin protection apply separately to each wedding.
 
@@ -88,37 +95,42 @@ An authenticated account may create a wedding and become its first administrator
 - The wedding start/end dates define the inclusive overall schedule in its selected time zone. Every active function’s start and optional end must fall within that range. Reject wedding date or zone changes that would exclude an active function; move or archive the affected function first.
 - A function requires an organizer-selected accent color when created or edited. Apply it to a restrained border/marker on a white card, not the entire card background. Keep visible card actions concise: Edit and Remove.
 - Each function has venue name, address, optional city/state, **latitude and longitude**, Google Maps directions URL and optional entry/landmark notes.
-- Show changes immediately to invited guests and assigned vendors. Organizers may edit after invitations were issued.
+- Show changes immediately to eligible invited guests and the organizing team. Organizers may edit after invitations were issued.
 
 **Acceptance:** Uninvited function data is not retrievable through guest endpoints. Coordinates use validated numeric ranges.
 
-### FR-03 — Shared organizer dashboard and settings
+### FR-03 — Organizer dashboard and navigation
 
-- Management dashboard shows approaching functions, assigned/pending/overdue tasks, actual paid spending, outstanding vendor payments, pending RSVPs, email problems and photo/storage usage.
-- Settings include wedding profile, organizers and administrators (admin-only membership controls), invitation theme/content, RSVP defaults, email/reminder preferences, private-link revocation and personal account settings.
-- All organizers see the **same wedding records**, regardless of who created them. Creator/assignee indicators can exist without establishing private visibility.
+- Wedding entry opens one Dashboard. Group desktop navigation into Planning (Dashboard, Functions, Tasks), People (Team, Vendors) and Management (Finance, Wedding details); use a keyboard-accessible drawer on smaller screens.
+- Tasks section contains open, overdue and my-open counts linking to server-filtered task views. A separate finance section shows actual paid and outstanding. Vendor section is an active count and directory link. Do not repeat task cards or a function chronology here.
+- Put the notification bell immediately beside the account/name menu. Existing account/wedding switching, profile, sign-out and unsaved-draft protections remain.
+- All organizers see the same selected wedding records; creator/owner does not create private task visibility. Future RSVP/media features do not add fabricated dashboard metrics now.
 
-### FR-04 — Tasks
+### FR-04 — Tasks and team notifications
 
-- Create/edit/delete function or wedding-wide tasks, assignees (organizer/vendor), due dates, priority, description, comments, @mentions and status.
-- Toggle List/Kanban views with the same backing data; statuses **To Do / In Progress / Completed**.
-- Vendor private links expose only explicitly assigned vendor tasks; vendors may mark their own assigned tasks complete, not edit arbitrary tasks.
-- Overdue and upcoming tasks appear in the dashboard, without external push alerts.
+- New and edited tasks require one active organizing-team owner (administrator or organizer). Default a new task to the current user; legacy ownerless/vendor-only records remain readable as Needs an owner until explicitly reassigned. A vendor is separate optional context and cannot own a task.
+- Support wedding-wide or active function links, due dates in wedding time zone, priority, description and To Do/In Progress/Completed status. An unchanged archived-function reference is retained when editing.
+- Use compact List/Kanban views backed by server-side search, owner/function/priority/status filters, My tasks, bounded pagination and full-result counts. Search/page choices instead of limiting them to an initial batch.
+- Title, description and comments support inline @ selection of multiple team members with keyboard/touch controls. Store stable recipient IDs and text ranges. Assignment, including self-assignment, and newly added task mentions notify atomically; combine same-save assignment and mention to one recipient. Unchanged mentions and idempotent retries do not notify again. Existing comment notification deduplication remains.
+- Bell shows unread count. Inbox defaults to unread and offers All history, read/unread controls, author, time and a link to the task/comment. Removed targets show no body preview. No email or push for these events.
 
-### FR-05 — Expense-only tracking and vendor payments
+### FR-05 — Expenses and payments
 
-- Record standalone paid expenses with description, date, amount, currency, function and optional vendor reference.
-- Record vendor agreed charges and separate partial payments/advances with date, amount and optional note.
-- Display **actual paid total**, function totals, vendor payment history, and **outstanding = agreed charges − recorded payments**.
-- Never double count a vendor payment as both a separate expense and a payment against a charge.
-- No budget targets, function allocations, forecasting, split-bill settlement, or payment gateway.
-- Finances are visible to every admin/organizer in the wedding; vendors see only their own agreed/paid/due totals.
+- An expense is an actual agreed cost/invoice, with category, description, amount and optional vendor. It can be non-vendor. No budget or estimated-spending feature.
+- Record separate full/partial payments against either kind of expense; show its remaining balance before submission. Track integer INR paise and reject concurrent overpayment under the wedding transaction lock. Retried submissions do not duplicate entries.
+- Provide separate Expenses and Payments views and Actual paid/Outstanding summaries. Remove paid-by-function and the old vendor-charge/payment tab split. Vendor balances load only after explicit request, with loading/error/refresh/pagination.
+- Corrections require a reason and retain the original plus correction history; replacement entries are separate. An expense with posted payments must have those payments corrected first.
+- Preserve legacy paid expenses as settled obligations/payments and old vendor charges/payments through compatible reads. Migration is optional, reviewed, backed up and reconciled; never silently convert retained records.
 
-### FR-06 — Vendor directory, discovery and restricted portals
+### FR-06 — Manual vendor directory (discovery deferred)
 
-**Managed vendors.** Organizers manually maintain vendor name, category, contact numbers, optional email, notes, assigned functions, responsibilities, agreed amount and payments. Vendor link grants read access to only that vendor's assignments, schedules, venue and own payment status, plus completion of assigned tasks. Photographers may additionally upload media to authorized functions.
+Current fields are vendor name, category, one to five phone numbers, active/inactive status, internal notes and a required controlled accent color (Forest, Copper, Marigold, Rose, Plum, Slate). Show a narrow card border/marker, never a full color fill. Keep searching/editing; no email form, function-assignment action, directory financial totals or vendor access. Existing missing colors stay neutral until explicitly chosen.
 
-**Google Places discovery (new).** Within the organizer portal, a user may:
+**Deferred discovery reference:**
+
+**Managed vendors.** Organizers manually maintain vendor name, category, contact numbers, optional email, notes, assigned functions, responsibilities, agreed amount and payments. Only administrators and organizers can view and maintain these internal records. No vendor link, portal or photographer capability is provided.
+
+**Google Places discovery — deferred, future reference only.** Within the organizer portal, a user may:
 
 1. Choose a function venue's coordinates or enter a manual search location; choose a distance radius and category/keyword.
 2. Search nearby vendors using **Places API (New) Nearby Search** and, for types not represented well by Places categories, **Text Search (New)**.
@@ -127,7 +139,7 @@ An authenticated account may create a wedding and become its first administrator
 
 Vendor discovery **does not** imply booking, offers, quotation collection, price comparisons, Google reviews storage, or live vendor messaging. The Places API requires billing enabled, quotas, a restricted API key, field masks, appropriate attribution, and data retention compliant with Google policy. Persist place IDs, not copied or bulk-cached Google Places profiles; details shown from Google are fetched when necessary and should not be saved into the internal vendor record as long-lived Google-derived content.
 
-**Acceptance:** Search errors and exhausted API quota yield a clear message and do not prevent manual vendor entry. Search requests enforce per-wedding quotas and cannot be called from anonymous guest/vendor links.
+**Current acceptance:** Manual vendor management works without a discovery service or vendor access. The historical discovery behavior above is outside the current release scope.
 
 ### FR-07 — Guest recipients and unique invitations
 
@@ -159,7 +171,7 @@ Vendor discovery **does not** imply booking, offers, quotation collection, price
 
 ### FR-11 — Photographs, direct upload and galleries (NO human moderation)
 
-- Admins, organizers, invited guests and authorized photographer-vendors may upload photos scoped to permitted functions.
+- Admins, organizers and eligible invited guests may upload photos scoped to permitted functions.
 - **No organizer approval/rejection queue.** After size/type/content safety checks and successful storage finalization, a valid photo is gallery-visible immediately to eligible recipients.
 - Organizers may delete or move a photo between functions; each move immediately changes who can see it. Guest upload permission may be disabled per invitation while viewing remains enabled.
 - Compress images to high-quality web formats, use private R2 storage, short-lived access URLs, gallery pagination, no public bucket, strict upload limits, and safe failure/retry behavior.
@@ -172,22 +184,22 @@ Vendor discovery **does not** imply booking, offers, quotation collection, price
 
 ## 5. Primary screens
 
-| Management (authenticated)                      | Private guest                                     | Private vendor                   |
-| ----------------------------------------------- | ------------------------------------------------- | -------------------------------- |
-| Register/Login/Recovery, Wedding Setup          | Personalized invitation                           | Assignments and function details |
-| Dashboard, Functions, Schedules, Venues         | Function schedule, countdown, maps                | Own payment summary              |
-| Tasks List/Kanban, Expense Tracker              | RSVP per function                                 | Complete assigned task           |
-| Vendors, Nearby Discovery, Vendor Detail        | Approved-to-display photo gallery (no moderation) | Photographer upload (authorized) |
-| Guests, RSVPs, Email Sending & Reminders        | Upload photos (if permitted)                      | Invalid/revoked link state       |
-| Gallery Management, Invitation Themes, Settings | YouTube livestream                                |                                  |
+| Management (authenticated)                      | Private guest                                     |
+| ----------------------------------------------- | ------------------------------------------------- |
+| Register/Login/Recovery, Wedding Setup          | Personalized invitation                           |
+| Dashboard, Functions, Schedules, Venues         | Function schedule, countdown, maps                |
+| Tasks List/Kanban, Expense Tracker              | RSVP per function                                 |
+| Manual Vendors, Vendor Detail        | Approved-to-display photo gallery (no moderation) |
+| Guests, RSVPs, Email Sending & Reminders        | Upload photos (if permitted)                      |
+| Gallery Management, Invitation Themes, Settings | YouTube livestream                                |
 
 ## 6. Critical end-to-end user journeys
 
 **J1 — Onboard:** user registers/signs in → Your weddings selector → creates a wedding as its first admin or joins another using a manually shared/emailed single-use code → selects the wedding to open → collaborates with its team. Accounts may repeat create/join for several weddings, with independent roles and tab-local switching.
 
-**J2 — Find and manage a vendor:** organizer selects venue coordinates/category → Google Places returns attributed live results → organizer selects a place ID and enters an internal vendor record → assigns functions and responsibilities → copies restricted vendor link → vendor views details and completes assigned tasks.
+**J2 — Manage a vendor:** organizer enters a manual vendor record → records function responsibilities and tasks → updates progress internally. Vendor discovery is deferred and vendors have no access.
 
-**J3 — Record spending:** organizer creates vendor charge and partial payments → paid and due totals update across the organizer dashboard and that vendor's private portal; vendor cannot edit payments.
+**J3 — Record spending:** organizer creates vendor charge and partial payments → paid and due totals update in the shared organizer dashboard and internal vendor records.
 
 **J4 — Invite and RSVP:** organizer creates guest recipient and selects functions, limits, deadlines → copies URL or queues a Resend email → guest opens link without account → accepts or declines each invited function and enters headcount → counts update → organizer sees pending RSVPs.
 
@@ -197,15 +209,15 @@ Vendor discovery **does not** imply booking, offers, quotation collection, price
 
 ## 7. Quality, security and operations requirements
 
-- **Isolation:** every management query and mutation includes server-derived tenant context; guest/vendor links receive narrowly scoped authorization. Automated tests must attempt cross-tenant access.
+- **Isolation:** every management query and mutation includes server-derived tenant context; guest links receive narrowly scoped authorization. Automated tests must attempt cross-tenant access.
 - **Custom auth:** passwords protected by Argon2id (or comparably accepted secure password hashing), generic login errors, login/signup throttling, secure opaque database sessions, `HttpOnly`, `Secure`, `SameSite` cookies, CSRF protection, rotation and revocation. No verification email during registration; do not infer identity solely from address.
-- **Tokens:** guest/vendor/join tokens use cryptographically random entropy, hashing at rest, rotation/revocation, expiration as appropriate, no logging of secrets; short-lived cookie-scoped access after opening a private URL where possible.
+- **Tokens:** guest/join tokens use cryptographically random entropy, hashing at rest, rotation/revocation, expiration as appropriate, no logging of secrets; short-lived cookie-scoped access after opening a private URL where possible.
 - **Rate limiting:** server-side shared persistence across Vercel invocations; IP + account/link + wedding quotas, with strong limits for login, anonymous RSVP, uploads, discovery and email.
 - **Files:** private R2 with short-lived upload/download URLs, MIME/signature/size checks, post-upload finalization, quarantine until technical validation is complete, ownership verification, storage quotas and cleanup of orphans.
 - **External service failures:** graceful UI errors for Maps, Resend, R2 and MongoDB outages; no false success claims.
 - **Reliability:** idempotent RSVP mutations and email-job claims; atomic updates, suitable transaction use for financial correctness, indexes, migrations, backup/restore procedure.
 - **Observability:** structured application logs and an application-maintained audit collection; no mandatory third-party monitoring/observability service in v1. Never log email secrets, cookies or access-link tokens.
-- **Performance and accessibility:** responsive guest/vendor mobile-first design, efficient desktop management, pagination and lazy-loaded photos, WCAG-informed contrast/forms, meaningful empty/error states; target good Core Web Vitals and test at intended load.
+- **Performance and accessibility:** responsive guest mobile-first design, efficient desktop management, pagination and lazy-loaded photos, WCAG-informed contrast/forms, meaningful empty/error states; target good Core Web Vitals and test at intended load.
 - **Service quotas and legal:** respect Resend quota; Maps billing/quota and attributions; free-tier usage caps; Vercel Hobby personal/noncommercial use; privacy policy and Terms including Google requirements; remove/export individual data when needed.
 
 ## 8. Out of scope by choice
@@ -219,13 +231,13 @@ The six phases are sequential **engineering milestones**, not six public launche
 | Phase                                          | Scope                                                                                                                                                                                                                 | Exit gate                                                                                                                                          |
 | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **1. Foundation & tenancy**                    | Next.js monolith; TypeScript; Mongo/Mongoose; custom auth/sessions; multiple wedding memberships and selector/switcher; manual/email admin invitation codes with controlled reveal; functions and settings foundation | Multi-wedding/tab isolation, per-wedding roles/revocation, code lifecycle and last-admin tests pass; existing wedding/functions CRUD remains valid |
-| **2. Organizer operations & vendor discovery** | Shared dashboard; tasks List/Kanban/comments; actual expenses and payments; vendor directory and private vendor links; Google Places nearby/text search with quotas & attribution; venue coordinates                  | Payment totals correct; vendor access scoped; Places failures gracefully fall back to manual vendor entry                                          |
+| **2. Organizer operations** | Shared dashboard; tasks List/Kanban/comments/mentions; in-app notification inbox; actual expenses and payments; manual manual vendor directory and internal responsibilities; venue coordinates                  | Payment totals correct; tasks/mentions and notification privacy verified; vendor records restricted to authorized management                                          |
 | **3. Guest invitation & RSVP**                 | Guest records, unique private links, invitations, themed baseline, function eligibility, RSVP limits/deadlines, dashboard counts                                                                                      | No-login link works; invalid/revoked links blocked; function isolation and RSVP validation pass                                                    |
 | **4. Email delivery & daily jobs**             | Resend invitations; Mongo outbox; immediate small batches; Vercel daily cron; manual and automatic pending-RSVP reminders; settings, dedupe, retries, quotas                                                          | End-to-end delivery, no-duplicate and quota tests pass; pending-only reminder logic works                                                          |
 | **5. Photos & visual experience**              | Editable predefined themes, compressed R2 uploads, immediate technical-validated publication, gallery permissions, organizer delete/retag, YouTube embeds, mobile polish                                              | Private media access and function reassignment tests pass; gallery and livestream work on mobile                                                   |
 | **6. Production hardening & launch**           | Threat-model review, abuse and load tests, email/Places quota drills, backups and restore test, logs, accessibility, staging smoke tests, deployment & documentation                                                  | All critical release gates passed, no known critical security issues, live configuration and recovery validated                                    |
 
-**Risk discipline:** Phase 2 vendor discovery is a paid-service dependency even if usage remains inside free monthly thresholds. If Maps billing is unavailable, the vendor-directory functionality remains usable; the Places search portion is feature-flagged off rather than blocking the whole release.
+**Scope decision (13 November):** Vendor discovery is deferred until the product owner chooses to revisit it. No Places billing, key, feature flag or search implementation is required for Phase 2. Manual vendor management is independent.
 
 ## 10. Production acceptance / release gates
 
@@ -233,15 +245,15 @@ The six phases are sequential **engineering milestones**, not six public launche
 - [ ] Signup/login/password reset and secure session revoke work without a third-party auth service or signup email confirmation.
 - [ ] Single-use invitation codes delivered manually or by email control joining; admin-only reveal/management, recipient binding and invalid-state rejection work without relying on email delivery.
 - [ ] Accounts select and switch among their weddings; independent tab context, per-wedding roles, revocation and last-admin guards pass isolation and concurrency tests.
-- [ ] Functions, task list/Kanban, comments and vendor completion work together.
+- [ ] Functions, task list/Kanban, comments and organizer-managed vendor responsibilities work together.
 - [ ] Expenses and payments are accurate and never double counted.
-- [ ] Nearby vendor search works within configured Places quotas, shows required attribution and stores only permitted references.
+- Deferred: nearby vendor search and its billing/attribution requirements; not a current release gate.
 - [ ] Guest links work without accounts; per-function eligibility, headcount limits, RSVP deadlines and revocation are enforced server-side.
 - [ ] Personalized emails contain correct private links; queued/failed/sent states and retries are accurate; pending-only reminders run daily within quotas.
 - [ ] Photo upload produces private, technically validated media that is immediately visible only to eligible invited functions; organizer deletion/retag works.
 - [ ] Unauthorized users cannot retrieve private R2 objects or reveal signed media URLs through API routes.
 - [ ] Basic logs and audit events work without leaking credentials; backups can be restored.
-- [ ] Google Places billing guardrails, privacy policy and Terms are ready; Vercel plan use aligns with product operation.
+- [ ] Privacy policy and Terms are ready; Vercel plan use aligns with product operation. Google Places billing guardrails apply only if discovery is reintroduced.
 - [ ] All critical flows pass browser-based end-to-end tests on mobile and desktop.
 
 ## 11. Approved implementation direction and remaining limits
@@ -261,3 +273,9 @@ The following implementation direction is approved: the RSVP deadline defaults a
 - OWASP sessions: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
 
 **End of Product Requirements Document — Make My Event v1.0**
+
+## Operations simplicity amendment - 14 November 2026
+
+Finance has one Add entry action: A cost to pay later creates an obligation; Something already paid records a fully paid purchase and its expense together. Existing expenses offer contextual Record payment with read-only expense, vendor/direct context and remaining balance. Expenses and Payments are separate views with concise explanations. Remove replaces the ambiguous Correct label; it requires a reason and preserves the original history. Payments must be removed before removing their expense. No budgeting or vendor accounts are introduced.
+
+Tasks distinguish All team tasks, My tasks and a selected owner explicitly. Empty boards and zero filter matches have different guidance. Selected mentions remain committed while continuing a sentence; a fresh unresolved @ opens organizer suggestions. Saved messages use readable inline mentions, chronological comments and a composer below the thread. Notifications use compact date-grouped rows, Unread/All history views and separate empty/loading states. The bell refreshes after successful selected-wedding API activity, focus/visibility return and notification changes, without recurring polling. Idle updates are not instant; the inbox has explicit refresh.

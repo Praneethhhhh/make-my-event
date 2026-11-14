@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event · Dashboard</title>
+<!-- Google Fonts: Newsreader (Editorial Serif) & Manrope (Grotesque Mono/Sans) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS via CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config verbatim matching System Tokens -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface": "#f1fcfa",
+            "secondary-fixed": "#ffdbca",
+            "outline": "#707976",
+            "surface-tint": "#36675c",
+            "tertiary-fixed": "#d8e5e2",
+            "on-secondary-container": "#794b32",
+            "surface-container-highest": "#dae5e3",
+            "on-error": "#ffffff",
+            "surface-bright": "#f1fcfa",
+            "outline-variant": "#c0c8c5",
+            "on-secondary-fixed-variant": "#673c24",
+            "on-tertiary-container": "#b9c6c3",
+            "secondary-fixed-dim": "#f7b999",
+            "on-primary-fixed-variant": "#1d4f45",
+            "on-tertiary-fixed-variant": "#3d4947",
+            "primary-fixed-dim": "#9ed1c4",
+            "on-background": "#141d1c",
+            "surface-container-lowest": "#ffffff",
+            "secondary": "#825339",
+            "error-container": "#ffdad6",
+            "tertiary": "#303c3a",
+            "surface-container": "#e5f0ee",
+            "tertiary-container": "#475351",
+            "background": "#f1fcfa",
+            "on-primary": "#ffffff",
+            "surface-container-low": "#ebf6f4",
+            "inverse-primary": "#9ed1c4",
+            "inverse-on-surface": "#e8f3f1",
+            "primary-fixed": "#baeddf",
+            "on-surface-variant": "#404946",
+            "on-primary-fixed": "#00201b",
+            "primary": "#0b4138",
+            "primary-container": "#28594f",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#283231",
+            "on-error-container": "#93000a",
+            "on-surface": "#141d1c",
+            "tertiary-fixed-dim": "#bdc9c6",
+            "surface-dim": "#d1dcda",
+            "surface-container-high": "#dfeae8",
+            "on-tertiary-fixed": "#121e1c",
+            "on-primary-container": "#9bcec1",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#321201",
+            "surface-variant": "#dae5e3",
+            "secondary-container": "#fdbe9e"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-desktop": "1.5rem",
+            "margin": "1rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "margin-desktop": "2rem",
+            "space-lg": "1.25rem",
+            "space-md": "0.75rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "body-lg": ["Manrope"],
+            "data-mono": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "label-md": ["Manrope"],
+            "body-sm": ["Manrope"],
+            "title-md": ["Manrope"],
+            "body-md": ["Manrope"],
+            "headline-sm": ["Newsreader"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "30px", "fontWeight": "500" }],
+            "body-lg": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "data-mono": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["20px", { "lineHeight": "26px", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Subtle paper card elevation */
+    .sheet-tier-1 {
+      background-color: #ffffff;
+      border: 1px solid #c0c8c5;
+      box-shadow: 0 1px 3px rgba(32, 42, 41, 0.04), 0 2px 6px rgba(32, 42, 41, 0.02);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased font-body-md min-h-screen flex selection:bg-primary selection:text-white">
+<!-- ==================== PERSISTENT LEFT SIDEBAR (224px / w-56) ==================== -->
+<aside class="w-56 h-screen flex flex-col justify-between p-4 border-r border-outline-variant bg-surface fixed top-0 left-0 z-30 select-none">
+<div class="flex flex-col gap-6">
+<!-- Brand Crest & Header -->
+<a class="flex items-center gap-2.5 px-2 group cursor-pointer" href="/weddings" title="Make My Event - Family Planner Suite">
+<img alt="Wedding crest insignia" class="w-7 h-7 object-contain group-hover:scale-105 transition-transform duration-150" src="https://lh3.googleusercontent.com/aida/ALJJyrAtpWwdsy0b-jtE-M3fZk749bEjVpPTWV6ddkP1ZvYk6BVUBPTTSAElGSLiK4DN7AD4nOVcE-hdX-gJtUzD64IyneLpe1QknYz-dg1W4U3YT7KLxpHx2SrhjP3mEM_tPC3pCMJTV8mUvbFZtk-GG8QTZZYWgHq6z8DjeE37A4pOaO1tvK882C0MKN3F_X1rPd7d1QRKilrZvIR2GXolBDpEEJB5A1Lo9wdqJ6QHvmq4RWAGKqPVE-7u1Eg"/>
+<div class="flex flex-col">
+<span class="text-title-md font-title-md font-semibold text-primary tracking-tight leading-none">Make My Event</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant tracking-wider uppercase opacity-75 mt-0.5">Family Planner</span>
+</div>
+</a>
+<!-- Navigation Hierarchy with Exact JSON Labels -->
+<nav class="flex flex-col gap-5">
+<!-- PLANNING GROUP -->
+<div>
+<div class="px-3 pb-1 text-label-sm font-label-sm uppercase tracking-wider text-outline opacity-80">Planning</div>
+<div class="flex flex-col gap-0.5">
+<!-- Dashboard (Active) -->
+<a class="flex items-center gap-3 px-3 py-2 text-primary font-title-md bg-surface-container rounded-lg" href="#">
+<span class="material-symbols-outlined text-primary">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Functions -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">event_upcoming</span>
+<span>Functions</span>
+</a>
+<!-- Tasks -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span>Tasks</span>
+</a>
+</div>
+</div>
+<!-- PEOPLE GROUP -->
+<div>
+<div class="px-3 pb-1 text-label-sm font-label-sm uppercase tracking-wider text-outline opacity-80">People</div>
+<div class="flex flex-col gap-0.5">
+<!-- Team -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Team</span>
+</a>
+<!-- Vendors -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span>Vendors</span>
+</a>
+</div>
+</div>
+<!-- MANAGEMENT GROUP -->
+<div>
+<div class="px-3 pb-1 text-label-sm font-label-sm uppercase tracking-wider text-outline opacity-80">Management</div>
+<div class="flex flex-col gap-0.5">
+<!-- Finance -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Finance</span>
+</a>
+<!-- Wedding details -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">tune</span>
+<span>Wedding details</span>
+</a>
+</div>
+</div>
+</nav>
+</div>
+<!-- Sidebar Bottom Utilities & Timezone Indicator -->
+<div class="flex flex-col gap-2 pt-3 border-t border-outline-variant">
+<div class="px-3 py-1.5 flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1.5 opacity-80">
+<span class="material-symbols-outlined text-[15px]">schedule</span>
+<span>Asia/Kolkata (IST)</span>
+</span>
+</div>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</aside>
+<!-- ==================== MAIN CONTENT CONTAINER (Offset by 224px) ==================== -->
+<div class="ml-56 flex-1 flex flex-col min-h-screen bg-surface">
+<!-- Stale State Warning Banner (Controlled via state switcher) -->
+<div class="hidden bg-secondary-fixed text-on-secondary-fixed-variant px-6 py-2 border-b border-outline-variant text-body-sm flex items-center justify-between animate-fade-in" id="stale-banner">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">warning</span>
+<span><strong>Removed Access / Stale View:</strong> Your role permissions for this estate were updated in another session. Please reload to sync changes.</span>
+</div>
+<button class="text-label-sm font-label-sm font-semibold underline hover:text-on-surface" onclick="switchView('populated')">Dismiss</button>
+</div>
+<!-- TOP BAR (Exact JSON & Shell Specifications) -->
+<header class="flex justify-between items-center w-full h-14 px-6 border-b border-outline-variant bg-surface-container-lowest sticky top-0 z-20">
+<!-- Left: Active Wedding Indicator with Dropdown Caret -->
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-2 py-1 rounded hover:bg-surface-container-low transition-colors duration-150 text-left group">
+<span class="text-headline-sm font-headline-sm text-primary group-hover:text-primary-container">Pavithra &amp; Manish · Feb 2027</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
+</button>
+</div>
+<!-- Right: STRICTLY RIGHT-ALIGNED ACTION GROUP -->
+<div class="flex items-center gap-3">
+<!-- Notification Bell with unread badge -->
+<button class="relative p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors duration-150" title="Notifications">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-4 h-4 bg-error text-on-error rounded-full flex items-center justify-center text-[10px] font-bold leading-none ring-2 ring-surface-container-lowest">3</span>
+</button>
+<!-- Divider line -->
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- User Profile Pill & Dropdown -->
+<div class="relative" id="profile-container">
+<button class="flex items-center gap-2.5 p-1 pl-1.5 rounded-lg hover:bg-surface-container-low transition-colors duration-150 border border-outline-variant group" id="profile-btn" onclick="toggleDropdown()">
+<span class="w-7 h-7 rounded bg-primary-container text-surface-bright text-label-sm font-label-sm flex items-center justify-center font-bold tracking-tight">PI</span>
+<div class="text-left hidden sm:flex flex-col pr-1">
+<span class="text-label-md font-label-md text-on-surface leading-tight">Pavithra Iyer</span>
+<span class="text-[11px] font-body-sm text-on-surface-variant leading-none">Administrator</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">expand_more</span>
+</button>
+<!-- Profile Dropdown Menu (Tier 2 Floating Sheet) -->
+<div class="hidden absolute right-0 mt-1 w-52 sheet-tier-1 rounded-lg py-1.5 z-40" id="profile-dropdown">
+<div class="px-3 py-1.5 border-b border-outline-variant mb-1">
+<p class="text-label-sm font-label-sm text-on-surface-variant">Active estate role</p>
+<p class="text-body-sm font-semibold text-primary">Chief Family Host</p>
+</div>
+<a class="flex items-center gap-2 px-3 py-1.5 text-body-sm hover:bg-surface-container-low text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">domain</span>
+<span>Your weddings</span>
+</a>
+<a class="flex items-center gap-2 px-3 py-1.5 text-body-sm hover:bg-surface-container-low text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>Create new wedding</span>
+</a>
+<a class="flex items-center gap-2 px-3 py-1.5 text-body-sm hover:bg-surface-container-low text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">key</span>
+<span>Join with code</span>
+</a>
+<div class="h-px bg-outline-variant my-1"></div>
+<a class="flex items-center gap-2 px-3 py-1.5 text-body-sm hover:bg-surface-container-low text-error transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">logout</span>
+<span>Sign out</span>
+</a>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN DASHBOARD CANVAS (Ivory #F7F5F0 base) -->
+<main class="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto flex flex-col gap-8">
+<!-- 1. Header Strip -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-3 border-b border-outline-variant">
+<div>
+<div class="flex items-center gap-3">
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Pavithra &amp; Manish's Wedding</h1>
+<span class="px-2.5 py-0.5 rounded text-label-sm font-label-sm bg-primary-fixed text-on-primary-fixed-variant border border-primary-fixed-dim">
+              Estate Wedding
+            </span>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">
+            Central coordination for family hosts and co-hosts. <strong class="font-medium text-primary">4 days until first ceremony</strong> (18 Feb 2027).
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<a class="px-3.5 py-2 text-label-md font-label-md text-primary bg-surface-container-lowest border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors duration-150 flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>Print Master Run Sheet</span>
+</a>
+</div>
+</section>
+<!-- ==================== VIEW MODES CONTAINER ==================== -->
+<!-- [A] POPULATED VIEW (Default Active) -->
+<div class="flex flex-col gap-8" id="view-populated">
+<!-- 2. Section: TASKS (Overview) -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">checklist</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Tasks Overview</h2>
+</div>
+<a class="text-label-md font-label-md text-primary hover:text-primary-container flex items-center gap-1 group" href="#">
+<span>Open all tasks</span>
+<span class="group-hover:translate-x-0.5 transition-transform duration-150">→</span>
+</a>
+</div>
+<!-- STRICTLY THREE COMPACT NAVIGABLE METRIC TILES -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Tile 1: Open tasks -->
+<a class="sheet-tier-1 p-5 rounded-xl hover:border-primary transition-all duration-150 group flex flex-col justify-between h-32" href="#">
+<div class="flex items-center justify-between text-label-md font-label-md text-on-surface-variant">
+<span>Open tasks</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[18px]">north_east</span>
+</div>
+<div class="flex items-baseline justify-between mt-auto">
+<span class="text-4xl font-semibold tracking-tight text-on-surface font-title-md">14</span>
+<span class="text-label-sm font-label-sm text-outline">To Do + In Progress</span>
+</div>
+</a>
+<!-- Tile 2: Overdue (Amber/Error tint accent) -->
+<a class="sheet-tier-1 p-5 rounded-xl hover:border-error transition-all duration-150 group flex flex-col justify-between h-32 bg-error-container/20 border-error/30" href="#">
+<div class="flex items-center justify-between text-label-md font-label-md text-on-error-container">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-error text-[16px]">error</span>
+<span>Overdue</span>
+</span>
+<span class="material-symbols-outlined text-error group-hover:translate-x-0.5 transition-transform text-[18px]">north_east</span>
+</div>
+<div class="flex items-baseline justify-between mt-auto">
+<span class="text-4xl font-semibold tracking-tight text-error font-title-md">2</span>
+<span class="text-label-sm font-label-sm text-error/90 font-medium">Requires immediate sign-off</span>
+</div>
+</a>
+<!-- Tile 3: My open tasks -->
+<a class="sheet-tier-1 p-5 rounded-xl hover:border-primary transition-all duration-150 group flex flex-col justify-between h-32" href="#">
+<div class="flex items-center justify-between text-label-md font-label-md text-on-surface-variant">
+<span>My open tasks</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-[18px]">north_east</span>
+</div>
+<div class="flex items-baseline justify-between mt-auto">
+<span class="text-4xl font-semibold tracking-tight text-primary font-title-md">5</span>
+<span class="text-label-sm font-label-sm text-outline">Assigned to Pavithra</span>
+</div>
+</a>
+</div>
+</section>
+<!-- 3. Section: FINANCES (Actual Costs & Settlements) -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Actual Costs &amp; Settlements</h2>
+</div>
+<a class="text-label-md font-label-md text-primary hover:text-primary-container flex items-center gap-1 group" href="#">
+<span>Open finance ledger</span>
+<span class="group-hover:translate-x-0.5 transition-transform duration-150">→</span>
+</a>
+</div>
+<!-- STRICTLY TWO SUMMARY CARDS -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Summary 1: Actual paid -->
+<div class="sheet-tier-1 p-5 rounded-xl flex flex-col justify-between h-36">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-on-surface-variant">Actual paid</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container text-primary font-medium">Recorded Advances</span>
+</div>
+<div class="my-auto">
+<div class="text-3xl lg:text-4xl font-bold tracking-tight text-on-surface font-headline-sm">₹8,25,000</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline">
+                Sum of recorded payments cleared to vendors &amp; venues
+              </div>
+</div>
+<!-- Summary 2: Outstanding balance -->
+<div class="sheet-tier-1 p-5 rounded-xl flex flex-col justify-between h-36">
+<div class="flex items-center justify-between">
+<span class="text-label-md font-label-md text-on-surface-variant">Outstanding balance</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-secondary-fixed/40 text-on-secondary-fixed-variant font-medium">To Be Settled</span>
+</div>
+<div class="my-auto">
+<div class="text-3xl lg:text-4xl font-bold tracking-tight text-secondary font-headline-sm">₹4,75,000</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline">
+                Remaining to be settled across confirmed commitments
+              </div>
+</div>
+</div>
+<!-- Mandatory Editorial Explanatory Footnote -->
+<p class="text-body-sm font-body-sm text-on-surface-variant/80 italic flex items-center gap-1.5 px-1">
+<span class="material-symbols-outlined text-[15px] not-italic">info</span>
+<span>Figures reflect actual recorded expenses and disbursements in INR.</span>
+</p>
+</section>
+<!-- 4. Section: VENDORS (Compact Vendor Team Panel) -->
+<section class="sheet-tier-1 rounded-xl p-5 md:p-6 flex flex-col gap-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-outline-variant pb-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">storefront</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Vendor Directory</h2>
+<span class="px-2 py-0.5 text-label-sm font-label-sm rounded-full bg-surface-container text-on-surface-variant font-medium">
+                  3 active vendors
+                </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Primary leads with signed contracts and active phone lines.</p>
+</div>
+<a class="text-label-md font-label-md text-primary hover:text-primary-container flex items-center gap-1 self-start sm:self-auto font-semibold" href="#">
+<span>Open vendor directory</span>
+<span>→</span>
+</a>
+</div>
+<!-- Quick List of the 3 Active Vendors -->
+<div class="divide-y divide-outline-variant">
+<!-- Vendor 1: Vrindavan Floral (Forest accent) -->
+<div class="py-3.5 flex items-center justify-between hover:bg-surface/50 px-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3.5">
+<div class="w-9 h-9 rounded-lg bg-primary-fixed flex items-center justify-center text-primary border border-primary-fixed-dim">
+<span class="material-symbols-outlined text-[18px]">local_florist</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-title-md font-title-md text-on-surface font-semibold">Vrindavan Floral</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded text-primary bg-primary-fixed/40 border border-primary-fixed-dim/60">Floral &amp; Decor</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Contact: Ananya Rao · Mandap &amp; Stage styling</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-data-mono font-data-mono text-on-surface font-medium hover:text-primary flex items-center gap-1.5 bg-surface px-2.5 py-1.5 rounded border border-outline-variant" href="tel:+919845012345">
+<span class="material-symbols-outlined text-[15px] text-outline">call</span>
+<span>+91 98450 12345</span>
+</a>
+</div>
+</div>
+<!-- Vendor 2: Mysore Royal Banquets (Copper/Secondary accent) -->
+<div class="py-3.5 flex items-center justify-between hover:bg-surface/50 px-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3.5">
+<div class="w-9 h-9 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary border border-secondary-fixed-dim">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-title-md font-title-md text-on-surface font-semibold">Mysore Royal Banquets</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded text-secondary bg-secondary-fixed/50 border border-secondary-fixed-dim">Catering</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Contact: Chef S. Hegde · South Traditional Sadya</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-data-mono font-data-mono text-on-surface font-medium hover:text-secondary flex items-center gap-1.5 bg-surface px-2.5 py-1.5 rounded border border-outline-variant" href="tel:+919820155432">
+<span class="material-symbols-outlined text-[15px] text-outline">call</span>
+<span>+91 98201 55432</span>
+</a>
+</div>
+</div>
+<!-- Vendor 3: Heritage Acoustics (Slate/Tertiary accent) -->
+<div class="py-3.5 flex items-center justify-between hover:bg-surface/50 px-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3.5">
+<div class="w-9 h-9 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary border border-tertiary-fixed-dim">
+<span class="material-symbols-outlined text-[18px]">volume_up</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-title-md font-title-md text-on-surface font-semibold">Heritage Acoustics</span>
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded text-tertiary bg-tertiary-fixed/60 border border-tertiary-fixed-dim">Sound &amp; Lighting</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Contact: Rajesh Kumar · Outdoor Estate PA system</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-data-mono font-data-mono text-on-surface font-medium hover:text-tertiary flex items-center gap-1.5 bg-surface px-2.5 py-1.5 rounded border border-outline-variant" href="tel:+919448088712">
+<span class="material-symbols-outlined text-[15px] text-outline">call</span>
+<span>+91 94480 88712</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- [B] GENUINELY EMPTY VIEW (Interactive State) -->
+<div class="hidden flex-col gap-8" id="view-empty">
+<section class="sheet-tier-1 rounded-xl p-12 text-center flex flex-col items-center justify-center gap-4 max-w-xl mx-auto w-full my-6">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">auto_stories</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">No Activity Recorded Yet</h3>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-md mx-auto mt-1">
+              Your wedding coordination workspace is ready. You currently have 0 tasks assigned, ₹0 expenses recorded, and no vendors documented in the directory.
+            </p>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+<button class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-lg hover:bg-primary-container transition-colors">
+              + Add First Task
+            </button>
+<button class="px-4 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface font-label-md rounded-lg hover:bg-surface-container-low transition-colors">
+              + Document Vendor
+            </button>
+</div>
+</section>
+</div>
+<!-- [C] LOADING SKELETON VIEW (Interactive State) -->
+<div class="hidden flex-col gap-8 animate-pulse" id="view-skeleton">
+<div class="flex flex-col gap-3">
+<div class="h-6 w-40 bg-outline-variant/40 rounded"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="h-32 bg-surface-container-highest/60 rounded-xl"></div>
+<div class="h-32 bg-surface-container-highest/60 rounded-xl"></div>
+<div class="h-32 bg-surface-container-highest/60 rounded-xl"></div>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="h-6 w-52 bg-outline-variant/40 rounded"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="h-36 bg-surface-container-highest/60 rounded-xl"></div>
+<div class="h-36 bg-surface-container-highest/60 rounded-xl"></div>
+</div>
+</div>
+<div class="h-64 bg-surface-container-highest/60 rounded-xl"></div>
+</div>
+<!-- [D] RECOVERABLE NETWORK ERROR VIEW (Interactive State) -->
+<div class="hidden flex-col items-center justify-center py-16 sheet-tier-1 rounded-xl text-center px-6 my-6 max-w-lg mx-auto w-full" id="view-error">
+<div class="w-12 h-12 rounded-full bg-error-container text-error flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-2xl">cloud_off</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Data Synchronization Failed</h3>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1 mb-5">
+          We could not load real-time task counters and financial ledger balances from the coordinator registry.
+        </p>
+<button class="px-5 py-2 bg-primary text-on-primary font-label-md rounded-lg hover:bg-primary-container flex items-center gap-2" onclick="switchView('populated')">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span>Retry Connection</span>
+</button>
+</div>
+</main>
+<!-- ==================== INTERACTIVE WORKSPACE STATE SWITCHER ==================== -->
+<footer class="mt-auto px-6 py-3 border-t border-outline-variant bg-surface-container-lowest text-label-sm font-label-sm text-on-surface-variant flex flex-wrap items-center justify-between gap-3 sticky bottom-0 z-30 shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">tune</span>
+<span class="font-semibold text-primary">Estate UI Inspector:</span>
+<span class="opacity-75">Switch workspace operational preview state:</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container p-1 rounded-lg border border-outline-variant">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-primary font-semibold shadow-xs transition-all" id="btn-state-populated" onclick="switchView('populated')">
+          Populated
+        </button>
+<button class="px-2.5 py-1 rounded hover:bg-surface-container-low text-on-surface-variant transition-all" id="btn-state-empty" onclick="switchView('empty')">
+          Genuinely Empty
+        </button>
+<button class="px-2.5 py-1 rounded hover:bg-surface-container-low text-on-surface-variant transition-all" id="btn-state-skeleton" onclick="switchView('skeleton')">
+          Loading Skeleton
+        </button>
+<button class="px-2.5 py-1 rounded hover:bg-surface-container-low text-on-surface-variant transition-all" id="btn-state-error" onclick="switchView('error')">
+          Network Error
+        </button>
+<button class="px-2.5 py-1 rounded hover:bg-surface-container-low text-on-surface-variant transition-all" id="btn-state-stale" onclick="toggleStaleBanner()">
+          Toggle Stale Banner
+        </button>
+</div>
+</footer>
+</div>
+<!-- Inline Script for Dropdown & State Switcher Micro-interactions -->
+<script>
+    // State switcher controller
+    function switchView(state) {
+      const views = ['populated', 'empty', 'skeleton', 'error'];
+      views.forEach(v => {
+        const el = document.getElementById('view-' + v);
+        const btn = document.getElementById('btn-state-' + v);
+        if (el) {
+          if (v === state) {
+            el.classList.remove('hidden');
+            el.classList.add('flex');
+          } else {
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+          }
+        }
+        if (btn) {
+          if (v === state) {
+            btn.classList.add('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-xs');
+            btn.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-low');
+          } else {
+            btn.classList.remove('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-xs');
+            btn.classList.add('text-on-surface-variant', 'hover:bg-surface-container-low');
+          }
+        }
+      });
+    }
+
+    // Toggle stale session banner
+    function toggleStaleBanner() {
+      const banner = document.getElementById('stale-banner');
+      if (banner.classList.contains('hidden')) {
+        banner.classList.remove('hidden');
+      } else {
+        banner.classList.add('hidden');
+      }
+    }
+
+    // Top Bar Profile Dropdown
+    function toggleDropdown() {
+      const dd = document.getElementById('profile-dropdown');
+      dd.classList.toggle('hidden');
+    }
+
+    // Close dropdown on outside click
+    window.addEventListener('click', function(e) {
+      const container = document.getElementById('profile-container');
+      const dd = document.getElementById('profile-dropdown');
+      if (container && !container.contains(e.target) && dd && !dd.classList.contains('hidden')) {
+        dd.classList.add('hidden');
+      }
+    });
+  </script>
+</body></html>

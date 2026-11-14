@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event - Dedicated Manual Vendors Directory</title>
+<!-- Google Fonts: Newsreader (Editorial Serif) & Manrope (Clean Modern Sans) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration matching the Provided Design System & Brand Tokens -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#9ed1c4",
+            "surface-dim": "#d1dcda",
+            "outline-variant": "#c0c8c5",
+            "on-primary-container": "#9bcec1",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#9ed1c4",
+            "on-surface-variant": "#404946",
+            "secondary": "#825339",
+            "surface-bright": "#f1fcfa",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201b",
+            "inverse-surface": "#283231",
+            "secondary-fixed-dim": "#f7b999",
+            "surface-container-highest": "#dae5e3",
+            "secondary-fixed": "#ffdbca",
+            "on-primary-fixed-variant": "#1d4f45",
+            "on-tertiary-fixed-variant": "#434842",
+            "inverse-on-surface": "#e8f3f1",
+            "on-surface": "#141d1c",
+            "tertiary-container": "#4d524c",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#321201",
+            "error": "#ba1a1a",
+            "primary-fixed": "#baeddf",
+            "on-tertiary-fixed": "#181d18",
+            "surface-container-low": "#ebf6f4",
+            "primary-container": "#28594f",
+            "on-secondary-fixed-variant": "#673c24",
+            "surface-tint": "#36675c",
+            "surface-container-high": "#dfeae8",
+            "surface": "#f1fcfa",
+            "background": "#f7f5f0", /* Warm Ivory editorial ground */
+            "tertiary-fixed": "#dfe4dc",
+            "on-secondary-container": "#794b32",
+            "on-tertiary-container": "#c0c5bd",
+            "secondary-container": "#fdbe9e",
+            "on-error": "#ffffff",
+            "surface-container": "#e5f0ee",
+            "tertiary": "#363b36",
+            "outline": "#707976",
+            "on-background": "#141d1c",
+            "surface-variant": "#dae5e3",
+            "primary": "#0b4138",
+            /* Warm physical stationery accents */
+            "warm-ivory": "#F7F5F0",
+            "paper-white": "#FFFFFF",
+            "warm-border": "#E6E4DC",
+            "recessed-well": "#DFE4DC",
+            "copper-brand": "#B98265"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "0.875rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Newsreader", "serif"],
+            "body-md": ["Manrope", "sans-serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "label-lg": ["Manrope", "sans-serif"],
+            "body-lg": ["Manrope", "sans-serif"],
+            "label-md": ["Manrope", "sans-serif"],
+            "display-lg": ["Newsreader", "serif"],
+            "headline-sm": ["Manrope", "sans-serif"],
+            "label-sm": ["Manrope", "sans-serif"],
+            "body-sm": ["Manrope", "sans-serif"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F7F5F0;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #C0C8C5;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#F7F5F0] text-on-surface antialiased min-h-screen flex flex-col font-body-md text-body-md selection:bg-primary selection:text-white">
+<!-- =========================================================================
+       STATE SWITCHER BAR (Interactive Preview Control for Evaluation)
+       ========================================================================= -->
+<div class="bg-[#202A29] text-surface-bright px-6 py-2 flex flex-wrap items-center justify-between text-xs tracking-wider z-50 border-b border-white/10">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="font-label-md text-label-md text-white/90">PROTOTYPE STATE SIMULATOR:</span>
+<span class="text-white/60">Switch directory view modes</span>
+</div>
+<div class="flex items-center gap-1.5 bg-black/40 p-1 rounded-lg border border-white/10">
+<button class="px-3 py-1 rounded font-label-md text-label-sm transition-all bg-primary-container text-white shadow-sm" id="btn-state-populated" onclick="setViewState('populated')">
+        Populated Directory
+      </button>
+<button class="px-3 py-1 rounded font-label-md text-label-sm transition-all text-white/70 hover:text-white hover:bg-white/10" id="btn-state-empty" onclick="setViewState('empty')">
+        Empty Directory (0 Vendors)
+      </button>
+<button class="px-3 py-1 rounded font-label-md text-label-sm transition-all text-white/70 hover:text-white hover:bg-white/10 flex items-center gap-1" id="btn-state-modal" onclick="openModal()">
+<span class="material-symbols-outlined text-[14px]">add_circle</span>
+        Add Manual Vendor Modal
+      </button>
+</div>
+</div>
+<!-- =========================================================================
+       SHARED TOP NAV BAR (Faithful to Shared Components JSON)
+       ========================================================================= -->
+<header class="sticky top-0 z-40 flex items-center justify-between w-full px-6 lg:px-8 py-3.5 bg-surface-container-lowest/95 backdrop-blur-sm border-b border-outline-variant/30 shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<!-- Left: Brand Logo & Wedding Indicator -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-lg">celebration</span>
+</div>
+<div>
+<span class="text-headline-md font-headline-md font-medium text-primary tracking-tight leading-none block">Make My Event</span>
+<span class="text-label-sm font-label-sm text-[#825339] uppercase tracking-wider block mt-0.5">Wedding Coordination Hub</span>
+</div>
+</div>
+<div class="hidden xl:flex items-center gap-2 pl-4 border-l border-outline-variant/40">
+<span class="material-symbols-outlined text-outline text-base">favorite</span>
+<span class="font-label-md text-label-md text-on-surface">Pavithra &amp; Manish</span>
+<span class="text-outline text-label-sm">• Feb 2027</span>
+<span class="ml-1 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider bg-[#28594F]/10 text-primary-container border border-primary-container/20">Active Event</span>
+</div>
+</div>
+<!-- Center: Primary Navigation Cluster -->
+<nav class="hidden md:flex items-center gap-6 lg:gap-8">
+<a class="text-on-surface-variant hover:text-on-surface pb-1 text-label-md font-label-md transition-colors flex items-center gap-1.5" href="#itinerary">
+        Itinerary
+      </a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 text-label-md font-label-md transition-colors flex items-center gap-1.5" href="#guests">
+        Guests &amp; RSVPs
+      </a>
+<!-- ACTIVE ITEM: Vendors (Direct Context Lock) -->
+<a class="border-b-2 border-primary text-primary font-semibold pb-1 text-label-md font-label-md transition-colors flex items-center gap-1.5" href="#vendors">
+<span class="material-symbols-outlined text-base">storefront</span>
+        Vendors
+      </a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 text-label-md font-label-md transition-colors flex items-center gap-1.5" href="#run-of-show">
+        Run of Show
+      </a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 text-label-md font-label-md transition-colors flex items-center gap-1.5" href="#finance">
+        Finance
+      </a>
+</nav>
+<!-- Right: Trailing Actions, Notifications, User Avatar -->
+<div class="flex items-center gap-3.5">
+<button class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-[#E6E4DC] hover:bg-surface-container-high/40 text-on-surface-variant text-label-md font-label-md transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[16px]">cloud_done</span>
+        Save Draft
+      </button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/40 transition-colors relative" title="Notifications">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Help &amp; Guidelines">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/40 mx-1"></div>
+<!-- Host Profile Portrait Avatar -->
+<div class="flex items-center gap-2 pl-1 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-primary-container text-white flex items-center justify-center font-label-md text-label-sm font-bold shadow-sm ring-2 ring-primary/20">
+          PI
+        </div>
+<div class="hidden lg:block text-left">
+<span class="block text-label-md font-label-md text-on-surface leading-tight">Pavithra Iyer</span>
+<span class="block text-[10px] text-outline">Lead Coordinator</span>
+</div>
+</div>
+</div>
+</header>
+<!-- =========================================================================
+       SUB-BREADCRUMB & WEDDING SWITCHER STRIP
+       ========================================================================= -->
+<div class="w-full bg-[#FFFFFF] border-b border-[#E6E4DC] px-6 lg:px-8 py-2.5 flex items-center justify-between text-xs">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<a class="hover:text-primary transition-colors flex items-center gap-1 font-label-md text-label-sm" href="#weddings">
+<span class="material-symbols-outlined text-[14px]">arrow_back</span>
+        Your weddings
+      </a>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-medium">Pavithra &amp; Manish (Udaipur Heritage Wedding)</span>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-semibold">Vendor Directory &amp; Coordination</span>
+</div>
+<div class="flex items-center gap-3 text-label-sm">
+<div class="flex items-center gap-1.5 text-on-surface-variant bg-[#DFE4DC]/50 px-2.5 py-1 rounded-md">
+<span class="material-symbols-outlined text-sm text-[#28594F]">verified_user</span>
+<span>Manual Private Records · Non-Automated Directory</span>
+</div>
+</div>
+</div>
+<!-- =========================================================================
+       PAGE WORKSPACE CONTAINER
+       ========================================================================= -->
+<main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+<!-- PAGE HEADER & PRIMARY ACTIONS -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-[#E6E4DC]">
+<div>
+<div class="flex items-center gap-2.5 mb-1">
+<span class="px-2.5 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wider bg-[rgba(185,130,101,0.12)] text-[#B98265] border border-[rgba(185,130,101,0.25)]">
+            Logistics &amp; Execution Hub
+          </span>
+<span class="text-xs text-outline">• All vendor accounts shared across 4 organizers</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-[#141D1C] tracking-tight">Vendor Directory &amp; Coordination</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">
+          Direct contacts, contract agreements, ceremony assignments, and coordinator handoffs.
+        </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] bg-white border border-[#E6E4DC] hover:border-outline text-on-surface text-label-lg font-label-lg transition-all shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<span class="material-symbols-outlined text-[18px]">download</span>
+          Export Briefs
+        </button>
+<button class="inline-flex items-center gap-2 px-4 py-2 rounded-[10px] bg-[#28594F] hover:bg-[#1E433B] text-white text-label-lg font-label-lg transition-all shadow-[0_2px_6px_rgba(40,89,79,0.2)] active:scale-[0.98]" onclick="openModal()">
+<span class="material-symbols-outlined text-[18px]">add</span>
+          + Add Manual Vendor
+        </button>
+</div>
+</section>
+<!-- SEARCH & FILTER TOOLBAR -->
+<section class="bg-[#FFFFFF] border border-[#E6E4DC] rounded-xl p-3 shadow-[0_1px_3px_rgba(32,42,41,0.04)] flex flex-col lg:flex-row items-center justify-between gap-3">
+<!-- Search Input -->
+<div class="relative w-full lg:w-96">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-transparent text-body-md border border-[#E6E4DC] rounded-lg focus:outline-none focus:border-[#28594F] focus:ring-1 focus:ring-[#28594F]/20 text-[#202A29] placeholder-[#5A6664]" placeholder="Search vendors by name, service or contact..." type="text"/>
+</div>
+<!-- Category Filter Pills -->
+<div class="flex items-center gap-1.5 overflow-x-auto w-full lg:w-auto pb-1 lg:pb-0 custom-scrollbar">
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md bg-[#28594F] text-white transition-colors shrink-0">
+          All (5)
+        </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md bg-[#DFE4DC]/60 hover:bg-[#DFE4DC] text-on-surface-variant hover:text-on-surface transition-colors shrink-0">
+          Floral &amp; Decor (1)
+        </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md bg-[#DFE4DC]/60 hover:bg-[#DFE4DC] text-on-surface-variant hover:text-on-surface transition-colors shrink-0">
+          Catering (1)
+        </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md bg-[#DFE4DC]/60 hover:bg-[#DFE4DC] text-on-surface-variant hover:text-on-surface transition-colors shrink-0">
+          Sound &amp; Lighting (1)
+        </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md bg-[#DFE4DC]/60 hover:bg-[#DFE4DC] text-on-surface-variant hover:text-on-surface transition-colors shrink-0">
+          Photography (1)
+        </button>
+<button class="px-3 py-1.5 rounded-lg text-label-md font-label-md bg-[#DFE4DC]/60 hover:bg-[#DFE4DC] text-on-surface-variant hover:text-on-surface transition-colors shrink-0">
+          Pooja &amp; Rituals (1)
+        </button>
+</div>
+<!-- Quick Summary Metric -->
+<div class="hidden xl:flex items-center gap-3 border-l border-[#E6E4DC] pl-4 text-body-sm text-on-surface-variant shrink-0">
+<span>Agreed Commitment: <strong class="text-[#202A29] font-semibold">₹14,95,000</strong></span>
+</div>
+</section>
+<!-- =========================================================================
+         POPULATED VIEW: SPLIT-VIEW (DIRECTORY LIST + VENDOR PROFILE DETAIL)
+         ========================================================================= -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start" id="view-populated">
+<!-- LEFT COLUMN: VENDOR DIRECTORY LIST (5 Columns) -->
+<div class="lg:col-span-5 flex flex-col gap-3.5">
+<div class="flex items-center justify-between px-1">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">
+            Contracted Vendors (5)
+          </span>
+<span class="text-body-sm text-outline">Sorted by Ceremony Sequence</span>
+</div>
+<!-- 1. Royal Decorators Co. (SELECTED / ACTIVE CARD) -->
+<article class="bg-[#FFFFFF] rounded-2xl p-4 border-2 border-[#28594F] shadow-[0_4px_12px_rgba(40,89,79,0.08)] relative cursor-pointer transition-all">
+<div class="absolute -top-2.5 right-4 bg-[#28594F] text-white text-[10px] font-label-sm uppercase tracking-wider px-2 py-0.5 rounded shadow-sm">
+            Active Viewing
+          </div>
+<div class="flex items-start justify-between gap-2">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-[19px] text-[#202A29] leading-tight font-semibold">Royal Decorators Co.</h3>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Floral &amp; Stage Decor · Haldi &amp; Muhurtham</p>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[rgba(40,89,79,0.1)] text-[#28594F] border border-[rgba(40,89,79,0.2)]">
+              Contract Signed
+            </span>
+</div>
+<div class="mt-3 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">person</span>
+<span>Ramesh Kumar</span>
+</div>
+<div class="font-label-lg text-label-md text-[#202A29] font-bold">
+              ₹3,50,000 <span class="text-xs font-normal text-outline">agreed</span>
+</div>
+</div>
+</article>
+<!-- 2. Heritage Sound & Light -->
+<article class="bg-[#FFFFFF] rounded-2xl p-4 border border-[#E6E4DC] hover:border-[#28594F]/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div>
+<h3 class="font-headline-md text-[18px] text-[#202A29] leading-tight">Heritage Sound &amp; Light</h3>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Acoustics &amp; Stage Rigging · Sangeet Gala</p>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[rgba(40,89,79,0.1)] text-[#28594F] border border-[rgba(40,89,79,0.2)]">
+              Confirmed
+            </span>
+</div>
+<div class="mt-3 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">person</span>
+<span>Dev Anand</span>
+</div>
+<div class="font-label-lg text-label-md text-[#202A29] font-bold">
+              ₹1,80,000 <span class="text-xs font-normal text-outline">agreed</span>
+</div>
+</div>
+</article>
+<!-- 3. Udaipur Palace Banquets & Catering -->
+<article class="bg-[#FFFFFF] rounded-2xl p-4 border border-[#E6E4DC] hover:border-[#28594F]/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div>
+<h3 class="font-headline-md text-[18px] text-[#202A29] leading-tight">Udaipur Palace Banquets &amp; Catering</h3>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Food &amp; Beverage · All Ceremonies</p>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[rgba(40,89,79,0.1)] text-[#28594F] border border-[rgba(40,89,79,0.2)]">
+              Confirmed
+            </span>
+</div>
+<div class="mt-3 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">person</span>
+<span>Chef Rajesh</span>
+</div>
+<div class="font-label-lg text-label-md text-[#202A29] font-bold">
+              ₹6,00,000 <span class="text-xs font-normal text-outline">agreed</span>
+</div>
+</div>
+</article>
+<!-- 4. Stories by Joseph Radhik -->
+<article class="bg-[#FFFFFF] rounded-2xl p-4 border border-[#E6E4DC] hover:border-[#28594F]/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div>
+<h3 class="font-headline-md text-[18px] text-[#202A29] leading-tight">Stories by Joseph Radhik</h3>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Cinematography &amp; Stills · All 4 Days</p>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[rgba(185,130,101,0.12)] text-[#B98265] border border-[rgba(185,130,101,0.25)]">
+              Booked
+            </span>
+</div>
+<div class="mt-3 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">person</span>
+<span>Joseph R.</span>
+</div>
+<div class="font-label-lg text-label-md text-[#202A29] font-bold">
+              ₹3,20,000 <span class="text-xs font-normal text-outline">agreed</span>
+</div>
+</div>
+</article>
+<!-- 5. Sri Manjunatha Pooja Samagri -->
+<article class="bg-[#FFFFFF] rounded-2xl p-4 border border-[#E6E4DC] hover:border-[#28594F]/40 shadow-[0_1px_3px_rgba(32,42,41,0.04)] cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-2">
+<div>
+<h3 class="font-headline-md text-[18px] text-[#202A29] leading-tight">Sri Manjunatha Pooja Samagri</h3>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Puja Supplies &amp; Purohit Support · Muhurtham</p>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[#DFE4DC] text-[#5A6664]">
+              In Coordination
+            </span>
+</div>
+<div class="mt-3 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">person</span>
+<span>Shastry Ji</span>
+</div>
+<div class="font-label-lg text-label-md text-[#202A29] font-bold">
+              ₹45,000 <span class="text-xs font-normal text-outline">agreed</span>
+</div>
+</div>
+</article>
+</div>
+<!-- RIGHT COLUMN: DETAILED VENDOR PROFILE SHEET (7 Columns) -->
+<section class="lg:col-span-7 bg-[#FFFFFF] rounded-2xl border border-[#E6E4DC] shadow-[0_1px_3px_rgba(32,42,41,0.04),0_4px_12px_rgba(32,42,41,0.02)] overflow-hidden">
+<!-- Profile Sheet Header with Warm Physical Aesthetic Banner -->
+<div class="p-6 border-b border-[#E6E4DC] bg-gradient-to-r from-surface-bright to-white relative">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<div class="flex flex-wrap items-center gap-2 mb-1.5">
+<span class="px-2.5 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wider bg-[rgba(185,130,101,0.12)] text-[#B98265] border border-[rgba(185,130,101,0.25)]">
+                  Floral &amp; Stage Decor
+                </span>
+<span class="px-2.5 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wider bg-[rgba(40,89,79,0.1)] text-[#28594F] border border-[rgba(40,89,79,0.2)] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  Contract Signed
+                </span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-[#141D1C] font-semibold leading-tight">Royal Decorators Co.</h2>
+<p class="text-body-sm text-on-surface-variant mt-1">
+                Vendor ID: <span class="font-mono text-xs">MME-VND-2027-01</span> · Assigned across 2 primary ceremonies
+              </p>
+</div>
+<!-- Header Action Controls -->
+<div class="flex items-center gap-2 shrink-0">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E6E4DC] bg-white hover:bg-surface-container-high/40 text-on-surface text-label-md font-label-md transition-all shadow-sm" onclick="openModal()">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+                Edit
+              </button>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FFFFFF] border border-[#B98265] text-[#B98265] hover:bg-[#B98265] hover:text-white text-label-md font-label-md transition-all shadow-sm">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                Record Payment
+              </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container/40 transition-colors" title="Delete Vendor">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-6 space-y-6">
+<!-- Section 1: Primary Contact Information (Archival Binder Style) -->
+<div>
+<div class="flex items-center justify-between mb-3">
+<h4 class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[#28594F] text-[18px]">badge</span>
+                Direct Point of Contact
+              </h4>
+<span class="text-xs text-outline font-body-sm">Verified directly with coordinator</span>
+</div>
+<div class="bg-[#F7F5F0] rounded-xl p-4 border border-[#E6E4DC] grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-outline block">Lead Contact &amp; Role</span>
+<span class="font-semibold text-on-surface text-body-lg block mt-0.5">Ramesh Kumar</span>
+<span class="text-body-sm text-on-surface-variant">Managing Director &amp; Lead Stylist</span>
+</div>
+<div>
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-outline block">Direct Phone (Tap to Call)</span>
+<a class="inline-flex items-center gap-1.5 font-semibold text-[#28594F] hover:underline text-body-lg mt-0.5" href="tel:+919845012345">
+<span class="material-symbols-outlined text-[16px]">call</span>
+                  +91 98450 12345
+                </a>
+<span class="block text-body-sm text-outline">Available 7:00 AM – 9:00 PM</span>
+</div>
+<div>
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-outline block">Direct Email</span>
+<a class="inline-flex items-center gap-1.5 text-on-surface hover:text-[#28594F] hover:underline text-body-md mt-0.5" href="mailto:ramesh@royaldecorators.in">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+                  ramesh@royaldecorators.in
+                </a>
+</div>
+<div>
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-outline block">Physical Studio / Warehouse Base</span>
+<p class="text-body-sm text-on-surface mt-0.5 leading-snug">
+                  42 MG Road, Commercial St, Bangalore, KA 560001
+                </p>
+</div>
+</div>
+</div>
+<!-- Section 2: Ceremony Responsibilities & Arrival Timeline Cues -->
+<div>
+<div class="flex items-center justify-between mb-3">
+<h4 class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[#28594F] text-[18px]">event_upcoming</span>
+                Ceremony Assignments &amp; Stage Load-In Cues
+              </h4>
+<span class="text-xs text-outline font-body-sm">2 Milestones Assigned</span>
+</div>
+<div class="space-y-3">
+<!-- Assignment 1: Haldi Ceremony -->
+<div class="bg-white rounded-xl p-4 border border-[#E6E4DC] border-l-4 border-l-[#B98265] shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+<span class="font-headline-md text-headline-sm text-on-surface">Haldi Ceremony</span>
+<div class="flex items-center gap-2 text-label-sm">
+<span class="px-2 py-0.5 rounded bg-[#DFE4DC] text-[#202A29] font-mono">Feb 18, 2027</span>
+<span class="px-2 py-0.5 rounded bg-[rgba(185,130,101,0.12)] text-[#B98265] font-semibold">Load-in strictly: 7:00 AM</span>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant mt-2 leading-relaxed">
+                  Yellow marigold custom floral backdrop with cascading brass bells, fresh petal arrangements, and a central traditional polished brass urli for ritual turmeric bath. Floral replenishment scheduled 1 hour before start.
+                </p>
+<div class="mt-2.5 pt-2.5 border-t border-[#E6E4DC]/60 flex items-center gap-4 text-body-sm text-outline">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-[#28594F]">location_on</span>
+                    Courtyard Fountain Lawn
+                  </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-[#B98265]">alarm</span>
+                    Rigging Window: 2.5 Hours
+                  </span>
+</div>
+</div>
+<!-- Assignment 2: Vedic Muhurtham -->
+<div class="bg-white rounded-xl p-4 border border-[#E6E4DC] border-l-4 border-l-[#28594F] shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+<span class="font-headline-md text-headline-sm text-on-surface">Vedic Muhurtham (Sacred Nuptials)</span>
+<div class="flex items-center gap-2 text-label-sm">
+<span class="px-2 py-0.5 rounded bg-[#DFE4DC] text-[#202A29] font-mono">Feb 20, 2027</span>
+<span class="px-2 py-0.5 rounded bg-[rgba(40,89,79,0.1)] text-[#28594F] font-semibold">Load-in: Feb 19, 10:00 PM</span>
+</div>
+</div>
+<p class="text-body-md text-on-surface-variant mt-2 leading-relaxed">
+                  Traditional South Indian 4-pillar jasmine &amp; fresh red rose temple mandap, banana tree entrance arches, overhead tuberose floral curtains, and seated aisle floor kolam with rose-petal boundaries.
+                </p>
+<div class="mt-2.5 pt-2.5 border-t border-[#E6E4DC]/60 flex items-center gap-4 text-body-sm text-outline">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-[#28594F]">location_on</span>
+                    Main Palace Heritage Pavilion
+                  </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-[#28594F]">check_circle</span>
+                    Fire Permit Cleared
+                  </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Contract & Financial Summary -->
+<div>
+<div class="flex items-center justify-between mb-3">
+<h4 class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[#28594F] text-[18px]">account_balance_wallet</span>
+                Contract Agreement &amp; Payment Ledger
+              </h4>
+<span class="text-xs text-emerald-800 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                Fully Settled
+              </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+<div class="p-3.5 rounded-xl bg-[#DFE4DC]/40 border border-[#E6E4DC]">
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-outline block">Total Agreed Fee</span>
+<span class="text-xl font-bold text-on-surface mt-1 block">₹3,50,000</span>
+<span class="text-xs text-outline">All taxes inclusive</span>
+</div>
+<div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200">
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-emerald-800 block">Total Paid to Date</span>
+<span class="text-xl font-bold text-emerald-900 mt-1 block">₹3,50,000</span>
+<span class="text-xs text-emerald-700">100% Disbursed</span>
+</div>
+<div class="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E6E4DC]">
+<span class="text-[11px] font-label-sm uppercase tracking-wider text-outline block">Outstanding Balance</span>
+<span class="text-xl font-bold text-on-surface mt-1 block">₹0</span>
+<span class="text-xs text-outline">No dues pending</span>
+</div>
+</div>
+<!-- Payment Receipt History Table -->
+<div class="border border-[#E6E4DC] rounded-xl overflow-hidden">
+<div class="bg-[#F7F5F0] px-4 py-2 text-xs font-label-md text-on-surface-variant flex items-center justify-between border-b border-[#E6E4DC]">
+<span>PAYMENT RECEIPT HISTORY</span>
+<span>3 Transactions Recorded</span>
+</div>
+<div class="divide-y divide-[#E6E4DC] text-body-sm">
+<div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#DFE4DC]/20 transition-colors">
+<div>
+<span class="font-medium text-on-surface">1. Advance Booking Deposit (30%)</span>
+<span class="block text-xs text-outline font-mono">NEFT Ref: HDFC9938201 · Oct 12, 2026</span>
+</div>
+<div class="text-right">
+<span class="font-bold text-on-surface">₹1,05,000</span>
+<span class="block text-[10px] text-emerald-700 uppercase font-semibold">Cleared</span>
+</div>
+</div>
+<div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#DFE4DC]/20 transition-colors">
+<div>
+<span class="font-medium text-on-surface">2. Mid-Stage Mockup Clearance (40%)</span>
+<span class="block text-xs text-outline font-mono">NEFT Ref: HDFC4820194 · Dec 20, 2026</span>
+</div>
+<div class="text-right">
+<span class="font-bold text-on-surface">₹1,40,000</span>
+<span class="block text-[10px] text-emerald-700 uppercase font-semibold">Cleared</span>
+</div>
+</div>
+<div class="px-4 py-2.5 flex items-center justify-between hover:bg-[#DFE4DC]/20 transition-colors">
+<div>
+<span class="font-medium text-on-surface">3. Pre-Event Balance Settlement (30%)</span>
+<span class="block text-xs text-outline font-mono">IMPS Ref: ICIC7721839 · Jan 25, 2027</span>
+</div>
+<div class="text-right">
+<span class="font-bold text-on-surface">₹1,05,000</span>
+<span class="block text-[10px] text-emerald-700 uppercase font-semibold">Cleared</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 4: Assigned Family Coordinators -->
+<div class="pt-2 border-t border-[#E6E4DC]">
+<div class="flex items-center justify-between mb-3">
+<h4 class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[#28594F] text-[18px]">group</span>
+                Assigned Family Coordinators
+              </h4>
+<button class="text-xs text-[#28594F] hover:underline font-label-md">+ Add Assignee</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#DFE4DC]/50 border border-[#E6E4DC]">
+<div class="w-6 h-6 rounded-full bg-[#28594F] text-white flex items-center justify-center text-[10px] font-bold">
+                  PI
+                </div>
+<div class="text-xs">
+<span class="font-medium text-on-surface">Pavithra Iyer</span>
+<span class="text-outline"> (Primary Lead &amp; Aesthetic Approval)</span>
+</div>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#DFE4DC]/50 border border-[#E6E4DC]">
+<div class="w-6 h-6 rounded-full bg-[#825339] text-white flex items-center justify-center text-[10px] font-bold">
+                  MS
+                </div>
+<div class="text-xs">
+<span class="font-medium text-on-surface">Manish Sharma</span>
+<span class="text-outline"> (Stage Access &amp; Logistics Lead)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- =========================================================================
+         STATE 2: EMPTY DIRECTORY (Interactive Switcher Controlled)
+         ========================================================================= -->
+<div class="hidden bg-white rounded-2xl border border-[#E6E4DC] p-12 text-center shadow-[0_1px_3px_rgba(32,42,41,0.04)] my-4" id="view-empty">
+<div class="max-w-md mx-auto flex flex-col items-center">
+<div class="w-16 h-16 rounded-2xl bg-[#DFE4DC]/60 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-3xl">storefront</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">No manual vendors added yet</h3>
+<p class="text-body-md text-on-surface-variant mt-2 leading-relaxed">
+          Start recording direct agreements, stage managers, caterers, and decorators. Manual records keep full control in your team's hands with zero automated interference.
+        </p>
+<button class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-[10px] bg-[#28594F] hover:bg-[#1E433B] text-white font-label-lg text-label-lg transition-all shadow-md active:scale-95" onclick="openModal()">
+<span class="material-symbols-outlined text-[18px]">add</span>
+          + Add First Manual Vendor
+        </button>
+</div>
+</div>
+</main>
+<!-- =========================================================================
+       MODAL: + ADD / EDIT MANUAL VENDOR DIALOG
+       ========================================================================= -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden" id="modal-add-vendor">
+<div class="bg-white rounded-2xl border border-[#E6E4DC] max-w-2xl w-full max-h-[921px] overflow-y-auto shadow-[0_12px_32px_-4px_rgba(32,42,41,0.18)] custom-scrollbar">
+<!-- Modal Header -->
+<div class="p-6 border-b border-[#E6E4DC] flex items-center justify-between sticky top-0 bg-white z-10">
+<div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[rgba(185,130,101,0.12)] text-[#B98265]">
+            Manual Vendor Record
+          </span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">Add Manual Vendor Profile</h3>
+<p class="text-xs text-on-surface-variant">Private team entry · No third-party API lookup</p>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-[#DFE4DC] transition-colors" onclick="closeModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Form Body -->
+<form class="p-6 space-y-5" onsubmit="handleFormSubmit(event)">
+<!-- Row 1: Vendor Name & Category -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Vendor Business Name *
+            </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="e.g., Royal Decorators Co." required="" type="text"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Service Category *
+            </label>
+<select class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]">
+<option>Floral &amp; Stage Decor</option>
+<option>Catering &amp; Beverage</option>
+<option>Sound &amp; Lighting</option>
+<option>Photography &amp; Films</option>
+<option>Pooja &amp; Vedic Rituals</option>
+<option>Makeup &amp; Henna</option>
+<option>Transportation &amp; Hospitality</option>
+</select>
+</div>
+</div>
+<!-- Row 2: Lead Person & Phone -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Primary Contact Person
+            </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="e.g., Ramesh Kumar (Lead Stylist)" type="text"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Direct Contact Phone *
+            </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="e.g., +91 98450 12345" required="" type="tel"/>
+</div>
+</div>
+<!-- Row 3: Email & Contract Agreement Status -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Email Address
+            </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="ramesh@royaldecorators.in" type="email"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Agreement Status
+            </label>
+<select class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]">
+<option>Contract Signed</option>
+<option>Confirmed &amp; Booked</option>
+<option>In Active Negotiation</option>
+<option>Draft / Exploratory</option>
+</select>
+</div>
+</div>
+<!-- Row 4: Financial Agreement Numbers -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Total Agreed Amount (₹)
+            </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="350000" type="number"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+              Initial Advance Disbursed (₹)
+            </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="105000" type="number"/>
+</div>
+</div>
+<!-- Row 5: Physical Office / Dispatch Base -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+            Studio / Workshop Physical Address
+          </label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="Office / Warehouse street, landmark, city" type="text"/>
+</div>
+<!-- Row 6: Ceremony Responsibilities & Load-in Timings -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">
+            Ceremony Responsibilities &amp; Load-In Brief
+          </label>
+<textarea class="w-full px-3.5 py-2.5 rounded-lg border border-[#E6E4DC] text-body-md focus:border-[#28594F] focus:ring-2 focus:ring-[#28594F]/20 text-[#202A29]" placeholder="Detail stage setup instructions, floral specs, rigging time windows, power requirements..." rows="3"></textarea>
+</div>
+<!-- Modal Actions Footer -->
+<div class="pt-4 border-t border-[#E6E4DC] flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-lg border border-[#E6E4DC] text-on-surface-variant hover:bg-[#DFE4DC] text-label-md font-label-md transition-colors" onclick="closeModal()" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2 rounded-lg bg-[#28594F] hover:bg-[#1E433B] text-white text-label-lg font-label-lg transition-all shadow-md active:scale-95" type="submit">
+            Save Manual Vendor
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- =========================================================================
+       FOOTER BRANDING & ARCHIVAL ATTRIBUTION
+       ========================================================================= -->
+<footer class="mt-auto border-t border-[#E6E4DC] bg-white py-4 px-6 lg:px-8 text-center text-xs text-outline">
+<div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-sm text-primary font-medium">Make My Event</span>
+<span>— Confidential Event Architecture &amp; Coordination</span>
+</div>
+<div>
+<span>Manual Vendor Management Module · Wedding ID: <strong>PV-MN-2027</strong></span>
+</div>
+</div>
+</footer>
+<!-- =========================================================================
+       INLINE MICRO-INTERACTIONS & JAVASCRIPT STATE CONTROLLER
+       ========================================================================= -->
+<script>
+    // State Switcher Function for the Evaluation Bar
+    function setViewState(state) {
+      const populatedView = document.getElementById('view-populated');
+      const emptyView = document.getElementById('view-empty');
+      const btnPopulated = document.getElementById('btn-state-populated');
+      const btnEmpty = document.getElementById('btn-state-empty');
+
+      if (state === 'populated') {
+        populatedView.classList.remove('hidden');
+        emptyView.classList.add('hidden');
+        btnPopulated.className = 'px-3 py-1 rounded font-label-md text-label-sm transition-all bg-primary-container text-white shadow-sm';
+        btnEmpty.className = 'px-3 py-1 rounded font-label-md text-label-sm transition-all text-white/70 hover:text-white hover:bg-white/10';
+      } else if (state === 'empty') {
+        populatedView.classList.add('hidden');
+        emptyView.classList.remove('hidden');
+        btnEmpty.className = 'px-3 py-1 rounded font-label-md text-label-sm transition-all bg-primary-container text-white shadow-sm';
+        btnPopulated.className = 'px-3 py-1 rounded font-label-md text-label-sm transition-all text-white/70 hover:text-white hover:bg-white/10';
+      }
+    }
+
+    // Modal Control
+    function openModal() {
+      const modal = document.getElementById('modal-add-vendor');
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal-add-vendor');
+      modal.classList.add('hidden');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      closeModal();
+      setViewState('populated');
+    }
+
+    // Close modal on Escape key press
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body></html>

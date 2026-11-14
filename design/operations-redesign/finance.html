@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Make My Event — Finance Expenses & Payments Ledger</title>
+  
+  <!-- Fonts: Newsreader (Editorial Serif) & Manrope (High-clarity functional sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet"/>
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <!-- Tailwind CSS v3 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            surface: "#f1fcfa",
+            "canvas-ivory": "#F7F5F0",
+            primary: "#28594F",
+            "primary-hover": "#1E433B",
+            charcoal: "#202A29",
+            "muted-secondary": "#5A6664",
+            "border-subtle": "#E6E4DC",
+            copper: "#B98265",
+            "copper-hover": "#A67256",
+            "surface-pure": "#FFFFFF",
+            "surface-muted": "#EFECE6",
+            "surface-card": "#FFFFFF",
+            /* Controlled 6 accent colors for Vendors & Categories */
+            "accent-forest": "#28594F",
+            "accent-copper": "#B98265",
+            "accent-marigold": "#C98A2C",
+            "accent-rose": "#B85D6C",
+            "accent-plum": "#6E4555",
+            "accent-slate": "#4A6B82"
+          },
+          fontFamily: {
+            sans: ["Manrope", "sans-serif"],
+            serif: ["Newsreader", "serif"]
+          },
+          boxShadow: {
+            subtle: "0 1px 3px rgba(32, 42, 41, 0.04), 0 2px 6px rgba(32, 42, 41, 0.02)",
+            dropdown: "0 8px 24px -4px rgba(32, 42, 41, 0.12), 0 2px 6px -1px rgba(32, 42, 41, 0.04)",
+            panel: "0 12px 32px -4px rgba(32, 42, 41, 0.14)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #202A29;
+      font-family: 'Manrope', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #F7F5F0;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #D8D4CA;
+      border-radius: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-canvas-ivory text-charcoal flex flex-col antialiased selection:bg-primary/20 selection:text-primary">
+
+  <!-- ================= TOP APP BAR (Standardized Coordinated Shell) ================= -->
+  <header class="sticky top-0 z-40 h-14 bg-surface-pure border-b border-border-subtle shadow-subtle px-4 sm:px-6 flex items-center justify-between">
+    <!-- Left: Brand Logo & Selected Wedding Context -->
+    <div class="flex items-center gap-4">
+      <a href="/weddings" class="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-primary rounded p-1" title="Back to All Weddings">
+        <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-sm tracking-tight shadow-sm group-hover:bg-primary-hover transition-colors">
+          M
+        </div>
+        <span class="font-serif font-medium text-xl text-primary tracking-tight">Make My Event</span>
+      </a>
+
+      <div class="h-4 w-px bg-border-subtle hidden sm:block"></div>
+
+      <!-- Wedding Selector Pill -->
+      <div class="relative">
+        <button id="weddingSelectorBtn" onclick="toggleWeddingMenu()" class="flex items-center gap-2 px-2.5 py-1 rounded-md text-xs font-semibold text-charcoal hover:bg-canvas-ivory border border-transparent hover:border-border-subtle transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-primary/20">
+          <span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+          <span>Pavithra &amp; Manish</span>
+          <span class="text-muted-secondary font-normal">· Feb 2027</span>
+          <span class="material-symbols-outlined text-muted-secondary">expand_more</span>
+        </button>
+
+        <!-- Dropdown Menu for Wedding Switcher -->
+        <div id="weddingDropdown" class="hidden absolute left-0 mt-1.5 w-64 bg-surface-pure rounded-lg border border-border-subtle shadow-dropdown py-1.5 z-50 text-xs">
+          <div class="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-muted-secondary">Your celebrations</div>
+          <a href="#" class="flex items-center justify-between px-3 py-2 bg-canvas-ivory/60 font-semibold text-primary">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              <span>Pavithra &amp; Manish</span>
+            </div>
+            <span class="material-symbols-outlined text-primary text-[16px]">check</span>
+          </a>
+          <a href="#" class="flex items-center gap-2 px-3 py-2 text-charcoal hover:bg-canvas-ivory transition-colors">
+            <span class="w-1.5 h-1.5 rounded-full bg-muted-secondary/40"></span>
+            <span>Aarav &amp; Meera (Archive)</span>
+          </a>
+          <div class="my-1 border-t border-border-subtle"></div>
+          <a href="#" class="flex items-center gap-2 px-3 py-2 text-primary hover:bg-canvas-ivory font-medium">
+            <span class="material-symbols-outlined text-[16px]">add</span>
+            <span>Create new wedding</span>
+          </a>
+          <a href="#" class="flex items-center gap-2 px-3 py-2 text-charcoal hover:bg-canvas-ivory">
+            <span class="material-symbols-outlined text-[16px]">vpn_key</span>
+            <span>Join with 12-char code</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right-Aligned Action Group: Bell IMMEDIATELY BESIDE Name & Disclosure -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Live Sync / Auto-save indicator -->
+      <span class="hidden md:inline-flex items-center gap-1.5 text-[12px] text-muted-secondary pr-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+        <span>Audited Ledger</span>
+      </span>
+
+      <!-- Notification Bell Trigger (Right-aligned beside user disclosure) -->
+      <div class="relative">
+        <button id="notificationTrigger" onclick="toggleNotificationPopover()" aria-label="Notifications: 2 unread" class="relative p-2 rounded-md text-charcoal hover:bg-canvas-ivory hover:text-primary transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-primary">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-copper ring-2 ring-white"></span>
+        </button>
+
+        <!-- Notification Popover Menu (Right Aligned) -->
+        <div id="notificationPopover" class="hidden absolute right-0 mt-2 w-80 sm:w-96 bg-surface-pure rounded-xl border border-border-subtle shadow-panel z-50 overflow-hidden">
+          <div class="px-4 py-3 border-b border-border-subtle flex items-center justify-between bg-canvas-ivory/40">
+            <div class="flex items-center gap-2">
+              <span class="font-serif font-medium text-sm text-charcoal">Notifications</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-copper/15 text-copper">2 unread</span>
+            </div>
+            <button onclick="markAllNotificationsRead()" class="text-xs text-primary hover:underline font-medium">Mark all read</button>
+          </div>
+          <div class="max-h-80 overflow-y-auto divide-y divide-border-subtle custom-scroll text-xs">
+            <div class="p-3.5 bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer">
+              <div class="flex items-start justify-between gap-2">
+                <span class="font-semibold text-charcoal">Lakshmi Sundaram</span>
+                <span class="text-[10px] text-muted-secondary">10m ago</span>
+              </div>
+              <p class="text-charcoal mt-1">Recorded payment of <span class="font-bold text-primary">₹6,00,000</span> for Royal Mysore Banquets.</p>
+              <span class="inline-block mt-1 text-[11px] text-copper font-medium">Finance · Payment settlement</span>
+            </div>
+            <div class="p-3.5 bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer">
+              <div class="flex items-start justify-between gap-2">
+                <span class="font-semibold text-charcoal">Manish Sharma</span>
+                <span class="text-[10px] text-muted-secondary">1h ago</span>
+              </div>
+              <p class="text-charcoal mt-1">Assigned you to: "Review Sangeet wireless mic frequency and generator backup".</p>
+              <span class="inline-block mt-1 text-primary font-medium">Tasks · Assigned to you</span>
+            </div>
+          </div>
+          <div class="p-2.5 bg-canvas-ivory border-t border-border-subtle text-center">
+            <a href="#notifications-view" class="text-xs font-semibold text-primary hover:underline">Open notification center</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Disclosure: Avatar & Name Dropdown -->
+      <div class="relative">
+        <button id="accountDisclosureBtn" onclick="toggleAccountMenu()" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-md text-xs hover:bg-canvas-ivory border border-transparent hover:border-border-subtle transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-primary">
+          <div class="w-7 h-7 rounded-full bg-primary text-white font-bold text-[11px] flex items-center justify-center tracking-tight shadow-sm">
+            PI
+          </div>
+          <span class="hidden sm:inline font-semibold text-charcoal">Pavithra Iyer</span>
+          <span class="material-symbols-outlined text-muted-secondary">expand_more</span>
+        </button>
+
+        <!-- Account Menu Items (Preserving exact requested items) -->
+        <div id="accountDropdown" class="hidden absolute right-0 mt-1.5 w-56 bg-surface-pure rounded-lg border border-border-subtle shadow-dropdown py-1.5 z-50 text-xs">
+          <div class="px-3 py-2 border-b border-border-subtle">
+            <div class="font-semibold text-charcoal">Pavithra Iyer</div>
+            <div class="text-[11px] text-muted-secondary truncate">pavithra.iyer@example.com</div>
+            <span class="inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary/10 text-primary">Administrator</span>
+          </div>
+          <a href="/weddings" class="flex items-center gap-2.5 px-3 py-2 text-charcoal hover:bg-canvas-ivory transition-colors">
+            <span class="material-symbols-outlined text-[16px] text-muted-secondary">view_carousel</span>
+            <span>Your weddings</span>
+          </a>
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2 text-charcoal hover:bg-canvas-ivory transition-colors">
+            <span class="material-symbols-outlined text-[16px] text-muted-secondary">add_circle_outline</span>
+            <span>Create new wedding</span>
+          </a>
+          <a href="#" class="flex items-center gap-2.5 px-3 py-2 text-charcoal hover:bg-canvas-ivory transition-colors">
+            <span class="material-symbols-outlined text-[16px] text-muted-secondary">group_add</span>
+            <span>Join with 12-char code</span>
+          </a>
+          <div class="my-1 border-t border-border-subtle"></div>
+          <a href="/sign-in" class="flex items-center gap-2.5 px-3 py-2 text-red-700 hover:bg-red-50 transition-colors">
+            <span class="material-symbols-outlined text-[16px]">logout</span>
+            <span>Sign out</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN LAYOUT WITH 224PX GROUPED SIDEBAR ================= -->
+  <div class="flex-1 flex w-full max-w-[1536px] mx-auto">
+    
+    <!-- Desktop Persistent 224px Grouped Sidebar -->
+    <aside aria-label="Wedding navigation sidebar" class="w-56 shrink-0 bg-canvas-ivory border-r border-border-subtle py-5 px-3 flex flex-col justify-between hidden md:flex min-h-[calc(100vh-3.5rem)]">
+      <div class="space-y-6">
+        <!-- Section: PLANNING -->
+        <div>
+          <div class="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-secondary">
+            Planning
+          </div>
+          <nav class="space-y-1">
+            <a href="#dashboard" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-charcoal hover:bg-surface-pure hover:text-primary transition-all duration-150">
+              <span class="material-symbols-outlined text-muted-secondary">dashboard</span>
+              <span>Dashboard</span>
+            </a>
+            <a href="#functions" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-charcoal hover:bg-surface-pure hover:text-primary transition-all duration-150">
+              <span class="material-symbols-outlined text-muted-secondary">event_upcoming</span>
+              <span>Functions</span>
+            </a>
+            <a href="#tasks" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-charcoal hover:bg-surface-pure hover:text-primary transition-all duration-150">
+              <span class="material-symbols-outlined text-muted-secondary">checklist</span>
+              <span>Tasks</span>
+              <span class="ml-auto px-1.5 py-0.2 rounded-full text-[10px] bg-border-subtle font-semibold text-muted-secondary">14</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Section: PEOPLE -->
+        <div>
+          <div class="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-secondary">
+            People
+          </div>
+          <nav class="space-y-1">
+            <a href="#team" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-charcoal hover:bg-surface-pure hover:text-primary transition-all duration-150">
+              <span class="material-symbols-outlined text-muted-secondary">group</span>
+              <span>Team</span>
+            </a>
+            <a href="#vendors-directory" onclick="switchMainTab('vendors-tab')" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-charcoal hover:bg-surface-pure hover:text-primary transition-all duration-150">
+              <span class="material-symbols-outlined text-muted-secondary">storefront</span>
+              <span>Vendors</span>
+              <span class="ml-auto px-1.5 py-0.2 rounded-full text-[10px] bg-primary/10 font-semibold text-primary">3</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Section: MANAGEMENT -->
+        <div>
+          <div class="px-3 mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-secondary">
+            Management
+          </div>
+          <nav class="space-y-1">
+            <!-- ACTIVE: Finance -->
+            <a href="#finance" onclick="switchMainTab('finance-tab')" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-bold bg-surface-pure text-primary shadow-subtle border border-border-subtle/80">
+              <span class="material-symbols-outlined text-primary">payments</span>
+              <span>Finance</span>
+            </a>
+            <a href="#details" class="flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-charcoal hover:bg-surface-pure hover:text-primary transition-all duration-150">
+              <span class="material-symbols-outlined text-muted-secondary">tune</span>
+              <span>Wedding details</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Sidebar Footer Note -->
+      <div class="pt-4 border-t border-border-subtle/60 px-3 text-[11px] text-muted-secondary">
+        <div class="flex items-center gap-1.5 text-charcoal font-medium">
+          <span class="material-symbols-outlined text-[14px] text-primary">lock</span>
+          <span>Family Private Mode</span>
+        </div>
+        <div class="mt-0.5">Asia/Kolkata (IST)</div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content Area -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 overflow-hidden">
+      
+      <!-- TOP COGNITIVE BANNER & WORKSPACE TABS -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-border-subtle">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-copper mb-1">
+            <span>Expenses &amp; Settlements</span>
+            <span>·</span>
+            <span class="text-muted-secondary font-normal lowercase">Actual cost ledger (INR)</span>
+          </div>
+          <h1 class="font-serif text-2xl sm:text-3xl text-primary font-medium tracking-tight">Expenses &amp; Payments Ledger</h1>
+          <p class="text-xs sm:text-sm text-muted-secondary mt-1">
+            Non-speculative ledger of agreed vendor invoices, standalone direct items, and verified disbursements.
+          </p>
+        </div>
+
+        <!-- Coordinated Dual Action Controls -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <!-- Switch between Finance Ledger and Manual Vendors Reference Board -->
+          <div class="bg-surface-muted p-0.5 rounded-lg border border-border-subtle flex items-center text-xs font-medium">
+            <button id="tabBtnFinance" onclick="switchMainTab('finance-tab')" class="px-3 py-1.5 rounded-md bg-surface-pure text-primary font-bold shadow-subtle transition-all duration-150">
+              Finance Ledger
+            </button>
+            <button id="tabBtnVendors" onclick="switchMainTab('vendors-tab')" class="px-3 py-1.5 rounded-md text-muted-secondary hover:text-charcoal transition-all duration-150">
+              Manual Vendors Directory (3)
+            </button>
+          </div>
+
+          <!-- Primary Actions -->
+          <button onclick="openRecordPaymentDrawer()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-pure border border-primary text-primary hover:bg-primary/5 text-xs font-bold transition-all duration-150 shadow-subtle active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[16px]">add_card</span>
+            <span>Record payment</span>
+          </button>
+          <button onclick="openAddExpenseDrawer()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all duration-150 shadow-subtle active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[16px]">add</span>
+            <span>Add expense</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= SECTION 1: FINANCE LEDGER VIEW ================= -->
+      <div id="financeViewContainer" class="space-y-6">
+
+        <!-- TOP SUMMARIES: ONLY ACTUAL PAID AND OUTSTANDING (STRICT REQUIREMENT) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Metric 1: Actual Paid (Sums Money Actually Cleared Exactly Once) -->
+          <div class="bg-surface-pure rounded-xl p-5 border border-border-subtle shadow-subtle relative overflow-hidden">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs uppercase tracking-wider font-bold text-muted-secondary block">Actual Paid</span>
+                <div class="text-3xl font-serif text-primary font-bold mt-1 tracking-tight">₹8,25,000</div>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[22px]">payments</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-border-subtle/60 flex items-center justify-between text-xs text-muted-secondary">
+              <span>Cleared across verified payments</span>
+              <span class="font-semibold text-primary">4 disbursements</span>
+            </div>
+          </div>
+
+          <!-- Metric 2: Outstanding Balance (Total Agreed Invoices minus Payments Cleared) -->
+          <div class="bg-surface-pure rounded-xl p-5 border border-border-subtle shadow-subtle relative overflow-hidden">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs uppercase tracking-wider font-bold text-muted-secondary block">Outstanding</span>
+                <div class="text-3xl font-serif text-copper font-bold mt-1 tracking-tight">₹4,75,000</div>
+              </div>
+              <div class="w-10 h-10 rounded-lg bg-copper/10 text-copper flex items-center justify-center">
+                <span class="material-symbols-outlined text-[22px]">hourglass_top</span>
+              </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-border-subtle/60 flex items-center justify-between text-xs text-muted-secondary">
+              <span>Remaining payable before Muhurtham</span>
+              <span class="font-semibold text-copper">Across 2 expenses</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TWO CLEAR SUBVIEWS: EXPENSES | PAYMENTS (NO THIRD TRIPLET OR VENDOR SUBNAV) -->
+        <div class="bg-surface-pure rounded-xl border border-border-subtle shadow-subtle overflow-hidden">
+          
+          <!-- View Controller & Filter Bar -->
+          <div class="px-4 py-3 bg-canvas-ivory/50 border-b border-border-subtle flex flex-wrap items-center justify-between gap-3">
+            <!-- Two Clear Views Toggle -->
+            <div class="flex items-center gap-1 bg-surface-muted p-1 rounded-lg border border-border-subtle text-xs font-semibold">
+              <button id="btnViewExpenses" onclick="switchLedgerView('expenses')" class="px-3.5 py-1.5 rounded-md bg-surface-pure text-primary font-bold shadow-subtle transition-all">
+                Expenses (4)
+              </button>
+              <button id="btnViewPayments" onclick="switchLedgerView('payments')" class="px-3.5 py-1.5 rounded-md text-muted-secondary hover:text-charcoal transition-all">
+                Payments (4)
+              </button>
+            </div>
+
+            <!-- Search and Filter Tools -->
+            <div class="flex items-center gap-2 flex-1 sm:max-w-md justify-end">
+              <div class="relative w-full max-w-xs">
+                <span class="material-symbols-outlined absolute left-2.5 top-2 text-muted-secondary text-[16px]">search</span>
+                <input type="text" id="ledgerSearchInput" oninput="filterLedgerRows()" placeholder="Search description, vendor..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-secondary/70"/>
+              </div>
+
+              <!-- Quick Status Filter (Expenses view) -->
+              <div id="expenseStatusFilterWrapper">
+                <select id="expenseStatusFilter" onchange="filterLedgerRows()" class="text-xs bg-surface-pure border border-border-subtle rounded-lg px-2.5 py-1.5 text-charcoal focus:outline-none focus:ring-1 focus:ring-primary">
+                  <option value="all">All statuses</option>
+                  <option value="Unpaid">Unpaid</option>
+                  <option value="Partially paid">Partially paid</option>
+                  <option value="Paid">Paid</option>
+                </select>
+              </div>
+
+              <!-- Reset Filter Pill (hidden unless filtered) -->
+              <button id="resetFilterBtn" onclick="resetLedgerFilters()" class="hidden text-xs text-copper hover:underline whitespace-nowrap">Reset</button>
+            </div>
+          </div>
+
+          <!-- SUBVIEW A: EXPENSES TABLE (Default View) -->
+          <div id="expensesTableContainer" class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-canvas-ivory/30 text-muted-secondary uppercase text-[11px] font-bold tracking-wider border-b border-border-subtle">
+                  <th class="py-3 px-4">Expense Description</th>
+                  <th class="py-3 px-4">Vendor Association</th>
+                  <th class="py-3 px-4 text-right">Agreed Amount</th>
+                  <th class="py-3 px-4 text-right">Paid to Date</th>
+                  <th class="py-3 px-4 text-right">Remaining Due</th>
+                  <th class="py-3 px-4 text-center">Status</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="expensesTbody" class="divide-y divide-border-subtle">
+                
+                <!-- Row 1: Partial with Vendor (Vrindavan Floral) -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal text-sm">Flower decoration &amp; Muhurtham Mandap Arch</div>
+                    <div class="text-[11px] text-muted-secondary mt-0.5">Category: Floral &amp; Stage Decor · Notes: Tranche 1 &amp; 2 agreed</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-accent-forest/10 text-accent-forest font-semibold text-[11px]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-accent-forest"></span>
+                      <span>Vrindavan Floral</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-medium text-charcoal">₹6,00,000</td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary">₹5,00,000</td>
+                  <td class="py-3.5 px-4 text-right font-bold text-copper">₹1,00,000</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-copper/15 text-copper border border-copper/30">
+                      Partially paid
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                    <button onclick="prefillPaymentModal('EXP-101', 'Flower decoration & Muhurtham Mandap Arch', 'Vrindavan Floral', 100000)" class="px-2.5 py-1 rounded bg-primary text-white hover:bg-primary-hover font-semibold text-[11px] shadow-subtle transition-all">
+                      Record payment
+                    </button>
+                    <button onclick="openCorrectionModal('EXP-101', 'Flower decoration & Muhurtham Mandap Arch', 600000)" class="ml-1 p-1 rounded text-muted-secondary hover:text-charcoal hover:bg-canvas-ivory transition-colors" title="Correct entry">
+                      <span class="material-symbols-outlined text-[16px]">edit</span>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Row 2: Partial with Vendor (Mysore Royal Banquets) -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal text-sm">Catering &amp; Traditional Sadya Feast</div>
+                    <div class="text-[11px] text-muted-secondary mt-0.5">Category: Food &amp; Beverage · Notes: 380 pax guaranteed count</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-accent-copper/10 text-accent-copper font-semibold text-[11px]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-accent-copper"></span>
+                      <span>Mysore Royal Banquets</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-medium text-charcoal">₹4,00,000</td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary">₹2,00,000</td>
+                  <td class="py-3.5 px-4 text-right font-bold text-copper">₹2,00,000</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-copper/15 text-copper border border-copper/30">
+                      Partially paid
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                    <button onclick="prefillPaymentModal('EXP-102', 'Catering & Traditional Sadya Feast', 'Mysore Royal Banquets', 200000)" class="px-2.5 py-1 rounded bg-primary text-white hover:bg-primary-hover font-semibold text-[11px] shadow-subtle transition-all">
+                      Record payment
+                    </button>
+                    <button onclick="openCorrectionModal('EXP-102', 'Catering & Traditional Sadya Feast', 400000)" class="ml-1 p-1 rounded text-muted-secondary hover:text-charcoal hover:bg-canvas-ivory transition-colors" title="Correct entry">
+                      <span class="material-symbols-outlined text-[16px]">edit</span>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Row 3: Fully Paid with Vendor (Heritage Acoustics) -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal text-sm">Outdoor Estate PA system &amp; Live microphones</div>
+                    <div class="text-[11px] text-muted-secondary mt-0.5">Category: Sound &amp; Lighting · Notes: Full setup cleared</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-accent-slate/10 text-accent-slate font-semibold text-[11px]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-accent-slate"></span>
+                      <span>Heritage Acoustics</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-medium text-charcoal">₹1,00,000</td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary">₹1,00,000</td>
+                  <td class="py-3.5 px-4 text-right font-semibold text-muted-secondary">₹0</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      Paid
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                    <span class="text-xs text-muted-secondary italic mr-2">Settled</span>
+                    <button onclick="openCorrectionModal('EXP-103', 'Outdoor Estate PA system & Live microphones', 100000)" class="p-1 rounded text-muted-secondary hover:text-charcoal hover:bg-canvas-ivory transition-colors" title="Correct entry">
+                      <span class="material-symbols-outlined text-[16px]">edit</span>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Row 4: Non-Vendor Expense (Strict Requirement: Non-vendor supports partial too) -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal text-sm">Bangalore Palace Lawn Fire Safety &amp; Sound Permit Fee</div>
+                    <div class="text-[11px] text-muted-secondary mt-0.5">Category: Statutory &amp; Municipal · Notes: Challan instalment 1 cleared</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded text-[10px] bg-canvas-ivory text-muted-secondary border border-border-subtle font-medium">
+                      No vendor (Direct)
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-medium text-charcoal">₹2,00,000</td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary">₹25,000</td>
+                  <td class="py-3.5 px-4 text-right font-bold text-copper">₹1,75,000</td>
+                  <td class="py-3.5 px-4 text-center">
+                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-copper/15 text-copper border border-copper/30">
+                      Partially paid
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                    <button onclick="prefillPaymentModal('EXP-104', 'Bangalore Palace Lawn Fire Safety & Sound Permit Fee', 'No vendor (Direct)', 175000)" class="px-2.5 py-1 rounded bg-primary text-white hover:bg-primary-hover font-semibold text-[11px] shadow-subtle transition-all">
+                      Record payment
+                    </button>
+                    <button onclick="openCorrectionModal('EXP-104', 'Bangalore Palace Lawn Fire Safety & Sound Permit Fee', 200000)" class="ml-1 p-1 rounded text-muted-secondary hover:text-charcoal hover:bg-canvas-ivory transition-colors" title="Correct entry">
+                      <span class="material-symbols-outlined text-[16px]">edit</span>
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- SUBVIEW B: PAYMENTS TABLE (Strict Money Actually Paid History) -->
+          <div id="paymentsTableContainer" class="hidden overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-canvas-ivory/30 text-muted-secondary uppercase text-[11px] font-bold tracking-wider border-b border-border-subtle">
+                  <th class="py-3 px-4">Payment Reference</th>
+                  <th class="py-3 px-4">Applied to Expense</th>
+                  <th class="py-3 px-4">Vendor / Payee</th>
+                  <th class="py-3 px-4 text-right">Amount Paid</th>
+                  <th class="py-3 px-4">Date &amp; Time (IST)</th>
+                  <th class="py-3 px-4">Payment Method</th>
+                  <th class="py-3 px-4 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-border-subtle">
+                <!-- Payment 1 -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors">
+                  <td class="py-3.5 px-4 font-mono font-medium text-charcoal">PAY-8821</td>
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal">Flower decoration &amp; Muhurtham Mandap Arch</div>
+                    <div class="text-[11px] text-muted-secondary">Advance tranche 1 cleared</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="font-medium text-primary">Vrindavan Floral</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary text-sm">₹5,00,000</td>
+                  <td class="py-3.5 px-4 text-charcoal">18 Jan 2027, 02:30 PM</td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded text-[11px] bg-canvas-ivory border border-border-subtle">NEFT #HDFC99210</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button onclick="openCorrectionModal('PAY-8821', 'Payment against Flower decoration', 500000)" class="text-xs text-primary hover:underline font-semibold">Correct entry</button>
+                  </td>
+                </tr>
+
+                <!-- Payment 2 -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors">
+                  <td class="py-3.5 px-4 font-mono font-medium text-charcoal">PAY-8822</td>
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal">Catering &amp; Traditional Sadya Feast</div>
+                    <div class="text-[11px] text-muted-secondary">50% banquet confirmation token</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="font-medium text-copper">Mysore Royal Banquets</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary text-sm">₹2,00,000</td>
+                  <td class="py-3.5 px-4 text-charcoal">22 Jan 2027, 11:15 AM</td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded text-[11px] bg-canvas-ivory border border-border-subtle">RTGS #ICICI4091</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button onclick="openCorrectionModal('PAY-8822', 'Payment against Catering', 200000)" class="text-xs text-primary hover:underline font-semibold">Correct entry</button>
+                  </td>
+                </tr>
+
+                <!-- Payment 3 -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors">
+                  <td class="py-3.5 px-4 font-mono font-medium text-charcoal">PAY-8823</td>
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal">Outdoor Estate PA system &amp; Live microphones</div>
+                    <div class="text-[11px] text-muted-secondary">Complete rental fee settled</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="font-medium text-charcoal">Heritage Acoustics</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary text-sm">₹1,00,000</td>
+                  <td class="py-3.5 px-4 text-charcoal">25 Jan 2027, 04:45 PM</td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded text-[11px] bg-canvas-ivory border border-border-subtle">Axis NEFT #1128</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button onclick="openCorrectionModal('PAY-8823', 'Payment against Sound PA system', 100000)" class="text-xs text-primary hover:underline font-semibold">Correct entry</button>
+                  </td>
+                </tr>
+
+                <!-- Payment 4: Non-Vendor Payment -->
+                <tr class="hover:bg-canvas-ivory/40 transition-colors">
+                  <td class="py-3.5 px-4 font-mono font-medium text-charcoal">PAY-8824</td>
+                  <td class="py-3.5 px-4">
+                    <div class="font-semibold text-charcoal">Bangalore Palace Lawn Fire Safety &amp; Sound Permit Fee</div>
+                    <div class="text-[11px] text-muted-secondary">Initial municipal challan submission</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <span class="text-muted-secondary italic">No vendor (Direct)</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right font-bold text-primary text-sm">₹25,000</td>
+                  <td class="py-3.5 px-4 text-charcoal">29 Jan 2027, 10:00 AM</td>
+                  <td class="py-3.5 px-4">
+                    <span class="px-2 py-0.5 rounded text-[11px] bg-canvas-ivory border border-border-subtle">Challan Bank Transfer</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-right">
+                    <button onclick="openCorrectionModal('PAY-8824', 'Payment against Fire Safety Permit', 25000)" class="text-xs text-primary hover:underline font-semibold">Correct entry</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Bottom Pagination and Immutable Ledger Integrity Bar -->
+          <div class="px-4 py-3 bg-canvas-ivory/30 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-secondary">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-[15px] text-primary">verified</span>
+              <span>Actual paid sums payments exactly once. Agreed invoices do not equal disbursements.</span>
+            </div>
+            <div class="flex items-center gap-1 font-medium">
+              <span>Showing 1–4 of 4 audited entries</span>
+              <span class="mx-1">·</span>
+              <button disabled class="px-2 py-0.5 rounded border border-border-subtle text-muted-secondary/50 cursor-not-allowed">Previous</button>
+              <button disabled class="px-2 py-0.5 rounded border border-border-subtle text-muted-secondary/50 cursor-not-allowed">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= COLLAPSED "VIEW VENDOR BALANCES" PANEL ================= -->
+        <!-- STRICT REQUIREMENT: Collapsed by default. Fetches ONLY on explicit user request. -->
+        <div class="bg-surface-pure rounded-xl border border-border-subtle shadow-subtle p-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="font-serif text-lg font-medium text-charcoal">Vendor Balances Snapshot</h2>
+              <p class="text-xs text-muted-secondary mt-0.5">
+                Aggregated per-vendor commitments, settlements, and open balances. On-demand compilation.
+              </p>
+            </div>
+            <button id="btnFetchVendorBalances" onclick="toggleVendorBalancesFetch()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-canvas-ivory hover:bg-surface-muted text-charcoal border border-border-subtle text-xs font-bold transition-all shadow-subtle">
+              <span class="material-symbols-outlined text-[16px] text-primary">sync</span>
+              <span id="fetchVendorBtnText">View vendor balances</span>
+            </button>
+          </div>
+
+          <!-- State Container for Vendor Balances (Unopened / Loading / Error / Populated) -->
+          <div id="vendorBalancesContent" class="mt-4 pt-4 border-t border-border-subtle/80 hidden">
+            <!-- Loading State -->
+            <div id="vendorBalancesLoading" class="py-8 text-center hidden">
+              <div class="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+              <p class="text-xs text-muted-secondary font-medium">Compiling vendor balances from audited ledger...</p>
+            </div>
+
+            <!-- Error State (with retry) -->
+            <div id="vendorBalancesError" class="py-6 px-4 bg-red-50/60 rounded-lg border border-red-200 text-center hidden">
+              <span class="material-symbols-outlined text-red-600 text-2xl mb-1">error</span>
+              <p class="text-xs font-semibold text-red-800">Unable to compile vendor balances</p>
+              <p class="text-[11px] text-red-700 mt-0.5">Connection timed out while querying settlement records.</p>
+              <button onclick="toggleVendorBalancesFetch(true)" class="mt-3 px-3 py-1.5 rounded bg-surface-pure border border-red-300 text-red-800 text-xs font-semibold hover:bg-red-50 transition-colors shadow-subtle">
+                Retry fetch
+              </button>
+            </div>
+
+            <!-- Populated State -->
+            <div id="vendorBalancesPopulated" class="hidden overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="bg-canvas-ivory/50 text-muted-secondary uppercase text-[10px] font-bold tracking-wider border-b border-border-subtle">
+                    <th class="py-2.5 px-3">Vendor Partner</th>
+                    <th class="py-2.5 px-3">Category</th>
+                    <th class="py-2.5 px-3 text-right">Agreed Charges</th>
+                    <th class="py-2.5 px-3 text-right">Disbursed (Paid)</th>
+                    <th class="py-2.5 px-3 text-right">Outstanding Balance</th>
+                    <th class="py-2.5 px-3 text-center">Settlement Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-border-subtle/60">
+                  <tr class="hover:bg-canvas-ivory/30">
+                    <td class="py-2.5 px-3 font-semibold text-charcoal">Vrindavan Floral</td>
+                    <td class="py-2.5 px-3 text-muted-secondary">Floral &amp; Stage Decor</td>
+                    <td class="py-2.5 px-3 text-right font-medium">₹6,00,000</td>
+                    <td class="py-2.5 px-3 text-right text-primary font-bold">₹5,00,000</td>
+                    <td class="py-2.5 px-3 text-right text-copper font-bold">₹1,00,000</td>
+                    <td class="py-2.5 px-3 text-center">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-copper/15 text-copper">Balance due</span>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-canvas-ivory/30">
+                    <td class="py-2.5 px-3 font-semibold text-charcoal">Mysore Royal Banquets</td>
+                    <td class="py-2.5 px-3 text-muted-secondary">Food &amp; Beverage</td>
+                    <td class="py-2.5 px-3 text-right font-medium">₹4,00,000</td>
+                    <td class="py-2.5 px-3 text-right text-primary font-bold">₹2,00,000</td>
+                    <td class="py-2.5 px-3 text-right text-copper font-bold">₹2,00,000</td>
+                    <td class="py-2.5 px-3 text-center">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-copper/15 text-copper">Balance due</span>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-canvas-ivory/30">
+                    <td class="py-2.5 px-3 font-semibold text-charcoal">Heritage Acoustics</td>
+                    <td class="py-2.5 px-3 text-muted-secondary">Sound &amp; Lighting</td>
+                    <td class="py-2.5 px-3 text-right font-medium">₹1,00,000</td>
+                    <td class="py-2.5 px-3 text-right text-primary font-bold">₹1,00,000</td>
+                    <td class="py-2.5 px-3 text-right text-muted-secondary font-medium">₹0</td>
+                    <td class="py-2.5 px-3 text-center">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">Fully Settled</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="mt-2.5 flex items-center justify-between text-[11px] text-muted-secondary pt-2 border-t border-border-subtle/60">
+                <span>Summary reflects only contracted manual vendors.</span>
+                <button onclick="toggleVendorBalancesFetch(false, true)" class="text-primary hover:underline font-semibold flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px]">refresh</span> Refresh snapshot
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= SECTION 2: MANUAL VENDORS DIRECTORY REFERENCE BOARD ================= -->
+      <!-- STRICT REQUIREMENT: Adjacent reference board. Name/category/phone/status/internal notes ONLY.
+           Controlled narrow accent border (6 colors: Forest, Copper, Marigold, Rose, Plum, Slate).
+           Edit color picker required. NO email, NO function assignments, NO portal, NO monetary clutter. -->
+      <div id="vendorsViewContainer" class="hidden space-y-6">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-surface-pure border border-border-subtle shadow-subtle">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
+              <span class="material-symbols-outlined text-[16px]">storefront</span>
+              <span>Manual Vendors Directory · Reference Board</span>
+            </div>
+            <p class="text-xs text-muted-secondary mt-1">
+              Private vendor roster. Direct contacts and internal notes. No automated discovery or external portal logins.
+            </p>
+          </div>
+          <button onclick="openVendorEditor('new')" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all shadow-subtle self-start sm:self-center">
+            <span class="material-symbols-outlined text-[16px]">person_add</span>
+            <span>+ Add manual vendor</span>
+          </button>
+        </div>
+
+        <!-- Directory Filter Bar -->
+        <div class="bg-surface-pure p-3.5 rounded-xl border border-border-subtle shadow-subtle flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 text-xs">
+          <div class="relative flex-1">
+            <span class="material-symbols-outlined absolute left-3 top-2.5 text-muted-secondary text-[16px]">search</span>
+            <input type="text" id="vendorSearchInput" oninput="filterVendorCards()" placeholder="Search vendors by name or phone..." class="w-full pl-9 pr-3 py-1.5 bg-canvas-ivory/50 border border-border-subtle rounded-lg text-charcoal focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-secondary/70"/>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <select id="vendorStatusFilter" onchange="filterVendorCards()" class="bg-canvas-ivory/50 border border-border-subtle rounded-lg px-2.5 py-1.5 text-charcoal focus:outline-none focus:ring-1 focus:ring-primary">
+              <option value="all">All statuses</option>
+              <option value="Active">Active only</option>
+              <option value="Inactive">Inactive only</option>
+            </select>
+
+            <select id="vendorCategoryFilter" onchange="filterVendorCards()" class="bg-canvas-ivory/50 border border-border-subtle rounded-lg px-2.5 py-1.5 text-charcoal focus:outline-none focus:ring-1 focus:ring-primary">
+              <option value="all">All categories</option>
+              <option value="Floral & Decor">Floral &amp; Decor</option>
+              <option value="Catering">Catering</option>
+              <option value="Sound & Lighting">Sound &amp; Lighting</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3 Manual Vendor Cards (Controlled Narrow Top Accent Border; NO MONETARY CLUTTER) -->
+        <div id="vendorCardsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- Vendor Card 1: Vrindavan Floral (Accent: Forest #28594F) -->
+          <article class="vendor-card bg-surface-pure rounded-xl border border-border-subtle shadow-subtle overflow-hidden relative flex flex-col justify-between hover:shadow-dropdown transition-all duration-150" data-name="Vrindavan Floral" data-status="Active" data-category="Floral & Decor">
+            <!-- Controlled narrow 3.5px accent top border -->
+            <div class="h-[3.5px] w-full bg-accent-forest" style="background-color: #28594F;"></div>
+            
+            <div class="p-5 space-y-3.5">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h3 class="font-serif text-lg font-medium text-charcoal leading-snug">Vrindavan Floral</h3>
+                  <span class="inline-block text-[11px] font-semibold text-muted-secondary mt-0.5">Floral &amp; Decor</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  Active
+                </span>
+              </div>
+
+              <!-- Phone Numbers -->
+              <div class="space-y-1 bg-canvas-ivory/60 p-2.5 rounded-lg border border-border-subtle/60 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] uppercase font-bold text-muted-secondary">Lead Contact</span>
+                  <span class="font-semibold text-charcoal">Ananya Rao</span>
+                </div>
+                <div class="flex items-center gap-1.5 pt-0.5 text-primary font-semibold">
+                  <span class="material-symbols-outlined text-[15px]">call</span>
+                  <a href="tel:+919845012345" class="hover:underline">+91 98450 12345</a>
+                </div>
+              </div>
+
+              <!-- Internal Notes -->
+              <div>
+                <span class="text-[10px] uppercase font-bold text-muted-secondary block mb-1">Internal Notes</span>
+                <p class="text-xs text-charcoal/90 leading-relaxed bg-canvas-ivory/30 p-2.5 rounded border border-border-subtle/40 line-clamp-3">
+                  Lead contact for main Muhurtham mandap floral canopies and poolside marigold strings. Arrives with 8-member installation crew on eve of Haldi.
+                </p>
+              </div>
+            </div>
+
+            <!-- Footer: Accent Color Indicator & Edit Button -->
+            <div class="px-5 py-3 bg-canvas-ivory/40 border-t border-border-subtle/60 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-1.5 text-[11px] text-muted-secondary">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: #28594F;"></span>
+                <span>Forest accent</span>
+              </div>
+              <button onclick="openVendorEditor('edit', 'Vrindavan Floral', 'Floral & Decor', '+91 98450 12345', 'Ananya Rao', 'Active', '#28594F', 'Lead contact for main Muhurtham mandap floral canopies and poolside marigold strings.')" class="px-2.5 py-1 rounded bg-surface-pure hover:bg-canvas-ivory border border-border-subtle font-semibold text-charcoal flex items-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-[14px]">edit</span>
+                <span>Edit</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Vendor Card 2: Mysore Royal Banquets (Accent: Marigold #C98A2C) -->
+          <article class="vendor-card bg-surface-pure rounded-xl border border-border-subtle shadow-subtle overflow-hidden relative flex flex-col justify-between hover:shadow-dropdown transition-all duration-150" data-name="Mysore Royal Banquets" data-status="Active" data-category="Catering">
+            <!-- Controlled narrow 3.5px accent top border -->
+            <div class="h-[3.5px] w-full bg-accent-marigold" style="background-color: #C98A2C;"></div>
+            
+            <div class="p-5 space-y-3.5">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h3 class="font-serif text-lg font-medium text-charcoal leading-snug">Mysore Royal Banquets</h3>
+                  <span class="inline-block text-[11px] font-semibold text-muted-secondary mt-0.5">Catering &amp; F&amp;B</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  Active
+                </span>
+              </div>
+
+              <!-- Phone Numbers -->
+              <div class="space-y-1 bg-canvas-ivory/60 p-2.5 rounded-lg border border-border-subtle/60 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] uppercase font-bold text-muted-secondary">Head Chef</span>
+                  <span class="font-semibold text-charcoal">Chef S. Hegde</span>
+                </div>
+                <div class="flex items-center gap-1.5 pt-0.5 text-primary font-semibold">
+                  <span class="material-symbols-outlined text-[15px]">call</span>
+                  <a href="tel:+919820155432" class="hover:underline">+91 98201 55432</a>
+                </div>
+              </div>
+
+              <!-- Internal Notes -->
+              <div>
+                <span class="text-[10px] uppercase font-bold text-muted-secondary block mb-1">Internal Notes</span>
+                <p class="text-xs text-charcoal/90 leading-relaxed bg-canvas-ivory/30 p-2.5 rounded border border-border-subtle/40 line-clamp-3">
+                  Traditional South Indian banana leaf wedding feast. Menu includes special Mysore Pak, Badam Halwa, and 4 varieties of traditional rasam.
+                </p>
+              </div>
+            </div>
+
+            <!-- Footer: Accent Color Indicator & Edit Button -->
+            <div class="px-5 py-3 bg-canvas-ivory/40 border-t border-border-subtle/60 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-1.5 text-[11px] text-muted-secondary">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: #C98A2C;"></span>
+                <span>Marigold accent</span>
+              </div>
+              <button onclick="openVendorEditor('edit', 'Mysore Royal Banquets', 'Catering', '+91 98201 55432', 'Chef S. Hegde', 'Active', '#C98A2C', 'Traditional South Indian banana leaf wedding feast.')" class="px-2.5 py-1 rounded bg-surface-pure hover:bg-canvas-ivory border border-border-subtle font-semibold text-charcoal flex items-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-[14px]">edit</span>
+                <span>Edit</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Vendor Card 3: Heritage Acoustics (Accent: Slate #4A6B82) -->
+          <article class="vendor-card bg-surface-pure rounded-xl border border-border-subtle shadow-subtle overflow-hidden relative flex flex-col justify-between hover:shadow-dropdown transition-all duration-150" data-name="Heritage Acoustics" data-status="Active" data-category="Sound & Lighting">
+            <!-- Controlled narrow 3.5px accent top border -->
+            <div class="h-[3.5px] w-full bg-accent-slate" style="background-color: #4A6B82;"></div>
+            
+            <div class="p-5 space-y-3.5">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h3 class="font-serif text-lg font-medium text-charcoal leading-snug">Heritage Acoustics</h3>
+                  <span class="inline-block text-[11px] font-semibold text-muted-secondary mt-0.5">Sound &amp; Lighting</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  Active
+                </span>
+              </div>
+
+              <!-- Phone Numbers -->
+              <div class="space-y-1 bg-canvas-ivory/60 p-2.5 rounded-lg border border-border-subtle/60 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] uppercase font-bold text-muted-secondary">Lead Engineer</span>
+                  <span class="font-semibold text-charcoal">Rajesh Kumar</span>
+                </div>
+                <div class="flex items-center gap-1.5 pt-0.5 text-primary font-semibold">
+                  <span class="material-symbols-outlined text-[15px]">call</span>
+                  <a href="tel:+919448088712" class="hover:underline">+91 94480 88712</a>
+                </div>
+              </div>
+
+              <!-- Internal Notes -->
+              <div>
+                <span class="text-[10px] uppercase font-bold text-muted-secondary block mb-1">Internal Notes</span>
+                <p class="text-xs text-charcoal/90 leading-relaxed bg-canvas-ivory/30 p-2.5 rounded border border-border-subtle/40 line-clamp-3">
+                  Outdoor estate PA line array setup for Shehnai and Nadaswaram troupes. Soundcheck scheduled on Sangeet eve at 4:00 PM.
+                </p>
+              </div>
+            </div>
+
+            <!-- Footer: Accent Color Indicator & Edit Button -->
+            <div class="px-5 py-3 bg-canvas-ivory/40 border-t border-border-subtle/60 flex items-center justify-between text-xs">
+              <div class="flex items-center gap-1.5 text-[11px] text-muted-secondary">
+                <span class="w-2.5 h-2.5 rounded-full" style="background-color: #4A6B82;"></span>
+                <span>Slate accent</span>
+              </div>
+              <button onclick="openVendorEditor('edit', 'Heritage Acoustics', 'Sound & Lighting', '+91 94480 88712', 'Rajesh Kumar', 'Active', '#4A6B82', 'Outdoor estate PA line array setup for Shehnai and Nadaswaram troupes.')" class="px-2.5 py-1 rounded bg-surface-pure hover:bg-canvas-ivory border border-border-subtle font-semibold text-charcoal flex items-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-[14px]">edit</span>
+                <span>Edit</span>
+              </button>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ================= FOCUSED SLIDE-OVER DRAWER: ADD EXPENSE ================= -->
+  <!-- Description, category, real amount INR, optional vendor, notes, optional Add payment now -->
+  <div id="drawerAddExpense" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex justify-end">
+    <div class="w-full max-w-lg bg-surface-pure h-full shadow-panel flex flex-col justify-between overflow-y-auto custom-scroll border-l border-border-subtle">
+      <!-- Header -->
+      <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between sticky top-0 bg-surface-pure z-10">
+        <div>
+          <h2 class="font-serif text-xl font-medium text-primary">Add Expense Invoice</h2>
+          <p class="text-xs text-muted-secondary">Record a committed expenditure or vendor contract amount.</p>
+        </div>
+        <button onclick="closeAddExpenseDrawer()" class="p-1 rounded-md text-muted-secondary hover:text-charcoal hover:bg-canvas-ivory">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <form onsubmit="handleAddExpenseSubmit(event)" class="p-6 space-y-4 text-xs">
+        
+        <!-- Description -->
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Expense Description *</label>
+          <input type="text" id="newExpDescription" required placeholder="e.g. Traditional Mysore Sandalwood Homam Sticks" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-secondary/70"/>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Real Amount INR -->
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Amount in INR (₹) *</label>
+            <input type="number" id="newExpAmount" required min="1" placeholder="50000" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Expense Category *</label>
+            <select id="newExpCategory" required class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary">
+              <option value="Floral & Decor">Floral &amp; Decor</option>
+              <option value="Food & Beverage">Food &amp; Beverage</option>
+              <option value="Sound & Lighting">Sound &amp; Lighting</option>
+              <option value="Rituals & Pooja">Rituals &amp; Pooja</option>
+              <option value="Statutory & Municipal">Statutory &amp; Municipal</option>
+              <option value="Hospitality & Gifts">Hospitality &amp; Gifts</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Optional Vendor Association (Independent Field) -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="font-semibold text-charcoal">Vendor Association</label>
+            <span class="text-[11px] text-muted-secondary">Optional</span>
+          </div>
+          <select id="newExpVendor" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary">
+            <option value="none">No vendor (Direct celebration expense)</option>
+            <option value="Vrindavan Floral">Vrindavan Floral</option>
+            <option value="Mysore Royal Banquets">Mysore Royal Banquets</option>
+            <option value="Heritage Acoustics">Heritage Acoustics</option>
+          </select>
+          <p class="text-[11px] text-muted-secondary mt-1">
+            Non-vendor expenses support tracking and partial disbursements just like vendor invoices.
+          </p>
+        </div>
+
+        <!-- Internal Notes -->
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Invoice Reference / Notes</label>
+          <textarea rows="2" id="newExpNotes" placeholder="Contract milestone, invoice number, or delivery notes..." class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-secondary/70"></textarea>
+        </div>
+
+        <!-- Optional Convenience: Add payment now -->
+        <div class="pt-3 border-t border-border-subtle/80">
+          <label class="flex items-start gap-2.5 cursor-pointer">
+            <input type="checkbox" id="checkAddPaymentNow" onchange="toggleConveniencePaymentFields()" class="mt-0.5 rounded text-primary focus:ring-primary border-border-subtle"/>
+            <div>
+              <span class="font-semibold text-charcoal block">Add payment now</span>
+              <span class="text-[11px] text-muted-secondary">Optionally record an immediate initial advance or full clearance.</span>
+            </div>
+          </label>
+
+          <!-- Collapsible Payment Convenience Fields -->
+          <div id="conveniencePaymentFields" class="hidden mt-3 p-3 bg-canvas-ivory/60 rounded-lg border border-border-subtle space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block font-semibold text-charcoal mb-1">Paid Amount (₹)</label>
+                <input type="number" id="convPayAmount" placeholder="Amount" class="w-full px-2.5 py-1.5 bg-surface-pure border border-border-subtle rounded text-charcoal text-xs"/>
+              </div>
+              <div>
+                <label class="block font-semibold text-charcoal mb-1">Payment Method</label>
+                <select id="convPayMethod" class="w-full px-2.5 py-1.5 bg-surface-pure border border-border-subtle rounded text-charcoal text-xs">
+                  <option value="NEFT / RTGS">NEFT / RTGS</option>
+                  <option value="UPI Transfer">UPI Transfer</option>
+                  <option value="Cheque">Cheque</option>
+                  <option value="Cash">Cash Voucher</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-border-subtle flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeAddExpenseDrawer()" class="px-3.5 py-2 rounded-lg border border-border-subtle text-charcoal hover:bg-canvas-ivory font-semibold">
+            Cancel
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold shadow-subtle">
+            Save Expense
+          </button>
+        </div>
+      </form>
+
+      <div class="p-4 bg-canvas-ivory/60 border-t border-border-subtle text-[11px] text-muted-secondary">
+        <span class="font-semibold text-charcoal">Note:</span> Entered amounts immediately update the Outstanding balance without altering historical disbursements.
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOCUSED SLIDE-OVER DRAWER: RECORD PAYMENT ================= -->
+  <!-- Searchable expense picker with visible balance, amount, date/time wedding zone, method and note -->
+  <div id="drawerRecordPayment" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex justify-end">
+    <div class="w-full max-w-lg bg-surface-pure h-full shadow-panel flex flex-col justify-between overflow-y-auto custom-scroll border-l border-border-subtle">
+      <!-- Header -->
+      <div class="px-6 py-4 border-b border-border-subtle flex items-center justify-between sticky top-0 bg-surface-pure z-10">
+        <div>
+          <h2 class="font-serif text-xl font-medium text-primary">Record Payment Disbursement</h2>
+          <p class="text-xs text-muted-secondary">Apply a verified payment against an agreed expense invoice.</p>
+        </div>
+        <button onclick="closeRecordPaymentDrawer()" class="p-1 rounded-md text-muted-secondary hover:text-charcoal hover:bg-canvas-ivory">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <form onsubmit="handleRecordPaymentSubmit(event)" class="p-6 space-y-4 text-xs">
+        
+        <!-- Searchable Expense Picker -->
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Select Expense to Pay *</label>
+          <select id="payExpensePicker" onchange="updateSelectedExpenseBalance()" required class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal font-medium focus:ring-1 focus:ring-primary focus:border-primary">
+            <option value="EXP-101" data-balance="100000" data-vendor="Vrindavan Floral">Flower decoration &amp; Muhurtham Mandap (Bal: ₹1,00,000)</option>
+            <option value="EXP-102" data-balance="200000" data-vendor="Mysore Royal Banquets">Catering &amp; Traditional Sadya Feast (Bal: ₹2,00,000)</option>
+            <option value="EXP-104" data-balance="175000" data-vendor="No vendor (Direct)">Palace Lawn Fire Safety Permit (Bal: ₹1,75,000)</option>
+          </select>
+          
+          <!-- Balance Summary Banner -->
+          <div class="mt-2 p-3 bg-canvas-ivory/80 rounded-lg border border-border-subtle flex items-center justify-between">
+            <span class="text-muted-secondary">Current Outstanding on this item:</span>
+            <span id="displaySelectedBalance" class="font-bold text-copper text-sm">₹1,00,000</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Amount Paid -->
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Payment Amount (₹) *</label>
+            <input type="number" id="payAmountInput" required min="1" max="100000" value="100000" placeholder="100000" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal font-bold focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+
+          <!-- Payment Method -->
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Payment Method *</label>
+            <select id="payMethodInput" required class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary">
+              <option value="HDFC NEFT / Wire">HDFC NEFT / Wire</option>
+              <option value="ICICI RTGS">ICICI RTGS</option>
+              <option value="UPI Transfer">UPI Transfer</option>
+              <option value="Bank Cheque">Bank Cheque</option>
+              <option value="Cash Voucher">Cash Voucher</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Date & Time (in Wedding Timezone: Asia/Kolkata IST) -->
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Disbursement Date &amp; Time (Asia/Kolkata IST) *</label>
+          <div class="grid grid-cols-2 gap-3">
+            <input type="date" id="payDateInput" required value="2027-02-18" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"/>
+            <input type="time" id="payTimeInput" required value="14:30" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+        </div>
+
+        <!-- Reference / UTR Number & Note -->
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Bank Reference / UTR / Note</label>
+          <input type="text" id="payNoteInput" placeholder="e.g. UTR #HDFC772810 — signed off by Pavithra" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-muted-secondary/70"/>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-border-subtle flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeRecordPaymentDrawer()" class="px-3.5 py-2 rounded-lg border border-border-subtle text-charcoal hover:bg-canvas-ivory font-semibold">
+            Cancel
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold shadow-subtle">
+            Save Payment Record
+          </button>
+        </div>
+      </form>
+
+      <div class="p-4 bg-canvas-ivory/60 border-t border-border-subtle text-[11px] text-muted-secondary">
+        Recorded disbursements are immutable. To rectify an erroneous record, use the "Correct entry" tool.
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DIALOG: CORRECT ENTRY (USER-FACING IMMUTABLE RECTIFICATION) ================= -->
+  <!-- User-facing 'Correct entry' with reason confirmation rather than jargon-heavy global void instructions -->
+  <div id="modalCorrectEntry" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-surface-pure rounded-xl border border-border-subtle shadow-panel max-w-md w-full p-6 text-xs space-y-4">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-2 text-primary font-bold">
+          <span class="material-symbols-outlined text-lg">edit_note</span>
+          <span class="font-serif text-lg text-charcoal">Correct Entry</span>
+        </div>
+        <button onclick="closeCorrectionModal()" class="text-muted-secondary hover:text-charcoal p-1">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <p class="text-muted-secondary leading-relaxed">
+        You are amending record <strong id="correctTargetId" class="text-charcoal font-mono">EXP-101</strong>: <span id="correctTargetDesc" class="text-charcoal">Flower decoration</span>. An audit notation will be preserved with your reason.
+      </p>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Adjusted Real Amount (₹) *</label>
+          <input type="number" id="correctNewAmount" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal font-bold focus:ring-1 focus:ring-primary focus:border-primary"/>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Reason for Correction *</label>
+          <textarea id="correctReason" required rows="2" placeholder="e.g. Vendor issued revised GST credit note reducing stage truss fee by ₹20,000" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"></textarea>
+        </div>
+      </div>
+
+      <div class="p-3 bg-canvas-ivory rounded-lg border border-border-subtle text-[11px] text-muted-secondary">
+        Audit trail logs who made this change and timestamps it in Asia/Kolkata (IST).
+      </div>
+
+      <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-border-subtle">
+        <button type="button" onclick="closeCorrectionModal()" class="px-3.5 py-1.5 rounded-lg border border-border-subtle text-charcoal hover:bg-canvas-ivory font-semibold">
+          Cancel
+        </button>
+        <button type="button" onclick="applyCorrectionConfirm()" class="px-4 py-1.5 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold shadow-subtle">
+          Confirm Correction
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DIALOG: ADD/EDIT MANUAL VENDOR (CONTROLLED 6-COLOR ACCENT PICKER) ================= -->
+  <!-- Fields: name, category, phone numbers, Active/Inactive status, internal notes, required chosen accent color -->
+  <div id="modalVendorEditor" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-surface-pure rounded-xl border border-border-subtle shadow-panel max-w-lg w-full p-6 text-xs space-y-4">
+      <div class="flex items-start justify-between">
+        <div>
+          <h2 id="vendorModalTitle" class="font-serif text-lg font-medium text-primary">Add Manual Vendor</h2>
+          <p class="text-[11px] text-muted-secondary">Direct vendor roster entry with required controlled color marker.</p>
+        </div>
+        <button onclick="closeVendorEditor()" class="text-muted-secondary hover:text-charcoal p-1">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form onsubmit="handleVendorSubmit(event)" class="space-y-3.5">
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Vendor / Business Name *</label>
+          <input type="text" id="vendFormName" required placeholder="e.g. Royal Decorators Co." class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"/>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Service Category *</label>
+            <select id="vendFormCategory" required class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary">
+              <option value="Floral & Decor">Floral &amp; Decor</option>
+              <option value="Catering">Catering</option>
+              <option value="Sound & Lighting">Sound &amp; Lighting</option>
+              <option value="Photography & Films">Photography &amp; Films</option>
+              <option value="Purohit & Pooja Supplies">Purohit &amp; Pooja Supplies</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Status *</label>
+            <select id="vendFormStatus" required class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Contact Person</label>
+            <input type="text" id="vendFormContact" placeholder="e.g. Ramesh Kumar" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+          <div>
+            <label class="block font-semibold text-charcoal mb-1">Direct Phone Number *</label>
+            <input type="tel" id="vendFormPhone" required placeholder="+91 98450 00000" class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"/>
+          </div>
+        </div>
+
+        <!-- REQUIRED CHOSEN ACCENT COLOR: Controlled 6 Colors Palette (Same as Functions) -->
+        <div>
+          <label class="block font-semibold text-charcoal mb-1.5">Required Card Accent Color Marker *</label>
+          <div class="flex items-center gap-3 p-2 bg-canvas-ivory/60 rounded-lg border border-border-subtle">
+            <!-- Forest #28594F -->
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name="vendColor" value="#28594F" checked class="text-primary focus:ring-primary"/>
+              <span class="w-4 h-4 rounded-full inline-block border border-black/10" style="background-color: #28594F;" title="Forest"></span>
+              <span class="text-[11px] text-charcoal">Forest</span>
+            </label>
+            <!-- Copper #B98265 -->
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name="vendColor" value="#B98265" class="text-copper focus:ring-copper"/>
+              <span class="w-4 h-4 rounded-full inline-block border border-black/10" style="background-color: #B98265;" title="Copper"></span>
+              <span class="text-[11px] text-charcoal">Copper</span>
+            </label>
+            <!-- Marigold #C98A2C -->
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name="vendColor" value="#C98A2C" class="text-amber-600 focus:ring-amber-600"/>
+              <span class="w-4 h-4 rounded-full inline-block border border-black/10" style="background-color: #C98A2C;" title="Marigold"></span>
+              <span class="text-[11px] text-charcoal">Marigold</span>
+            </label>
+            <!-- Rose #B85D6C -->
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name="vendColor" value="#B85D6C" class="text-rose-600 focus:ring-rose-600"/>
+              <span class="w-4 h-4 rounded-full inline-block border border-black/10" style="background-color: #B85D6C;" title="Rose"></span>
+              <span class="text-[11px] text-charcoal">Rose</span>
+            </label>
+            <!-- Plum #6E4555 -->
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name="vendColor" value="#6E4555" class="text-purple-900 focus:ring-purple-900"/>
+              <span class="w-4 h-4 rounded-full inline-block border border-black/10" style="background-color: #6E4555;" title="Plum"></span>
+              <span class="text-[11px] text-charcoal">Plum</span>
+            </label>
+            <!-- Slate #4A6B82 -->
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name="vendColor" value="#4A6B82" class="text-slate-600 focus:ring-slate-600"/>
+              <span class="w-4 h-4 rounded-full inline-block border border-black/10" style="background-color: #4A6B82;" title="Slate"></span>
+              <span class="text-[11px] text-charcoal">Slate</span>
+            </label>
+          </div>
+          <p class="text-[10px] text-muted-secondary mt-1">
+            Appears as a clean narrow top border on the white card. Never fills the entire card.
+          </p>
+        </div>
+
+        <!-- Internal Notes Only -->
+        <div>
+          <label class="block font-semibold text-charcoal mb-1">Internal Notes</label>
+          <textarea id="vendFormNotes" rows="2" placeholder="Brief setup notes, arrival cues, special preferences..." class="w-full px-3 py-2 bg-surface-pure border border-border-subtle rounded-lg text-charcoal focus:ring-1 focus:ring-primary focus:border-primary"></textarea>
+        </div>
+
+        <div class="pt-3 border-t border-border-subtle flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeVendorEditor()" class="px-3.5 py-1.5 rounded-lg border border-border-subtle text-charcoal hover:bg-canvas-ivory font-semibold">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-1.5 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold shadow-subtle">
+            Save Vendor Card
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+  <div id="toastNotification" class="fixed bottom-4 right-4 z-50 bg-charcoal text-white text-xs px-4 py-2.5 rounded-lg shadow-panel hidden flex items-center gap-2">
+    <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+    <span id="toastMessage">Ledger updated successfully.</span>
+  </div>
+
+  <!-- ================= JAVASCRIPT CONTROLLERS ================= -->
+  <script>
+    // Tab switching between Finance Ledger and Manual Vendors Directory
+    function switchMainTab(tabId) {
+      const financeView = document.getElementById('financeViewContainer');
+      const vendorsView = document.getElementById('vendorsViewContainer');
+      const tabBtnFinance = document.getElementById('tabBtnFinance');
+      const tabBtnVendors = document.getElementById('tabBtnVendors');
+
+      if (tabId === 'finance-tab') {
+        financeView.classList.remove('hidden');
+        vendorsView.classList.add('hidden');
+        tabBtnFinance.className = "px-3 py-1.5 rounded-md bg-surface-pure text-primary font-bold shadow-subtle transition-all duration-150";
+        tabBtnVendors.className = "px-3 py-1.5 rounded-md text-muted-secondary hover:text-charcoal transition-all duration-150";
+      } else {
+        vendorsView.classList.remove('hidden');
+        financeView.classList.add('hidden');
+        tabBtnVendors.className = "px-3 py-1.5 rounded-md bg-surface-pure text-primary font-bold shadow-subtle transition-all duration-150";
+        tabBtnFinance.className = "px-3 py-1.5 rounded-md text-muted-secondary hover:text-charcoal transition-all duration-150";
+      }
+    }
+
+    // Ledger subviews toggle (Expenses vs Payments)
+    function switchLedgerView(viewType) {
+      const expContainer = document.getElementById('expensesTableContainer');
+      const payContainer = document.getElementById('paymentsTableContainer');
+      const btnExpenses = document.getElementById('btnViewExpenses');
+      const btnPayments = document.getElementById('btnViewPayments');
+      const statusFilterWrap = document.getElementById('expenseStatusFilterWrapper');
+
+      if (viewType === 'expenses') {
+        expContainer.classList.remove('hidden');
+        payContainer.classList.add('hidden');
+        btnExpenses.className = "px-3.5 py-1.5 rounded-md bg-surface-pure text-primary font-bold shadow-subtle transition-all";
+        btnPayments.className = "px-3.5 py-1.5 rounded-md text-muted-secondary hover:text-charcoal transition-all";
+        statusFilterWrap.classList.remove('hidden');
+      } else {
+        payContainer.classList.remove('hidden');
+        expContainer.classList.add('hidden');
+        btnPayments.className = "px-3.5 py-1.5 rounded-md bg-surface-pure text-primary font-bold shadow-subtle transition-all";
+        btnExpenses.className = "px-3.5 py-1.5 rounded-md text-muted-secondary hover:text-charcoal transition-all";
+        statusFilterWrap.classList.add('hidden');
+      }
+    }
+
+    // On-demand Vendor Balances fetch controller
+    let vendorBalancesFetched = false;
+    function toggleVendorBalancesFetch(isRetry = false, isRefresh = false) {
+      const content = document.getElementById('vendorBalancesContent');
+      const loading = document.getElementById('vendorBalancesLoading');
+      const errorDiv = document.getElementById('vendorBalancesError');
+      const populated = document.getElementById('vendorBalancesPopulated');
+      const btnText = document.getElementById('fetchVendorBtnText');
+
+      if (!content.classList.contains('hidden') && !isRetry && !isRefresh) {
+        content.classList.add('hidden');
+        btnText.textContent = "View vendor balances";
+        return;
+      }
+
+      content.classList.remove('hidden');
+      loading.classList.remove('hidden');
+      errorDiv.classList.add('hidden');
+      populated.classList.add('hidden');
+      btnText.textContent = "Hide vendor balances";
+
+      // Simulate async fetch
+      setTimeout(() => {
+        loading.classList.add('hidden');
+        populated.classList.remove('hidden');
+        vendorBalancesFetched = true;
+      }, 450);
+    }
+
+    // Modal & Drawer Toggles
+    function openAddExpenseDrawer() {
+      document.getElementById('drawerAddExpense').classList.remove('hidden');
+    }
+    function closeAddExpenseDrawer() {
+      document.getElementById('drawerAddExpense').classList.add('hidden');
+    }
+
+    function openRecordPaymentDrawer() {
+      document.getElementById('drawerRecordPayment').classList.remove('hidden');
+      updateSelectedExpenseBalance();
+    }
+    function closeRecordPaymentDrawer() {
+      document.getElementById('drawerRecordPayment').classList.add('hidden');
+    }
+
+    function toggleConveniencePaymentFields() {
+      const check = document.getElementById('checkAddPaymentNow');
+      const fields = document.getElementById('conveniencePaymentFields');
+      if (check.checked) {
+        fields.classList.remove('hidden');
+        const amt = document.getElementById('newExpAmount').value;
+        if (amt) document.getElementById('convPayAmount').value = amt;
+      } else {
+        fields.classList.add('hidden');
+      }
+    }
+
+    function prefillPaymentModal(expId, expTitle, vendorName, balanceDue) {
+      const picker = document.getElementById('payExpensePicker');
+      picker.value = expId;
+      document.getElementById('displaySelectedBalance').textContent = "₹" + balanceDue.toLocaleString('en-IN');
+      const payInput = document.getElementById('payAmountInput');
+      payInput.value = balanceDue;
+      payInput.max = balanceDue;
+      openRecordPaymentDrawer();
+    }
+
+    function updateSelectedExpenseBalance() {
+      const picker = document.getElementById('payExpensePicker');
+      const selectedOption = picker.options[picker.selectedIndex];
+      const bal = parseInt(selectedOption.getAttribute('data-balance') || '0', 10);
+      document.getElementById('displaySelectedBalance').textContent = "₹" + bal.toLocaleString('en-IN');
+      const payInput = document.getElementById('payAmountInput');
+      payInput.value = bal;
+      payInput.max = bal;
+    }
+
+    // Correction Modal
+    function openCorrectionModal(recordId, desc, currentAmount) {
+      document.getElementById('correctTargetId').textContent = recordId;
+      document.getElementById('correctTargetDesc').textContent = desc;
+      document.getElementById('correctNewAmount').value = currentAmount;
+      document.getElementById('correctReason').value = '';
+      document.getElementById('modalCorrectEntry').classList.remove('hidden');
+    }
+    function closeCorrectionModal() {
+      document.getElementById('modalCorrectEntry').classList.add('hidden');
+    }
+    function applyCorrectionConfirm() {
+      const reason = document.getElementById('correctReason').value;
+      if (!reason) {
+        alert("Please provide a reason for the audit log.");
+        return;
+      }
+      closeCorrectionModal();
+      showToast("Record updated with audit note: " + reason);
+    }
+
+    // Vendor Modal
+    function openVendorEditor(mode, name, category, phone, contact, status, color, notes) {
+      const modal = document.getElementById('modalVendorEditor');
+      modal.classList.remove('hidden');
+      const title = document.getElementById('vendorModalTitle');
+      if (mode === 'edit') {
+        title.textContent = "Edit Manual Vendor: " + name;
+        document.getElementById('vendFormName').value = name;
+        document.getElementById('vendFormCategory').value = category;
+        document.getElementById('vendFormPhone').value = phone;
+        document.getElementById('vendFormContact').value = contact || '';
+        document.getElementById('vendFormStatus').value = status;
+        document.getElementById('vendFormNotes').value = notes || '';
+        const radios = document.getElementsByName('vendColor');
+        for (let r of radios) {
+          if (r.value.toLowerCase() === color.toLowerCase()) r.checked = true;
+        }
+      } else {
+        title.textContent = "Add Manual Vendor";
+        document.getElementById('vendFormName').value = '';
+        document.getElementById('vendFormPhone').value = '';
+        document.getElementById('vendFormContact').value = '';
+        document.getElementById('vendFormNotes').value = '';
+      }
+    }
+    function closeVendorEditor() {
+      document.getElementById('modalVendorEditor').classList.add('hidden');
+    }
+    function handleVendorSubmit(e) {
+      e.preventDefault();
+      closeVendorEditor();
+      showToast("Manual vendor roster updated.");
+    }
+
+    // Submit handlers for Expense and Payment
+    function handleAddExpenseSubmit(e) {
+      e.preventDefault();
+      closeAddExpenseDrawer();
+      showToast("Expense invoice saved to ledger.");
+    }
+    function handleRecordPaymentSubmit(e) {
+      e.preventDefault();
+      closeRecordPaymentDrawer();
+      showToast("Disbursement payment verified & logged.");
+    }
+
+    // Top Bar Disclosures
+    function toggleWeddingMenu() {
+      document.getElementById('weddingDropdown').classList.toggle('hidden');
+      document.getElementById('accountDropdown').classList.add('hidden');
+      document.getElementById('notificationPopover').classList.add('hidden');
+    }
+    function toggleAccountMenu() {
+      document.getElementById('accountDropdown').classList.toggle('hidden');
+      document.getElementById('weddingDropdown').classList.add('hidden');
+      document.getElementById('notificationPopover').classList.add('hidden');
+    }
+    function toggleNotificationPopover() {
+      document.getElementById('notificationPopover').classList.toggle('hidden');
+      document.getElementById('accountDropdown').classList.add('hidden');
+      document.getElementById('weddingDropdown').classList.add('hidden');
+    }
+    function markAllNotificationsRead() {
+      showToast("All notifications marked as read.");
+      document.getElementById('notificationPopover').classList.add('hidden');
+    }
+
+    // Global outside click closer
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#weddingSelectorBtn') && !e.target.closest('#weddingDropdown')) {
+        document.getElementById('weddingDropdown').classList.add('hidden');
+      }
+      if (!e.target.closest('#accountDisclosureBtn') && !e.target.closest('#accountDropdown')) {
+        document.getElementById('accountDropdown').classList.add('hidden');
+      }
+      if (!e.target.closest('#notificationTrigger') && !e.target.closest('#notificationPopover')) {
+        document.getElementById('notificationPopover').classList.add('hidden');
+      }
+    });
+
+    // Filtering helpers
+    function filterLedgerRows() {
+      const q = (document.getElementById('ledgerSearchInput').value || '').toLowerCase();
+      const status = document.getElementById('expenseStatusFilter').value;
+      const rows = document.querySelectorAll('#expensesTbody tr');
+      let visible = 0;
+
+      rows.forEach(r => {
+        const text = r.innerText.toLowerCase();
+        const matchesQuery = !q || text.includes(q);
+        const matchesStatus = status === 'all' || text.includes(status.toLowerCase());
+        if (matchesQuery && matchesStatus) {
+          r.style.display = '';
+          visible++;
+        } else {
+          r.style.display = 'none';
+        }
+      });
+
+      const resetBtn = document.getElementById('resetFilterBtn');
+      if (q || status !== 'all') {
+        resetBtn.classList.remove('hidden');
+      } else {
+        resetBtn.classList.add('hidden');
+      }
+    }
+
+    function resetLedgerFilters() {
+      document.getElementById('ledgerSearchInput').value = '';
+      document.getElementById('expenseStatusFilter').value = 'all';
+      filterLedgerRows();
+    }
+
+    function filterVendorCards() {
+      const q = (document.getElementById('vendorSearchInput').value || '').toLowerCase();
+      const status = document.getElementById('vendorStatusFilter').value;
+      const cat = document.getElementById('vendorCategoryFilter').value;
+      const cards = document.querySelectorAll('.vendor-card');
+
+      cards.forEach(card => {
+        const name = (card.getAttribute('data-name') || '').toLowerCase();
+        const cardStatus = card.getAttribute('data-status') || '';
+        const cardCat = card.getAttribute('data-category') || '';
+        const text = card.innerText.toLowerCase();
+
+        const matchQ = !q || text.includes(q);
+        const matchStatus = status === 'all' || cardStatus === status;
+        const matchCat = cat === 'all' || cardCat === cat;
+
+        if (matchQ && matchStatus && matchCat) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

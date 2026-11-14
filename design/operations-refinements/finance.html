@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event · Expenses &amp; Payments Ledger Architecture</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Newsreader & Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface": "#141d1c",
+            "surface-tint": "#36675c",
+            "surface-container-high": "#dfeae8",
+            "primary": "#0b4138",
+            "on-background": "#141d1c",
+            "secondary-fixed-dim": "#f7b999",
+            "primary-container": "#28594f",
+            "on-error": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#794b32",
+            "on-secondary-fixed-variant": "#673c24",
+            "tertiary-fixed": "#dfe4dc",
+            "background": "#f7f5f0", /* Warm Ivory foundation matching brand guidance */
+            "primary-fixed": "#baeddf",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#00201b",
+            "error": "#ba1a1a",
+            "inverse-on-surface": "#e8f3f1",
+            "outline-variant": "#c0c8c5",
+            "on-tertiary-fixed-variant": "#434842",
+            "surface-container-low": "#ebf6f4",
+            "outline": "#707976",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "on-tertiary-container": "#c0c5bd",
+            "surface": "#f1fcfa",
+            "inverse-surface": "#283231",
+            "inverse-primary": "#9ed1c4",
+            "on-tertiary-fixed": "#181d18",
+            "error-container": "#ffdad6",
+            "secondary-fixed": "#ffdbca",
+            "on-surface-variant": "#404946",
+            "surface-container-highest": "#dae5e3",
+            "secondary": "#825339",
+            "surface-container": "#e5f0ee",
+            "surface-variant": "#dae5e3",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#9bcec1",
+            "tertiary-container": "#4d524c",
+            "tertiary": "#363b36",
+            "on-primary-fixed-variant": "#1d4f45",
+            "secondary-container": "#fdbe9e",
+            "on-secondary-fixed": "#321201",
+            "surface-dim": "#d1dcda",
+            "on-primary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#f1fcfa",
+            "primary-fixed-dim": "#9ed1c4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-xl": "2.5rem"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Newsreader"],
+            "body-md": ["Manrope"],
+            "label-md": ["Manrope"],
+            "headline-md": ["Newsreader"],
+            "body-sm": ["Manrope"],
+            "headline-sm": ["Manrope"],
+            "label-lg": ["Manrope"],
+            "display-lg": ["Newsreader"],
+            "body-lg": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "headline-lg": ["Newsreader"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1fcfa;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c0c8c5;
+      border-radius: 9999px;
+    }
+    .paper-card {
+      box-shadow: 0 1px 3px rgba(32, 42, 41, 0.04), 0 4px 12px rgba(32, 42, 41, 0.02);
+    }
+    .floating-modal-shadow {
+      box-shadow: 0 12px 32px -4px rgba(32, 42, 41, 0.08), 0 4px 12px -2px rgba(32, 42, 41, 0.04);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased flex h-screen overflow-hidden font-body-md text-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- LEFT PERSISTENT SIDEBAR (w-56 / 224px per Shared Components Specification) -->
+<aside class="w-56 h-screen flex flex-col justify-between p-4 border-r border-outline-variant bg-surface flex-shrink-0 z-30 select-none">
+<!-- Top Identity & Monogram -->
+<div class="space-y-4">
+<!-- Brand Monogram -->
+<div class="flex items-center gap-2.5 px-1 py-1">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-surface-container-lowest flex items-center justify-center font-display-lg text-lg font-semibold tracking-tight shadow-sm">
+          M
+        </div>
+<div class="leading-tight">
+<span class="text-headline-sm font-headline-sm font-semibold text-primary tracking-tight block">Make My Event</span>
+<span class="text-[10px] tracking-wider uppercase text-on-surface-variant font-label-sm">Enterprise Atelier</span>
+</div>
+</div>
+<!-- Wedding Badge Anchor -->
+<div class="p-2.5 rounded-lg border border-outline-variant/60 bg-surface-container-lowest/80">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<p class="font-label-md text-label-md text-primary font-semibold truncate">Pavithra &amp; Manish</p>
+</div>
+<p class="font-body-sm text-[11px] text-on-surface-variant pl-4 mt-0.5">Feb 2027 · Estate Wedding</p>
+</div>
+<!-- Navigation Hierarchy -->
+<nav class="space-y-4 pt-1">
+<!-- Planning Section -->
+<div>
+<span class="px-2 text-[10px] uppercase tracking-wider font-label-sm text-outline font-bold">Planning</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="event_upcoming">event_upcoming</span>
+<span>Functions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="checklist">checklist</span>
+<span>Tasks</span>
+</a>
+</div>
+</div>
+<!-- People Section -->
+<div>
+<span class="px-2 text-[10px] uppercase tracking-wider font-label-sm text-outline font-bold">People</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="group">group</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="storefront">storefront</span>
+<span>Vendors</span>
+</a>
+</div>
+</div>
+<!-- Management Section -->
+<div>
+<span class="px-2 text-[10px] uppercase tracking-wider font-label-sm text-outline font-bold">Management</span>
+<div class="mt-1 space-y-0.5">
+<!-- Active Finance Navigation Tab (Shared Component Anchor) -->
+<a class="flex items-center gap-3 px-3 py-2 text-primary font-label-lg font-semibold bg-surface-container rounded-lg border-l-2 border-primary-container shadow-xs" href="#">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="payments" data-weight="fill" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span>Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="tune">tune</span>
+<span>Wedding details</span>
+</a>
+</div>
+</div>
+</nav>
+</div>
+<!-- Bottom Meta & Timezone -->
+<div class="pt-3 border-t border-outline-variant/60 space-y-2.5">
+<div class="flex items-center justify-between px-2 py-1 bg-tertiary-fixed/40 rounded-md">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]" data-icon="lock">lock</span>
+<span class="text-[11px] font-medium">Family Private Mode</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+</div>
+<div class="px-2 text-[11px] text-outline flex items-center justify-between">
+<span>Asia/Kolkata (IST)</span>
+<span class="font-mono">11:42 AM</span>
+</div>
+<div class="flex items-center justify-between pt-1 text-[11px] text-on-surface-variant">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]" data-icon="settings">settings</span> Settings
+        </a>
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]" data-icon="help_outline">help_outline</span> Support
+        </a>
+</div>
+</div>
+</aside>
+<!-- MAIN CANVAS CONTAINER -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden bg-background">
+<!-- TOP APP BAR -->
+<header class="flex justify-between items-center w-full h-14 px-8 border-b border-outline-variant bg-surface-container-lowest flex-shrink-0 z-20">
+<!-- Breadcrumbs Anchor -->
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md text-outline">Management</span>
+<span class="text-outline text-xs">/</span>
+<h1 class="text-headline-sm font-headline-sm font-semibold text-primary tracking-tight">Expenses &amp; Payments Ledger</h1>
+</div>
+<!-- Action & Profile Cluster -->
+<div class="flex items-center gap-4">
+<!-- Live Verified Badge -->
+<div class="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-primary text-label-sm border border-outline-variant/40">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="verified" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Ledger Synced · Real-time Balance</span>
+</div>
+<!-- Activity Notification Bell with Popover Trigger -->
+<div class="relative">
+<button class="relative p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-low rounded-lg transition-colors duration-150 focus:outline-none" id="notificationBtn" onclick="toggleNotifications()" title="Genuine activity feed">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-secondary rounded-full ring-2 ring-surface-container-lowest"></span>
+</button>
+<!-- Notification Center Drawer/Popover (Activity-based, real events) -->
+<div class="hidden absolute right-0 mt-2 w-80 bg-surface-container-lowest rounded-xl border border-outline-variant floating-modal-shadow p-3 z-50 animate-in fade-in zoom-in-95 duration-100" id="notificationPopover">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/50">
+<span class="font-headline-sm text-sm text-primary font-semibold">Ledger Activity</span>
+<span class="text-[10px] text-outline font-label-sm uppercase">Direct Events</span>
+</div>
+<div class="mt-2 space-y-2">
+<div class="p-2 rounded-lg bg-surface-container-low/60 hover:bg-surface-container-low transition-colors">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px] mt-0.5" data-icon="payments">payments</span>
+<div class="space-y-0.5">
+<p class="text-body-sm font-medium text-on-surface leading-tight">Manish recorded disbursement of ₹1,80,000 to Heritage Audio.</p>
+<span class="text-[10px] text-outline">18 mins ago · Ref UTR-904128</span>
+</div>
+</div>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-low/30 hover:bg-surface-container-low transition-colors">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[16px] mt-0.5" data-icon="receipt_long">receipt_long</span>
+<div class="space-y-0.5">
+<p class="text-body-sm font-medium text-on-surface leading-tight">Vrindavan Floral updated agreed total for Mandap Arch to ₹6,00,000.</p>
+<span class="text-[10px] text-outline">2 hours ago · Verified by Pavithra</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-2 pt-2 border-t border-outline-variant/40 flex items-center justify-between text-[11px] text-outline">
+<span>Event listener connected</span>
+<span class="text-primary font-medium cursor-pointer hover:underline">Mark cleared</span>
+</div>
+</div>
+</div>
+<!-- Host Admin Avatar -->
+<div class="flex items-center gap-2.5 pl-2 border-l border-outline-variant">
+<img class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant" data-alt="Close up photographic portrait of a sophisticated South Asian female wedding host with elegant hair, warm ambient lighting, dignified professional aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy-0CYK3Sdt5LNDjv5kcB4Xl72yf-wPRsTkO0sX3e88do68OBIG9y4s4PDktzjmm8b6eatDZ3LCQpLI1NSf_GE8Drjdcyt3m00fxDrfGN7HAz33FyGVaYf4VCyBT9DTWuBgk80eQnwp7U1Te76tpcVQLXpkEFL3ad80tMZNJWhZdPKBHtX_1Jb5rMixJXwTXdpwYcdUuFCjxorCff9FlVb6O8IvyFk5Hd8424jCCj3vPyA2LzE4N_e5auAKZErZlMKQ-0pYW6f8Xs"/>
+<div class="leading-none text-left">
+<span class="text-label-md font-semibold text-on-surface block">Pavithra Iyer</span>
+<span class="text-[11px] text-on-surface-variant font-normal">Host Admin</span>
+</div>
+</div>
+</div>
+</header>
+<!-- WORKSPACE CANVAS (Scrollable Viewport) -->
+<main class="flex-1 overflow-y-auto custom-scrollbar p-8 space-y-6">
+<!-- TOP EXECUTIVE CONTROL BAR & CALLOUT -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div>
+<span class="text-[11px] font-bold uppercase tracking-wider text-secondary">Board 3 Architecture · Run of Show Finance</span>
+<h2 class="text-headline-lg font-headline-lg text-primary tracking-tight mt-0.5">Disbursements &amp; Obligations Ledger</h2>
+<p class="text-body-sm text-on-surface-variant mt-1">Dual-reconciliation engine for contractual deliverables and atomic spot disbursements.</p>
+</div>
+<!-- Action Bar: Add expense, Record payment, Vendor balances modal -->
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Vendor balances snapshot button -->
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface-variant hover:text-primary hover:border-primary text-label-md font-label-md transition-colors flex items-center gap-1.5 paper-card" onclick="openVendorModal()">
+<span class="material-symbols-outlined text-[16px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Vendor balances snapshot</span>
+</button>
+<!-- Record payment (Immediate one-off purchase) -->
+<div class="relative group">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest border border-secondary text-secondary hover:bg-secondary hover:text-on-secondary text-label-md font-label-md transition-all flex items-center gap-1.5 paper-card" onclick="openQuickPayModal()">
+<span class="material-symbols-outlined text-[16px]" data-icon="receipt">receipt</span>
+<span>Record payment</span>
+</button>
+<!-- Explanatory Micro-copy Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-56 p-2 bg-on-surface text-surface-container-lowest text-[11px] rounded-lg shadow-xl text-center pointer-events-none z-50">
+              Creates an expense and records its payment together for immediate spot transactions.
+            </div>
+</div>
+<!-- Primary: Add Expense -->
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary text-label-md font-semibold transition-all flex items-center gap-1.5 shadow-sm" onclick="openAddExpenseModal()">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+<span>+ Add expense</span>
+</button>
+</div>
+</div>
+<!-- 1. EXECUTIVE SETTLEMENT METRICS CARDS (Bento Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Card 1: Actual Paid -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant paper-card relative overflow-hidden flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Total Disbursed</span>
+<span class="p-1 rounded-md bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</span>
+</div>
+<div class="my-3">
+<div class="text-3xl font-bold font-headline-sm text-primary tracking-tight">₹8,25,000</div>
+<p class="text-body-sm text-on-surface-variant mt-1">Cleared across 4 verified disbursements, bank transaction verified</p>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between text-[11px] text-outline">
+<span>Audit status: Reconciled</span>
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> 100% Cleared
+            </span>
+</div>
+</div>
+<!-- Card 2: Outstanding Balance -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant paper-card relative overflow-hidden flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-label-sm uppercase tracking-wider text-secondary font-bold">Outstanding Balance</span>
+<span class="p-1 rounded-md bg-secondary-fixed/40 text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="pending_actions">pending_actions</span>
+</span>
+</div>
+<div class="my-3">
+<div class="text-3xl font-bold font-headline-sm text-secondary tracking-tight">₹4,75,000</div>
+<p class="text-body-sm text-on-surface-variant mt-1">Remaining payable before Muhurtham across 2 agreed vendor contracts</p>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between text-[11px] text-outline">
+<span>Next milestone: 10 Feb 2027</span>
+<span class="text-secondary font-medium">Stage 2 Deliverables</span>
+</div>
+</div>
+<!-- Card 3: Combined Total Contract Commitment -->
+<div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant paper-card relative overflow-hidden flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">Total Committed Sum</span>
+<span class="p-1 rounded-md bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]" data-icon="contract">contract</span>
+</span>
+</div>
+<div class="my-3">
+<div class="text-3xl font-bold font-headline-sm text-on-surface tracking-tight">₹13,00,000</div>
+<div class="w-full bg-surface-container rounded-full h-1.5 mt-3 overflow-hidden flex">
+<div class="bg-primary-container h-1.5" style="width: 63.46%"></div>
+<div class="bg-secondary-fixed-dim h-1.5" style="width: 36.54%"></div>
+</div>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between text-[11px] text-on-surface-variant">
+<span>63.5% Settled</span>
+<span class="font-medium text-primary">₹8.25L / ₹13.00L</span>
+</div>
+</div>
+</section>
+<!-- STRICT RULE ENFORCEMENT CALLOUT -->
+<div class="rounded-xl border border-outline-variant/80 bg-surface-container-low/60 p-3.5 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5" data-icon="policy">policy</span>
+<div class="text-body-sm leading-relaxed">
+<strong class="font-semibold text-primary">Strict Integrity Rule:</strong> Expenses with active recorded payments cannot be deleted until payments are removed first — no silent cascade deletions. active totals recalculate in real-time while immutable audit logs are preserved.
+        </div>
+</div>
+<!-- 2. COORDINATED VIEWS TABS (Expenses & Payments) -->
+<section class="space-y-4">
+<div class="flex items-center justify-between border-b border-outline-variant">
+<div class="flex items-center gap-6">
+<button class="pb-3 text-label-lg font-semibold text-primary border-b-2 border-primary-container flex items-center gap-2" id="tabExpensesBtn" onclick="switchLedgerTab('expenses')">
+<span>Expenses</span>
+<span class="px-2 py-0.5 text-[11px] rounded-full bg-surface-container text-primary font-bold">4</span>
+</button>
+<button class="pb-3 text-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2" id="tabPaymentsBtn" onclick="switchLedgerTab('payments')">
+<span>Payments</span>
+<span class="px-2 py-0.5 text-[11px] rounded-full bg-surface-container-high text-on-surface-variant font-bold">4</span>
+</button>
+</div>
+<div class="text-[12px] text-outline flex items-center gap-2 pb-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="filter_list">filter_list</span>
+<span>Showing verified active ledger records</span>
+</div>
+</div>
+<!-- VIEW 1: EXPENSES TABLE (Active Tab Default) -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant paper-card overflow-hidden" id="expensesTableView">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/60 border-b border-outline-variant text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">
+<th class="py-3 px-4">Expense Description</th>
+<th class="py-3 px-4">Vendor Association</th>
+<th class="py-3 px-4 text-right">Agreed Amount</th>
+<th class="py-3 px-4 text-right">Paid to Date</th>
+<th class="py-3 px-4 text-right">Remaining Due</th>
+<th class="py-3 px-4 text-center">Status</th>
+<th class="py-3 px-4 text-right">Row Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 font-body-sm text-[13px]">
+<!-- Row 1: Flower decoration (Contextual Pay Target in prompt) -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3.5 px-4 font-medium text-on-surface">
+<div class="font-semibold text-on-surface">Flower decoration &amp; Muhurtham Mandap Arch</div>
+<div class="text-[11px] text-outline">Floral stage arch, jasmine garlands, traditional brass urli displays</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-primary">
+<span class="material-symbols-outlined text-[15px]" data-icon="local_florist">local_florist</span>
+                      Vrindavan Floral
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-on-surface">₹6,00,000</td>
+<td class="py-3.5 px-4 text-right text-primary font-semibold">₹5,00,000</td>
+<td class="py-3.5 px-4 text-right text-secondary font-bold">₹1,00,000</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-secondary-fixed/50 text-on-secondary-container border border-secondary-fixed-dim">
+                      Partially paid
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+<!-- Contextual In-Row Pay Expense Button -->
+<button class="px-2.5 py-1.5 rounded-lg bg-primary-container text-surface-container-lowest hover:bg-primary text-[12px] font-semibold transition-all inline-flex items-center gap-1" onclick="openPayExpenseDrawer('Flower decoration &amp; Muhurtham Mandap Arch', 'Vrindavan Floral', 600000, 500000, 100000)">
+<span class="material-symbols-outlined text-[14px]" data-icon="payments">payments</span>
+<span>Pay expense</span>
+</button>
+<!-- Remove Action (Protected) -->
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-surface-container transition-colors inline-flex items-center" onclick="openRemoveExpenseModal('Flower decoration &amp; Muhurtham Mandap Arch', true)" title="Remove expense">
+<span class="material-symbols-outlined text-[16px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Heritage Audio & Traditional Nadaswaram -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3.5 px-4 font-medium text-on-surface">
+<div class="font-semibold text-on-surface">Live Acoustic Set &amp; Nadaswaram Ensemble</div>
+<div class="text-[11px] text-outline">Morning muhurtham live instrumentation + evening reception console</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-primary">
+<span class="material-symbols-outlined text-[15px]" data-icon="music_note">music_note</span>
+                      Heritage Audio
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-on-surface">₹2,50,000</td>
+<td class="py-3.5 px-4 text-right text-primary font-semibold">₹1,80,000</td>
+<td class="py-3.5 px-4 text-right text-secondary font-bold">₹70,000</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-secondary-fixed/50 text-on-secondary-container border border-secondary-fixed-dim">
+                      Partially paid
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+<button class="px-2.5 py-1.5 rounded-lg bg-primary-container text-surface-container-lowest hover:bg-primary text-[12px] font-semibold transition-all inline-flex items-center gap-1" onclick="openPayExpenseDrawer('Live Acoustic Set &amp; Nadaswaram Ensemble', 'Heritage Audio', 250000, 180000, 70000)">
+<span class="material-symbols-outlined text-[14px]" data-icon="payments">payments</span>
+<span>Pay expense</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-surface-container transition-colors inline-flex items-center" onclick="openRemoveExpenseModal('Live Acoustic Set &amp; Nadaswaram Ensemble', true)" title="Remove expense">
+<span class="material-symbols-outlined text-[16px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Grand Estate Lawn Lighting & Power Backup -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3.5 px-4 font-medium text-on-surface">
+<div class="font-semibold text-on-surface">Estate Lawn Fairy Canopy &amp; 125kVA Genset</div>
+<div class="text-[11px] text-outline">Full perimeter string lighting, focal trees uplighting, continuous silent power</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-primary">
+<span class="material-symbols-outlined text-[15px]" data-icon="tungsten">tungsten</span>
+                      Luminance Power Guild
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-on-surface">₹3,00,000</td>
+<td class="py-3.5 px-4 text-right text-outline font-medium">₹0</td>
+<td class="py-3.5 px-4 text-right text-secondary font-bold">₹3,00,000</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-tertiary-fixed text-on-tertiary-fixed-variant">
+                      Unpaid
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+<button class="px-2.5 py-1.5 rounded-lg bg-primary-container text-surface-container-lowest hover:bg-primary text-[12px] font-semibold transition-all inline-flex items-center gap-1" onclick="openPayExpenseDrawer('Estate Lawn Fairy Canopy &amp; 125kVA Genset', 'Luminance Power Guild', 300000, 0, 300000)">
+<span class="material-symbols-outlined text-[14px]" data-icon="payments">payments</span>
+<span>Pay expense</span>
+</button>
+<!-- Deletable row because 0 disbursements recorded -->
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-surface-container transition-colors inline-flex items-center" onclick="openRemoveExpenseModal('Estate Lawn Fairy Canopy &amp; 125kVA Genset', false)" title="Remove expense">
+<span class="material-symbols-outlined text-[16px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Cash Pooja Samagri & Temple Permit (Spot purchase from Record Payment) -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3.5 px-4 font-medium text-on-surface">
+<div class="font-semibold text-on-surface">Vedic Homam Samagri &amp; Temple Permit Dues</div>
+<div class="text-[11px] text-outline">Ghee, dry herbs, brass camphor lamps, official Devaswom receipt</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]" data-icon="store">store</span>
+                      Direct Temple Counter
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-on-surface">₹1,45,000</td>
+<td class="py-3.5 px-4 text-right text-primary font-semibold">₹1,45,000</td>
+<td class="py-3.5 px-4 text-right text-outline font-medium">₹0</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-surface-container text-primary border border-outline-variant">
+                      Settled
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+<span class="text-[11px] text-outline italic px-2 py-1">Fully paid</span>
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-surface-container transition-colors inline-flex items-center" onclick="openRemoveExpenseModal('Vedic Homam Samagri &amp; Temple Permit Dues', true)" title="Remove expense">
+<span class="material-symbols-outlined text-[16px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 bg-surface-container-low/40 border-t border-outline-variant flex items-center justify-between text-body-sm text-outline">
+<span>Showing 4 active expense obligations</span>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span>Agreed Total: <strong class="text-on-surface font-semibold">₹13,00,000</strong></span>
+<span>Paid: <strong class="text-primary font-semibold">₹8,25,000</strong></span>
+<span>Pending: <strong class="text-secondary font-semibold">₹4,75,000</strong></span>
+</div>
+</div>
+</div>
+<!-- VIEW 2: PAYMENTS TABLE (Initially hidden, coordinated via Tab JS) -->
+<div class="hidden bg-surface-container-lowest rounded-xl border border-outline-variant paper-card overflow-hidden" id="paymentsTableView">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/60 border-b border-outline-variant text-[11px] uppercase tracking-wider font-bold text-on-surface-variant">
+<th class="py-3 px-4">Disbursement Date</th>
+<th class="py-3 px-4">Linked Expense Obligation</th>
+<th class="py-3 px-4">Payee / Vendor</th>
+<th class="py-3 px-4 text-right">Amount Disbursed</th>
+<th class="py-3 px-4">Payment Method &amp; Reference</th>
+<th class="py-3 px-4">Recorded By</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 font-body-sm text-[13px]">
+<!-- Payment 1 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3 px-4 whitespace-nowrap font-medium text-on-surface">22 Jan 2027</td>
+<td class="py-3 px-4">
+<span class="font-medium text-on-surface">Flower decoration &amp; Muhurtham Mandap Arch</span>
+<span class="block text-[11px] text-outline">Stage 1 Advance Booking</span>
+</td>
+<td class="py-3 px-4 text-primary font-medium">Vrindavan Floral</td>
+<td class="py-3 px-4 text-right font-bold text-primary">₹3,00,000</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 text-[12px] font-mono bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[13px]" data-icon="account_balance">account_balance</span>
+                      HDFC NEFT · UTR-88192019
+                    </span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">Pavithra Iyer (Host)</td>
+</tr>
+<!-- Payment 2 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3 px-4 whitespace-nowrap font-medium text-on-surface">28 Jan 2027</td>
+<td class="py-3 px-4">
+<span class="font-medium text-on-surface">Flower decoration &amp; Muhurtham Mandap Arch</span>
+<span class="block text-[11px] text-outline">Stage 2 Material Procurement</span>
+</td>
+<td class="py-3 px-4 text-primary font-medium">Vrindavan Floral</td>
+<td class="py-3 px-4 text-right font-bold text-primary">₹2,00,000</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 text-[12px] font-mono bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[13px]" data-icon="account_balance">account_balance</span>
+                      ICICI RTGS · UTR-77291044
+                    </span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">Manish (Co-Host)</td>
+</tr>
+<!-- Payment 3 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3 px-4 whitespace-nowrap font-medium text-on-surface">02 Feb 2027</td>
+<td class="py-3 px-4">
+<span class="font-medium text-on-surface">Live Acoustic Set &amp; Nadaswaram Ensemble</span>
+<span class="block text-[11px] text-outline">Musicians Retention Advance</span>
+</td>
+<td class="py-3 px-4 text-primary font-medium">Heritage Audio</td>
+<td class="py-3 px-4 text-right font-bold text-primary">₹1,80,000</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 text-[12px] font-mono bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[13px]" data-icon="account_balance">account_balance</span>
+                      HDFC NEFT · UTR-904128
+                    </span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">Manish (Co-Host)</td>
+</tr>
+<!-- Payment 4 -->
+<tr class="hover:bg-surface-container/30 transition-colors">
+<td class="py-3 px-4 whitespace-nowrap font-medium text-on-surface">04 Feb 2027</td>
+<td class="py-3 px-4">
+<span class="font-medium text-on-surface">Vedic Homam Samagri &amp; Temple Permit Dues</span>
+<span class="block text-[11px] text-outline">Spot Cash Voucher Settlement</span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant font-medium">Direct Temple Counter</td>
+<td class="py-3 px-4 text-right font-bold text-primary">₹1,45,000</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 text-[12px] font-mono bg-surface-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[13px]" data-icon="receipt_long">receipt_long</span>
+                      Cash Voucher · VCH-00412
+                    </span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">Pavithra Iyer (Host)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 bg-surface-container-low/40 border-t border-outline-variant flex items-center justify-between text-body-sm text-outline">
+<span>Audit trail validated · 4 verified disbursements logged</span>
+<span class="font-semibold text-primary">Total Realized Outflow: ₹8,25,000</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- CONTEXTUAL IN-ROW "PAY EXPENSE" SLIDE-OVER DRAWER -->
+<div class="fixed inset-0 bg-on-surface/30 backdrop-blur-[2px] z-50 hidden transition-opacity" id="payExpenseDrawer">
+<div class="absolute inset-y-0 right-0 max-w-md w-full bg-surface-container-lowest border-l border-outline-variant floating-modal-shadow flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-200">
+<!-- Drawer Header -->
+<div class="p-6 border-b border-outline-variant bg-surface-container-low/30">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]" data-icon="payments">payments</span>
+<h3 class="font-headline-sm text-lg font-bold text-primary">Record Payment for Expense</h3>
+</div>
+<button class="p-1.5 text-outline hover:text-on-surface rounded-lg hover:bg-surface-container" onclick="closePayExpenseDrawer()">
+<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
+</button>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-1">Pre-filled against contractual baseline. Real-time balance will decrement automatically.</p>
+</div>
+<!-- Drawer Body: Prefilled read-only stats + Entry Form -->
+<div class="p-6 space-y-5 flex-1">
+<!-- Read-Only Context Block -->
+<div class="rounded-xl border border-outline-variant bg-surface-container p-4 space-y-3">
+<div>
+<span class="text-[11px] uppercase tracking-wider font-bold text-outline">Expense Obligation</span>
+<h4 class="text-body-md font-bold text-on-surface mt-0.5" id="drawerExpenseTitle">Flower decoration &amp; Muhurtham Mandap Arch</h4>
+</div>
+<div>
+<span class="text-[11px] uppercase tracking-wider font-bold text-outline">Vendor Association</span>
+<p class="text-body-sm font-semibold text-primary" id="drawerExpenseVendor">Vrindavan Floral</p>
+</div>
+<div class="grid grid-cols-3 gap-2 pt-2 border-t border-outline-variant/60 text-center">
+<div class="bg-surface-container-lowest p-2 rounded-lg border border-outline-variant/40">
+<span class="text-[10px] text-outline block">Total Agreed</span>
+<span class="text-xs font-bold text-on-surface" id="drawerTotalAgreed">₹6,00,000</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded-lg border border-outline-variant/40">
+<span class="text-[10px] text-outline block">Paid to Date</span>
+<span class="text-xs font-bold text-primary" id="drawerPaidToDate">₹5,00,000</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded-lg border border-outline-variant/40">
+<span class="text-[10px] text-outline block">Remaining Due</span>
+<span class="text-xs font-bold text-secondary" id="drawerRemainingDue">₹1,00,000</span>
+</div>
+</div>
+</div>
+<!-- Payment Input Fields -->
+<form class="space-y-4" id="recordPaymentForm" onsubmit="event.preventDefault(); submitPayment();">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Disbursement Amount (INR) *</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline font-bold">₹</span>
+<input class="w-full pl-8 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-md font-semibold text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none" id="payAmountInput" max="100000" required="" type="number" value="100000"/>
+</div>
+<span class="text-[11px] text-outline mt-1 block">Defaulted to entire remaining balance. Partial sums permitted.</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Payment Date *</label>
+<input class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface focus:border-primary focus:outline-none" required="" type="date" value="2027-02-05"/>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Method *</label>
+<select class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface focus:border-primary focus:outline-none">
+<option>HDFC NEFT</option>
+<option>ICICI RTGS</option>
+<option>IMPS Fast Pay</option>
+<option>Cash Voucher</option>
+<option>Cheque / Demand Draft</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Bank UTR / Transaction Reference *</label>
+<input class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm font-mono text-on-surface focus:border-primary focus:outline-none" placeholder="e.g. UTR-9920148102" required="" type="text" value="UTR-9920148102"/>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Recorded By (Organizer Witness)</label>
+<input class="w-full px-3 py-2 bg-surface-container border border-outline-variant rounded-lg text-body-sm text-on-surface-variant cursor-not-allowed" readonly="" type="text" value="Pavithra Iyer (Host Admin)"/>
+</div>
+<!-- Strict Safeguard Check -->
+<div class="flex items-start gap-2 pt-2">
+<input checked="" class="mt-1 rounded border-outline-variant text-primary focus:ring-primary" id="verifyPayCheck" required="" type="checkbox"/>
+<label class="text-[12px] text-on-surface-variant leading-tight" for="verifyPayCheck">
+              I verify that bank clearance has been confirmed with our estate liaison and this voucher cannot be overwritten silently.
+            </label>
+</div>
+<div class="pt-4 border-t border-outline-variant flex items-center justify-end gap-2.5">
+<button class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container text-label-md" onclick="closePayExpenseDrawer()" type="button">Cancel</button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-semibold text-label-md flex items-center gap-1.5 shadow-sm" type="submit">
+<span class="material-symbols-outlined text-[16px]" data-icon="task_alt">task_alt</span>
+<span>Confirm &amp; Disburse</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- REMOVE ACTION CONFIRMATION MODAL WITH RULE ENFORCEMENT -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-[2px] z-50 hidden flex items-center justify-center p-4" id="removeExpenseModal">
+<div class="max-w-md w-full bg-surface-container-lowest rounded-xl border border-outline-variant floating-modal-shadow p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-start gap-3">
+<div class="p-2 rounded-lg bg-error-container text-error">
+<span class="material-symbols-outlined text-[24px]" data-icon="warning">warning</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-lg font-bold text-on-surface">Remove Expense Obligation</h3>
+<p class="text-body-sm font-semibold text-primary mt-0.5" id="removeModalExpenseName">Flower decoration &amp; Mandap Arch</p>
+</div>
+</div>
+<!-- State A: Blocked if active payments exist -->
+<div class="hidden rounded-lg bg-error-container/40 border border-error/30 p-3 text-body-sm text-on-surface space-y-1" id="removeBlockedState">
+<strong class="font-bold text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="block">block</span> Action Prohibited by Architecture Rule
+        </strong>
+<p class="text-[12px] text-on-surface-variant leading-relaxed">
+          This expense currently holds <strong>active recorded disbursements</strong>. To prevent corrupting reconciled balances, you must delete or reverse all associated payments in the Payments ledger before this contractual record can be removed. No silent cascade deletions are permitted.
+        </p>
+</div>
+<!-- State B: Allowed if zero recorded payments exist -->
+<div class="space-y-3" id="removeAllowedState">
+<p class="text-body-sm text-on-surface-variant">
+          Removing this obligation will recalculate your total contractual budget commitment immediately. An immutable entry will be preserved in the audit log.
+        </p>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Reason for Removal (Required for Audit Trail) *</label>
+<input class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface focus:border-error focus:outline-none" id="removalReasonInput" placeholder="e.g. Scope relocated to alternative lighting contractor" type="text"/>
+</div>
+</div>
+<div class="pt-3 border-t border-outline-variant flex items-center justify-end gap-2.5">
+<button class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container text-label-md" onclick="closeRemoveExpenseModal()">Close</button>
+<button class="px-4 py-2 rounded-lg bg-error text-on-error hover:bg-opacity-90 font-semibold text-label-md flex items-center gap-1" id="confirmDeleteBtn" onclick="executeRemoval()">
+<span class="material-symbols-outlined text-[16px]" data-icon="delete_forever">delete_forever</span>
+<span>Confirm Removal</span>
+</button>
+</div>
+</div>
+</div>
+<!-- VENDOR BALANCES SNAPSHOT MODAL (Explicit On-Demand Modal) -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-[2px] z-50 hidden flex items-center justify-center p-4" id="vendorBalancesModal">
+<div class="max-w-2xl w-full bg-surface-container-lowest rounded-xl border border-outline-variant floating-modal-shadow overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+<div class="p-5 border-b border-outline-variant flex items-center justify-between bg-surface-container-low/40">
+<div>
+<span class="text-[10px] uppercase font-bold tracking-wider text-secondary">Summary Aggregates</span>
+<h3 class="font-headline-sm text-lg font-bold text-primary">Vendor Balances Snapshot</h3>
+</div>
+<button class="p-1.5 text-outline hover:text-on-surface rounded-lg hover:bg-surface-container" onclick="closeVendorModal()">
+<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
+</button>
+</div>
+<div class="p-5 space-y-4 max-h-[716px] overflow-y-auto custom-scrollbar">
+<p class="text-body-sm text-on-surface-variant">Live balance aggregates grouped by primary vendor counterparty:</p>
+<div class="space-y-3">
+<!-- Vendor 1 -->
+<div class="p-4 rounded-xl border border-outline-variant bg-surface-container-lowest paper-card space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]" data-icon="storefront">storefront</span>
+                Vrindavan Floral (Stage &amp; Mandap)
+              </span>
+<span class="text-xs px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-container font-semibold">₹1,00,000 Pending</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-xs pt-1 text-on-surface-variant">
+<div>Contract: <span class="font-semibold text-on-surface">₹6,00,000</span></div>
+<div>Disbursed: <span class="font-semibold text-primary">₹5,00,000</span></div>
+<div>Terms: <span class="text-outline">Settlement due 24h prior to Muhurtham</span></div>
+</div>
+</div>
+<!-- Vendor 2 -->
+<div class="p-4 rounded-xl border border-outline-variant bg-surface-container-lowest paper-card space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]" data-icon="speaker">speaker</span>
+                Heritage Audio (Acoustics &amp; Sound)
+              </span>
+<span class="text-xs px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-container font-semibold">₹70,000 Pending</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-xs pt-1 text-on-surface-variant">
+<div>Contract: <span class="font-semibold text-on-surface">₹2,50,000</span></div>
+<div>Disbursed: <span class="font-semibold text-primary">₹1,80,000</span></div>
+<div>Terms: <span class="text-outline">Balance upon final sound-check clearance</span></div>
+</div>
+</div>
+<!-- Vendor 3 -->
+<div class="p-4 rounded-xl border border-outline-variant bg-surface-container-lowest paper-card space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]" data-icon="tungsten">tungsten</span>
+                Luminance Power Guild (Lighting &amp; Power)
+              </span>
+<span class="text-xs px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-semibold">₹3,00,000 Pending</span>
+</div>
+<div class="grid grid-cols-3 gap-2 text-xs pt-1 text-on-surface-variant">
+<div>Contract: <span class="font-semibold text-on-surface">₹3,00,000</span></div>
+<div>Disbursed: <span class="font-semibold text-outline">₹0</span></div>
+<div>Terms: <span class="text-outline">100% scheduled prior to generator dry-run</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-container flex items-center justify-between text-body-sm">
+<span class="text-outline">All figures verified against signed work orders.</span>
+<button class="px-4 py-1.5 rounded-lg bg-primary-container text-on-primary font-semibold text-label-md" onclick="closeVendorModal()">Done</button>
+</div>
+</div>
+</div>
+<!-- ADD EXPENSE MODAL (New Real Contractual Obligation) -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-[2px] z-50 hidden flex items-center justify-center p-4" id="addExpenseModal">
+<div class="max-w-lg w-full bg-surface-container-lowest rounded-xl border border-outline-variant floating-modal-shadow p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center justify-between border-b border-outline-variant pb-3">
+<div>
+<span class="text-[10px] uppercase font-bold tracking-wider text-primary">New Obligation</span>
+<h3 class="font-headline-sm text-lg font-bold text-primary">+ Add Contractual Expense</h3>
+</div>
+<button class="p-1.5 text-outline hover:text-on-surface rounded-lg hover:bg-surface-container" onclick="closeAddExpenseModal()">
+<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
+</button>
+</div>
+<form class="space-y-4" onsubmit="event.preventDefault(); closeAddExpenseModal();">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Expense Description *</label>
+<input class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface focus:border-primary focus:outline-none" placeholder="e.g. Master Catering - Sadya Feast (850 pax)" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Vendor (Optional)</label>
+<select class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface focus:border-primary focus:outline-none">
+<option>Vrindavan Floral</option>
+<option>Heritage Audio</option>
+<option>Luminance Power Guild</option>
+<option>Annalakshmi Catering Guild</option>
+<option>Independent / Direct Payment</option>
+</select>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Agreed Amount (INR) *</label>
+<input class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface focus:border-primary focus:outline-none" placeholder="₹ Amount" required="" type="number"/>
+</div>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-1">Deliverable Notes &amp; Payment Schedule</label>
+<textarea class="w-full px-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm text-on-surface focus:border-primary focus:outline-none" placeholder="Agreed payment milestones (e.g. 50% advance, 50% post meal service)" rows="2"></textarea>
+</div>
+<div class="pt-3 border-t border-outline-variant flex items-center justify-end gap-2.5">
+<button class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container text-label-md" onclick="closeAddExpenseModal()" type="button">Cancel</button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-semibold text-label-md" type="submit">Create Expense Obligation</button>
+</div>
+</form>
+</div>
+</div>
+<!-- JAVASCRIPT STATE ENGINE & INTERACTION LOGIC -->
+<script>
+    // Tab switching between Expenses and Payments views
+    function switchLedgerTab(view) {
+      const expTabBtn = document.getElementById('tabExpensesBtn');
+      const payTabBtn = document.getElementById('tabPaymentsBtn');
+      const expTable = document.getElementById('expensesTableView');
+      const payTable = document.getElementById('paymentsTableView');
+
+      if (view === 'expenses') {
+        expTabBtn.className = "pb-3 text-label-lg font-semibold text-primary border-b-2 border-primary-container flex items-center gap-2";
+        payTabBtn.className = "pb-3 text-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2";
+        expTable.classList.remove('hidden');
+        payTable.classList.add('hidden');
+      } else {
+        payTabBtn.className = "pb-3 text-label-lg font-semibold text-primary border-b-2 border-primary-container flex items-center gap-2";
+        expTabBtn.className = "pb-3 text-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2";
+        payTable.classList.remove('hidden');
+        expTable.classList.add('hidden');
+      }
+    }
+
+    // Contextual Pay Expense Slide-over Drawer
+    function openPayExpenseDrawer(title, vendor, total, paid, remaining) {
+      document.getElementById('drawerExpenseTitle').innerText = title;
+      document.getElementById('drawerExpenseVendor').innerText = vendor;
+      document.getElementById('drawerTotalAgreed').innerText = "₹" + total.toLocaleString('en-IN');
+      document.getElementById('drawerPaidToDate').innerText = "₹" + paid.toLocaleString('en-IN');
+      document.getElementById('drawerRemainingDue').innerText = "₹" + remaining.toLocaleString('en-IN');
+      
+      const payInput = document.getElementById('payAmountInput');
+      payInput.value = remaining;
+      payInput.max = remaining;
+
+      document.getElementById('payExpenseDrawer').classList.remove('hidden');
+    }
+
+    function closePayExpenseDrawer() {
+      document.getElementById('payExpenseDrawer').classList.add('hidden');
+    }
+
+    function submitPayment() {
+      closePayExpenseDrawer();
+      // Switch automatically to Payments view to show the result
+      switchLedgerTab('payments');
+    }
+
+    // Remove Expense Modal Logic with Strict Non-Cascade Rule
+    function openRemoveExpenseModal(title, hasPayments) {
+      document.getElementById('removeModalExpenseName').innerText = title;
+      const blockedState = document.getElementById('removeBlockedState');
+      const allowedState = document.getElementById('removeAllowedState');
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+
+      if (hasPayments) {
+        blockedState.classList.remove('hidden');
+        allowedState.classList.add('hidden');
+        confirmBtn.classList.add('opacity-50', 'pointer-events-none');
+      } else {
+        blockedState.classList.add('hidden');
+        allowedState.classList.remove('hidden');
+        confirmBtn.classList.remove('opacity-50', 'pointer-events-none');
+      }
+
+      document.getElementById('removeExpenseModal').classList.remove('hidden');
+    }
+
+    function closeRemoveExpenseModal() {
+      document.getElementById('removeExpenseModal').classList.add('hidden');
+    }
+
+    function executeRemoval() {
+      closeRemoveExpenseModal();
+    }
+
+    // Vendor Balances Snapshot Modal
+    function openVendorModal() {
+      document.getElementById('vendorBalancesModal').classList.remove('hidden');
+    }
+
+    function closeVendorModal() {
+      document.getElementById('vendorBalancesModal').classList.add('hidden');
+    }
+
+    // Add Expense Modal
+    function openAddExpenseModal() {
+      document.getElementById('addExpenseModal').classList.remove('hidden');
+    }
+
+    function closeAddExpenseModal() {
+      document.getElementById('addExpenseModal').classList.add('hidden');
+    }
+
+    // Quick Record Payment (One-off purchase trigger)
+    function openQuickPayModal() {
+      openPayExpenseDrawer('Spot Purchase / Permit Fee', 'Direct Vendor / Petty Cash', 25000, 0, 25000);
+    }
+
+    // Activity Notification Popover Toggle
+    function toggleNotifications() {
+      const popover = document.getElementById('notificationPopover');
+      popover.classList.toggle('hidden');
+    }
+
+    // Close notifications popover if clicked outside
+    document.addEventListener('click', function(e) {
+      const popover = document.getElementById('notificationPopover');
+      const notifBtn = document.getElementById('notificationBtn');
+      if (!popover.contains(e.target) && !notifBtn.contains(e.target) && !popover.classList.contains('hidden')) {
+        popover.classList.add('hidden');
+      }
+    });
+  </script>
+</body></html>

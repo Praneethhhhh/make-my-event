@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Expenses &amp; Finance Ledger — Pavithra &amp; Manish's Wedding — Make My Event</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-container": "#794b32",
+            "primary-fixed": "#baeddf",
+            "tertiary": "#363b36",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#9ed1c4",
+            "surface-container": "#e5f0ee",
+            "on-surface": "#141d1c",
+            "on-tertiary-container": "#c0c5bd",
+            "inverse-primary": "#9ed1c4",
+            "surface-container-low": "#ebf6f4",
+            "surface-container-highest": "#dae5e3",
+            "surface": "#f1fcfa",
+            "surface-container-high": "#dfeae8",
+            "on-background": "#141d1c",
+            "background": "#f7f5f0",
+            "primary-container": "#28594f",
+            "on-error": "#ffffff",
+            "primary": "#0b4138",
+            "outline": "#707976",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed": "#ffdbca",
+            "on-primary-fixed": "#00201b",
+            "on-primary-fixed-variant": "#1d4f45",
+            "on-secondary": "#ffffff",
+            "surface-bright": "#f1fcfa",
+            "tertiary-container": "#4d524c",
+            "surface-variant": "#dae5e3",
+            "on-primary-container": "#9bcec1",
+            "on-tertiary-fixed": "#181d18",
+            "inverse-on-surface": "#e8f3f1",
+            "on-error-container": "#93000a",
+            "secondary": "#825339",
+            "secondary-container": "#fdbe9e",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "outline-variant": "#c0c8c5",
+            "error": "#ba1a1a",
+            "on-secondary-fixed-variant": "#673c24",
+            "inverse-surface": "#283231",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed": "#321201",
+            "on-primary": "#ffffff",
+            "on-surface-variant": "#404946",
+            "secondary-fixed-dim": "#f7b999",
+            "surface-dim": "#d1dcda",
+            "tertiary-fixed": "#dfe4dc",
+            "surface-tint": "#36675c",
+            "on-tertiary-fixed-variant": "#434842"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "0.875rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.5rem",
+            "space-xl": "2.5rem"
+          },
+          "fontFamily": {
+            "label-lg": ["Manrope"],
+            "headline-md": ["Newsreader"],
+            "body-lg": ["Manrope"],
+            "body-sm": ["Manrope"],
+            "headline-lg": ["Newsreader"],
+            "label-sm": ["Manrope"],
+            "headline-sm": ["Manrope"],
+            "display-lg": ["Newsreader"],
+            "display-lg-mobile": ["Newsreader"],
+            "body-md": ["Manrope"],
+            "label-md": ["Manrope"]
+          },
+          "fontSize": {
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #F7F5F0;
+      color: #141D1C;
+      font-family: 'Manrope', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .paper-shadow {
+      box-shadow: 0 1px 3px rgba(32, 42, 41, 0.04), 0 4px 12px rgba(32, 42, 41, 0.02);
+    }
+    .overlay-shadow {
+      box-shadow: 0 12px 32px -4px rgba(32, 42, 41, 0.08), 0 4px 12px -2px rgba(32, 42, 41, 0.04);
+    }
+    .copper-pill {
+      background-color: rgba(185, 130, 101, 0.12);
+      color: #825339;
+      border: 1px solid rgba(185, 130, 101, 0.25);
+    }
+    .forest-pill {
+      background-color: rgba(40, 89, 79, 0.1);
+      color: #0b4138;
+      border: 1px solid rgba(40, 89, 79, 0.2);
+    }
+    .neutral-pill {
+      background-color: #DFE4DC;
+      color: #404946;
+      border: 1px solid transparent;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F7F5F0] text-on-surface antialiased flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Interactive State Reviewer Bar -->
+<aside aria-label="Review State Switcher" class="w-full bg-[#141d1c] text-[#ebf6f4] px-6 py-2 flex flex-wrap items-center justify-between text-body-sm font-body-sm z-50">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="font-label-sm uppercase tracking-wider text-outline-variant">Design Review States:</span>
+<span class="text-surface-variant font-label-md" id="state-current-label">Populated Ledger (Live Audited)</span>
+</div>
+<div class="flex items-center gap-1.5 overflow-x-auto py-1">
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-primary-container text-on-primary transition-colors" id="btn-state-populated" onclick="setPreviewState('populated')">Populated Ledger</button>
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-tertiary-container/60 hover:bg-tertiary-container text-surface-variant transition-colors" id="btn-state-empty" onclick="setPreviewState('empty')">Empty Ledger State</button>
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-tertiary-container/60 hover:bg-tertiary-container text-surface-variant transition-colors" id="btn-state-loading" onclick="setPreviewState('loading')">Loading Skeleton</button>
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-tertiary-container/60 hover:bg-tertiary-container text-surface-variant transition-colors" id="btn-state-error" onclick="setPreviewState('error')">Error / Sync Alert</button>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component Integration) -->
+<header class="sticky top-0 z-40 flex items-center justify-between w-full px-6 lg:px-8 py-3.5 bg-surface-container-lowest/95 backdrop-blur-sm border-b border-outline-variant/30 shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<!-- Brand & Event Context -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5 cursor-pointer">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-lg" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<span class="text-headline-md font-headline-md font-medium text-primary tracking-tight">Make My Event</span>
+</div>
+<!-- Wedding Context Selector Pill -->
+<div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F7F5F0] border border-[#E6E4DC] text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-on-surface">Pavithra &amp; Manish</span>
+<span class="text-outline">·</span>
+<span class="text-on-surface-variant font-body-sm">Feb 2027</span>
+<span class="material-symbols-outlined text-sm text-outline cursor-pointer" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Main Navigation Links -->
+<nav class="hidden xl:flex items-center gap-7 text-label-md font-label-md">
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="javascript:void(0)">Overview</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="javascript:void(0)">Functions</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="javascript:void(0)">Tasks</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="javascript:void(0)">Vendors</a>
+<a class="border-b-2 border-primary text-primary font-semibold pb-1" href="javascript:void(0)">Finance</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="javascript:void(0)">Team</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors" href="javascript:void(0)">Wedding details</a>
+</nav>
+<!-- Trailing Action Icons & Host Profile -->
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-1.5 text-outline text-body-sm">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="cloud_done">cloud_done</span>
+<span class="font-body-sm text-on-surface-variant text-[12px]">Auto-saved 2m ago</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="relative p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-surface-container-high/40 transition-colors" title="Help &amp; Guides">
+<span class="material-symbols-outlined text-xl" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+<!-- Host Profile Pill -->
+<div class="flex items-center gap-2 pl-3 border-l border-outline-variant/40">
+<div class="w-8 h-8 rounded-full bg-[#DFE4DC] border border-[#c0c8c5] flex items-center justify-center font-label-sm font-semibold text-primary">
+          PI
+        </div>
+<div class="hidden lg:flex flex-col text-left">
+<span class="text-label-md font-label-md text-on-surface leading-tight">Pavithra Iyer</span>
+<span class="text-[11px] font-body-sm text-outline">Family Admin</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Error / Sync Alert Banner (Hidden by default, triggered in error state) -->
+<div class="hidden w-full bg-error-container text-on-error-container px-6 py-2.5 border-b border-error/30 flex items-center justify-between text-body-sm" id="sync-error-banner">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<span><strong>Ledger Sync Alert:</strong> Offline reconciliation detected 1 conflicting tranche for 'Heritage Sound &amp; Acoustics'. Audit log preserved.</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-label-sm font-semibold underline hover:opacity-80" onclick="dismissErrorBanner()">Re-verify Hashes</button>
+<button class="material-symbols-outlined text-sm hover:opacity-80" data-icon="close" onclick="dismissErrorBanner()">close</button>
+</div>
+</div>
+<!-- Main Canvas -->
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-6 lg:px-8 py-8 space-y-7">
+<!-- Subheader / Section Title Area -->
+<section class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 border-b border-outline-variant/30 pb-6">
+<div class="space-y-1.5 max-w-2xl">
+<div class="flex items-center gap-2.5">
+<span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-bold">Financial Settlement &amp; Audit Trail</span>
+<span class="text-outline text-xs">•</span>
+<span class="text-outline text-body-sm">Non-speculative Ledger</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">Expenses &amp; Finance Ledger</h1>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+          Actual paid standalone expenses, contractual vendor charges, and immutable INR disbursement records for Pavithra &amp; Manish's celebration.
+        </p>
+</div>
+<!-- Primary Action Buttons -->
+<div class="flex flex-wrap items-center gap-3">
+<button class="px-4 py-2.5 rounded-[10px] bg-white border border-[#E6E4DC] hover:border-secondary text-secondary hover:bg-secondary hover:text-white text-label-lg font-label-lg transition-all paper-shadow flex items-center gap-1.5 active:scale-[0.98]" onclick="openModal('modal-add-expense')">
+<span class="material-symbols-outlined text-lg" data-icon="receipt_long">receipt_long</span>
+<span>+ Add Paid Expense</span>
+</button>
+<button class="px-4 py-2.5 rounded-[10px] bg-white border border-[#E6E4DC] hover:border-primary text-primary hover:bg-[#ebf6f4] text-label-lg font-label-lg transition-all paper-shadow flex items-center gap-1.5 active:scale-[0.98]" onclick="openModal('modal-vendor-charge')">
+<span class="material-symbols-outlined text-lg" data-icon="handshake">handshake</span>
+<span>+ Record Vendor Charge</span>
+</button>
+<button class="px-4 py-2.5 rounded-[10px] bg-primary text-white hover:bg-[#1E433B] text-label-lg font-label-lg transition-all shadow-sm flex items-center gap-1.5 active:scale-[0.98]" onclick="openModal('modal-record-payment')">
+<span class="material-symbols-outlined text-lg" data-icon="payments">payments</span>
+<span>+ Record Payment</span>
+</button>
+</div>
+</section>
+<!-- Core Financial KPI Cards (Strictly Numeric & Clear, NO Progress Bars) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5" id="kpi-container">
+<!-- Card 1: Total Paid Disbursements -->
+<div class="bg-white rounded-[14px] p-5 border border-[#E6E4DC] paper-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline font-semibold">Total Paid Disbursements</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+</div>
+<div>
+<div class="text-headline-lg font-headline-lg text-primary tracking-tight">₹14,50,000</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1.5">Cleared across vendor tranches and direct expenses</p>
+</div>
+<div class="mt-4 pt-3 border-t border-[#f0eee6] flex items-center gap-1.5 text-body-sm text-outline">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="verified">verified</span>
+<span>7 cleared payments audited</span>
+</div>
+</div>
+<!-- Card 2: Agreed Committed Charges -->
+<div class="bg-white rounded-[14px] p-5 border border-[#E6E4DC] paper-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline font-semibold">Agreed Committed Charges</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="description">description</span>
+</div>
+</div>
+<div>
+<div class="text-headline-lg font-headline-lg text-[#202A29] tracking-tight">₹18,00,000</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1.5">Formal vendor contracts &amp; documented dues</p>
+</div>
+<div class="mt-4 pt-3 border-t border-[#f0eee6] flex items-center gap-1.5 text-body-sm text-outline">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="gavel">gavel</span>
+<span>4 master vendor agreements</span>
+</div>
+</div>
+<!-- Card 3: Outstanding Balance Due -->
+<div class="bg-white rounded-[14px] p-5 border border-[#E6E4DC] paper-shadow relative overflow-hidden flex flex-col justify-between border-l-4 border-l-secondary">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-secondary font-semibold">Outstanding Balance Due</span>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed/50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="pending_actions">pending_actions</span>
+</div>
+</div>
+<div>
+<div class="text-headline-lg font-headline-lg text-secondary tracking-tight">₹3,50,000</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1.5">Remaining payable across 3 vendors</p>
+</div>
+<div class="mt-4 pt-3 border-t border-[#f0eee6] flex items-center justify-between text-body-sm">
+<span class="copper-pill px-2 py-0.5 rounded text-[11px] font-label-sm uppercase">Due at Muhurtham</span>
+<span class="text-outline text-xs">Zero penalties</span>
+</div>
+</div>
+<!-- Card 4: Standalone Direct Expenses -->
+<div class="bg-white rounded-[14px] p-5 border border-[#E6E4DC] paper-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline font-semibold">Standalone Direct Expenses</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-lg" data-icon="local_mall">local_mall</span>
+</div>
+</div>
+<div>
+<div class="text-headline-lg font-headline-lg text-tertiary tracking-tight">₹85,000</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1.5">Pooja samagri, dry fruits, regional permits, immediate cash items</p>
+</div>
+<div class="mt-4 pt-3 border-t border-[#f0eee6] flex items-center gap-1.5 text-body-sm text-outline">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="history">history</span>
+<span>3 logged family outlays</span>
+</div>
+</div>
+</section>
+<!-- Main Ledger Module with Tabbed Views -->
+<section class="bg-white rounded-[14px] border border-[#E6E4DC] paper-shadow overflow-hidden">
+<!-- Filter Bar & Tab Navigation Header -->
+<div class="px-6 py-4 border-b border-[#E6E4DC] flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface-container-lowest">
+<!-- Three Tabbed Ledger Views -->
+<div class="flex items-center gap-1 bg-[#F7F5F0] p-1 rounded-xl border border-[#E6E4DC]" role="tablist">
+<button class="px-4 py-2 rounded-lg text-label-md font-label-md bg-white text-primary shadow-sm font-semibold transition-all" id="tab-btn-all" onclick="switchTab('all')">
+            All Ledger &amp; History (7)
+          </button>
+<button class="px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all" id="tab-btn-vendors" onclick="switchTab('vendors')">
+            Vendor Charges &amp; Commitments (4)
+          </button>
+<button class="px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all" id="tab-btn-direct" onclick="switchTab('direct')">
+            Direct Paid Expenses (3)
+          </button>
+</div>
+<!-- Ledger Filter & Search Field -->
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-lg" data-icon="search">search</span>
+<input class="pl-9 pr-4 py-1.5 text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] bg-white focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 w-64 text-on-surface placeholder:text-outline" placeholder="Filter by partner, payer, or ceremony..." type="text"/>
+</div>
+<button class="p-2 rounded-lg border border-[#E6E4DC] text-on-surface-variant hover:bg-[#F7F5F0] transition-colors" title="Export CSV / PDF Ledger">
+<span class="material-symbols-outlined text-lg" data-icon="file_download">file_download</span>
+</button>
+</div>
+</div>
+<!-- Ledger Content Container -->
+<div class="overflow-x-auto" id="ledger-content-wrapper">
+<!-- 1. POPULATED TABLE STATE -->
+<table class="w-full text-left border-collapse" id="populated-table">
+<thead>
+<tr class="bg-[#F7F5F0]/75 border-b border-[#E6E4DC] text-label-sm font-label-sm uppercase tracking-wider text-outline">
+<th class="py-3.5 px-6 font-semibold">Date &amp; Entry</th>
+<th class="py-3.5 px-6 font-semibold">Description / Vendor Partner</th>
+<th class="py-3.5 px-6 font-semibold">Category &amp; Ceremony</th>
+<th class="py-3.5 px-6 font-semibold text-right">Charge / Agreed</th>
+<th class="py-3.5 px-6 font-semibold text-right">Amount Paid</th>
+<th class="py-3.5 px-6 font-semibold text-right">Balance Due</th>
+<th class="py-3.5 px-6 font-semibold">Recorded By</th>
+<th class="py-3.5 px-6 font-semibold text-center">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E6E4DC] text-body-md font-body-md" id="ledger-rows">
+<!-- Row 1: Vrindavan Floral -->
+<tr class="hover:bg-[#DFE4DC]/20 transition-colors ledger-row-vendor">
+<td class="py-4 px-6 whitespace-nowrap text-on-surface font-medium text-body-sm">
+<div>18 Jan 2027</div>
+<span class="text-[11px] font-label-sm text-outline">TRX-7821-M</span>
+</td>
+<td class="py-4 px-6">
+<div class="font-semibold text-primary flex items-center gap-1.5">
+<span>Vrindavan Floral &amp; Mandap</span>
+</div>
+<div class="text-body-sm text-outline">Muhurtham &amp; Haldi Mandap Arch (Tranche 1 &amp; 2 Cleared)</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="copper-pill px-2.5 py-1 rounded-md text-[11px] font-label-sm uppercase font-bold">Muhurtham &amp; Haldi</span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-medium text-on-surface">₹6,00,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-primary">₹5,00,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-secondary">₹1,00,000</td>
+<td class="py-4 px-6 whitespace-nowrap text-body-sm">
+<div class="text-on-surface font-medium">Pavithra Iyer</div>
+<div class="text-[11px] text-outline">HDFC NEFT #4091</div>
+</td>
+<td class="py-4 px-6 text-center whitespace-nowrap">
+<button class="text-label-sm font-label-sm text-outline hover:text-error px-2 py-1 rounded hover:bg-error-container/30 transition-colors" onclick="openCorrectionModal('Vrindavan Floral &amp; Mandap (Tranche 2)', '₹2,50,000', '18 Jan 2027')">
+                  Void / Correct
+                </button>
+</td>
+</tr>
+<!-- Row 2: Royal Mysore Banquets -->
+<tr class="hover:bg-[#DFE4DC]/20 transition-colors ledger-row-vendor">
+<td class="py-4 px-6 whitespace-nowrap text-on-surface font-medium text-body-sm">
+<div>22 Jan 2027</div>
+<span class="text-[11px] font-label-sm text-outline">TRX-7910-C</span>
+</td>
+<td class="py-4 px-6">
+<div class="font-semibold text-primary flex items-center gap-1.5">
+<span>Royal Mysore Banquets &amp; Caterers</span>
+</div>
+<div class="text-body-sm text-outline">Traditional Feasts &amp; Reception Buffet (Advance &amp; Intermediate)</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="forest-pill px-2.5 py-1 rounded-md text-[11px] font-label-sm uppercase font-bold">Catering &amp; Dining</span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-medium text-on-surface">₹7,50,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-primary">₹6,00,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-secondary">₹1,50,000</td>
+<td class="py-4 px-6 whitespace-nowrap text-body-sm">
+<div class="text-on-surface font-medium">Suresh Iyer</div>
+<div class="text-[11px] text-outline">ICICI RTGS #9910</div>
+</td>
+<td class="py-4 px-6 text-center whitespace-nowrap">
+<button class="text-label-sm font-label-sm text-outline hover:text-error px-2 py-1 rounded hover:bg-error-container/30 transition-colors" onclick="openCorrectionModal('Royal Mysore Banquets (Intermediate Tranche)', '₹3,00,000', '22 Jan 2027')">
+                  Void / Correct
+                </button>
+</td>
+</tr>
+<!-- Row 3: Heritage Sound & Acoustics -->
+<tr class="hover:bg-[#DFE4DC]/20 transition-colors ledger-row-vendor">
+<td class="py-4 px-6 whitespace-nowrap text-on-surface font-medium text-body-sm">
+<div>25 Jan 2027</div>
+<span class="text-[11px] font-label-sm text-outline">TRX-8104-S</span>
+</td>
+<td class="py-4 px-6">
+<div class="font-semibold text-primary flex items-center gap-1.5">
+<span>Heritage Sound &amp; Acoustics</span>
+</div>
+<div class="text-body-sm text-outline">Ballroom Sangeet &amp; Sound Rig with Line Array Systems</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="neutral-pill px-2.5 py-1 rounded-md text-[11px] font-label-sm uppercase font-bold">Sangeet Night</span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-medium text-on-surface">₹2,80,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-primary">₹2,30,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-secondary">₹50,000</td>
+<td class="py-4 px-6 whitespace-nowrap text-body-sm">
+<div class="text-on-surface font-medium">Manish Nair</div>
+<div class="text-[11px] text-outline">Axis NEFT #1128</div>
+</td>
+<td class="py-4 px-6 text-center whitespace-nowrap">
+<button class="text-label-sm font-label-sm text-outline hover:text-error px-2 py-1 rounded hover:bg-error-container/30 transition-colors" onclick="openCorrectionModal('Heritage Sound &amp; Acoustics (Setup Advance)', '₹1,50,000', '25 Jan 2027')">
+                  Void / Correct
+                </button>
+</td>
+</tr>
+<!-- Row 4: Stories by Joseph Radhik -->
+<tr class="hover:bg-[#DFE4DC]/20 transition-colors ledger-row-vendor">
+<td class="py-4 px-6 whitespace-nowrap text-on-surface font-medium text-body-sm">
+<div>27 Jan 2027</div>
+<span class="text-[11px] font-label-sm text-outline">TRX-8240-P</span>
+</td>
+<td class="py-4 px-6">
+<div class="font-semibold text-primary flex items-center gap-1.5">
+<span>Stories by Joseph Radhik</span>
+</div>
+<div class="text-body-sm text-outline">Cinematography &amp; Stills Master Contract (Retainer Cleared)</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="copper-pill px-2.5 py-1 rounded-md text-[11px] font-label-sm uppercase font-bold">Media &amp; Film</span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-medium text-on-surface">₹3,20,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-primary">₹1,70,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-secondary">₹1,50,000</td>
+<td class="py-4 px-6 whitespace-nowrap text-body-sm">
+<div class="text-on-surface font-medium">Pavithra Iyer</div>
+<div class="text-[11px] text-outline">HDFC Cheque #004412</div>
+</td>
+<td class="py-4 px-6 text-center whitespace-nowrap">
+<button class="text-label-sm font-label-sm text-outline hover:text-error px-2 py-1 rounded hover:bg-error-container/30 transition-colors" onclick="openCorrectionModal('Stories by Joseph Radhik (Retainer)', '₹1,70,000', '27 Jan 2027')">
+                  Void / Correct
+                </button>
+</td>
+</tr>
+<!-- Row 5: Direct Spend - Palace Lawns Fire Safety -->
+<tr class="hover:bg-[#DFE4DC]/20 transition-colors ledger-row-direct">
+<td class="py-4 px-6 whitespace-nowrap text-on-surface font-medium text-body-sm">
+<div>29 Jan 2027</div>
+<span class="text-[11px] font-label-sm text-outline">EXP-1049-D</span>
+</td>
+<td class="py-4 px-6">
+<div class="font-semibold text-on-surface flex items-center gap-1.5">
+<span>Bangalore Palace Lawn Fire Safety Permit</span>
+</div>
+<div class="text-body-sm text-outline">Statutory municipal compliance fee for pyrotechnic lamps</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="neutral-pill px-2.5 py-1 rounded-md text-[11px] font-label-sm uppercase font-bold">Permits &amp; Municipal</span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-medium text-outline">—</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-primary">₹25,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap text-outline font-medium">₹0</td>
+<td class="py-4 px-6 whitespace-nowrap text-body-sm">
+<div class="text-on-surface font-medium">Suresh Iyer</div>
+<div class="text-[11px] text-outline">Challan Bank Transfer</div>
+</td>
+<td class="py-4 px-6 text-center whitespace-nowrap">
+<button class="text-label-sm font-label-sm text-outline hover:text-error px-2 py-1 rounded hover:bg-error-container/30 transition-colors" onclick="openCorrectionModal('Bangalore Palace Lawn Fire Permit', '₹25,000', '29 Jan 2027')">
+                  Void / Correct
+                </button>
+</td>
+</tr>
+<!-- Row 6: Direct Spend - Vedic Purohit Samagri -->
+<tr class="hover:bg-[#DFE4DC]/20 transition-colors ledger-row-direct">
+<td class="py-4 px-6 whitespace-nowrap text-on-surface font-medium text-body-sm">
+<div>01 Feb 2027</div>
+<span class="text-[11px] font-label-sm text-outline">EXP-1052-D</span>
+</td>
+<td class="py-4 px-6">
+<div class="font-semibold text-on-surface flex items-center gap-1.5">
+<span>Vedic Purohit Samagri &amp; Special Camphor</span>
+</div>
+<div class="text-body-sm text-outline">Traditional Homa woods, organic ghee, silk vastram for rituals</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="copper-pill px-2.5 py-1 rounded-md text-[11px] font-label-sm uppercase font-bold">Muhurtham Pooja</span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-medium text-outline">—</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-primary">₹15,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap text-outline font-medium">₹0</td>
+<td class="py-4 px-6 whitespace-nowrap text-body-sm">
+<div class="text-on-surface font-medium">Lakshmi S.</div>
+<div class="text-[11px] text-outline">Cash Withdrawal Voucher</div>
+</td>
+<td class="py-4 px-6 text-center whitespace-nowrap">
+<button class="text-label-sm font-label-sm text-outline hover:text-error px-2 py-1 rounded hover:bg-error-container/30 transition-colors" onclick="openCorrectionModal('Vedic Purohit Samagri', '₹15,000', '01 Feb 2027')">
+                  Void / Correct
+                </button>
+</td>
+</tr>
+<!-- Row 7: Direct Spend - Artisanal Sweet Boxes -->
+<tr class="hover:bg-[#DFE4DC]/20 transition-colors ledger-row-direct">
+<td class="py-4 px-6 whitespace-nowrap text-on-surface font-medium text-body-sm">
+<div>03 Feb 2027</div>
+<span class="text-[11px] font-label-sm text-outline">EXP-1060-D</span>
+</td>
+<td class="py-4 px-6">
+<div class="font-semibold text-on-surface flex items-center gap-1.5">
+<span>Artisanal Kaju Katli &amp; Sweet Boxes for Guest Arrival</span>
+</div>
+<div class="text-body-sm text-outline">Anand Sweets hand-packed welcome hamper assortment (150 units)</div>
+</td>
+<td class="py-4 px-6 whitespace-nowrap">
+<span class="forest-pill px-2.5 py-1 rounded-md text-[11px] font-label-sm uppercase font-bold">Hospitality &amp; Welcomes</span>
+</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-medium text-outline">—</td>
+<td class="py-4 px-6 text-right whitespace-nowrap font-semibold text-primary">₹45,000</td>
+<td class="py-4 px-6 text-right whitespace-nowrap text-outline font-medium">₹0</td>
+<td class="py-4 px-6 whitespace-nowrap text-body-sm">
+<div class="text-on-surface font-medium">Pavithra Iyer</div>
+<div class="text-[11px] text-outline">UPI Transaction #8892</div>
+</td>
+<td class="py-4 px-6 text-center whitespace-nowrap">
+<button class="text-label-sm font-label-sm text-outline hover:text-error px-2 py-1 rounded hover:bg-error-container/30 transition-colors" onclick="openCorrectionModal('Artisanal Kaju Katli Hampers', '₹45,000', '03 Feb 2027')">
+                  Void / Correct
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- 2. EMPTY STATE -->
+<div class="hidden py-16 px-6 text-center space-y-4" id="empty-state-view">
+<div class="w-14 h-14 rounded-full bg-[#DFE4DC] mx-auto flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-2xl" data-icon="folder_open">folder_open</span>
+</div>
+<div class="space-y-1">
+<h3 class="text-headline-sm font-headline-sm text-on-surface">No Finance Entries Recorded Yet</h3>
+<p class="text-body-md font-body-md text-outline max-w-md mx-auto">
+              Start by logging your agreed vendor contracts or adding immediate out-of-pocket expenses to construct an immutable financial ledger.
+            </p>
+</div>
+<div class="pt-2 flex justify-center gap-3">
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-label-md font-semibold hover:bg-[#1E433B]" onclick="openModal('modal-vendor-charge')">
+              + Record Initial Contract
+            </button>
+<button class="px-4 py-2 rounded-lg bg-white border border-[#E6E4DC] text-secondary text-label-md font-semibold hover:bg-secondary hover:text-white" onclick="openModal('modal-add-expense')">
+              + Log Direct Spend
+            </button>
+</div>
+</div>
+<!-- 3. LOADING SKELETON STATE -->
+<div class="hidden p-6 space-y-4" id="loading-skeleton-view">
+<div class="h-6 bg-[#DFE4DC]/60 rounded animate-pulse w-full"></div>
+<div class="space-y-3 pt-2">
+<div class="h-12 bg-[#DFE4DC]/40 rounded-lg animate-pulse"></div>
+<div class="h-12 bg-[#DFE4DC]/40 rounded-lg animate-pulse"></div>
+<div class="h-12 bg-[#DFE4DC]/40 rounded-lg animate-pulse"></div>
+<div class="h-12 bg-[#DFE4DC]/40 rounded-lg animate-pulse"></div>
+</div>
+</div>
+</div>
+<!-- Ledger Footer Summary Row -->
+<div class="px-6 py-4 bg-[#F7F5F0] border-t border-[#E6E4DC] flex flex-col md:flex-row md:items-center justify-between gap-4 text-body-sm font-body-sm text-outline">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-primary" data-icon="lock">lock</span>
+<span>Immutable Ledger Integrity: All line items hashed with family admin signatures.</span>
+</div>
+<div class="flex items-center gap-6">
+<div>Audited Balance Payable: <strong class="text-secondary font-semibold text-body-md">₹3,50,000</strong></div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div>Total Cash Outflow: <strong class="text-primary font-semibold text-body-md">₹14,50,000</strong></div>
+</div>
+</div>
+</section>
+<!-- Contextual Information Card: Settlement Guidance -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="bg-white rounded-[14px] p-6 border border-[#E6E4DC] paper-shadow">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed/50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="receipt">receipt</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Vendor Tranche Policy</h3>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+          Vendor payments are locked to stage deliverables. Final settlements (₹3,50,000) are disbursed post-muhurtham after priest confirmation and audio handoff.
+        </p>
+</div>
+<div class="bg-white rounded-[14px] p-6 border border-[#E6E4DC] paper-shadow">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="family_restroom">family_restroom</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Family Co-Signers</h3>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+          Entries logged by Pavithra Iyer, Suresh Iyer, or Manish Nair carry equal administrative validity. All void requests record an explicit audit reason.
+        </p>
+</div>
+<div class="bg-white rounded-[14px] p-6 border border-[#E6E4DC] paper-shadow">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 rounded-lg bg-[#DFE4DC] flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-lg" data-icon="currency_rupee">currency_rupee</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Indian Rupee (INR) Discipline</h3>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+          Transactions adhere strictly to Indian banking reconciliation standards with NEFT, RTGS, and cheque UTR archiving for all high-value mandates.
+        </p>
+</div>
+</section>
+</main>
+<!-- ============================================================== -->
+<!-- MODAL 1: Record Paid Expense -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 bg-[#141D1C]/60 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-add-expense">
+<div class="bg-white rounded-[14px] w-full max-w-xl border border-[#E6E4DC] overlay-shadow overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="px-6 py-4.5 border-b border-[#E6E4DC] bg-[#F7F5F0]/70 flex items-center justify-between">
+<div>
+<div class="text-[11px] font-label-sm uppercase tracking-wider text-secondary font-bold">Direct Disbursement</div>
+<h3 class="text-headline-md font-headline-md text-primary tracking-tight">Record Paid Expense</h3>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors" onclick="closeModal('modal-add-expense')">
+<span class="material-symbols-outlined text-xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<form class="p-6 space-y-4" onsubmit="event.preventDefault(); simulateSuccess('Expense recorded successfully'); closeModal('modal-add-expense');">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Expense Date</label>
+<input class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" type="date" value="2027-02-04"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Ceremony / Function Tag</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white">
+<option>Muhurtham Rituals</option>
+<option>Haldi Ceremony</option>
+<option>Sangeet Evening</option>
+<option>Welcome &amp; Logistics</option>
+<option>Hospitality &amp; Gifting</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Expense Title / Item Description</label>
+<input class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="e.g. Traditional Fresh Jasmine Garlands for Entourage" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Amount Paid (INR ₹)</label>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-body-md text-outline">₹</span>
+<input class="w-full pl-8 text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="25,000" type="number"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Paid By (Family Member)</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white">
+<option>Pavithra Iyer (Bride)</option>
+<option>Manish Nair (Groom)</option>
+<option>Suresh Iyer (Father of Bride)</option>
+<option>Lakshmi S. (Mother of Bride)</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Paid From Account / Mode</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white">
+<option>HDFC Family Joint A/C</option>
+<option>ICICI Wedding Pool A/C</option>
+<option>Direct Cash Voucher</option>
+<option>UPI Instant Transfer</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Reference / UTR / Cheque Note</label>
+<input class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="e.g. UPI Ref #4992-019" type="text"/>
+</div>
+</div>
+<!-- Modal Footer Actions -->
+<div class="pt-4 border-t border-[#E6E4DC] flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-[#F7F5F0]" onclick="closeModal('modal-add-expense')" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2 rounded-lg bg-primary text-white text-label-md font-label-md font-semibold hover:bg-[#1E433B] shadow-sm" type="submit">
+            Save Immutable Entry
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- MODAL 2: Record Vendor Charge -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 bg-[#141D1C]/60 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-vendor-charge">
+<div class="bg-white rounded-[14px] w-full max-w-xl border border-[#E6E4DC] overlay-shadow overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="px-6 py-4.5 border-b border-[#E6E4DC] bg-[#F7F5F0]/70 flex items-center justify-between">
+<div>
+<div class="text-[11px] font-label-sm uppercase tracking-wider text-primary font-bold">Contractual Commitment</div>
+<h3 class="text-headline-md font-headline-md text-primary tracking-tight">Record Vendor Charge</h3>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors" onclick="closeModal('modal-vendor-charge')">
+<span class="material-symbols-outlined text-xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<form class="p-6 space-y-4" onsubmit="event.preventDefault(); simulateSuccess('Vendor charge committed'); closeModal('modal-vendor-charge');">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Select Vendor Partner</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white">
+<option>Vrindavan Floral &amp; Mandap</option>
+<option>Royal Mysore Banquets &amp; Caterers</option>
+<option>Heritage Sound &amp; Acoustics</option>
+<option>Stories by Joseph Radhik</option>
+<option>Bangalore Palace Security Operations</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Service Scope Title</label>
+<input class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="e.g. Stage Rigging &amp; Ambient Fixtures" type="text"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Associated Ceremony</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white">
+<option>Muhurtham (Main Ceremony)</option>
+<option>Sangeet Evening</option>
+<option>Haldi &amp; Mehendi</option>
+<option>Reception Dinner</option>
+<option>Multi-Ceremony Overall</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Agreed Charge Amount in INR (₹)</label>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-body-md text-outline">₹</span>
+<input class="w-full pl-8 text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="4,50,000" type="number"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Payment Terms &amp; Milestones Note</label>
+<textarea class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="e.g. 50% advance retainer on signing, 30% on stage load-in, 20% post-reception inspection." rows="3"></textarea>
+</div>
+<!-- Modal Footer Actions -->
+<div class="pt-4 border-t border-[#E6E4DC] flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-[#F7F5F0]" onclick="closeModal('modal-vendor-charge')" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2 rounded-lg bg-primary text-white text-label-md font-label-md font-semibold hover:bg-[#1E433B] shadow-sm" type="submit">
+            Record Vendor Contract
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- MODAL 3: Record Partial / Tranche Payment -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 bg-[#141D1C]/60 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-record-payment">
+<div class="bg-white rounded-[14px] w-full max-w-xl border border-[#E6E4DC] overlay-shadow overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="px-6 py-4.5 border-b border-[#E6E4DC] bg-[#F7F5F0]/70 flex items-center justify-between">
+<div>
+<div class="text-[11px] font-label-sm uppercase tracking-wider text-secondary font-bold">Disbursement Voucher</div>
+<h3 class="text-headline-md font-headline-md text-primary tracking-tight">Record Payment Tranche</h3>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg hover:bg-surface-container-high transition-colors" onclick="closeModal('modal-record-payment')">
+<span class="material-symbols-outlined text-xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<form class="p-6 space-y-4" onsubmit="event.preventDefault(); simulateSuccess('Payment tranche recorded'); closeModal('modal-record-payment');">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Select from Outstanding Vendor Charges</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white" id="payment-vendor-select" onchange="updateVendorDueStats()">
+<option value="vrindavan">Vrindavan Floral &amp; Mandap — ₹1,00,000 Balance Due</option>
+<option value="royal">Royal Mysore Banquets &amp; Caterers — ₹1,50,000 Balance Due</option>
+<option value="heritage">Heritage Sound &amp; Acoustics — ₹50,000 Balance Due</option>
+<option value="stories">Stories by Joseph Radhik — ₹1,50,000 Balance Due</option>
+</select>
+</div>
+<!-- Dynamic Context Box -->
+<div class="p-3.5 rounded-xl bg-[#F7F5F0] border border-[#E6E4DC] grid grid-cols-2 gap-3 text-body-sm">
+<div>
+<span class="text-outline text-xs block">Contracted Master Charge:</span>
+<span class="text-on-surface font-semibold text-body-md" id="charge-stat-total">₹6,00,000</span>
+</div>
+<div>
+<span class="text-outline text-xs block">Remaining Outstanding Due:</span>
+<span class="text-secondary font-semibold text-body-md" id="charge-stat-due">₹1,00,000</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Payment Amount to Disburse (INR ₹)</label>
+<div class="relative">
+<span class="absolute left-3 top-2.5 text-body-md text-outline">₹</span>
+<input class="w-full pl-8 text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 font-semibold text-primary" type="number" value="100000"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Payment Method</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white">
+<option>NEFT Wire Transfer</option>
+<option>RTGS Real-Time Settlement</option>
+<option>Bank Account Payee Cheque</option>
+<option>Direct Bank Demand Draft</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Disbursed From Account</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10 bg-white">
+<option>HDFC Family Joint A/C #**4091</option>
+<option>ICICI Escrow Operations A/C #**9910</option>
+<option>Axis Celebration Pool #**1128</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Transaction Reference / UTR</label>
+<input class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="e.g. UTR-HDFC27020499" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Audit Memo / Delivery Confirmation Note</label>
+<input class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-primary focus:ring-2 focus:ring-primary/10" placeholder="e.g. Final stage handover signed off by wedding decorator on-site." type="text"/>
+</div>
+<!-- Modal Footer Actions -->
+<div class="pt-4 border-t border-[#E6E4DC] flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-[#F7F5F0]" onclick="closeModal('modal-record-payment')" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2 rounded-lg bg-primary text-white text-label-md font-label-md font-semibold hover:bg-[#1E433B] shadow-sm" type="submit">
+            Disburse &amp; Clear Tranche
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- DIALOG 4: Void / Correction Confirmation Dialog -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 bg-[#141D1C]/60 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-void-dialog">
+<div class="bg-white rounded-[14px] w-full max-w-lg border border-[#E6E4DC] overlay-shadow overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+<!-- Dialog Header -->
+<div class="px-6 py-4 border-b border-[#E6E4DC] bg-error-container/30 flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-error" data-icon="report_problem">report_problem</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Void / Correct Ledger Entry</h3>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded-lg" onclick="closeModal('modal-void-dialog')">
+<span class="material-symbols-outlined text-xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Dialog Body -->
+<form class="p-6 space-y-4" onsubmit="event.preventDefault(); simulateSuccess('Ledger record reversed with audit reason'); closeModal('modal-void-dialog');">
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+          This ledger is immutable. Reversing or correcting an existing disbursement creates an inverted audit trace. This action cannot be erased from the log.
+        </p>
+<!-- Entry Preview Card -->
+<div class="p-3.5 rounded-xl bg-[#F7F5F0] border border-[#E6E4DC] text-body-sm space-y-1">
+<div class="text-outline text-xs uppercase font-label-sm">Target Entry to Reverse:</div>
+<div class="text-primary font-semibold text-body-md" id="dialog-target-title">Vrindavan Floral &amp; Mandap (Tranche 2)</div>
+<div class="text-on-surface text-body-sm flex items-center gap-3">
+<span>Disbursed: <strong id="dialog-target-amount">₹2,50,000</strong></span>
+<span>•</span>
+<span id="dialog-target-date">18 Jan 2027</span>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">
+            Correction / Reversal Reason <span class="text-error">*</span>
+</label>
+<select class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-error focus:ring-2 focus:ring-error/10 bg-white" required="">
+<option value="">Select mandatory audit reason...</option>
+<option>Duplicate NEFT / Bank transfer entry</option>
+<option>Clerical invoice figure typographical error</option>
+<option>Contract renegotiation prior to release</option>
+<option>Cheque bounce or technical clearing failure</option>
+<option>Immediate merchant refund issued</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1 font-semibold">Family Admin Confirmation Signature</label>
+<input class="w-full text-body-sm font-body-sm rounded-lg border border-[#E6E4DC] p-2.5 focus:border-error focus:ring-2 focus:ring-error/10" placeholder="Type 'PAVITHRA IYER' to authorize correction" required="" type="text"/>
+</div>
+<!-- Dialog Footer Actions -->
+<div class="pt-4 border-t border-[#E6E4DC] flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:bg-[#F7F5F0]" onclick="closeModal('modal-void-dialog')" type="button">
+            Discard Action
+          </button>
+<button class="px-5 py-2 rounded-lg bg-error text-white text-label-md font-label-md font-semibold hover:bg-error/90 shadow-sm" type="submit">
+            Execute Immutable Reversal
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Notification Toast -->
+<div class="fixed bottom-6 right-6 z-50 bg-[#141D1C] text-white px-4 py-3 rounded-xl paper-shadow border border-outline/30 hidden items-center gap-3 text-body-sm font-body-sm animate-in slide-in-from-bottom-5 duration-200" id="toast-notification">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="check_circle">check_circle</span>
+<span id="toast-text">Operation completed.</span>
+</div>
+<!-- Interactive JavaScript Logic -->
+<script>
+    // Tab Switching Logic
+    function switchTab(tabType) {
+      const btnAll = document.getElementById('tab-btn-all');
+      const btnVendors = document.getElementById('tab-btn-vendors');
+      const btnDirect = document.getElementById('tab-btn-direct');
+
+      const rows = document.querySelectorAll('#ledger-rows tr');
+
+      // Reset Styles
+      [btnAll, btnVendors, btnDirect].forEach(btn => {
+        btn.className = "px-4 py-2 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all";
+      });
+
+      if (tabType === 'all') {
+        btnAll.className = "px-4 py-2 rounded-lg text-label-md font-label-md bg-white text-primary shadow-sm font-semibold transition-all";
+        rows.forEach(r => r.style.display = '');
+      } else if (tabType === 'vendors') {
+        btnVendors.className = "px-4 py-2 rounded-lg text-label-md font-label-md bg-white text-primary shadow-sm font-semibold transition-all";
+        rows.forEach(r => {
+          if (r.classList.contains('ledger-row-vendor')) {
+            r.style.display = '';
+          } else {
+            r.style.display = 'none';
+          }
+        });
+      } else if (tabType === 'direct') {
+        btnDirect.className = "px-4 py-2 rounded-lg text-label-md font-label-md bg-white text-primary shadow-sm font-semibold transition-all";
+        rows.forEach(r => {
+          if (r.classList.contains('ledger-row-direct')) {
+            r.style.display = '';
+          } else {
+            r.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    // Modal Control Logic
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // Void / Correction Modal Context Setter
+    function openCorrectionModal(title, amount, date) {
+      document.getElementById('dialog-target-title').innerText = title;
+      document.getElementById('dialog-target-amount').innerText = amount;
+      document.getElementById('dialog-target-date').innerText = date;
+      openModal('modal-void-dialog');
+    }
+
+    // Dynamic stats switcher inside Tranche modal
+    function updateVendorDueStats() {
+      const select = document.getElementById('payment-vendor-select');
+      const val = select.value;
+      const totalEl = document.getElementById('charge-stat-total');
+      const dueEl = document.getElementById('charge-stat-due');
+
+      if (val === 'vrindavan') {
+        totalEl.innerText = '₹6,00,000';
+        dueEl.innerText = '₹1,00,000';
+      } else if (val === 'royal') {
+        totalEl.innerText = '₹7,50,000';
+        dueEl.innerText = '₹1,50,000';
+      } else if (val === 'heritage') {
+        totalEl.innerText = '₹2,80,000';
+        dueEl.innerText = '₹50,000';
+      } else if (val === 'stories') {
+        totalEl.innerText = '₹3,20,000';
+        dueEl.innerText = '₹1,50,000';
+      }
+    }
+
+    // Design Review State Switcher Logic
+    function setPreviewState(state) {
+      const label = document.getElementById('state-current-label');
+      const table = document.getElementById('populated-table');
+      const empty = document.getElementById('empty-state-view');
+      const loading = document.getElementById('loading-skeleton-view');
+      const errorBanner = document.getElementById('sync-error-banner');
+
+      // Reset buttons
+      ['populated', 'empty', 'loading', 'error'].forEach(s => {
+        const b = document.getElementById(`btn-state-${s}`);
+        b.className = "px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-tertiary-container/60 hover:bg-tertiary-container text-surface-variant transition-colors";
+      });
+      document.getElementById(`btn-state-${state}`).className = "px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-primary-container text-on-primary transition-colors";
+
+      // Hide all dynamic views
+      table.classList.add('hidden');
+      empty.classList.add('hidden');
+      loading.classList.add('hidden');
+      errorBanner.classList.add('hidden');
+
+      if (state === 'populated') {
+        label.innerText = 'Populated Ledger (Live Audited)';
+        table.classList.remove('hidden');
+      } else if (state === 'empty') {
+        label.innerText = 'Empty Ledger State (Zero State)';
+        empty.classList.remove('hidden');
+      } else if (state === 'loading') {
+        label.innerText = 'Loading Skeleton (Async Network)';
+        loading.classList.remove('hidden');
+      } else if (state === 'error') {
+        label.innerText = 'Error / Sync Alert (Conflict Mode)';
+        table.classList.remove('hidden');
+        errorBanner.classList.remove('hidden');
+      }
+    }
+
+    function dismissErrorBanner() {
+      document.getElementById('sync-error-banner').classList.add('hidden');
+    }
+
+    // Success Notification Toast
+    function simulateSuccess(msg) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-text').innerText = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3500);
+    }
+  </script>
+</body></html>

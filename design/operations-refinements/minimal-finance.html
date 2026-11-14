@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event - Wedding Finance</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "tertiary-container": "#4d524c",
+            "on-tertiary-fixed": "#181d18",
+            "on-primary-fixed-variant": "#1d4f45",
+            "outline": "#707976",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#434842",
+            "primary-fixed-dim": "#9ed1c4",
+            "secondary-container": "#fdbe9e",
+            "tertiary": "#363b36",
+            "background": "#f1fcfa",
+            "on-secondary-fixed-variant": "#673c24",
+            "surface": "#f1fcfa",
+            "secondary-fixed-dim": "#f7b999",
+            "primary-container": "#28594f",
+            "secondary-fixed": "#ffdbca",
+            "surface-container-high": "#dfeae8",
+            "surface-tint": "#36675c",
+            "inverse-primary": "#9ed1c4",
+            "on-secondary-container": "#794b32",
+            "surface-container": "#e5f0ee",
+            "secondary": "#825339",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "on-tertiary-container": "#c0c5bd",
+            "on-background": "#141d1c",
+            "surface-bright": "#f1fcfa",
+            "error": "#ba1a1a",
+            "on-secondary-fixed": "#321201",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#0b4138",
+            "on-primary-container": "#9bcec1",
+            "surface-variant": "#dae5e3",
+            "inverse-surface": "#283231",
+            "inverse-on-surface": "#e8f3f1",
+            "surface-container-highest": "#dae5e3",
+            "on-primary-fixed": "#00201b",
+            "on-tertiary": "#ffffff",
+            "surface-container-low": "#ebf6f4",
+            "on-surface-variant": "#404946",
+            "on-error": "#ffffff",
+            "on-surface": "#141d1c",
+            "error-container": "#ffdad6",
+            "surface-dim": "#d1dcda",
+            "tertiary-fixed": "#dfe4dc",
+            "outline-variant": "#c0c8c5",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#baeddf"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "body-sm": ["Manrope", "sans-serif"],
+            "label-md": ["Manrope", "sans-serif"],
+            "display-lg-mobile": ["Newsreader", "serif"],
+            "label-sm": ["Manrope", "sans-serif"],
+            "display-lg": ["Newsreader", "serif"],
+            "headline-sm": ["Manrope", "sans-serif"],
+            "body-lg": ["Manrope", "sans-serif"],
+            "label-lg": ["Manrope", "sans-serif"],
+            "body-md": ["Manrope", "sans-serif"]
+          },
+          "fontSize": {
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 20px;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md select-none">
+<!-- Interactive State Controller (Review Bar) -->
+<div class="sticky top-0 z-50 bg-tertiary text-on-tertiary px-6 py-2 flex items-center justify-between text-body-sm shadow-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container" data-icon="tune">tune</span>
+<span class="font-label-md tracking-wide text-surface-container-low">Interactive Preview Switcher:</span>
+</div>
+<div class="flex items-center gap-1.5 bg-tertiary-container/80 p-1 rounded-lg">
+<button class="px-3 py-1 rounded text-label-sm transition-all duration-150 bg-surface-container-lowest text-primary font-semibold shadow-xs" id="btn-state-populated" onclick="setPreviewState('populated')">
+        Populated View
+      </button>
+<button class="px-3 py-1 rounded text-label-sm transition-all duration-150 text-surface-variant hover:text-surface-container-lowest" id="btn-state-empty-expenses" onclick="setPreviewState('empty-expenses')">
+        Empty Expenses
+      </button>
+<button class="px-3 py-1 rounded text-label-sm transition-all duration-150 text-surface-variant hover:text-surface-container-lowest" id="btn-state-empty-payments" onclick="setPreviewState('empty-payments')">
+        Empty Payments
+      </button>
+<button class="px-3 py-1 rounded text-label-sm transition-all duration-150 text-secondary-container hover:text-surface-container-lowest flex items-center gap-1" id="btn-state-modal" onclick="openModal('add-entry')">
+<span class="material-symbols-outlined text-xs" data-icon="add_circle">add_circle</span> Add Entry Modal
+      </button>
+</div>
+</div>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SIDEBAR (w-56 / 224px) Source of Truth: SideNavBar & Prompt -->
+<aside class="w-56 h-[calc(100vh-41px)] sticky top-[41px] flex flex-col justify-between p-4 border-r border-outline-variant bg-surface shrink-0">
+<div class="space-y-6">
+<!-- Brand & Wedding Context -->
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary font-bold" data-icon="deck">deck</span>
+<span class="text-title-md font-title-md font-semibold text-primary tracking-tight font-headline-sm">Make My Event</span>
+</div>
+<div class="px-1 py-1 rounded bg-surface-container/60 mt-1 border border-outline-variant/30">
+<p class="text-label-sm text-primary font-bold truncate">Pavithra &amp; Manish</p>
+<p class="text-[10px] text-on-surface-variant font-medium">Feb 2027 · Estate Wedding</p>
+</div>
+</div>
+<!-- Grouped Navigation Items -->
+<nav class="space-y-4">
+<!-- GROUP: PLANNING -->
+<div>
+<span class="px-3 text-[10px] font-label-sm tracking-wider uppercase text-outline font-bold">PLANNING</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="event_upcoming">event_upcoming</span>
+<span>Functions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+<span>Tasks</span>
+</a>
+</div>
+</div>
+<!-- GROUP: PEOPLE -->
+<div>
+<span class="px-3 text-[10px] font-label-sm tracking-wider uppercase text-outline font-bold">PEOPLE</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span>Vendors</span>
+</a>
+</div>
+</div>
+<!-- GROUP: MANAGEMENT -->
+<div>
+<span class="px-3 text-[10px] font-label-sm tracking-wider uppercase text-outline font-bold">MANAGEMENT</span>
+<div class="mt-1 space-y-0.5">
+<!-- ACTIVE TAB: Finance (MANDATE MATCH) -->
+<a class="flex items-center gap-3 px-3 py-1.5 text-primary font-headline-sm font-semibold bg-surface-container rounded-lg border-l-2 border-primary shadow-xs" href="javascript:void(0)">
+<span class="material-symbols-outlined text-primary fill" data-icon="payments">payments</span>
+<span>Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+<span>Wedding details</span>
+</a>
+</div>
+</div>
+</nav>
+</div>
+<!-- Footer User & Settings -->
+<div class="pt-4 border-t border-outline-variant/60 space-y-2">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150" href="javascript:void(0)">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container-low/80 mt-2">
+<div class="w-7 h-7 rounded-full bg-primary-container text-surface-container-lowest flex items-center justify-center font-bold text-xs">
+            PI
+          </div>
+<div class="flex-1 min-w-0">
+<p class="text-label-sm text-on-surface truncate font-bold">Pavithra Iyer</p>
+<p class="text-[10px] text-on-surface-variant truncate">Family Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- MAIN APP CANVAS -->
+<div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+<!-- TOP APP BAR (Source of truth: TopNavBar & Prompt) -->
+<header class="flex justify-between items-center w-full h-14 px-8 border-b border-outline-variant bg-surface-container-lowest shrink-0">
+<!-- Breadcrumb & Sync indicator -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 text-body-md font-body-md text-on-surface-variant">
+<span class="text-outline">Pavithra &amp; Manish</span>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-semibold">Finance</span>
+</div>
+<div class="h-3.5 w-px bg-outline-variant mx-1"></div>
+<div class="flex items-center gap-1.5 text-[11px] font-label-sm text-primary bg-primary-fixed/30 px-2 py-0.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>All changes saved</span>
+</div>
+</div>
+<!-- Trailing actions: Notifications & User profile pill -->
+<div class="flex items-center gap-4">
+<button class="relative p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-secondary"></span>
+</button>
+<div class="flex items-center gap-2 text-label-md pl-2 border-l border-outline-variant text-on-surface">
+<span class="font-medium text-body-sm text-on-surface">Pavithra Iyer <span class="text-outline text-xs">(Family Admin)</span></span>
+<span class="material-symbols-outlined text-outline-variant text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</header>
+<!-- CONTENT BODY: STRICT MINIMALIST FINANCE BOARD -->
+<main class="p-8 max-w-6xl w-full mx-auto space-y-6">
+<!-- Top Header & Primary Action: Exactly ONE "+ Add entry" button -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">Wedding Expenses &amp; Payments</h1>
+<p class="text-body-md text-on-surface-variant mt-0.5">Simple, honest ledger for family coordination without accounting jargon.</p>
+</div>
+<div>
+<!-- Sole Top Action: Primary button -->
+<button class="flex items-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest px-4 py-2.5 rounded-xl font-label-lg shadow-sm transition-all duration-150" onclick="openModal('add-entry')">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+<span>+ Add entry</span>
+</button>
+</div>
+</div>
+<!-- TOP METRICS: STRICTLY TWO CLEAR NUMBERS (No charts, formulas, progress bars) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Actual paid -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/60 shadow-xs flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Actual paid so far</span>
+<span class="w-8 h-8 rounded-full bg-primary-fixed/40 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="check_circle">check_circle</span>
+</span>
+</div>
+<div class="mt-4">
+<div class="text-display-lg-mobile md:text-headline-lg font-headline-lg text-primary font-medium tracking-tight">₹8,25,000</div>
+<p class="text-body-sm text-on-surface-variant mt-1">Settled from bank transfers, cash advances &amp; vendor deposits.</p>
+</div>
+</div>
+<!-- Still to pay -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/60 shadow-xs flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Still to pay</span>
+<span class="w-8 h-8 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" data-icon="hourglass_top">hourglass_top</span>
+</span>
+</div>
+<div class="mt-4">
+<div class="text-display-lg-mobile md:text-headline-lg font-headline-lg text-secondary font-medium tracking-tight">₹4,75,000</div>
+<p class="text-body-sm text-on-surface-variant mt-1">Pending payments agreed across current bookings and permits.</p>
+</div>
+</div>
+</div>
+<!-- FILTER & EXPLANATION CONTAINER -->
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/60 overflow-hidden shadow-xs">
+<div class="p-5 border-b border-outline-variant/40 bg-surface-container-low/30">
+<!-- Segmented View Filter -->
+<div class="flex items-center justify-between flex-wrap gap-4">
+<div class="inline-flex p-1 bg-surface-container rounded-xl border border-outline-variant/40">
+<button class="px-4 py-1.5 text-label-md rounded-lg font-semibold bg-surface-container-lowest text-primary shadow-xs transition-all duration-150" id="tab-expenses-btn" onclick="switchViewTab('expenses')">
+                  Expenses (4)
+                </button>
+<button class="px-4 py-1.5 text-label-md rounded-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all duration-150" id="tab-payments-btn" onclick="switchViewTab('payments')">
+                  Payments (4)
+                </button>
+</div>
+<!-- Vendor Balances Snapshot Link (Tucked away at side/bottom) -->
+<button class="text-body-sm text-secondary hover:text-on-secondary-fixed font-semibold flex items-center gap-1.5 hover:underline" onclick="toggleVendorDrawer()">
+<span class="material-symbols-outlined text-sm" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Vendor balances snapshot (optional)</span>
+<span class="material-symbols-outlined text-sm transition-transform duration-200" data-icon="expand_more" id="drawer-arrow">expand_more</span>
+</button>
+</div>
+<!-- MANDATORY EXPLANATORY SENTENCE -->
+<p class="text-body-sm text-on-surface-variant mt-3 italic text-tertiary">
+              "Expenses are costs you've recorded; payments are money already paid."
+            </p>
+<!-- Collapsible Vendor Balances Snapshot -->
+<div class="hidden mt-4 pt-4 border-t border-outline-variant/40" id="vendor-snapshot-drawer">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-body-sm">
+<div class="p-3 bg-surface-container-lowest rounded-xl border border-outline-variant/50">
+<p class="text-xs text-outline font-label-sm">Vrindavan Floral</p>
+<p class="text-body-md font-semibold text-primary mt-1">₹1,00,000 pending</p>
+<span class="text-[11px] text-on-surface-variant">Agreed: ₹6,00,000</span>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-xl border border-outline-variant/50">
+<p class="text-xs text-outline font-label-sm">Mysore Royal Banquets</p>
+<p class="text-body-md font-semibold text-primary mt-1">₹2,00,000 pending</p>
+<span class="text-[11px] text-on-surface-variant">Agreed: ₹4,00,000</span>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-xl border border-outline-variant/50">
+<p class="text-xs text-outline font-label-sm">Heritage Sound</p>
+<p class="text-body-md font-semibold text-primary-container mt-1">₹0 (Fully Settled)</p>
+<span class="text-[11px] text-on-surface-variant">Agreed: ₹1,00,000</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 1: EXPENSES CONTENT AREA -->
+<div id="expenses-view-container">
+<!-- POPULATED STATE (EXPENSES) -->
+<div class="overflow-x-auto" id="expenses-populated">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/40 bg-surface-container-low/20 text-label-sm text-outline uppercase tracking-wider">
+<th class="py-3.5 px-6 font-semibold">Expense title &amp; Category</th>
+<th class="py-3.5 px-4 font-semibold">Vendor / Source</th>
+<th class="py-3.5 px-4 font-semibold text-right">Total agreed</th>
+<th class="py-3.5 px-4 font-semibold text-right">Remaining to pay</th>
+<th class="py-3.5 px-6 font-semibold text-center">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 text-body-md">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Flower decoration &amp; Muhurtham Mandap Arch</div>
+<span class="inline-block mt-0.5 text-xs text-outline font-label-sm">Decor &amp; Stage</span>
+</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-medium">Vrindavan Floral</div>
+<span class="text-xs text-outline">External vendor</span>
+</td>
+<td class="py-4 px-4 text-right font-medium text-on-surface">₹6,00,000</td>
+<td class="py-4 px-4 text-right">
+<span class="font-semibold text-secondary">₹1,00,000</span>
+<span class="block text-[11px] text-outline">₹5,00,000 paid</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-2">
+<button class="px-3 py-1.5 text-label-sm font-semibold rounded-lg bg-surface-container-lowest border border-secondary text-secondary hover:bg-secondary hover:text-on-secondary transition-all" onclick="openRecordPaymentModal('Flower decoration &amp; Muhurtham Mandap Arch', 'Vrindavan Floral', '1,00,000')">
+                          Record payment
+                        </button>
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('Flower decoration')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Traditional Sadya Catering</div>
+<span class="inline-block mt-0.5 text-xs text-outline font-label-sm">Food &amp; Beverage</span>
+</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-medium">Mysore Royal Banquets</div>
+<span class="text-xs text-outline">Contracted caterer</span>
+</td>
+<td class="py-4 px-4 text-right font-medium text-on-surface">₹4,00,000</td>
+<td class="py-4 px-4 text-right">
+<span class="font-semibold text-secondary">₹2,00,000</span>
+<span class="block text-[11px] text-outline">₹2,00,000 paid</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-2">
+<button class="px-3 py-1.5 text-label-sm font-semibold rounded-lg bg-surface-container-lowest border border-secondary text-secondary hover:bg-secondary hover:text-on-secondary transition-all" onclick="openRecordPaymentModal('Traditional Sadya Catering', 'Mysore Royal Banquets', '2,00,000')">
+                          Record payment
+                        </button>
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('Traditional Sadya Catering')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Bangalore Lawn Sound &amp; Safety Permit</div>
+<span class="inline-block mt-0.5 text-xs text-outline font-label-sm">Municipal Permits</span>
+</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded bg-surface-container text-tertiary font-label-sm">
+<span class="material-symbols-outlined text-xs" data-icon="apartment">apartment</span>
+                        Direct expense
+                      </span>
+</td>
+<td class="py-4 px-4 text-right font-medium text-on-surface">₹2,00,000</td>
+<td class="py-4 px-4 text-right">
+<span class="font-semibold text-secondary">₹1,75,000</span>
+<span class="block text-[11px] text-outline">₹25,000 fee advance</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-2">
+<button class="px-3 py-1.5 text-label-sm font-semibold rounded-lg bg-surface-container-lowest border border-secondary text-secondary hover:bg-secondary hover:text-on-secondary transition-all" onclick="openRecordPaymentModal('Bangalore Lawn Sound &amp; Safety Permit', 'Direct family expense', '1,75,000')">
+                          Record payment
+                        </button>
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('Bangalore Lawn Permit')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors bg-surface-container-low/10">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Sangeet Stage Lighting &amp; Acoustic Rig</div>
+<span class="inline-block mt-0.5 text-xs text-outline font-label-sm">Audio &amp; Visual</span>
+</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-medium">Heritage Sound</div>
+<span class="text-xs text-outline">Production crew</span>
+</td>
+<td class="py-4 px-4 text-right font-medium text-on-surface">₹1,00,000</td>
+<td class="py-4 px-4 text-right">
+<span class="inline-flex items-center gap-1 font-semibold text-primary text-xs bg-primary-fixed/40 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-xs" data-icon="done_all">done_all</span> Fully settled
+                      </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center justify-center gap-2">
+<span class="text-xs text-outline italic px-3 py-1.5">No balance due</span>
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('Sangeet Stage Lighting')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- EMPTY STATE (EXPENSES) -->
+<div class="hidden p-16 text-center" id="expenses-empty">
+<div class="w-14 h-14 rounded-full bg-surface-container mx-auto flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-2xl" data-icon="receipt_long">receipt_long</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary mb-2">No expenses yet.</h3>
+<p class="text-body-md text-on-surface-variant max-w-md mx-auto mb-6">
+                Add your first entry to start tracking wedding costs. You can note down venue advances, decorator quotes, or direct family costs.
+              </p>
+<button class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest px-5 py-2.5 rounded-xl font-label-lg shadow-sm transition-all duration-150" onclick="openModal('add-entry')">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+<span>+ Add your first entry</span>
+</button>
+</div>
+</div>
+<!-- TAB 2: PAYMENTS CONTENT AREA (Initially Hidden or Populated) -->
+<div class="hidden" id="payments-view-container">
+<!-- POPULATED STATE (PAYMENTS) -->
+<div class="overflow-x-auto" id="payments-populated">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/40 bg-surface-container-low/20 text-label-sm text-outline uppercase tracking-wider">
+<th class="py-3.5 px-6 font-semibold">Expense title &amp; vendor context</th>
+<th class="py-3.5 px-4 font-semibold">Payment Date</th>
+<th class="py-3.5 px-4 font-semibold text-right">Amount paid</th>
+<th class="py-3.5 px-4 font-semibold">Payment reference / Method</th>
+<th class="py-3.5 px-6 font-semibold text-center">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 text-body-md">
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Flower decoration &amp; Muhurtham Mandap Arch</div>
+<span class="text-xs text-outline">Paid to Vrindavan Floral (Advance 1)</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant font-medium">12 Jan 2027</td>
+<td class="py-4 px-4 text-right font-semibold text-primary">₹5,00,000</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-label-sm bg-surface-container text-tertiary">
+<span class="material-symbols-outlined text-xs" data-icon="account_balance">account_balance</span>
+                        HDFC NEFT #882193
+                      </span>
+</td>
+<td class="py-4 px-6 text-center">
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('Payment #882193')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Traditional Sadya Catering</div>
+<span class="text-xs text-outline">Paid to Mysore Royal Banquets (Booking token)</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant font-medium">18 Jan 2027</td>
+<td class="py-4 px-4 text-right font-semibold text-primary">₹2,00,000</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-label-sm bg-surface-container text-tertiary">
+<span class="material-symbols-outlined text-xs" data-icon="qr_code_2">qr_code_2</span>
+                        UPI Transfer (GPay)
+                      </span>
+</td>
+<td class="py-4 px-6 text-center">
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('UPI Payment')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Sangeet Stage Lighting &amp; Acoustic Rig</div>
+<span class="text-xs text-outline">Paid to Heritage Sound (Full clearance)</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant font-medium">25 Jan 2027</td>
+<td class="py-4 px-4 text-right font-semibold text-primary">₹1,00,000</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-label-sm bg-surface-container text-tertiary">
+<span class="material-symbols-outlined text-xs" data-icon="account_balance">account_balance</span>
+                        ICICI IMPS #00341
+                      </span>
+</td>
+<td class="py-4 px-6 text-center">
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('IMPS Payment')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<div class="font-medium text-on-surface">Bangalore Lawn Sound &amp; Safety Permit</div>
+<span class="text-xs text-outline">Direct municipal office submission</span>
+</td>
+<td class="py-4 px-4 text-on-surface-variant font-medium">02 Feb 2027</td>
+<td class="py-4 px-4 text-right font-semibold text-primary">₹25,000</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-label-sm bg-surface-container text-tertiary">
+<span class="material-symbols-outlined text-xs" data-icon="payments">payments</span>
+                        Cash with counter receipt
+                      </span>
+</td>
+<td class="py-4 px-6 text-center">
+<button class="p-1.5 text-outline hover:text-error rounded-lg hover:bg-error-container/20 transition-colors" onclick="confirmRemove('Municipal cash payment')" title="Remove">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- EMPTY STATE (PAYMENTS) -->
+<div class="hidden p-16 text-center" id="payments-empty">
+<div class="w-14 h-14 rounded-full bg-surface-container mx-auto flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-2xl" data-icon="credit_card_off">credit_card_off</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-primary mb-2">No payments recorded yet.</h3>
+<p class="text-body-md text-on-surface-variant max-w-md mx-auto mb-6">
+                Use 'Add entry' to log a purchase or record a payment against an existing expense.
+              </p>
+<button class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-surface-container-lowest px-5 py-2.5 rounded-xl font-label-lg shadow-sm transition-all duration-150" onclick="openModal('add-entry')">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+<span>+ Add entry</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Family Coordination Guidance Card (Subtle & reassuring for non-technical families) -->
+<div class="bg-surface-container-low/40 rounded-xl p-4 border border-outline-variant/40 flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary mt-0.5" data-icon="shield">shield</span>
+<div class="text-body-sm text-on-surface-variant">
+<span class="font-semibold text-on-surface">Family budget privacy:</span>
+            All wedding elders and coordinator family members invited under the 'Team' tab have read-only or editor access based on permissions you choose. No complex tax accounting rules are enforced.
+          </div>
+</div>
+</main>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- MODAL 1: FOCUSED '+ ADD ENTRY' MODAL (Two distinct radio branches) -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 bg-tertiary/60 backdrop-blur-xs hidden flex items-center justify-center p-4" id="modal-add-entry">
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant max-w-lg w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+<!-- Modal Header -->
+<div class="px-6 py-5 border-b border-outline-variant/50 flex items-center justify-between">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-primary font-semibold">Add Wedding Cost or Payment</h2>
+<p class="text-body-sm text-on-surface-variant">Log an agreed cost or money already handed over.</p>
+</div>
+<button class="p-1.5 text-outline hover:text-on-surface rounded-lg hover:bg-surface-container transition-colors" onclick="closeModal('add-entry')">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Form -->
+<form class="p-6 space-y-5" onsubmit="handleFormSubmit(event)">
+<!-- Two Clear Labeled Radio Choices -->
+<div class="space-y-2">
+<label class="block text-label-sm font-label-sm uppercase text-outline font-bold">What are you recording?</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<label class="relative flex items-start gap-3 p-3.5 rounded-xl border border-outline-variant cursor-pointer hover:bg-surface-container-low/30 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/10 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+<input checked="" class="mt-0.5 text-primary focus:ring-primary h-4 w-4" name="entry_type" onchange="toggleEntryType('later')" type="radio" value="later"/>
+<div>
+<span class="block text-label-md font-semibold text-on-surface">A cost to pay later</span>
+<span class="block text-body-sm text-outline mt-0.5 text-xs">Agreement or booking quote with remaining balance.</span>
+</div>
+</label>
+<label class="relative flex items-start gap-3 p-3.5 rounded-xl border border-outline-variant cursor-pointer hover:bg-surface-container-low/30 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary-fixed/10 has-[:checked]:ring-1 has-[:checked]:ring-primary">
+<input class="mt-0.5 text-primary focus:ring-primary h-4 w-4" name="entry_type" onchange="toggleEntryType('already_paid')" type="radio" value="already_paid"/>
+<div>
+<span class="block text-label-md font-semibold text-on-surface">Something already paid</span>
+<span class="block text-body-sm text-outline mt-0.5 text-xs">Full direct purchase or instant cash expense.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Description / Title -->
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">Title / What was this for?</label>
+<input class="w-full rounded-xl border border-outline-variant px-3.5 py-2.5 text-body-md text-on-surface placeholder:text-outline focus:border-primary focus:ring-2 focus:ring-primary/20" placeholder="e.g. Wedding Hall Advance, Temple Priest Dakshina" required="" type="text"/>
+</div>
+<!-- Category & Total Amount -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">Category</label>
+<select class="w-full rounded-xl border border-outline-variant px-3 py-2.5 text-body-md text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest">
+<option>Decor &amp; Florals</option>
+<option>Catering &amp; Sadya</option>
+<option>Venue &amp; Logistics</option>
+<option>Music &amp; Entertainment</option>
+<option>Attire &amp; Jewellery</option>
+<option>Priest &amp; Rituals</option>
+<option>Other Misc Costs</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">Total agreed amount (₹)</label>
+<div class="relative">
+<span class="absolute left-3.5 top-2.5 text-outline font-semibold">₹</span>
+<input class="w-full rounded-xl border border-outline-variant pl-8 pr-3.5 py-2.5 text-body-md text-on-surface font-medium focus:border-primary focus:ring-2 focus:ring-primary/20" placeholder="50,000" required="" type="number"/>
+</div>
+</div>
+</div>
+<!-- Vendor Selection -->
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">Vendor / Recipient (Optional)</label>
+<select class="w-full rounded-xl border border-outline-variant px-3 py-2.5 text-body-md text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 bg-surface-container-lowest">
+<option value="direct">Direct family expense (No external vendor)</option>
+<option value="vrindavan">Vrindavan Floral</option>
+<option value="mysore_banquets">Mysore Royal Banquets</option>
+<option value="heritage">Heritage Sound</option>
+<option value="new">+ Add new vendor name...</option>
+</select>
+</div>
+<!-- CONDITIONAL FIELDS: Revealed only when 'Something already paid' is selected -->
+<div class="hidden p-4 rounded-xl bg-surface-container-low border border-outline-variant/60 space-y-4" id="already-paid-fields">
+<div class="flex items-center gap-1.5 text-xs font-label-sm text-primary font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span>Atomic settlement: Saves both expense and payment records together</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-label-sm text-on-surface font-semibold mb-1">Payment Date</label>
+<input class="w-full rounded-xl border border-outline-variant px-3 py-2 text-body-md text-on-surface bg-surface-container-lowest" type="date" value="2027-02-14"/>
+</div>
+<div>
+<label class="block text-label-sm text-on-surface font-semibold mb-1">Payment Method</label>
+<select class="w-full rounded-xl border border-outline-variant px-3 py-2 text-body-md text-on-surface bg-surface-container-lowest">
+<option>UPI / GooglePay / PhonePe</option>
+<option>Bank NEFT / RTGS</option>
+<option>Cash from family wallet</option>
+<option>Cheque payment</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="pt-3 border-t border-outline-variant/40 flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-xl text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" onclick="closeModal('add-entry')" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2.5 rounded-xl bg-primary-container hover:bg-primary text-surface-container-lowest font-label-lg shadow-sm transition-all" type="submit">
+            Save Entry
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- MODAL 2: CONTEXTUAL RECORD PAYMENT MODAL -->
+<!-- ============================================================== -->
+<div class="fixed inset-0 z-50 bg-tertiary/60 backdrop-blur-xs hidden flex items-center justify-center p-4" id="modal-record-payment">
+<div class="bg-surface-container-lowest rounded-2xl border border-outline-variant max-w-md w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+<!-- Modal Header -->
+<div class="px-6 py-5 border-b border-outline-variant/50 flex items-center justify-between">
+<div>
+<h2 class="text-headline-sm font-headline-sm text-primary font-semibold">Record a Payment</h2>
+<p class="text-body-sm text-on-surface-variant">Apply a paid amount against this expense.</p>
+</div>
+<button class="p-1.5 text-outline hover:text-on-surface rounded-lg hover:bg-surface-container transition-colors" onclick="closeModal('record-payment')">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Pre-filled Read-only details -->
+<div class="p-6 space-y-4">
+<div class="p-3.5 bg-surface-container-low rounded-xl border border-outline-variant/50 space-y-1.5">
+<div class="text-xs text-outline font-label-sm uppercase">Selected Expense</div>
+<div class="font-semibold text-on-surface text-body-md" id="rec-payment-title">Flower decoration &amp; Muhurtham Mandap Arch</div>
+<div class="flex items-center justify-between text-xs text-on-surface-variant pt-1">
+<span>Vendor: <strong class="text-on-surface" id="rec-payment-vendor">Vrindavan Floral</strong></span>
+<span class="text-secondary font-bold">Remaining: <span id="rec-payment-remaining">₹1,00,000</span></span>
+</div>
+</div>
+<!-- Input for payment amount -->
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface font-semibold mb-1">Amount paying now (₹)</label>
+<div class="relative">
+<span class="absolute left-3.5 top-2.5 text-outline font-semibold">₹</span>
+<input class="w-full rounded-xl border border-outline-variant pl-8 pr-3.5 py-2.5 text-body-md text-on-surface font-semibold focus:border-primary focus:ring-2 focus:ring-primary/20" id="rec-amount-input" type="text" value="1,00,000"/>
+</div>
+<p class="text-xs text-outline mt-1">You can pay partially or clear the remaining balance.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div>
+<label class="block text-label-sm text-on-surface font-semibold mb-1">Payment Date</label>
+<input class="w-full rounded-xl border border-outline-variant px-3 py-2 text-body-md text-on-surface" type="date" value="2027-02-14"/>
+</div>
+<div>
+<label class="block text-label-sm text-on-surface font-semibold mb-1">Payment Method</label>
+<select class="w-full rounded-xl border border-outline-variant px-3 py-2 text-body-md text-on-surface bg-surface-container-lowest">
+<option>Bank NEFT / RTGS</option>
+<option>UPI / GPay / PhonePe</option>
+<option>Cash</option>
+<option>Cheque</option>
+</select>
+</div>
+</div>
+<!-- Notes / Ref -->
+<div>
+<label class="block text-label-sm text-on-surface font-semibold mb-1">Reference note / Cheque # (Optional)</label>
+<input class="w-full rounded-xl border border-outline-variant px-3.5 py-2 text-body-md text-on-surface" placeholder="e.g. UTR #9920194 or handed by Uncle Ramesh" type="text"/>
+</div>
+<!-- Actions -->
+<div class="pt-4 border-t border-outline-variant/40 flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-xl text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" onclick="closeModal('record-payment')" type="button">
+            Cancel
+          </button>
+<button class="px-5 py-2.5 rounded-xl bg-primary-container hover:bg-primary text-surface-container-lowest font-label-lg shadow-sm transition-all" onclick="confirmPaymentRecorded()" type="button">
+            Confirm Payment
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Toast Notification Container -->
+<div class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 transition-opacity duration-200 opacity-0 pointer-events-none text-body-sm" id="toast">
+<span class="material-symbols-outlined text-primary-fixed" data-icon="check_circle">check_circle</span>
+<span id="toast-text">Action completed successfully.</span>
+</div>
+<!-- JAVASCRIPT MICRO-INTERACTIONS & STATE LOGIC -->
+<script>
+    let currentTab = 'expenses';
+    let currentPreviewMode = 'populated';
+
+    function setPreviewState(mode) {
+      currentPreviewMode = mode;
+      
+      // Update switcher buttons
+      document.querySelectorAll('#btn-state-populated, #btn-state-empty-expenses, #btn-state-empty-payments').forEach(btn => {
+        btn.classList.remove('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-xs');
+        btn.classList.add('text-surface-variant');
+      });
+
+      const activeBtn = document.getElementById(`btn-state-${mode}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-xs');
+        activeBtn.classList.remove('text-surface-variant');
+      }
+
+      if (mode === 'populated') {
+        showPopulatedViews();
+      } else if (mode === 'empty-expenses') {
+        switchViewTab('expenses');
+        document.getElementById('expenses-populated').classList.add('hidden');
+        document.getElementById('expenses-empty').classList.remove('hidden');
+        document.getElementById('payments-populated').classList.remove('hidden');
+        document.getElementById('payments-empty').classList.add('hidden');
+      } else if (mode === 'empty-payments') {
+        switchViewTab('payments');
+        document.getElementById('payments-populated').classList.add('hidden');
+        document.getElementById('payments-empty').classList.remove('hidden');
+        document.getElementById('expenses-populated').classList.remove('hidden');
+        document.getElementById('expenses-empty').classList.add('hidden');
+      }
+    }
+
+    function showPopulatedViews() {
+      document.getElementById('expenses-populated').classList.remove('hidden');
+      document.getElementById('expenses-empty').classList.add('hidden');
+      document.getElementById('payments-populated').classList.remove('hidden');
+      document.getElementById('payments-empty').classList.add('hidden');
+    }
+
+    function switchViewTab(tab) {
+      currentTab = tab;
+      const expensesContainer = document.getElementById('expenses-view-container');
+      const paymentsContainer = document.getElementById('payments-view-container');
+      const tabExpensesBtn = document.getElementById('tab-expenses-btn');
+      const tabPaymentsBtn = document.getElementById('tab-payments-btn');
+
+      if (tab === 'expenses') {
+        expensesContainer.classList.remove('hidden');
+        paymentsContainer.classList.add('hidden');
+        tabExpensesBtn.className = "px-4 py-1.5 text-label-md rounded-lg font-semibold bg-surface-container-lowest text-primary shadow-xs transition-all duration-150";
+        tabPaymentsBtn.className = "px-4 py-1.5 text-label-md rounded-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all duration-150";
+      } else {
+        expensesContainer.classList.add('hidden');
+        paymentsContainer.classList.remove('hidden');
+        tabPaymentsBtn.className = "px-4 py-1.5 text-label-md rounded-lg font-semibold bg-surface-container-lowest text-primary shadow-xs transition-all duration-150";
+        tabExpensesBtn.className = "px-4 py-1.5 text-label-md rounded-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all duration-150";
+      }
+    }
+
+    function toggleVendorDrawer() {
+      const drawer = document.getElementById('vendor-snapshot-drawer');
+      const arrow = document.getElementById('drawer-arrow');
+      drawer.classList.toggle('hidden');
+      if (drawer.classList.contains('hidden')) {
+        arrow.style.transform = 'rotate(0deg)';
+      } else {
+        arrow.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    function openModal(id) {
+      document.getElementById(`modal-${id}`).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(`modal-${id}`).classList.add('hidden');
+    }
+
+    function toggleEntryType(type) {
+      const paidFields = document.getElementById('already-paid-fields');
+      if (type === 'already_paid') {
+        paidFields.classList.remove('hidden');
+      } else {
+        paidFields.classList.add('hidden');
+      }
+    }
+
+    function openRecordPaymentModal(title, vendor, remaining) {
+      document.getElementById('rec-payment-title').innerText = title;
+      document.getElementById('rec-payment-vendor').innerText = vendor;
+      document.getElementById('rec-payment-remaining').innerText = '₹' + remaining;
+      document.getElementById('rec-amount-input').value = remaining;
+      openModal('record-payment');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      closeModal('add-entry');
+      showToast("Entry recorded successfully.");
+      setPreviewState('populated');
+    }
+
+    function confirmPaymentRecorded() {
+      closeModal('record-payment');
+      showToast("Payment recorded and ledger balances updated.");
+    }
+
+    function confirmRemove(item) {
+      if (confirm(`Remove "${item}" from records?`)) {
+        showToast(`Removed "${item}".`);
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      toastText.innerText = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+  </script>
+</body></html>

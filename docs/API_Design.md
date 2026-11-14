@@ -1,5 +1,54 @@
 # MAKE MY EVENT
 
+**14 November 2026 approved redesign:** Task writes require assigneeUserId, optional vendorId, bounded mentions and creationKey; vendor ownership is rejected. Lists accept validated server-side q/mine/assignee/function/status/priority filters with cursors and accurate counts. GET /operations?view=context and /operations?view=choices provide lightweight scoped context and searched choices. GET /finance/expenses, /finance/payments, /finance/summary and explicit /finance/vendor-balances; POST /finance/expenses and /finance/payments; POST /finance/{expenses|payments}/{id}/correct preserve history with reason/revision. Source-aware legacy rows are readable; new expense obligations/payment events do not double count existing records. Vendor function-assignment endpoints return 404. Notifications distinguish assignment, task mention and comment mention, combine same-save recipients and preserve unread/history behavior. See [implementation plan](OPERATIONS_REDESIGN_PLAN.md).
+
+**14 November 2026 product decision:** Vendors have no application access: no portal, private URLs, capability sessions, self-service task completion or vendor/photographer uploads. Administrators and organizers maintain vendor contacts, responsibilities, task status, charges and payments internally. Guest invitation access is unchanged. Google Places discovery remains deferred. Any earlier design exports or historical test notes describing vendor access are superseded.
+
+
+**Phase 2 amendment — 13 November 2026:** Vendor discovery endpoints below are deferred and must not be enabled. In-app mention notifications are selected-wedding management resources: `GET /notifications?view=unread|all`, `PATCH /notifications/{id}` with `{read:boolean}`, `POST /notifications/read-all`. Return recipient-only rows with actor, timestamp, task/comment context and unread count; paginate bounded history. Only active selected-wedding members can access their own notifications. Mutations require CSRF. Comments atomically notify unique active mentioned members except the author. See [delivery plan](PHASE_2_OPERATIONS_PLAN.md).
+
+### Organizer redesign contracts — 14 November 2026
+
+These contracts supersede older operations tables below. All paths use `/api/v1`, no-store, exact selected X-Wedding-Id and active membership. Mutations also require CSRF and the persisted management quota. Implementation is verified locally and awaiting user review; see PROJECT_STATUS.md for actual evidence and coverage limits.
+
+| Route | Contract |
+| --- | --- |
+| `GET /operations` or `?view=dashboard` | `{title,displayName,timeZone,summary:{open,overdue,mine,activeVendors,actualPaid,outstanding}}`; count/aggregate reads, no directory/choice/ledger arrays. Wedding root is Dashboard; `/weddings/{id}/dashboard` redirects to it. |
+| `GET /operations?view=context` | Only userId, role, title, timeZone and displayName. |
+| `GET /operations?view=choices&type=people\|vendors\|functions&q=&cursor=` | Searched active choices, items `{id,name}`, 50 rows and nextCursor. Cursor for people is the membership row; value ID is the user. Escaped literal search, not caller-supplied regex. |
+| `GET /tasks?q=&owner=&function=&priority=&status=&mine=true&scope=open\|overdue\|mine&cursor=` | Filters run before 50-row `_id` pagination and full-result total/statusCounts. Scope mine means my open tasks; mine=true and owner filters can include completed, and combined filters intersect. Lists resolve bounded owner/function/vendor labels and ownerActive. |
+| `POST /tasks`; `PATCH /tasks/{id}` | title, description, weddingTimeZone, functionId or null, assigneeType USER, required assigneeUserId, assigneeVendorId null, optional vendorId, status, priority, dueAt/null, bounded mentions `{userId,field,start,end}` and UUID creationKey. PATCH additionally revision. Active human owner; vendor is context. Same-save assignment/new mentions combine per recipient; replay does not duplicate task/notifications. |
+| `POST /tasks/{id}/comments`; `PATCH /tasks/{id}/comments/{commentId}` | Existing body/mentionedUserIds plus bounded mentionRanges `{userId,start,end}` for inline editing. Create uses creationKey; edit uses revision. Legacy comments/mentions remain readable. |
+| `POST /vendors`; `PATCH /vendors/{id}` | name, category, phones (1..5), internalNotes, status and required controlled color; revision on edit. No email or function assignments. `POST /vendors/{id}/assignments` returns 404. Missing legacy color reads neutral. |
+| `GET /finance/expenses`, `/finance/payments` | Source-aware ledger items, source/id key cursor, total, q search; expenses `open=true` limits to active remaining balances for payment selection; expenseId/expenseSource filters provide an exact scoped balance refresh. DTOs include amounts, payment/remaining balance where relevant, vendor label and correction history. Legacy paid expenses produce one virtual payment each. |
+| `GET /finance/summary` | `{actualPaid,outstanding}` in integer INR paise across both compatible legacy and new records. |
+| `GET /finance/vendor-balances?cursor=` | Explicit on-demand only, 50 vendor groups `{id,name,paidPaise,outstandingPaise}` and nextCursor. |
+| `POST /finance/expenses` | description/category, positive integer amountPaise (maximum 10,000,000,000), currency INR, optional vendorId/null, notes, creationKey. Creates modelVersion 2 obligation. |
+| `POST /finance/payments` | expenseId, expenseSource expenses/vendorCharges, amountPaise, currency INR, paidAt ISO, paymentMethod, notes, weddingTimeZone and creationKey. Server derives vendor from same-wedding expense and checks combined old/new posted payments under lock. |
+| `POST /finance/{expenses\|payments}/{id}/correct` | source, revision, reason and creationKey. Keeps original/correction metadata; payments must be corrected before the cost. Source must match resource type. |
+
+Notification rows distinguish task assignment/new mentions and existing comment mentions. A task event returns commentId null and links to the task; comment events link to their comment. Recipient-only read/unread/history contracts remain. Removed targets expose no body preview. Errors include 409 STALE_REVISION, STALE_WEDDING_SCHEDULE, IDEMPOTENCY_CONFLICT, OVERPAYMENT and EXPENSE_HAS_PAYMENTS; malformed inputs are 422, invalid list parameters 400. Legacy finance POST/void routes remain compatible but count new payments in their balance checks and reject migrated source rows.
+
+### Earlier Phase 2 compatibility routes (superseded UI)
+
+All paths below are under `/api/v1`, no-store. Management requests require X-Wedding-Id; mutations also require CSRF and the existing persisted management quota. Collection lists use `data.items`, `nextCursor` and 50-row `_id` cursors. Unknown/foreign records fail safely. The older route tables below remain the wider baseline; the 14 November redesign contracts above take precedence.
+
+| Route | Delivered behavior |
+| --- | --- |
+| `GET /operations` | Compact Dashboard counts and real paid/outstanding totals; context/choices use the explicit view parameters above. |
+| `GET, POST /tasks`; `GET, PATCH, DELETE /tasks/{id}` | Shared tasks, full allowlisted edits with revision, soft deletion returning 200 `{deleted:true}`. Task mutations include `weddingTimeZone` precondition, ISO deadline or null, matching assignee reference and optional function. An unchanged existing archived-function link is preserved; new/changed function links must be active and same-wedding. Preparation deadlines may precede wedding dates. |
+| `GET /tasks/{id}?cursor=&commentId=` | Task and paged newest comments; optional highlighted comment is resolved within that task even outside the first page. |
+| `POST /tasks/{id}/comments` | Plain text, explicit mentionedUserIds and UUID creationKey; atomic deduplicated in-app notifications, no self-alert. |
+| `PATCH, DELETE /tasks/{id}/comments/{commentId}` | Revision required. Author can edit own body/mentions; author or wedding admin may soft-delete. Existing recipient/comment notification pairs never duplicate on edits. Deleted comments are not exposed through task responses. |
+| `GET, POST /vendors`; `GET, PATCH /vendors/{id}` | Manual contacts/notes/category and ACTIVE/INACTIVE status with revision. Inactive vendors keep history but cannot be newly assigned be assigned new responsibilities. |
+| `POST /vendors/{id}/assignments` | Function, bounded responsibility lines and ACTIVE/COMPLETED/CANCELLED status; replaces the vendor/function responsibility list. |
+| `GET, POST /expenses`, `/vendor-charges`, `/vendor-payments` | Posted expense, active agreed charge, posted partial payment respectively. Create requires UUID creationKey and integer amountPaise/currency INR; financial retry returns the same DTO, changed payload with same key is 409. |
+| `POST /expenses/{id}/void`, `/vendor-charges/{id}/void`, `/vendor-payments/{id}/void` | Revision and reason; retain original record, audit correction. Charges with posted payments cannot be voided. No direct payment rewriting or gateway. |
+| `GET /notifications?view=unread\|all&cursor=` | Intended recipient only; unread default; unreadCount, actorName, date/time and task/comment IDs. Deleted targets are unavailable. |
+| `PATCH /notifications/{id}`, `POST /notifications/read-all` | Mark read/unread or mark currently unread as read; recipient checked transactionally. |
+
+Errors include 409 STALE_REVISION, STALE_WEDDING_SCHEDULE, IDEMPOTENCY_CONFLICT, PAYMENT_EXCEEDS_CHARGE and CHARGE_HAS_PAYMENTS; invalid references/mentions are 422. Bell refresh is triggered by coalesced selected-wedding API activity and focus; full inbox has manual refresh, without recurring polling. No sockets, push/email notification delivery or discovery endpoints are added.
+
 ## REST API Design & Contract Specification — Version 1.0
 
 **Status:** Reconciled implementation baseline; operational defaults still require phase-specific decisions
@@ -10,7 +59,7 @@
 **Intended initial load:** ~200 guest recipients per wedding; multiple isolated wedding tenants  
 **API base:** `/api/v1` (HTTPS; same-origin browser clients)
 
-> **Contract principle:** A client may identify its desired wedding, but an ID alone never authorizes access. The server validates the exact active management membership or scoped guest/vendor capability before deriving `weddingId`, role and permitted resources. One wedding remains one isolated tenant, even when an account belongs to several weddings.
+> **Contract principle:** A client may identify its desired wedding, but an ID alone never authorizes access. The server validates the exact active management membership or scoped guest capability before deriving `weddingId`, role and permitted resources. One wedding remains one isolated tenant, even when an account belongs to several weddings.
 
 **12 November 2026 implementation amendment:** Multiple wedding memberships, explicit per-tab wedding context and admin-revealed/manual invitation codes supersede the former one-wedding/email-only contracts. These account, wedding-context and management-invitation contracts are implemented; other feature sections retain their future-phase scope. See [the full migration/delivery plan](MULTI_WEDDING_AND_INVITATION_CODES_PLAN.md).
 
@@ -33,7 +82,7 @@
 | ---------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Multi-tenancy    | Multiple wedding memberships with independent roles                           | Explicit wedding candidate validated against exact active membership | Unique wedding/user pair; non-unique account membership listing      | Tenant-owned management requests require X-Wedding-Id; no first-membership fallback     |
 | Management       | Multiple admins/organizers share the same wedding data; admin-only membership | Custom password/session auth                                         | `users`, `authSessions`, `weddingMemberships`, `membershipInvites`   | Cookie management session; admin-only membership mutations                              |
-| Guests & vendors | No accounts; individually revocable private URLs                              | Token exchange to cookie-scoped portal session                       | `accessLinks`, `portalSessions`                                      | Token entry via web pages; guest/vendor REST endpoints require their portal cookies     |
+| Guests | No accounts; individually revocable private URLs                              | Token exchange to cookie-scoped portal session                       | `accessLinks`, `portalSessions`                                      | Token entry via web pages; guest REST endpoints require their portal cookies     |
 | RSVP             | One status/count per guest/function, limits and deadlines                     | Authorized conditional mutation                                      | Unique `functionInvitations`, `revision`                             | Versioned RSVP update with server deadline/limit checks                                 |
 | Finance          | Expense tracker, not budgets; paid and agreed amounts separate                | Avoid double counting and race conditions                            | `expenses`, `vendorCharges`, `vendorPayments`                        | Immutable posted-payment history via void/correction; derived totals                    |
 | Vendors          | Manual directory and Places discovery, no booking                             | Server-side Places proxy, cost controls                              | Persistent `googlePlaceId` only for Google-derived listing reference | Search endpoints with cost caps; manual vendor save independent of Google listing cache |
@@ -98,7 +147,7 @@
 - Use `Idempotency-Key` (UUID or 16–128 ASCII chars) for all **creation of payments**, bulk email requests, first-admin wedding setup, and other critical non-idempotent operations. Keys are scoped to the principal + operation + wedding, persisted in `idempotencyRecords`, and a reused key with different request body returns `409`.
 - For optimistic edits use `revision`/`If-Match` where the domain supports it, notably RSVPs; return current safe state on a legitimate conflict to support UI refresh.
 - Soft-deletion and finance corrections are explicit operations; no arbitrary client `$set` into Mongoose models.
-- Every unsafe cookie-authenticated request requires an allowed `Origin` and a CSRF protection mechanism (including guest/vendor capability sessions). `SameSite` alone is not enough.
+- Every unsafe cookie-authenticated request requires an allowed `Origin` and a CSRF protection mechanism (including guest capability sessions). `SameSite` alone is not enough.
 
 ## 3. Identity boundaries and security classes
 
@@ -108,27 +157,26 @@
 | Management `ADMIN`     | Valid `__Host-mme_session` + ACTIVE membership                       | Same-wedding operations plus membership management                                                | Cannot remove final ACTIVE admin                 |
 | Management `ORGANIZER` | Same session + ACTIVE membership                                     | Same-wedding operational data and settings                                                        | Cannot create/remove/promote members             |
 | Guest capability       | Valid `__Host-mme_guest` scoped cookie linked to ACTIVE guest link   | That guest's invited functions, RSVPs, photos and livestream                                      | Cannot see uninvited functions or admin data     |
-| Vendor capability      | Valid `__Host-mme_vendor` scoped cookie linked to ACTIVE vendor link | Own assignments, payments and task completion; scoped photographer uploads                        | No other vendor details or financial edits       |
 | Cron/internal service  | Bearer `CRON_SECRET`                                                 | Daily work exclusively                                                                            | No direct user-management APIs                   |
 | Resend webhook         | Verified provider signature, if enabled                              | Delivery event updates only                                                                       | Never trusts event without signature/idempotency |
 
 **Management registration without email verification:** An account's email never independently authorizes joining. A recipient-bound admin-issued code delivered manually or by email proves invitation possession; manual delivery is not mailbox verification. Safe password recovery still requires mailbox control or a documented controlled recovery process.
 
-**Private-link entry:** `/invite/{rawToken}` and `/vendor/{rawToken}` are **web entry routes**, not JSON API resources. Validate lookup hash and link state, set limited `HttpOnly`, `Secure`, `SameSite=Lax` cookie, and redirect to a secret-free guest/vendor URL. Initial GET must not RSVP, complete tasks, consume a one-time invitation, or trigger email sending. Revoke/rotate invalidates all existing portal sessions through per-request link-state verification. Use `Referrer-Policy: no-referrer`; disable analytics/prefetch on entry pages. Do not return bearer tokens in guest/vendor JSON.
+**Private-link entry:** `/invite/{rawToken}` is **web entry routes**, not JSON API resources. Validate lookup hash and link state, set limited `HttpOnly`, `Secure`, `SameSite=Lax` cookie, and redirect to a secret-free guest URL. Initial GET must not RSVP, consume a one-time invitation, or trigger email sending. Revoke/rotate invalidates all existing portal sessions through per-request link-state verification. Use `Referrer-Policy: no-referrer`; disable analytics/prefetch on entry pages. Do not return bearer tokens in guest JSON.
 
 ### 3.1 Route authorization checks (mandatory sequence)
 
 1. Validate HTTP method, body size, request origin/CSRF, and coarse rate limit.
 2. Authenticate management session or portal capability, or authenticate `CRON_SECRET` for the internal job.
-3. Resolve tenant server-side: for management, validate the explicit X-Wedding-Id candidate against that exact active wedding/membership; for guest/vendor, derive it from the capability record. Resolve only that membership's role and subject; never choose the first membership.
+3. Resolve tenant server-side: for management, validate the explicit X-Wedding-Id candidate against that exact active wedding/membership; for guest, derive it from the capability record. Resolve only that membership's role and subject; never choose the first membership.
 4. Parse/validate user input via Zod and check fine-grained quotas.
-5. Fetch target resource by `{ _id, weddingId }`; for guest/vendor operations also check required invitation/assignment relationship within that tenant.
+5. Fetch target resource by `{ _id, weddingId }`; for guest operations also check required invitation/assignment relationship within that tenant.
 6. Apply business rules (deadline, count, vendor payment guard, photo quota, etc.) in service layer; use transaction/conditional update when needed.
 7. Record safe audit event for high-impact changes and return a safe DTO.
 
 ## 4. Management authentication, wedding membership and settings endpoints
 
-**Legend:** `P` = public; `M` = any active wedding manager (admin or organizer); `A` = administrator only; `G` = guest capability; `V` = vendor capability; `I` = internal cron/webhook. All paths in the tables are relative to `/api/v1`, unless explicitly marked otherwise.
+**Legend:** `P` = public; `M` = any active wedding manager (admin or organizer); `A` = administrator only; `G` = guest capability; `I` = internal cron/webhook. All paths in the tables are relative to `/api/v1`, unless explicitly marked otherwise.
 
 ### 4.1 Authentication and management membership
 
@@ -166,7 +214,7 @@ Redemption accepts `{email,code}` after sign-in/CSRF, independently of any selec
 
 Browser account navigation: `/`, `/sign-in` and `/register` read the session at request time. All valid sessions visiting account forms and fresh authentication successes go to `/weddings`, including zero/one/many states. Signed-in homepage actions say Your weddings. Preserve fresh navigation to discard prefetched signed-out pages. Scoped UI uses `/weddings/{weddingId}/...`, with dirty-draft protection when switching. Legacy unscoped management routes go to the selector; legacy setup/join entries go to `/weddings/new` and `/weddings/join`.
 
-**Mandatory management context:** Existing tenant-owned API routes require X-Wedding-Id, even when the account has only one membership. Validate that exact ACTIVE wedding/membership and derive its role server-side; return 400 WEDDING_CONTEXT_REQUIRED for missing context, 400 malformed context, or indistinguishable 404 for nonexistent/foreign/removed context. Never fall back to the first membership. Auth, GET/POST /weddings and redemption are context-free exceptions; guest/vendor capabilities stay independent. GET /wedding returns the selected wedding plus safe membership ID/role/revision. All frontend queries, caches, requests, drafts and retries include the tab URL's wedding context; late responses cannot overwrite another context.
+**Mandatory management context:** Existing tenant-owned API routes require X-Wedding-Id, even when the account has only one membership. Validate that exact ACTIVE wedding/membership and derive its role server-side; return 400 WEDDING_CONTEXT_REQUIRED for missing context, 400 malformed context, or indistinguishable 404 for nonexistent/foreign/removed context. Never fall back to the first membership. Auth, GET/POST /weddings and redemption are context-free exceptions; guest capabilities stay independent. GET /wedding returns the selected wedding plus safe membership ID/role/revision. All frontend queries, caches, requests, drafts and retries include the tab URL's wedding context; late responses cannot overwrite another context.
 
 ### 4.2 Wedding profile and settings
 
@@ -220,7 +268,7 @@ Function POST/PATCH also requires `color`, chosen from `forest`, `copper`, `mari
 | `PATCH /tasks/{taskId}/comments/{commentId}`  | M      | Edit comment content under a defined comment-edit policy                                                | `200` comment |
 | `DELETE /tasks/{taskId}/comments/{commentId}` | M      | Soft-delete comment                                                                                     | `204`         |
 
-**Task invariants:** `assigneeType` is `USER`, `VENDOR`, or `UNASSIGNED`; exactly the matching reference field must be present. Client cannot set `completedAt` arbitrarily. All managers in the wedding can see all tasks, including assignments created by someone else. Vendor completion uses a narrower portal endpoint below.
+**Task invariants:** `assigneeType` is `USER`, `VENDOR`, or `UNASSIGNED`; exactly the matching reference field must be present. Client cannot set `completedAt` arbitrarily. All managers in the wedding can see all tasks, including assignments created by someone else. Only managers update task status, including tasks assigned to a vendor.
 
 ## 7. Financial REST endpoints — expense tracker, not budgeting
 
@@ -254,14 +302,11 @@ The API distinguishes **standalone posted expenses** from **vendor agreed charge
 | `POST /vendors`                             | M      | Organizer-entered vendor name, phones, category, notes, optional `googlePlaceId`; no Google result cache | `201` vendor                         |
 | `GET /vendors/{vendorId}`                   | M      | Internal contact and responsibility detail                                                               | `200` vendor                         |
 | `PATCH /vendors/{vendorId}`                 | M      | Edit independently maintained vendor data                                                                | `200` vendor                         |
-| `POST /vendors/{vendorId}/deactivate`       | M      | Disable vendor and revoke portal access; retain payment history                                          | `200` vendor                         |
+| `POST /vendors/{vendorId}/deactivate`       | M      | Deactivate internal vendor; retain payment and responsibility history                                          | `200` vendor                         |
 | `GET /vendors/{vendorId}/assignments`       | M      | Function assignments and responsibilities                                                                | `200` list                           |
 | `POST /vendors/{vendorId}/assignments`      | M      | `functionId`, `responsibilities[]`, window/notes; unique per vendor-function                             | `201` assignment                     |
 | `PATCH /vendor-assignments/{assignmentId}`  | M      | Update responsibilities and assignment status                                                            | `200` assignment                     |
 | `DELETE /vendor-assignments/{assignmentId}` | M      | Cancel/disable assignment; dependent task access reflects updated scope                                  | `204`                                |
-| `POST /vendors/{vendorId}/links`            | M      | Issue active private vendor link if absent; return raw URL **only to authorized manager**                | `201` link                           |
-| `POST /vendors/{vendorId}/links/rotate`     | M      | Revoke old link and sessions, issue new link atomically                                                  | `201` replacement URL                |
-| `DELETE /vendors/{vendorId}/links`          | M      | Revoke vendor link and associated capability sessions                                                    | `204`                                |
 | `POST /vendor-discovery/nearby`             | M      | Search with `latitude`, `longitude`, `radiusMeters`, supported `category`, `pageSize`                    | `200` attributed live Places results |
 | `POST /vendor-discovery/text`               | M      | `query`, location center/radius or bias, bounded result count                                            | `200` attributed live Places results |
 
@@ -337,20 +382,9 @@ These routes use a guest cookie; **they never receive a raw private link token, 
 
 **Deadline consistency:** Every RSVP write checks the current effective deadline server-side; the same rule drives reminder eligibility. There is no confirmation email requirement for an RSVP in v1.
 
-## 10. Vendor capability portal API
+## 10. Vendor access removed
 
-These routes use a **vendor capability cookie**. A photographer uses the same vendor identity with a function-scoped upload permission.
-
-| Method & path                          | Access | Response / action                                                                        |
-| -------------------------------------- | ------ | ---------------------------------------------------------------------------------------- |
-| `GET /vendor/me`                       | V      | Own vendor name/category, permitted function summaries and own agreed/paid/due figures   |
-| `GET /vendor/functions`                | V      | Functions for this vendor's ACTIVE assignments only                                      |
-| `GET /vendor/tasks`                    | V      | Own assigned tasks; no organizer comments or unrelated tasks                             |
-| `POST /vendor/tasks/{taskId}/complete` | V      | Only task `assigneeVendorId` equals portal vendor; sets COMPLETED idempotently           |
-| `GET /vendor/charges`                  | V      | Own ACTIVE charges and corresponding POSTED payment sums, never another vendor's numbers |
-| `GET /vendor/payments`                 | V      | Own payment history, no unrelated financial fields                                       |
-
-**Vendor task completion:** Repeated completion is idempotent (`200` with current COMPLETED status). Vendor cannot change priority, due date, task description, assignee, or payment records. A photographer's upload authorization additionally checks ACTIVE vendor assignment for the selected function.
+No vendor portal, capability cookie, exchange, private-link or completion endpoints are supported. Managers maintain vendor records and task status. Former `/vendor` and `/api/v1/vendor/...` routes return 404, as do vendor link/access routes.
 
 ## 11. Email invitation, reminder and job APIs
 
@@ -403,7 +437,7 @@ The image workflow uses **private R2, client-side compression, signed direct PUT
 
 | Method & path                     | Access                                               | Request / behavior                                                                                     | Success                                                  |
 | --------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------- |
-| `POST /media/upload-intents`      | M/G/V-photographer                                   | `functionId`, declared `mimeType`, `sizeBytes`, `fileName?`; enforce source-specific eligibility/quota | `201` `{photoId, uploadUrl, requiredHeaders, expiresAt}` |
+| `POST /media/upload-intents`      | M/G                                   | `functionId`, declared `mimeType`, `sizeBytes`, `fileName?`; enforce source-specific eligibility/quota | `201` `{photoId, uploadUrl, requiredHeaders, expiresAt}` |
 | `POST /media/{photoId}/finalize`  | Original authorized uploader, or M                   | Verify exact R2 object exists and matches expected key/size/file signature/dimensions; mark READY      | `200` safe photo DTO                                     |
 | `GET /media`                      | M                                                    | Paginated photo metadata, `functionId`, `uploadState` filters                                          | `200` page                                               |
 | `GET /media/{photoId}`            | M or eligible G/V, when allowed                      | Metadata only; READY and function scope enforced                                                       | `200` photo                                              |
@@ -411,7 +445,6 @@ The image workflow uses **private R2, client-side compression, signed direct PUT
 | `DELETE /media/{photoId}`         | M                                                    | Soft-delete DB metadata and schedule actual object removal                                             | `204`                                                    |
 | `PATCH /media/{photoId}/function` | M                                                    | `functionId`; validate same-wedding function; instantly change gallery eligibility                     | `200` photo                                              |
 | `GET /guest/photos`               | G                                                    | See eligible READY photos only, with cursor and function filter                                        | `200` page                                               |
-| `GET /vendor/photos`              | V-photographer only                                  | Own authorized upload metadata, not general guest galleries                                            | `200` page                                               |
 
 **Intent request:**
 
@@ -442,7 +475,7 @@ The documented URL is illustrative, never an actual credential. The browser uses
 
 **Security/privacy trade-off:** A 30–60-second signed GET is itself a bearer URL and can outlive an organizer's photo delete/reassignment for that brief period. Cache-control `no-store` and short expiries reduce exposure. The bucket must not be public and private photo objects must not be automatically cached on a public CDN. The backend never uses storage-key folder names as authorization evidence; only the current `photos.functionId` and invitation relation count.
 
-**Uploader authorization:** Management = any wedding manager; guest = only active function invitation with `uploadAllowed=true`; photographer = vendor capability with ACTIVE vendor assignment to function and photo-upload permission. A vendor without photographer permission cannot use upload intents.
+**Uploader authorization:** Management = any wedding manager; guest = only active function invitation with `uploadAllowed=true`. Vendors, including photographers, have no upload capability.
 
 ## 13. Internal, operational, audit and lifecycle endpoints
 
@@ -482,7 +515,7 @@ Cross-document refs are checked in service/repository layers, not only by Zod. R
 
 | Stable code                                 | When returned                                                          | Expected UI behavior                                                              |
 | ------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `AUTH_REQUIRED` / `SESSION_EXPIRED`         | No valid management or portal cookie                                   | Show sign-in for manager; show invalid-link guidance for guest/vendor             |
+| `AUTH_REQUIRED` / `SESSION_EXPIRED`         | No valid management or portal cookie                                   | Show sign-in for manager; show invalid-link guidance for guest             |
 | `CSRF_INVALID`                              | Missing/wrong CSRF or origin                                           | Refresh security token / repeat safely                                            |
 | `PERMISSION_DENIED`                         | Role lacks action                                                      | Hide forbidden control; show concise explanation                                  |
 | `RESOURCE_NOT_FOUND`                        | Absent or not within scope                                             | Do not leak cross-tenant existence                                                |
@@ -522,7 +555,7 @@ Implement distributed (MongoDB-backed) counters in `rateLimitWindows`, not an in
 | -------------------------- | ---------------------------------------------------------------------------------------------- |
 | Signup/login               | Per IP and normalized email, progressive throttling after failures                             |
 | Password reset             | Per IP and target identity; generic response                                                   |
-| Guest/vendor link exchange | Per IP and token fingerprint; avoid open enumeration                                           |
+| Guest link exchange | Per IP and token fingerprint; avoid open enumeration                                           |
 | Guest RSVP                 | Example 12 mutations per link/hour; `revision` protects lost updates                           |
 | Vendor completion          | Low per-link mutation cap, completion is idempotent                                            |
 | Photo intent               | Per-link and per-wedding upload count, size, and byte quota                                    |
@@ -559,11 +592,11 @@ If a quota reservation itself fails because MongoDB is unavailable, fail closed 
 2. Manager creates their own vendor record, optionally referencing Google `placeId` (no permanent listing cache).
 3. Manager assigns vendor to function, creates task and agreed charge.
 4. Manager records partial payment using transaction/idempotency guard; actual paid total updates, due amount decreases.
-5. Vendor opens private link and marks its own assigned task complete; cannot edit financial data.
+5. Manager updates vendor-assigned task status. Vendor access and link-generation endpoints are unavailable.
 
 ### 16.4 Photo upload → immediate gallery
 
-1. Guest or authorized photographer requests upload intent for an eligible function.
+1. Guest or authorized manager requests upload intent for an eligible function.
 2. API reserves quota and creates `photos.uploadState=INITIATED`; issues very short private R2 presigned PUT.
 3. Browser uploads compressed photo directly to R2.
 4. Finalize verifies object and changes state `VALIDATING → READY`; it appears immediately, without human approval.
@@ -593,7 +626,7 @@ If a quota reservation itself fails because MongoDB is unavailable, fail closed 
 - **Authentication:** no signup email verification gate, generic login errors, Argon2id password storage, cookie flags, CSRF, password reset, login throttling.
 - **Tenancy:** Wedding A IDs submitted by Wedding B manager always yield 404 and never mutate data; list filters cannot bypass scope.
 - **Membership:** concurrent first-wedding creation, concurrent join invitations, self/last-admin removal, role elevation attempt by organizer.
-- **Guest/vendor capabilities:** URL guessing/rate controls; revoked link stops new and existing sessions; guest sees invited only; vendor sees self only.
+- **Guest capabilities:** URL guessing/rate controls; revoked link stops new and existing sessions; guest sees invited functions only.
 - **RSVP:** count lower/upper bounds, expired deadline, same request repeated, revision conflicts, organizer override audit, removed function eligibility.
 - **Finance:** sums and no-double-count, concurrent payment cap, void/correction, foreign charge/vendor mismatch, idempotency replay.
 - **Places:** allowed field mask, quotas and Google attribution; no bulk cached Google listing persistence; graceful provider failure.
@@ -606,7 +639,7 @@ If a quota reservation itself fails because MongoDB is unavailable, fail closed 
 | Phase                             | API deliverables                                                                                         | Exit gate                                                         |
 | --------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
 | **P1 Foundation & tenancy**       | Auth, wedding create/profile, member invitations/roles, functions/schedule, settings foundation          | Cross-tenant and last-admin tests pass                            |
-| **P2 Organizer operations**       | Dashboard, tasks/comments, expenses/charges/payments, vendor directory/assignments/access, Places search | Payment consistency and Places quota/vendor scope pass            |
+| **P2 Organizer operations**       | Dashboard, tasks/comments, expenses/charges/payments, manual vendor directory/assignments and in-app notifications | Payment consistency, notifications and management tenant isolation pass            |
 | **P3 Guest experience**           | Guests, function-invitation records, private guest links, guest portal, RSVP, summaries                  | Revoked/uninvited access rejected; count/deadline/revision tested |
 | **P4 Email**                      | Invitation/reminder sends, outbox listing, daily cron, webhook if configured, usage/settings             | Quota/dedupe/failure tests pass                                   |
 | **P5 Photos & visual experience** | R2 intent/finalize/read, gallery, delete/retag; invitation theme settings and livestream fields          | Private media/no approval/authorized guest gallery tests pass     |
@@ -665,3 +698,10 @@ Permanent deletion also returns `409 INVITATION_DELIVERY_IN_PROGRESS` with `Retr
 ### Invitation redemption session fencing — 13 November 2026
 
 Redemption transactionally consumes the exact authenticated, active, unexpired current session before accepting the code or minting a replacement. Password changes and logout write that same row, so a paused request authenticated earlier receives 401 AUTH_REQUIRED after revocation; invitation/membership changes roll back and no replacement cookie is sent. If redemption commits first, a subsequent password change revokes its newly created session. Session rotation is single-use: parallel redemptions sharing one old cookie may require retry with the fresh session, while independently authenticated sessions can join separate weddings concurrently. Other legitimate sessions are not revoked by redemption itself.
+
+## Operations refinement contracts - 14 November 2026
+
+- GET /api/v1/notifications?view=count returns data: { unreadCount: number } only, scoped to the authenticated recipient and validated X-Wedding-Id; it does not load or expose inbox rows.
+- POST /api/v1/finance/paid-expenses takes costInput (description, category, optional vendorId, amountPaise, currency INR, notes, UUID creationKey) plus weddingTimeZone, ISO paidAt and paymentMethod CASH/UPI/BANK/OTHER. It creates one expense and its full payment atomically; response 201 data contains expense and payment DTOs. Tenant/member/vendor/time-zone guards and creation-key replay/conflict rules apply. Invalid input leaves neither record.
+- POST /api/v1/finance/{expenses|payments}/{id}/remove uses the existing source, revision, reason and creationKey body. It marks the entry VOID with retained history. Existing /correct remains a compatibility alias. Removing an expense with posted payments is rejected.
+- Client bell requests are coalesced after successful selected-wedding data API responses (excluding notification endpoints to prevent feedback loops), focus/visibility return and notification mutations. No periodic timer; rapid requests share a count refresh.

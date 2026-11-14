@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event - Tasks &amp; Milestones</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed-dim": "#bdc9c6",
+            "outline": "#707976",
+            "inverse-surface": "#283231",
+            "surface": "#f7f5f0",
+            "on-secondary-fixed": "#321201",
+            "on-secondary": "#ffffff",
+            "surface-container-high": "#dfeae8",
+            "on-primary-fixed": "#00201b",
+            "primary-container": "#28594f",
+            "on-primary-fixed-variant": "#1d4f45",
+            "on-primary-container": "#9bcec1",
+            "on-primary": "#ffffff",
+            "surface-variant": "#dae5e3",
+            "surface-container-lowest": "#ffffff",
+            "background": "#f7f5f0",
+            "secondary-container": "#fdbe9e",
+            "on-surface-variant": "#5a6664",
+            "on-tertiary-fixed": "#121e1c",
+            "tertiary-fixed": "#d8e5e2",
+            "surface-bright": "#f1fcfa",
+            "primary-fixed": "#baeddf",
+            "on-error-container": "#93000a",
+            "secondary-fixed-dim": "#f7b999",
+            "surface-container-low": "#ebf6f4",
+            "on-tertiary": "#ffffff",
+            "outline-variant": "#e6e4dc",
+            "error": "#ba1a1a",
+            "tertiary-container": "#475351",
+            "surface-container-highest": "#dae5e3",
+            "on-background": "#202a29",
+            "secondary-fixed": "#ffdbca",
+            "inverse-on-surface": "#e8f3f1",
+            "primary": "#28594f",
+            "tertiary": "#303c3a",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed-variant": "#3d4947",
+            "primary-fixed-dim": "#9ed1c4",
+            "on-tertiary-container": "#b9c6c3",
+            "surface-tint": "#28594f",
+            "on-secondary-container": "#794b32",
+            "inverse-primary": "#9ed1c4",
+            "secondary": "#b98265",
+            "surface-container": "#f1eee7",
+            "on-surface": "#202a29",
+            "surface-dim": "#d1dcda",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#673c24"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-desktop": "1.5rem",
+            "space-md": "0.75rem",
+            "space-lg": "1.25rem",
+            "gutter": "1rem",
+            "space-xl": "2rem",
+            "margin-desktop": "2rem",
+            "space-sm": "0.5rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "data-mono": ["Manrope"],
+            "label-md": ["Manrope"],
+            "body-md": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "headline-md": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "headline-lg-mobile": ["Newsreader"],
+            "body-sm": ["Manrope"],
+            "headline-sm": ["Newsreader"],
+            "title-md": ["Manrope"],
+            "body-lg": ["Manrope"]
+          },
+          "fontSize": {
+            "data-mono": ["13px", {"lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "label-md": ["13px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "headline-md": ["24px", {"lineHeight": "30px", "fontWeight": "500"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "headline-lg-mobile": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "headline-sm": ["20px", {"lineHeight": "26px", "fontWeight": "500"}],
+            "title-md": ["16px", {"lineHeight": "22px", "fontWeight": "600"}],
+            "body-lg": ["15px", {"lineHeight": "22px", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Custom subtle paper scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F7F5F0;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E6E4DC;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C0C8C5;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-col overflow-hidden">
+<!-- Main Shell Flex Container -->
+<div class="flex flex-1 h-screen overflow-hidden">
+<!-- SIDEBAR SHELL: Exact matching 224px (w-56) ivory persistent shell -->
+<aside class="w-56 h-screen flex flex-col justify-between p-4 border-r border-outline-variant bg-surface select-none shrink-0 z-20">
+<div class="flex flex-col gap-6">
+<!-- Header & Wedding Switcher -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-size: 16px;">favorite</span>
+</span>
+<div>
+<span class="text-title-md font-title-md font-semibold text-primary tracking-tight block leading-tight">Make My Event</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant block tracking-wider uppercase text-[10px]">Family Planner</span>
+</div>
+</div>
+<div class="mt-2 p-2 bg-surface-container-lowest rounded-lg border border-outline-variant flex items-center justify-between cursor-pointer hover:bg-surface-container-low transition-colors duration-150">
+<div class="truncate pr-1">
+<span class="text-label-md font-label-md text-on-surface block truncate">Pavithra &amp; Manish</span>
+<span class="text-[11px] text-on-surface-variant font-data-mono block">Feb 2027 · Estate</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">unfold_more</span>
+</div>
+</div>
+<!-- Add Event CTA from Shared Components -->
+<button class="w-full h-8 flex items-center justify-center gap-1.5 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg border border-outline-variant transition-colors duration-150">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>+ Add Event</span>
+</button>
+<!-- Navigation Groups -->
+<div class="flex flex-col gap-5 overflow-y-auto pr-1">
+<!-- GROUP: PLANNING -->
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-label-sm text-outline tracking-widest uppercase px-3 mb-1">Planning</span>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined">event_upcoming</span>
+<span>Functions</span>
+</a>
+<!-- ACTIVE TAB: Tasks -->
+<a class="flex items-center gap-3 px-3 py-2 text-primary font-title-md bg-surface-container rounded-lg transition-all duration-150 ease-in-out border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined fill text-primary">checklist</span>
+<span class="font-semibold">Tasks</span>
+<span class="ml-auto text-[11px] font-semibold bg-primary text-on-primary rounded-full px-1.5 py-0.2 leading-tight">14</span>
+</a>
+</div>
+<!-- GROUP: PEOPLE -->
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-label-sm text-outline tracking-widest uppercase px-3 mb-1">People</span>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span>Vendors</span>
+</a>
+</div>
+<!-- GROUP: MANAGEMENT -->
+<div class="flex flex-col gap-1">
+<span class="text-[10px] font-label-sm text-outline tracking-widest uppercase px-3 mb-1">Management</span>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-all duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined">tune</span>
+<span>Wedding details</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Footer Elements -->
+<div class="pt-3 border-t border-outline-variant flex flex-col gap-2">
+<div class="flex items-center gap-2 px-3 py-1.5 text-on-surface-variant text-[11px] font-data-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="truncate">Asia/Kolkata (IST)</span>
+</div>
+<div class="flex items-center justify-between px-1">
+<a class="flex items-center gap-2 px-2 py-1 text-on-surface-variant hover:text-on-surface font-body-sm rounded hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[16px]">settings</span>
+<span class="text-label-sm">Settings</span>
+</a>
+<a class="flex items-center gap-1.5 px-2 py-1 text-on-surface-variant hover:text-on-surface font-body-sm rounded hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[16px]">help_outline</span>
+<span class="text-label-sm">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- WORKSPACE CANVAS -->
+<div class="flex-1 flex flex-col min-w-0 bg-surface overflow-hidden">
+<!-- Top Main Header Bar -->
+<header class="flex justify-between items-center w-full h-14 px-6 border-b border-outline-variant bg-surface-container-lowest shrink-0 z-10">
+<!-- Left: Context breadcrumbs -->
+<div class="flex items-center gap-2 text-body-md font-body-md text-on-surface-variant">
+<span class="hover:text-on-surface transition-colors cursor-pointer">Pavithra &amp; Manish</span>
+<span class="material-symbols-outlined text-outline text-[14px]">chevron_right</span>
+<span class="text-primary font-title-md font-semibold">Tasks &amp; Milestones</span>
+</div>
+<!-- Right: Action group with notifications + avatar immediately adjacent (no space-between) -->
+<div class="flex items-center gap-3">
+<!-- Notification Bell with count badge immediately beside profile -->
+<button aria-label="Notifications" class="relative w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors duration-150">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-4 h-4 bg-error text-on-error font-data-mono text-[10px] font-bold rounded-full flex items-center justify-center leading-none">3</span>
+</button>
+<!-- Divider -->
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- User Avatar Profile Pill -->
+<div class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg hover:bg-surface-container-low transition-colors duration-150 cursor-pointer border border-transparent hover:border-outline-variant">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-xs font-semibold">
+              PI
+            </div>
+<div class="flex flex-col text-left">
+<span class="text-label-md font-label-md text-on-surface leading-tight">Pavithra Iyer</span>
+<span class="text-[10px] font-body-sm text-on-surface-variant leading-none">Administrator</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px] ml-1">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Main Workspace Scrollable Container -->
+<main class="flex-1 flex flex-col min-h-0 overflow-hidden">
+<!-- Workspace Subheader & View Actions -->
+<div class="px-6 pt-5 pb-3 border-b border-outline-variant bg-surface flex flex-wrap items-center justify-between gap-4 shrink-0">
+<div>
+<h1 class="font-headline-md text-headline-md font-serif text-on-surface tracking-tight">Tasks &amp; Milestones</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Assign responsibilities across family organizers, track ceremony milestones, and coordinate vendors.</p>
+</div>
+<div class="flex items-center gap-3">
+<!-- View Switchers -->
+<div class="inline-flex p-0.5 bg-surface-container rounded-lg border border-outline-variant">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container-lowest text-primary shadow-sm">
+<span class="material-symbols-outlined text-[16px]">view_list</span>
+<span>Table View</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">view_kanban</span>
+<span>Kanban Board</span>
+</button>
+</div>
+<!-- Primary Action Button: 44px height, 8px radius, deep forest green -->
+<button class="h-[44px] px-4 rounded-lg bg-primary hover:bg-[#1E433B] text-on-primary font-label-md text-label-md flex items-center gap-2 shadow-sm transition-colors duration-150">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Add task</span>
+</button>
+</div>
+</div>
+<!-- Filter & Search Toolbar Row -->
+<div class="px-6 py-2.5 bg-surface-container-lowest border-b border-outline-variant flex flex-wrap items-center justify-between gap-3 shrink-0">
+<div class="flex items-center flex-wrap gap-2 flex-1 min-w-[340px]">
+<!-- Search Input -->
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full h-8 pl-8 pr-3 bg-surface rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" placeholder="Search tasks by name or notes..." type="text"/>
+</div>
+<!-- "My Tasks" Quick Toggle Pill -->
+<button class="h-8 px-2.5 rounded-lg border border-outline-variant bg-surface text-on-surface-variant hover:bg-surface-container font-label-md text-label-md flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span>My tasks</span>
+</button>
+<!-- Function Dropdown Filter -->
+<div class="relative inline-block">
+<select class="h-8 pl-2.5 pr-7 rounded-lg border border-outline-variant bg-surface text-on-surface-variant font-label-md text-label-md appearance-none focus:outline-none focus:border-primary">
+<option>Function: All</option>
+<option>Vedic Muhurtham</option>
+<option>Haldi</option>
+<option>Sangeet Night</option>
+<option>General</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-1/2 -translate-y-1/2 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+<!-- Owner Dropdown Filter -->
+<div class="relative inline-block">
+<select class="h-8 pl-2.5 pr-7 rounded-lg border border-outline-variant bg-surface text-on-surface-variant font-label-md text-label-md appearance-none focus:outline-none focus:border-primary">
+<option>Owner: All</option>
+<option>Pavithra Iyer</option>
+<option>Manish Sharma</option>
+<option>Lakshmi Sundaram</option>
+<option>Suresh Iyer</option>
+<option>Unassigned</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-1/2 -translate-y-1/2 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+<!-- Priority Dropdown Filter -->
+<div class="relative inline-block">
+<select class="h-8 pl-2.5 pr-7 rounded-lg border border-outline-variant bg-surface text-on-surface-variant font-label-md text-label-md appearance-none focus:outline-none focus:border-primary">
+<option>Priority: All</option>
+<option>High</option>
+<option>Normal</option>
+<option>Low</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-1/2 -translate-y-1/2 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+<!-- Status Dropdown Filter -->
+<div class="relative inline-block">
+<select class="h-8 pl-2.5 pr-7 rounded-lg border border-outline-variant bg-surface text-on-surface-variant font-label-md text-label-md appearance-none focus:outline-none focus:border-primary">
+<option>Status: All</option>
+<option>To Do</option>
+<option>In Progress</option>
+<option>Completed</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-1/2 -translate-y-1/2 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+<!-- Active filter indicator & Reset -->
+<div class="flex items-center gap-1.5 pl-1">
+<span class="h-6 px-2 rounded bg-surface-container border border-outline-variant text-[11px] font-data-mono text-on-surface-variant flex items-center gap-1">
+                Filter: Open Only
+                <span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-on-surface">close</span>
+</span>
+<button class="text-[12px] font-label-md text-outline hover:text-primary underline ml-1">Reset</button>
+</div>
+</div>
+<!-- Filtered Count Indicator -->
+<div class="text-body-sm font-data-mono text-on-surface-variant shrink-0">
+            Showing <strong class="text-on-surface font-semibold">14</strong> open tasks of 22 total
+          </div>
+</div>
+<!-- MAIN SPLIT WORKSPACE: 65% Table Area & 35% Focused Inspector Drawer -->
+<div class="flex-1 flex min-h-0 overflow-hidden bg-surface">
+<!-- LEFT / MAIN TABLE AREA (65% width) -->
+<section class="w-[65%] flex flex-col border-r border-outline-variant bg-surface overflow-hidden">
+<!-- Scrollable Table Container -->
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<!-- High Density Table Header -->
+<thead class="sticky top-0 bg-surface z-10 border-b border-outline-variant">
+<tr class="h-9 text-[11px] font-label-sm text-on-surface-variant uppercase tracking-wider select-none">
+<th class="pl-6 pr-3 font-semibold w-6">
+<input class="rounded border-outline text-primary focus:ring-0 focus:ring-offset-0 w-3.5 h-3.5" type="checkbox"/>
+</th>
+<th class="px-3 font-semibold min-w-[240px]">Task Title</th>
+<th class="px-3 font-semibold min-w-[140px]">Owner</th>
+<th class="px-3 font-semibold min-w-[130px]">Function</th>
+<th class="px-3 font-semibold min-w-[130px]">Vendor Context</th>
+<th class="px-3 font-semibold min-w-[140px]">Deadline</th>
+<th class="px-3 font-semibold w-24">Priority</th>
+<th class="pr-6 pl-3 font-semibold w-28 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant bg-surface-container-lowest font-body-sm text-body-sm">
+<!-- ROW 1: SELECTED ROW -->
+<tr class="h-11 bg-primary/5 hover:bg-primary/10 transition-colors border-l-4 border-l-primary cursor-pointer">
+<td class="pl-5 pr-3">
+<input checked="" class="rounded border-outline text-primary focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+</td>
+<td class="px-3">
+<div class="flex items-center gap-1.5">
+<span class="font-medium text-on-surface truncate">Finalize bridal entry phoolon ki chaadar</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-data-mono bg-surface-container text-primary shrink-0 border border-outline-variant">@Manish</span>
+</div>
+</td>
+<td class="px-3">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-primary-container text-on-primary-container text-[10px] font-bold flex items-center justify-center shrink-0">PI</span>
+<span class="truncate text-on-surface">Pavithra Iyer</span>
+</div>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#28594F]/10 text-primary border border-primary/20">
+                        Vedic Muhurtham
+                      </span>
+</td>
+<td class="px-3">
+<span class="text-on-surface-variant truncate block">Vrindavan Floral</span>
+</td>
+<td class="px-3 font-data-mono text-[12px] text-on-surface-variant">
+                      19 Feb 2027 · 09:15 AM
+                    </td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#B98265]/15 text-[#B98265] border border-[#B98265]/30">
+                        High
+                      </span>
+</td>
+<td class="pr-6 pl-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        In Progress
+                      </span>
+</td>
+</tr>
+<!-- ROW 2 -->
+<tr class="h-11 hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="pl-6 pr-3">
+<input class="rounded border-outline text-primary focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+</td>
+<td class="px-3">
+<span class="font-medium text-on-surface truncate block">Soundcheck &amp; mic frequency test for Sangeet</span>
+</td>
+<td class="px-3">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold flex items-center justify-center shrink-0">MS</span>
+<span class="truncate text-on-surface">Manish Sharma</span>
+</div>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700 border border-purple-200">
+                        Sangeet Night
+                      </span>
+</td>
+<td class="px-3">
+<span class="text-on-surface-variant truncate block">Heritage Acoustics</span>
+</td>
+<td class="px-3 font-data-mono text-[12px] text-on-surface-variant">
+                      18 Feb 2027 · 04:00 PM
+                    </td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#B98265]/15 text-[#B98265] border border-[#B98265]/30">
+                        High
+                      </span>
+</td>
+<td class="pr-6 pl-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-stone-100 text-stone-700 border border-stone-200">
+<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>
+                        To Do
+                      </span>
+</td>
+</tr>
+<!-- ROW 3 -->
+<tr class="h-11 hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="pl-6 pr-3">
+<input class="rounded border-outline text-primary focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+</td>
+<td class="px-3">
+<span class="font-medium text-on-surface truncate block">Distribute South traditional sadya banana leaf menu</span>
+</td>
+<td class="px-3">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-stone-200 text-stone-700 text-[10px] font-bold flex items-center justify-center shrink-0">SI</span>
+<span class="truncate text-on-surface">Suresh Iyer</span>
+</div>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#28594F]/10 text-primary border border-primary/20">
+                        Vedic Muhurtham
+                      </span>
+</td>
+<td class="px-3">
+<span class="text-on-surface-variant truncate block">Mysore Royal Banquets</span>
+</td>
+<td class="px-3 font-data-mono text-[12px] text-on-surface-variant">
+                      20 Feb 2027 · 11:30 AM
+                    </td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface-container text-on-surface-variant">
+                        Normal
+                      </span>
+</td>
+<td class="pr-6 pl-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        In Progress
+                      </span>
+</td>
+</tr>
+<!-- ROW 4 -->
+<tr class="h-11 hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="pl-6 pr-3">
+<input class="rounded border-outline text-primary focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+</td>
+<td class="px-3">
+<span class="font-medium text-on-surface truncate block">Pack pooja samagri &amp; homam silver vessels</span>
+</td>
+<td class="px-3">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold flex items-center justify-center shrink-0">LS</span>
+<span class="truncate text-on-surface">Lakshmi Sundaram</span>
+</div>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#28594F]/10 text-primary border border-primary/20">
+                        Vedic Muhurtham
+                      </span>
+</td>
+<td class="px-3">
+<span class="text-on-surface-variant truncate block">Sri Manjunatha</span>
+</td>
+<td class="px-3 font-data-mono text-[12px] text-on-surface-variant">
+                      19 Feb 2027 · 06:00 PM
+                    </td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#B98265]/15 text-[#B98265] border border-[#B98265]/30">
+                        High
+                      </span>
+</td>
+<td class="pr-6 pl-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-stone-100 text-stone-700 border border-stone-200">
+<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>
+                        To Do
+                      </span>
+</td>
+</tr>
+<!-- ROW 5 -->
+<tr class="h-11 hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="pl-6 pr-3">
+<input class="rounded border-outline text-primary focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+</td>
+<td class="px-3">
+<span class="font-medium text-on-surface truncate block">Guest welcome hamper distribution at Leela lobby</span>
+</td>
+<td class="px-3">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-primary-container text-on-primary-container text-[10px] font-bold flex items-center justify-center shrink-0">PI</span>
+<span class="truncate text-on-surface">Pavithra Iyer</span>
+</div>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-stone-100 text-stone-700">
+                        General
+                      </span>
+</td>
+<td class="px-3">
+<span class="text-outline">—</span>
+</td>
+<td class="px-3 font-data-mono text-[12px] text-on-surface-variant">
+                      18 Feb 2027 · 12:00 PM
+                    </td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface-container text-on-surface-variant">
+                        Normal
+                      </span>
+</td>
+<td class="pr-6 pl-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        In Progress
+                      </span>
+</td>
+</tr>
+<!-- ROW 6: WARNING / NEEDS OWNER -->
+<tr class="h-11 hover:bg-surface-container-low transition-colors cursor-pointer bg-amber-50/20">
+<td class="pl-6 pr-3">
+<input class="rounded border-outline text-primary focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+</td>
+<td class="px-3">
+<span class="font-medium text-on-surface truncate block">Priest dakshina envelopes &amp; auspicious silk vastram</span>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-error-container text-on-error-container border border-error/20">
+<span class="material-symbols-outlined text-[13px]">warning</span>
+                        Needs an owner
+                      </span>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#28594F]/10 text-primary border border-primary/20">
+                        Vedic Muhurtham
+                      </span>
+</td>
+<td class="px-3">
+<span class="text-outline">—</span>
+</td>
+<td class="px-3 font-data-mono text-[12px] text-on-surface-variant">
+                      20 Feb 2027 · 07:00 AM
+                    </td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#B98265]/15 text-[#B98265] border border-[#B98265]/30">
+                        High
+                      </span>
+</td>
+<td class="pr-6 pl-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-stone-100 text-stone-700 border border-stone-200">
+<span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>
+                        To Do
+                      </span>
+</td>
+</tr>
+<!-- ROW 7: COMPLETED -->
+<tr class="h-11 hover:bg-surface-container-low transition-colors cursor-pointer opacity-75">
+<td class="pl-6 pr-3">
+<input checked="" class="rounded border-outline text-primary focus:ring-0 w-3.5 h-3.5" type="checkbox"/>
+</td>
+<td class="px-3">
+<span class="font-normal text-on-surface-variant line-through truncate block">Arrange backup silent diesel generator for ballroom</span>
+</td>
+<td class="px-3">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold flex items-center justify-center shrink-0">MS</span>
+<span class="truncate text-on-surface-variant">Manish Sharma</span>
+</div>
+</td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-purple-50 text-purple-700">
+                        Sangeet Night
+                      </span>
+</td>
+<td class="px-3">
+<span class="text-on-surface-variant truncate block">Heritage Acoustics</span>
+</td>
+<td class="px-3 font-data-mono text-[12px] text-on-surface-variant">
+                      18 Feb 2027 · 02:00 PM
+                    </td>
+<td class="px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface-container text-on-surface-variant">
+                        Normal
+                      </span>
+</td>
+<td class="pr-6 pl-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+<span class="material-symbols-outlined text-[12px] text-emerald-600">check</span>
+                        Completed
+                      </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination & Footer Status -->
+<div class="h-12 px-6 bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between shrink-0">
+<span class="text-body-sm font-data-mono text-on-surface-variant">Showing 1–7 of 22 tasks</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 text-label-sm font-label-sm border border-outline-variant rounded-md text-on-surface-variant disabled:opacity-40" disabled="">
+                  Previous
+                </button>
+<span class="text-[12px] font-data-mono px-2 text-on-surface">Page 1 of 4</span>
+<button class="px-2.5 py-1 text-label-sm font-label-sm border border-outline-variant rounded-md text-on-surface hover:bg-surface-container transition-colors">
+                  Next
+                </button>
+</div>
+</div>
+</section>
+<!-- RIGHT / TASK FOCUSED SIDE EDITOR / INSPECTOR (35% width) -->
+<aside class="w-[35%] flex flex-col bg-surface-container-lowest overflow-hidden">
+<!-- Inspector Header -->
+<div class="p-4 px-6 border-b border-outline-variant flex items-center justify-between shrink-0 bg-surface">
+<div class="flex items-center gap-2.5">
+<span class="font-headline-sm text-headline-sm font-serif text-on-surface">Edit Task</span>
+<span class="text-label-sm font-data-mono text-outline">#TK-104</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  In Progress
+                </span>
+</div>
+<button class="w-7 h-7 rounded flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors" title="Close Panel">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Inspector Form Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-6 space-y-4">
+<!-- Task Title with Removable Mention -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant mb-1.5">Task Title *</label>
+<div class="p-2 border border-outline-variant rounded-lg bg-surface-container-lowest focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20">
+<div class="flex flex-wrap items-center gap-1 mb-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-data-mono bg-surface-container text-primary border border-outline-variant">
+<span>@Manish Sharma</span>
+<span class="material-symbols-outlined text-[12px] cursor-pointer hover:text-error">close</span>
+</span>
+</div>
+<input class="w-full text-body-md font-body-md text-on-surface border-0 p-0 focus:ring-0 placeholder:text-outline bg-transparent" type="text" value="Finalize bridal entry phoolon ki chaadar coordination"/>
+</div>
+</div>
+<!-- Required Owner & Vendor Context Grid -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Owner (Person Only) -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
+                    Owner (Family Member) *
+                  </label>
+<div class="relative">
+<select class="w-full h-9 pl-2.5 pr-7 bg-surface-container-lowest rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface appearance-none focus:border-primary">
+<option selected="">Pavithra Iyer (You)</option>
+<option>Manish Sharma</option>
+<option>Lakshmi Sundaram</option>
+<option>Suresh Iyer</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Vendor Context (Separate Roster) -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant mb-1">
+                    Vendor Context
+                  </label>
+<div class="relative">
+<select class="w-full h-9 pl-2.5 pr-7 bg-surface-container-lowest rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface appearance-none focus:border-primary">
+<option selected="">Vrindavan Floral &amp; Mandap</option>
+<option>Heritage Acoustics</option>
+<option>Mysore Royal Banquets</option>
+<option>Sri Manjunatha</option>
+<option>None (Family Only)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Function Assignment -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Function / Ceremony *</label>
+<div class="relative">
+<select class="w-full h-9 pl-2.5 pr-7 bg-surface-container-lowest rounded-lg border border-outline-variant text-body-sm font-body-sm text-on-surface appearance-none focus:border-primary">
+<option selected="">Vedic Muhurtham &amp; Sacred Nuptials</option>
+<option>Haldi Ceremony</option>
+<option>Sangeet Night</option>
+<option>General Event Logistics</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline text-[16px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Deadline & Time -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Deadline Date &amp; Time</label>
+<div class="grid grid-cols-2 gap-2">
+<div class="relative">
+<input class="w-full h-9 pl-8 pr-2 bg-surface-container-lowest rounded-lg border border-outline-variant text-body-sm font-data-mono text-on-surface focus:border-primary" type="text" value="19 Feb 2027"/>
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">calendar_today</span>
+</div>
+<div class="relative">
+<input class="w-full h-9 pl-8 pr-2 bg-surface-container-lowest rounded-lg border border-outline-variant text-body-sm font-data-mono text-on-surface focus:border-primary" type="text" value="09:15 AM (IST)"/>
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">schedule</span>
+</div>
+</div>
+</div>
+<!-- Priority & Status Segmented Controls -->
+<div class="grid grid-cols-2 gap-3 pt-1">
+<!-- Priority Segmented -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Priority</label>
+<div class="grid grid-cols-3 p-0.5 bg-surface-container rounded-lg border border-outline-variant text-center">
+<button class="py-1 text-[11px] font-label-sm text-on-surface-variant rounded">Low</button>
+<button class="py-1 text-[11px] font-label-sm text-on-surface-variant rounded">Normal</button>
+<button class="py-1 text-[11px] font-label-sm font-semibold rounded bg-[#B98265] text-on-primary shadow-xs">High</button>
+</div>
+</div>
+<!-- Status Segmented -->
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant mb-1">Status</label>
+<div class="grid grid-cols-3 p-0.5 bg-surface-container rounded-lg border border-outline-variant text-center">
+<button class="py-1 text-[11px] font-label-sm text-on-surface-variant rounded">To Do</button>
+<button class="py-1 text-[11px] font-label-sm font-semibold rounded bg-surface-container-lowest text-primary shadow-xs">In Prog</button>
+<button class="py-1 text-[11px] font-label-sm text-on-surface-variant rounded">Done</button>
+</div>
+</div>
+</div>
+<!-- Description & Instructions with ACTIVE @mention popover -->
+<div class="relative pt-1">
+<div class="flex items-center justify-between mb-1">
+<label class="text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">Description / Instructions</label>
+<span class="text-[11px] text-outline font-data-mono">Type @ to tag co-hosts</span>
+</div>
+<div class="relative border border-outline-variant rounded-lg bg-surface-container-lowest focus-within:border-primary">
+<textarea class="w-full p-2.5 text-body-sm font-body-sm text-on-surface border-0 rounded-lg focus:ring-0 resize-none" rows="4">Make sure the fresh jasmine garland border matches the bridal lehenga dupatta trim. We will verify with @Lakshmi</textarea>
+<!-- ACTIVE @MENTION AUTOCOMPLETE SUGGESTION LIST -->
+<div class="absolute bottom-3 left-4 w-72 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-lg p-1.5 z-30">
+<div class="text-[10px] font-label-sm text-outline uppercase tracking-wider px-2 py-1 border-b border-outline-variant">Family Members Matching "@Lakshmi"</div>
+<div class="mt-1 flex flex-col gap-0.5">
+<!-- Active suggestion item -->
+<div class="flex items-center gap-2 p-1.5 rounded bg-primary/10 cursor-pointer">
+<span class="w-6 h-6 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold flex items-center justify-center shrink-0">LS</span>
+<div class="truncate">
+<span class="text-label-md font-label-md text-primary block leading-tight">Lakshmi Sundaram</span>
+<span class="text-[10px] text-on-surface-variant block leading-tight">Guest Hospitality &amp; Rituals</span>
+</div>
+<span class="ml-auto text-[10px] font-data-mono text-outline">↵ Enter</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Audit Note Notice -->
+<div class="p-2.5 rounded-lg bg-surface border border-outline-variant flex items-start gap-2 text-[11px] text-on-surface-variant leading-relaxed">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0 mt-0.5">info</span>
+<span>Tagged members and assignee will receive in-app workspace notification. Unchanged mentions will not repeat.</span>
+</div>
+</div>
+<!-- Inspector Footer Actions -->
+<div class="p-4 px-6 border-t border-outline-variant bg-surface flex items-center justify-between shrink-0">
+<button class="h-9 px-4 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors">
+                Cancel
+              </button>
+<div class="flex items-center gap-2">
+<button class="h-9 px-4 rounded-lg bg-primary hover:bg-[#1E433B] text-on-primary font-label-md text-label-md transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Save changes</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Design Preview State Toggle Bar -->
+<footer class="h-8 bg-surface-container border-t border-outline-variant px-6 flex items-center justify-between text-[11px] font-data-mono text-on-surface-variant select-none shrink-0">
+<div class="flex items-center gap-3">
+<span class="font-semibold text-outline uppercase tracking-wider text-[10px]">Preview State:</span>
+<button class="px-2 py-0.5 rounded bg-surface-container-lowest text-primary font-semibold border border-outline-variant shadow-xs">Populated Table</button>
+<button class="px-2 py-0.5 rounded hover:bg-surface-container-low transition-colors">Kanban View</button>
+<button class="px-2 py-0.5 rounded hover:bg-surface-container-low transition-colors">Empty State (No tasks yet)</button>
+<button class="px-2 py-0.5 rounded hover:bg-surface-container-low transition-colors">Loading Skeleton</button>
+<button class="px-2 py-0.5 rounded hover:bg-surface-container-low transition-colors text-error">Recoverable Error Toast</button>
+</div>
+<div class="flex items-center gap-2 text-outline text-[11px]">
+<span>Estate Wedding Suite v2.4</span>
+<span>·</span>
+<span>Synced: Just now</span>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

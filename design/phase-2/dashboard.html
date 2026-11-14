@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Celebration Command Center · Make My Event</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Typography Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration Verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#9ed1c4",
+            "surface-dim": "#d1dcda",
+            "outline-variant": "#c0c8c5",
+            "on-primary-container": "#9bcec1",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#9ed1c4",
+            "on-surface-variant": "#404946",
+            "secondary": "#825339",
+            "surface-bright": "#f1fcfa",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00201b",
+            "inverse-surface": "#283231",
+            "secondary-fixed-dim": "#f7b999",
+            "surface-container-highest": "#dae5e3",
+            "secondary-fixed": "#ffdbca",
+            "on-primary-fixed-variant": "#1d4f45",
+            "on-tertiary-fixed-variant": "#434842",
+            "inverse-on-surface": "#e8f3f1",
+            "on-surface": "#141d1c",
+            "tertiary-container": "#4d524c",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#321201",
+            "error": "#ba1a1a",
+            "primary-fixed": "#baeddf",
+            "on-tertiary-fixed": "#181d18",
+            "surface-container-low": "#ebf6f4",
+            "primary-container": "#28594f",
+            "on-secondary-fixed-variant": "#673c24",
+            "surface-tint": "#36675c",
+            "surface-container-high": "#dfeae8",
+            "surface": "#f1fcfa",
+            "background": "#f1fcfa",
+            "tertiary-fixed": "#dfe4dc",
+            "on-secondary-container": "#794b32",
+            "on-tertiary-container": "#c0c5bd",
+            "secondary-container": "#fdbe9e",
+            "on-error": "#ffffff",
+            "surface-container": "#e5f0ee",
+            "tertiary": "#363b36",
+            "outline": "#707976",
+            "on-background": "#141d1c",
+            "surface-variant": "#dae5e3",
+            "primary": "#0b4138"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg-mobile": [
+              "Newsreader"
+            ],
+            "body-md": [
+              "Manrope"
+            ],
+            "headline-md": [
+              "Newsreader"
+            ],
+            "headline-lg": [
+              "Newsreader"
+            ],
+            "label-lg": [
+              "Manrope"
+            ],
+            "body-lg": [
+              "Manrope"
+            ],
+            "label-md": [
+              "Manrope"
+            ],
+            "display-lg": [
+              "Newsreader"
+            ],
+            "headline-sm": [
+              "Manrope"
+            ],
+            "label-sm": [
+              "Manrope"
+            ],
+            "body-sm": [
+              "Manrope"
+            ]
+          },
+          "fontSize": {
+            "display-lg-mobile": [
+              "36px",
+              {
+                "lineHeight": "44px",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "400"
+              }
+            ],
+            "body-md": [
+              "14px",
+              {
+                "lineHeight": "20px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-md": [
+              "24px",
+              {
+                "lineHeight": "32px",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "500"
+              }
+            ],
+            "headline-lg": [
+              "32px",
+              {
+                "lineHeight": "40px",
+                "letterSpacing": "-0.015em",
+                "fontWeight": "500"
+              }
+            ],
+            "label-lg": [
+              "14px",
+              {
+                "lineHeight": "20px",
+                "letterSpacing": "0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "body-lg": [
+              "16px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "400"
+              }
+            ],
+            "label-md": [
+              "12px",
+              {
+                "lineHeight": "16px",
+                "letterSpacing": "0.02em",
+                "fontWeight": "600"
+              }
+            ],
+            "display-lg": [
+              "48px",
+              {
+                "lineHeight": "56px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-sm": [
+              "18px",
+              {
+                "lineHeight": "26px",
+                "letterSpacing": "-0.005em",
+                "fontWeight": "600"
+              }
+            ],
+            "label-sm": [
+              "11px",
+              {
+                "lineHeight": "14px",
+                "letterSpacing": "0.04em",
+                "fontWeight": "700"
+              }
+            ],
+            "body-sm": [
+              "12px",
+              {
+                "lineHeight": "18px",
+                "fontWeight": "400"
+              }
+            ]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    /* Physical paper card elevation */
+    .paper-elevated {
+      box-shadow: 0 1px 3px rgba(32, 42, 41, 0.04), 0 4px 12px rgba(32, 42, 41, 0.02);
+    }
+    .copper-cue {
+      border-left: 3px solid #B98265;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c0c8c5;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#F7F5F0] text-on-surface antialiased font-body-md text-body-md min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TOP APP BAR (Executed from Shared Components JSON & Style Guidance) -->
+<header class="sticky top-0 z-50 flex items-center justify-between w-full px-6 lg:px-8 py-3.5 bg-surface-container-lowest/95 backdrop-blur-sm shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<!-- Brand Anchor & Identity -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[18px]">celebration</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md font-medium text-primary tracking-tight leading-tight">Make My Event</span>
+<span class="text-[10px] font-label-md tracking-wider text-outline uppercase font-semibold">Connected Moments</span>
+</div>
+</div>
+<!-- Weddings Selector / Switcher -->
+<div class="hidden sm:flex items-center gap-2 pl-4 border-l border-outline-variant/40">
+<a class="flex items-center gap-1.5 text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors py-1 px-2 rounded hover:bg-surface-container-high/40" href="#switch">
+<span>Your weddings</span>
+<span class="material-symbols-outlined text-[16px]">unfold_more</span>
+</a>
+</div>
+</div>
+<!-- Centered Wedding Context Indicator -->
+<div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary-fixed/60 border border-outline-variant/30">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-headline-sm text-headline-sm text-primary font-medium tracking-tight">Pavithra &amp; Manish</span>
+<span class="text-outline text-label-md">·</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">18–21 Feb 2027</span>
+<span class="text-outline text-label-md">·</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Bangalore</span>
+</div>
+<!-- Trailing Icon Actions & Host Profile Pill -->
+<div class="flex items-center gap-3">
+<!-- Save Draft / Primary Action from JSON -->
+<button class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant/60 text-label-md font-label-md font-semibold text-primary hover:bg-surface-container-high/40 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-[16px]">save</span>
+<span>Save Draft</span>
+</button>
+<!-- Notification Action with Unread Badge -->
+<button aria-label="Notifications" class="relative p-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/40 active:scale-[0.98] transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-4 h-4 bg-error text-on-error text-[9px] font-bold rounded-full flex items-center justify-center leading-none">3</span>
+</button>
+<!-- Help Action -->
+<button aria-label="Help" class="p-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high/40 active:scale-[0.98] transition-colors">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/40 mx-0.5"></div>
+<!-- Host Profile Pill -->
+<div class="flex items-center gap-2.5 pl-1.5 pr-2 py-1 rounded-full border border-outline-variant/50 bg-surface-container-lowest hover:border-primary/40 transition-colors cursor-pointer">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold tracking-tight">
+          PI
+        </div>
+<div class="hidden lg:flex flex-col text-left pr-1 leading-none">
+<span class="text-label-md font-label-md text-on-surface font-semibold">Pavithra Iyer</span>
+<span class="text-[10px] font-label-sm text-outline tracking-normal">Family Admin</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</div>
+</div>
+</header>
+<!-- SECONDARY NAV ROW: Active / Inactive states strictly mapped from JSON tokens -->
+<nav class="sticky top-[58px] z-40 bg-surface-container-lowest/90 backdrop-blur-sm px-6 lg:px-8 shadow-sm">
+<div class="max-w-[1440px] mx-auto flex items-center gap-6 overflow-x-auto no-scrollbar pt-2.5 pb-0">
+<!-- Overview (Current Active Navigation Screen) -->
+<a class="border-b-2 border-primary text-primary font-semibold pb-2 text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#overview">
+<span class="material-symbols-outlined text-[16px]">dashboard</span>
+<span>Overview</span>
+</a>
+<!-- Shared Components Specified Links + Domain Context -->
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#functions">
+<span class="material-symbols-outlined text-[16px]">event_upcoming</span>
+<span>Functions</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#itinerary">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>Itinerary</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#run-of-show">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Run of Show</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#guests">
+<span class="material-symbols-outlined text-[16px]">group</span>
+<span>Guests &amp; RSVPs</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#tasks">
+<span class="material-symbols-outlined text-[16px]">checklist</span>
+<span>Tasks</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#vendors">
+<span class="material-symbols-outlined text-[16px]">storefront</span>
+<span>Vendors</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#finance">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+<span>Finance</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#team">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+<span>Team</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 transition-colors text-label-md font-label-md flex items-center gap-1.5 whitespace-nowrap" href="#wedding-details">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Wedding details</span>
+</a>
+</div>
+</nav>
+<!-- MAIN CANVAS -->
+<main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+<!-- PAGE HERO HEADER WITH BESPOKE EDITORIAL FLOURISH -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pb-2 border-b border-[#E6E4DC]">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm uppercase tracking-wider bg-[rgba(185,130,101,0.12)] text-[#B98265] border border-[rgba(185,130,101,0.25)]">
+            Active Milestone · T-minus 2 Days
+          </span>
+<span class="text-outline text-label-md">·</span>
+<span class="text-label-md font-label-md text-on-surface-variant">The Leela Palace Bangalore</span>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight font-medium">
+          Celebration Command Center · Pavithra &amp; Manish's Wedding
+        </h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">
+          Coordinated multi-day logistics, immediate vendor sign-offs, and critical cue tracking.
+        </p>
+</div>
+<!-- Quick Action Controls -->
+<div class="flex items-center gap-2.5 flex-wrap">
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-lowest border border-[#E6E4DC] text-label-md font-label-md text-on-surface font-semibold hover:bg-surface-container-high/40 transition-colors shadow-sm active:scale-[0.98]" id="add-task-trigger">
+<span class="material-symbols-outlined text-[16px]">add_task</span>
+<span>New Task</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-lowest border border-[#B98265] text-label-md font-label-md text-[#B98265] font-semibold hover:bg-[#B98265] hover:text-white transition-all shadow-sm active:scale-[0.98]" id="record-disbursement-btn">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span>Record Payment</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary text-label-md font-label-md font-semibold hover:bg-primary transition-colors shadow-sm active:scale-[0.98]">
+<span class="material-symbols-outlined text-[16px]">broadcast_on_personal</span>
+<span>Live Run-of-Show</span>
+</button>
+</div>
+</div>
+<!-- STAT ROW CARDS (4 Modules over Ivory, pure white container cards, Newsreader titles) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="stats-section">
+<!-- 1. Upcoming Function -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated flex flex-col justify-between transition-all hover:border-primary/40">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Upcoming Function</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase bg-[rgba(185,130,101,0.12)] text-[#B98265] border border-[rgba(185,130,101,0.25)]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#B98265] animate-pulse"></span>
+            In 18 hours
+          </span>
+</div>
+<div class="mt-3">
+<div class="text-headline-md font-headline-md text-primary font-medium">Haldi Ceremony</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Tomorrow 10:00 AM · Courtyard Lawn</p>
+</div>
+<div class="mt-4 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm">
+<span class="text-outline text-label-md">Lead Host: Lakshmi S.</span>
+<a class="text-primary font-semibold hover:underline text-label-md flex items-center gap-0.5" href="#functions">
+            Cue sheet <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- 2. Urgent Operational Tasks -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated flex flex-col justify-between transition-all hover:border-primary/40">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Urgent Tasks</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase bg-error-container text-on-error-container border border-error/20">
+            Action Req
+          </span>
+</div>
+<div class="mt-3">
+<div class="text-headline-md font-headline-md text-on-surface font-medium">4 Pending Action</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">2 due today · 2 critical vendor sign-offs</p>
+</div>
+<div class="mt-4 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm">
+<span class="text-outline text-label-md">1 blocked dependency</span>
+<a class="text-primary font-semibold hover:underline text-label-md flex items-center gap-0.5" href="#tasks">
+            Resolve queue <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- 3. Committed Vendor Partners -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated flex flex-col justify-between transition-all hover:border-primary/40">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Vendor Ecosystem</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase bg-[rgba(40,89,79,0.1)] text-primary-container border border-[rgba(40,89,79,0.2)]">
+            All Assigned
+          </span>
+</div>
+<div class="mt-3">
+<div class="text-headline-md font-headline-md text-primary font-medium">8 Confirmed Partners</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">Catering, mandap, decor, photo &amp; music</p>
+</div>
+<div class="mt-4 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm">
+<span class="text-outline text-label-md">100% on-site clearance</span>
+<a class="text-primary font-semibold hover:underline text-label-md flex items-center gap-0.5" href="#vendors">
+            Access directory <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- 4. Financial Settlement Ledger (INR values, no progress bars) -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated flex flex-col justify-between transition-all hover:border-primary/40">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Settlement Ledger</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase bg-tertiary-fixed text-on-tertiary-fixed-variant">
+            INR · Ledger
+          </span>
+</div>
+<div class="mt-3">
+<div class="flex items-baseline gap-2">
+<span class="text-headline-md font-headline-md text-primary font-medium">₹14,50,000</span>
+<span class="text-label-md font-label-md text-outline">Settled</span>
+</div>
+<div class="text-body-sm font-body-sm text-secondary font-semibold mt-0.5">
+            ₹3,50,000 Due before reception
+          </div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm">
+<span class="text-outline text-label-md">Total Cap: ₹18,00,000</span>
+<a class="text-primary font-semibold hover:underline text-label-md flex items-center gap-0.5" href="#finance">
+            Breakdown <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- CELEBRATION PALACE VISUAL HIGHLIGHT & ATMOSPHERIC BANNER -->
+<div class="relative rounded-2xl overflow-hidden border border-[#E6E4DC] bg-surface-container-lowest paper-elevated">
+<div class="grid grid-cols-1 md:grid-cols-12 min-h-[220px]">
+<!-- Imagery Left Segment -->
+<div class="md:col-span-4 relative h-48 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="An opulent Indian destination wedding portrait at a majestic sandstone heritage palace courtyard in Rajasthan. The bride wears an ornate crimson and gold lehenga with elaborate jewelry, and the groom stands beside her in an ivory sherwani and safa turban. Soft, warm natural afternoon light illuminates the carved jharokha arches, yellow marigold garlands, and tranquil stone terraces in a serene editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1fd0-OhYOAjRnW-9jEu_RvwfCPI02yPfjiSVnGrUJaDCS05vfsNdGxeVgr7G-XORD3q320MsI2Xg3zAxv2LJWbwiC8XG_psOTY_8Yln_XvsyIZZzhmTFl87vDBK8WznDAHjEkgtXCYJEalz_KuEZt_5DzmJ30xTlxzREyZ_q94jW01bYpagkLICuIEhqWFmUSAGtFstU4jSn7BoLXn-5Q5rHA_NwZ21_rTfjMect8qewdmlf7K4CilFdDTywFQj2vdR7E0UxZUUc"/>
+<div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/40 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 text-white text-xs font-label-md px-2 py-1 rounded bg-black/50 backdrop-blur-sm">
+            Bangalore Palace Estate Grounds
+          </div>
+</div>
+<!-- Logistics Brief Right Segment -->
+<div class="md:col-span-8 p-6 flex flex-col justify-between bg-surface-container-lowest">
+<div class="flex items-start justify-between flex-wrap gap-2">
+<div>
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-[#B98265] font-bold">Celebration Itinerary Schedule</span>
+<h2 class="text-headline-md font-headline-md text-primary mt-0.5">4-Day Grand Ceremonial Run-Down</h2>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-md font-label-md bg-surface-container-high/60 text-on-surface-variant border border-outline-variant/30">
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+              142 Guests Confirmed (94% RSVP Rate)
+            </span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-4 py-3 border-y border-[#E6E4DC]">
+<div class="space-y-0.5">
+<span class="text-label-sm text-outline uppercase font-semibold">Day 1 · Feb 18</span>
+<p class="font-semibold text-on-surface text-body-md">Mehendi Soirée</p>
+<p class="text-body-sm text-on-surface-variant">4:00 PM · Glasshouse</p>
+</div>
+<div class="space-y-0.5 copper-cue pl-2">
+<span class="text-label-sm text-[#B98265] uppercase font-bold">Day 2 · Feb 19 (Next)</span>
+<p class="font-semibold text-primary text-body-md">Haldi Ceremony</p>
+<p class="text-body-sm text-on-surface-variant">10:00 AM · Courtyard</p>
+</div>
+<div class="space-y-0.5">
+<span class="text-label-sm text-outline uppercase font-semibold">Day 2 · Feb 19</span>
+<p class="font-semibold text-on-surface text-body-md">Sangeet Beats</p>
+<p class="text-body-sm text-on-surface-variant">7:30 PM · Grand Ballroom</p>
+</div>
+<div class="space-y-0.5">
+<span class="text-label-sm text-outline uppercase font-semibold">Day 3 · Feb 20</span>
+<p class="font-semibold text-on-surface text-body-md">Vedic Muhurtham</p>
+<p class="text-body-sm text-on-surface-variant">9:15 AM · Royal Mandap</p>
+</div>
+</div>
+<div class="flex items-center justify-between flex-wrap gap-2 text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">domain</span> Palace Suite Wing A Reserved</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">local_taxi</span> 6 Chauffeur Shuttles Standing By</span>
+</div>
+<a class="text-label-md font-label-md text-primary font-semibold hover:underline" href="#itinerary">
+              Download PDF Master Plan →
+            </a>
+</div>
+</div>
+</div>
+</div>
+<!-- MAIN TWO-COLUMN BALANCED MODULAR WORKSPACE -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start" id="main-content-layout">
+<!-- LEFT COLUMN: Immediate Operational Queue & Timeline (7 cols) -->
+<div class="lg:col-span-7 space-y-6">
+<!-- 1. Immediate Task Action Queue -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h2 class="text-headline-md font-headline-md text-primary">Immediate Task Action Queue</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Sorted by urgency for upcoming Haldi &amp; Sangeet milestones</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-medium">4 Active</span>
+</div>
+</div>
+<!-- Task Items List -->
+<div class="divide-y divide-[#E6E4DC]" id="tasks-container">
+<!-- Task 1 -->
+<div class="py-3.5 first:pt-0 last:pb-0 flex items-start justify-between gap-3 group transition-colors hover:bg-surface-container-low/40 rounded-lg px-2 -mx-2">
+<div class="flex items-start gap-3">
+<input class="mt-1 w-4 h-4 rounded border-[#E6E4DC] text-primary-container focus:ring-primary focus:ring-offset-0 cursor-pointer" onchange="toggleTaskDone(this)" type="checkbox"/>
+<div class="space-y-1">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-md font-semibold text-on-surface task-title">Confirm fresh marigold garland delivery for Muhurtham</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-error-container text-on-error-container font-bold">Due Today</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-on-surface-variant flex-wrap">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_circle</span>
+<span class="text-outline">Pavithra I.</span>
+</span>
+<span>·</span>
+<span class="text-outline">Vendor: The Lotus Florists</span>
+<span>·</span>
+<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-[rgba(185,130,101,0.12)] text-[#B98265]">In Progress</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+<button class="px-2.5 py-1 text-label-md font-label-md rounded border border-[#E6E4DC] hover:border-primary text-primary hover:bg-primary hover:text-white transition-all" onclick="markTaskQuick(this)">
+                  Mark Done
+                </button>
+<button class="p-1 text-outline hover:text-on-surface rounded hover:bg-surface-container-high/40" title="Task Details">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Task 2 -->
+<div class="py-3.5 flex items-start justify-between gap-3 group transition-colors hover:bg-surface-container-low/40 rounded-lg px-2 -mx-2">
+<div class="flex items-start gap-3">
+<input class="mt-1 w-4 h-4 rounded border-[#E6E4DC] text-primary-container focus:ring-primary focus:ring-offset-0 cursor-pointer" onchange="toggleTaskDone(this)" type="checkbox"/>
+<div class="space-y-1">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-md font-semibold text-on-surface task-title">Review acoustic balance &amp; DJ wireless mic frequencies</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[rgba(185,130,101,0.12)] text-[#B98265] font-bold">Due 8 PM</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-on-surface-variant flex-wrap">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_circle</span>
+<span class="text-outline">Manish S.</span>
+</span>
+<span>·</span>
+<span class="text-outline">Function: Sangeet</span>
+<span>·</span>
+<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-tertiary-fixed text-on-tertiary-fixed-variant">To Do</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+<button class="px-2.5 py-1 text-label-md font-label-md rounded border border-[#E6E4DC] hover:border-primary text-primary hover:bg-primary hover:text-white transition-all" onclick="markTaskQuick(this)">
+                  Mark Done
+                </button>
+<button class="p-1 text-outline hover:text-on-surface rounded hover:bg-surface-container-high/40" title="Task Details">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Task 3 -->
+<div class="py-3.5 flex items-start justify-between gap-3 group transition-colors hover:bg-surface-container-low/40 rounded-lg px-2 -mx-2">
+<div class="flex items-start gap-3">
+<input class="mt-1 w-4 h-4 rounded border-[#E6E4DC] text-primary-container focus:ring-primary focus:ring-offset-0 cursor-pointer" onchange="toggleTaskDone(this)" type="checkbox"/>
+<div class="space-y-1">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-md font-semibold text-on-surface task-title">Finalize stage lighting silent generator backup redundancy</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-[rgba(40,89,79,0.1)] text-primary font-bold">Safety Signoff</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-on-surface-variant flex-wrap">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_circle</span>
+<span class="text-outline">Lakshmi S.</span>
+</span>
+<span>·</span>
+<span class="text-outline">Engineering / Leela Ops</span>
+<span>·</span>
+<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-[rgba(185,130,101,0.12)] text-[#B98265]">In Review</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+<button class="px-2.5 py-1 text-label-md font-label-md rounded border border-[#E6E4DC] hover:border-primary text-primary hover:bg-primary hover:text-white transition-all" onclick="markTaskQuick(this)">
+                  Mark Done
+                </button>
+<button class="p-1 text-outline hover:text-on-surface rounded hover:bg-surface-container-high/40" title="Task Details">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Task 4 -->
+<div class="py-3.5 last:pb-0 flex items-start justify-between gap-3 group transition-colors hover:bg-surface-container-low/40 rounded-lg px-2 -mx-2">
+<div class="flex items-start gap-3">
+<input class="mt-1 w-4 h-4 rounded border-[#E6E4DC] text-primary-container focus:ring-primary focus:ring-offset-0 cursor-pointer" onchange="toggleTaskDone(this)" type="checkbox"/>
+<div class="space-y-1">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="text-body-md font-semibold text-on-surface task-title">Approve curated dessert spread tasting list (Kaju Katli &amp; Mysore Pak)</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm uppercase tracking-wider bg-tertiary-fixed text-on-tertiary-fixed-variant">Food &amp; Beverage</span>
+</div>
+<div class="flex items-center gap-3 text-body-sm text-on-surface-variant flex-wrap">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_circle</span>
+<span class="text-outline">Pavithra I.</span>
+</span>
+<span>·</span>
+<span class="text-outline">Anand Sweets &amp; Leela Chef</span>
+<span>·</span>
+<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-tertiary-fixed text-on-tertiary-fixed-variant">Pending Sample</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 opacity-90 group-hover:opacity-100 transition-opacity">
+<button class="px-2.5 py-1 text-label-md font-label-md rounded border border-[#E6E4DC] hover:border-primary text-primary hover:bg-primary hover:text-white transition-all" onclick="markTaskQuick(this)">
+                  Mark Done
+                </button>
+<button class="p-1 text-outline hover:text-on-surface rounded hover:bg-surface-container-high/40" title="Task Details">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Run-of-Show Function Chronology & Stage Milestones -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h2 class="text-headline-md font-headline-md text-primary">Run-of-Show Chronology</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Live temporal sequence of functions, leads, and venue stations</p>
+</div>
+<a class="text-label-md font-label-md text-primary font-semibold hover:underline flex items-center gap-1" href="#run-of-show">
+              Full Cue Timeline <span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+<!-- Chronology Track -->
+<div class="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-[#DFE4DC]">
+<!-- Event 1 (Completed) -->
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-4 h-4 rounded-full bg-primary-container border-2 border-white flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[10px]">check</span>
+</span>
+<div class="p-3.5 bg-surface-container-low/50 rounded-lg border border-[#E6E4DC]">
+<div class="flex items-center justify-between flex-wrap gap-1">
+<span class="text-label-md font-bold text-primary uppercase">Day 1 Completed · Mehendi Welcome</span>
+<span class="text-body-sm text-outline">Yesterday 4:00 PM – 9:00 PM</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface mt-1">Henna Artists, Folk Dholaks &amp; Chaat Counters</p>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Glasshouse Atrium · Host: Pavithra Iyer · 118 Guests logged</p>
+</div>
+</div>
+<!-- Event 2 (Next Immediate Milestone - Copper Accent) -->
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-4 h-4 rounded-full bg-[#B98265] border-2 border-white ring-2 ring-[#B98265]/30"></span>
+<div class="p-3.5 bg-surface-container-lowest rounded-lg border border-[#B98265]/50 copper-cue shadow-sm">
+<div class="flex items-center justify-between flex-wrap gap-1">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-bold text-[#B98265] uppercase">Upcoming · Haldi Ceremony</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-bold bg-[#B98265]/10 text-[#B98265]">T-18H</span>
+</div>
+<span class="text-body-sm font-semibold text-[#B98265]">Tomorrow 10:00 AM – 1:30 PM</span>
+</div>
+<p class="text-body-md font-semibold text-primary mt-1">Yellow Floral Canopies, Organic Turmeric Paste &amp; Coconut Water Cart</p>
+<div class="flex items-center justify-between mt-2 pt-2 border-t border-[#E6E4DC] text-body-sm text-on-surface-variant">
+<span>Courtyard Lawn · Lead: Lakshmi S.</span>
+<span class="font-medium text-primary">DJ &amp; Sound Check: 9:00 AM</span>
+</div>
+</div>
+</div>
+<!-- Event 3 (Sangeet Evening) -->
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-4 h-4 rounded-full bg-outline-variant border-2 border-white"></span>
+<div class="p-3.5 bg-surface-container-lowest rounded-lg border border-[#E6E4DC]">
+<div class="flex items-center justify-between flex-wrap gap-1">
+<span class="text-label-md font-bold text-on-surface-variant uppercase">Sangeet Musical Night</span>
+<span class="text-body-sm text-outline">Tomorrow 7:30 PM – 1:00 AM</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface mt-1">Choreographed Family Dances &amp; Live Band Performance</p>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Grand Ballroom · Host: Manish Sharma · 140 Expected</p>
+</div>
+</div>
+<!-- Event 4 (Muhurtham) -->
+<div class="relative">
+<span class="absolute -left-[27px] top-1 w-4 h-4 rounded-full bg-outline-variant border-2 border-white"></span>
+<div class="p-3.5 bg-surface-container-lowest rounded-lg border border-[#E6E4DC]">
+<div class="flex items-center justify-between flex-wrap gap-1">
+<span class="text-label-md font-bold text-on-surface-variant uppercase">Vedic Muhurtham &amp; Saat Phere</span>
+<span class="text-body-sm text-outline">Feb 20 · 9:15 AM Auspicious Hour</span>
+</div>
+<p class="text-body-md font-semibold text-on-surface mt-1">Traditional South Indian Kanya Daan &amp; Saptapadi</p>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Royal Temple Mandap · Panditji Shastri &amp; Nadaswaram Troupe</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Team Feed & Vendor Settlement Ledger Table (5 cols) -->
+<div class="lg:col-span-5 space-y-6">
+<!-- 1. Recent Workspace Activity & In-App Comments -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h2 class="text-headline-md font-headline-md text-primary">Team Coordination Feed</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Live operations &amp; family @mentions</p>
+</div>
+<button class="text-label-md font-label-md text-primary font-semibold hover:underline flex items-center gap-1" onclick="focusCommentBox()">
+<span class="material-symbols-outlined text-[16px]">add_comment</span>
+<span>Post</span>
+</button>
+</div>
+<!-- Feed Stream -->
+<div class="space-y-3.5" id="activity-feed">
+<!-- Activity 1 -->
+<div class="p-3 rounded-lg bg-surface-container-low/40 border border-[#E6E4DC] text-body-sm space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold flex items-center justify-center">MS</div>
+<span class="font-semibold text-on-surface">Manish Sharma</span>
+</div>
+<span class="text-[11px] text-outline">18m ago</span>
+</div>
+<p class="text-on-surface-variant">
+                Mentioned <span class="text-primary font-semibold bg-primary-fixed/30 px-1 py-0.5 rounded">@Pavithra Iyer</span> on <span class="font-medium text-on-surface">Haldi floral setup</span>:
+                “Floral supplier confirmed 8:00 AM delivery at the Courtyard Gate 2. Yellow marigold arch will be ready by 9:15 AM.”
+              </p>
+</div>
+<!-- Activity 2 -->
+<div class="p-3 rounded-lg bg-surface-container-low/40 border border-[#E6E4DC] text-body-sm space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary-fixed text-on-primary-fixed text-[11px] font-bold flex items-center justify-center">LS</div>
+<span class="font-semibold text-on-surface">Lakshmi S.</span>
+</div>
+<span class="text-[11px] text-outline">1h ago</span>
+</div>
+<p class="text-on-surface-variant">
+                Recorded payment disbursement of <span class="font-bold text-primary">₹1,80,000</span> to <span class="font-medium text-on-surface">Heritage Sound &amp; Light</span> for Sangeet audio-visual stage rig. Receipt uploaded.
+              </p>
+</div>
+<!-- Activity 3 -->
+<div class="p-3 rounded-lg bg-surface-container-low/40 border border-[#E6E4DC] text-body-sm space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-fixed-dim text-on-tertiary-fixed text-[11px] font-bold flex items-center justify-center">PI</div>
+<span class="font-semibold text-on-surface">Pavithra Iyer</span>
+</div>
+<span class="text-[11px] text-outline">2h ago</span>
+</div>
+<p class="text-on-surface-variant">
+                Updated RSVP status for <span class="font-semibold text-on-surface">Vaidyanathan Family (4 guests)</span> from Pending to <span class="text-primary font-bold">Attending All Ceremonies</span>. Airport cab assigned.
+              </p>
+</div>
+</div>
+<!-- Quick Comment Input Box -->
+<div class="mt-4 pt-3 border-t border-[#E6E4DC]">
+<form class="flex items-center gap-2" onsubmit="handleQuickPost(event)">
+<input class="flex-1 bg-white border border-[#E6E4DC] rounded-lg px-3 py-1.5 text-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="quick-comment-input" placeholder="Type a note or @mention family host..." type="text"/>
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary text-label-md font-label-md font-semibold hover:bg-primary transition-colors" type="submit">
+                Send
+              </button>
+</form>
+</div>
+</div>
+<!-- 2. Vendor Settlement Snapshot & Commitment Ledger -->
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-xl p-5 paper-elevated">
+<div class="flex items-center justify-between mb-3">
+<div>
+<h2 class="text-headline-md font-headline-md text-primary">Vendor Settlements</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Committed contracts and outstanding balances</p>
+</div>
+<button class="text-label-md font-label-md text-secondary font-semibold hover:underline flex items-center gap-0.5" onclick="openPaymentModal()">
+<span>+ Record Paid</span>
+</button>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto -mx-5 px-5">
+<table class="w-full text-left text-body-sm">
+<thead>
+<tr class="border-b border-[#E6E4DC] text-outline text-[11px] font-label-sm uppercase tracking-wider">
+<th class="py-2.5 font-bold">Vendor &amp; Scope</th>
+<th class="py-2.5 font-bold text-right">Agreed</th>
+<th class="py-2.5 font-bold text-right">Paid</th>
+<th class="py-2.5 font-bold text-right">Balance</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E6E4DC]" id="vendor-table-rows">
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5">
+<p class="font-semibold text-on-surface">The Leela Catering</p>
+<p class="text-body-sm text-outline">Royal Banquet F&amp;B</p>
+</td>
+<td class="py-2.5 text-right font-medium">₹8,00,000</td>
+<td class="py-2.5 text-right text-primary font-medium">₹6,50,000</td>
+<td class="py-2.5 text-right font-semibold text-secondary">₹1,50,000</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5">
+<p class="font-semibold text-on-surface">Lotus Floral Decors</p>
+<p class="text-body-sm text-outline">Mandap &amp; Lawn Arches</p>
+</td>
+<td class="py-2.5 text-right font-medium">₹4,20,000</td>
+<td class="py-2.5 text-right text-primary font-medium">₹3,50,000</td>
+<td class="py-2.5 text-right font-semibold text-secondary">₹70,000</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5">
+<p class="font-semibold text-on-surface">Heritage Sound &amp; DJ</p>
+<p class="text-body-sm text-outline">Acoustic Rig &amp; Lights</p>
+</td>
+<td class="py-2.5 text-right font-medium">₹2,80,000</td>
+<td class="py-2.5 text-right text-primary font-medium">₹2,80,000</td>
+<td class="py-2.5 text-right font-semibold text-primary">₹0 (Paid)</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5">
+<p class="font-semibold text-on-surface">Stories by Joseph Radhik</p>
+<p class="text-body-sm text-outline">Candid Photography &amp; Film</p>
+</td>
+<td class="py-2.5 text-right font-medium">₹3,00,000</td>
+<td class="py-2.5 text-right text-primary font-medium">₹1,70,000</td>
+<td class="py-2.5 text-right font-semibold text-secondary">₹1,30,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 pt-3 border-t border-[#E6E4DC] flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant font-medium">Net Pending Disbursements</span>
+<span class="text-headline-sm font-headline-sm font-bold text-secondary">₹3,50,000</span>
+</div>
+</div>
+</div>
+</div>
+<!-- STATE PREVIEW TOGGLE BAR (Fixed / Docked at Bottom of Canvas for Review) -->
+<div class="mt-8 pt-4 pb-2 border-t border-[#E6E4DC] flex flex-col sm:flex-row items-center justify-between gap-3 bg-surface-container-low/60 rounded-xl px-5 py-3.5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">tune</span>
+<span class="text-label-md font-label-md text-on-surface font-semibold">State Preview Controller:</span>
+<span class="text-body-sm text-on-surface-variant">Switch dashboard simulation states</span>
+</div>
+<div class="flex items-center gap-2 flex-wrap">
+<button class="px-3 py-1 rounded-lg text-label-md font-label-md font-semibold bg-primary text-white transition-all shadow-sm" id="btn-state-populated" onclick="renderState('populated')">
+          Populated Overview
+        </button>
+<button class="px-3 py-1 rounded-lg text-label-md font-label-md font-semibold bg-surface-container-lowest text-on-surface-variant hover:text-on-surface border border-[#E6E4DC] transition-all" id="btn-state-empty" onclick="renderState('empty')">
+          Empty State
+        </button>
+<button class="px-3 py-1 rounded-lg text-label-md font-label-md font-semibold bg-surface-container-lowest text-secondary hover:text-white hover:bg-secondary border border-secondary transition-all" onclick="simulateToast()">
+          Simulate Error Toast
+        </button>
+</div>
+</div>
+</main>
+<!-- RECORD PAYMENT MODAL (Tactile Physical Paper Stack Overlay) -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs hidden items-center justify-center p-4" id="payment-modal">
+<div class="bg-surface-container-lowest border border-[#E6E4DC] rounded-2xl max-w-md w-full p-6 shadow-[0_12px_32px_-4px_rgba(32,42,41,0.08),0_4px_12px_-2px_rgba(32,42,41,0.04)] animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center justify-between pb-3 border-b border-[#E6E4DC]">
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">Record Vendor Payment</h3>
+<p class="text-body-sm text-on-surface-variant">Instant update to INR ledger</p>
+</div>
+<button class="p-1 text-outline hover:text-on-surface rounded-full hover:bg-surface-container-high/40" onclick="closePaymentModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="mt-4 space-y-4" onsubmit="handlePaymentSubmit(event)">
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">Select Vendor Partner</label>
+<select class="w-full bg-surface-container-lowest border border-[#E6E4DC] rounded-lg px-3 py-2 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="modal-vendor-select">
+<option value="The Leela Catering">The Leela Catering (₹1,50,000 Due)</option>
+<option value="Lotus Floral Decors">Lotus Floral Decors (₹70,000 Due)</option>
+<option value="Stories by Joseph Radhik">Stories by Joseph Radhik (₹1,30,000 Due)</option>
+<option value="Heritage Sound &amp; DJ">Heritage Sound &amp; DJ (₹0 Due - Adhoc)</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">Disbursement Amount (INR)</label>
+<div class="relative">
+<span class="absolute left-3 top-2 text-outline font-semibold">₹</span>
+<input class="w-full bg-surface-container-lowest border border-[#E6E4DC] rounded-lg pl-7 pr-3 py-2 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" id="modal-amount-input" placeholder="50000" required="" type="number"/>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm uppercase tracking-wider text-outline mb-1">Payment Method &amp; Reference</label>
+<input class="w-full bg-surface-container-lowest border border-[#E6E4DC] rounded-lg px-3 py-2 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="RTGS / HDFC Ref #928374921" type="text"/>
+</div>
+<div class="pt-3 border-t border-[#E6E4DC] flex items-center justify-end gap-2.5">
+<button class="px-4 py-2 rounded-lg border border-[#E6E4DC] text-label-md font-semibold text-on-surface-variant hover:bg-surface-container-high/40" onclick="closePaymentModal()" type="button">
+            Cancel
+          </button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-white text-label-md font-semibold hover:bg-primary transition-colors shadow-sm" type="submit">
+            Save Disbursement
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- FLOATING TOAST NOTIFICATION CONTAINER -->
+<div class="fixed bottom-6 right-6 z-50 max-w-sm w-full pointer-events-none space-y-2" id="toast-container"></div>
+<!-- SCRIPT: INTERACTION LOGIC & DYNAMIC STATE CONTROL -->
+<script>
+    // Quick Task Checkbox Interaction
+    function toggleTaskDone(checkbox) {
+      const container = checkbox.closest('.group');
+      const title = container.querySelector('.task-title');
+      if (checkbox.checked) {
+        title.classList.add('line-through', 'text-outline');
+        showToast('Task marked complete!', 'check_circle', 'text-primary');
+      } else {
+        title.classList.remove('line-through', 'text-outline');
+      }
+    }
+
+    function markTaskQuick(btn) {
+      const container = btn.closest('.group');
+      const checkbox = container.querySelector('input[type="checkbox"]');
+      checkbox.checked = !checkbox.checked;
+      toggleTaskDone(checkbox);
+    }
+
+    // Modal Control
+    function openPaymentModal() {
+      const modal = document.getElementById('payment-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePaymentModal() {
+      const modal = document.getElementById('payment-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Handle Payment Submission
+    function handlePaymentSubmit(e) {
+      e.preventDefault();
+      const vendor = document.getElementById('modal-vendor-select').value;
+      const amount = document.getElementById('modal-amount-input').value;
+      
+      closePaymentModal();
+      showToast(`Recorded payment of ₹${Number(amount).toLocaleString('en-IN')} to ${vendor}`, 'payments', 'text-primary');
+
+      // Append to team feed
+      const feed = document.getElementById('activity-feed');
+      const newCard = document.createElement('div');
+      newCard.className = "p-3 rounded-lg bg-surface-container-low/40 border border-[#E6E4DC] text-body-sm space-y-1.5 animate-in fade-in duration-200";
+      newCard.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-primary-container text-white text-[11px] font-bold flex items-center justify-center">PI</div>
+            <span class="font-semibold text-on-surface">Pavithra Iyer</span>
+          </div>
+          <span class="text-[11px] text-outline">Just now</span>
+        </div>
+        <p class="text-on-surface-variant">
+          Recorded adhoc ledger disbursement of <span class="font-bold text-primary">₹${Number(amount).toLocaleString('en-IN')}</span> to <span class="font-medium text-on-surface">${vendor}</span>.
+        </p>
+      `;
+      feed.insertBefore(newCard, feed.firstChild);
+    }
+
+    // Quick Comment Form
+    function focusCommentBox() {
+      const input = document.getElementById('quick-comment-input');
+      input.focus();
+    }
+
+    function handleQuickPost(e) {
+      e.preventDefault();
+      const input = document.getElementById('quick-comment-input');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const feed = document.getElementById('activity-feed');
+      const newCard = document.createElement('div');
+      newCard.className = "p-3 rounded-lg bg-surface-container-low/40 border border-[#E6E4DC] text-body-sm space-y-1.5 animate-in fade-in duration-200";
+      newCard.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-primary-container text-white text-[11px] font-bold flex items-center justify-center">PI</div>
+            <span class="font-semibold text-on-surface">Pavithra Iyer</span>
+          </div>
+          <span class="text-[11px] text-outline">Just now</span>
+        </div>
+        <p class="text-on-surface-variant">${val}</p>
+      `;
+      feed.insertBefore(newCard, feed.firstChild);
+      input.value = '';
+      showToast('Comment posted to team timeline', 'forum', 'text-primary');
+    }
+
+    // State Preview Simulation (Populated vs Empty State)
+    function renderState(state) {
+      const btnPopulated = document.getElementById('btn-state-populated');
+      const btnEmpty = document.getElementById('btn-state-empty');
+      const tasksContainer = document.getElementById('tasks-container');
+
+      if (state === 'empty') {
+        btnEmpty.classList.replace('bg-surface-container-lowest', 'bg-primary');
+        btnEmpty.classList.replace('text-on-surface-variant', 'text-white');
+        btnPopulated.classList.replace('bg-primary', 'bg-surface-container-lowest');
+        btnPopulated.classList.replace('text-white', 'text-on-surface-variant');
+        btnPopulated.classList.add('border', 'border-[#E6E4DC]');
+
+        tasksContainer.innerHTML = `
+          <div class="py-12 text-center space-y-3">
+            <div class="w-12 h-12 rounded-full bg-tertiary-fixed mx-auto flex items-center justify-center text-outline">
+              <span class="material-symbols-outlined text-[24px]">task_alt</span>
+            </div>
+            <div class="max-w-xs mx-auto">
+              <p class="font-headline-md text-headline-md text-on-surface">All caught up!</p>
+              <p class="text-body-sm text-on-surface-variant mt-1">No urgent operational tasks pending for this milestone window.</p>
+            </div>
+            <button onclick="renderState('populated')" class="px-3.5 py-1.5 rounded-lg bg-surface-container-lowest border border-[#E6E4DC] text-label-md font-semibold text-primary hover:bg-surface-container-high/40">
+              Restore Sample Data
+            </button>
+          </div>
+        `;
+        showToast('Switched to clean empty state view', 'visibility', 'text-outline');
+      } else {
+        window.location.reload();
+      }
+    }
+
+    // Toast Notification System
+    function showToast(message, icon = 'info', iconColor = 'text-primary') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = "pointer-events-auto flex items-center gap-3 p-3.5 bg-surface-container-lowest border border-[#E6E4DC] rounded-xl shadow-[0_4px_16px_rgba(32,42,41,0.08)] transform transition-all duration-200 ease-out translate-y-2 opacity-0";
+      toast.innerHTML = `
+        <span class="material-symbols-outlined text-[20px] ${iconColor}">${icon}</span>
+        <span class="text-body-sm font-medium text-on-surface flex-1">${message}</span>
+      `;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 250);
+      }, 4000);
+    }
+
+    function simulateToast() {
+      showToast('Error syncing with payment gateway: Bank server timeout. Please verify transaction manually.', 'error', 'text-error');
+    }
+
+    // Event listener for shortcut additions
+    document.getElementById('add-task-trigger')?.addEventListener('click', () => {
+      const taskName = prompt('Enter urgent task description for Pavithra & Manish\'s Wedding:');
+      if (taskName) {
+        showToast(`Task "${taskName}" queued to Lakshmi S.`, 'add_task', 'text-primary');
+      }
+    });
+
+    document.getElementById('record-disbursement-btn')?.addEventListener('click', openPaymentModal);
+  </script>
+</body></html>

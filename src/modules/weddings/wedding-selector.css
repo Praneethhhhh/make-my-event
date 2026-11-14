@@ -463,3 +463,20 @@
     transform: none;
   }
 }
+
+.wedding-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  min-width: 0;
+}
+.wedding-header-actions .notification-bell,
+.wedding-header-actions .account-dropdown {
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .wedding-header-actions {
+    gap: 4px;
+  }
+}

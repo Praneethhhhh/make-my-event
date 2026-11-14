@@ -137,6 +137,10 @@ test("permanent deletion cascades only the selected wedding and retains account 
     await database.collection(collection).insertMany([
       {
         weddingId: row!._id,
+        ...(collection === "accessLinks" ? { tokenHash: randomUUID() } : {}),
+        ...(collection === "portalSessions"
+          ? { sessionTokenHash: randomUUID() }
+          : {}),
         fixture: true,
         dedupeKey: randomUUID(),
         provider: "fixture-a",
@@ -144,6 +148,10 @@ test("permanent deletion cascades only the selected wedding and retains account 
       },
       {
         weddingId: other!._id,
+        ...(collection === "accessLinks" ? { tokenHash: randomUUID() } : {}),
+        ...(collection === "portalSessions"
+          ? { sessionTokenHash: randomUUID() }
+          : {}),
         fixture: true,
         dedupeKey: randomUUID(),
         provider: "fixture-b",
@@ -348,6 +356,8 @@ for (const width of [390, 1440])
       .click();
     await expect(page).toHaveURL("/weddings");
     await page.getByRole("link", { name: "Open wedding", exact: true }).click();
+    if (width < 961)
+      await page.getByRole("button", { name: "Wedding menu" }).click();
     await page
       .getByRole("link", { name: "Wedding details", exact: true })
       .click();

@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event - Notifications &amp; Task Discussion</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Newsreader & Manrope -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "tertiary-container": "#4d524c",
+            "on-tertiary-fixed": "#181d18",
+            "on-primary-fixed-variant": "#1d4f45",
+            "outline": "#707976",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#434842",
+            "primary-fixed-dim": "#9ed1c4",
+            "secondary-container": "#fdbe9e",
+            "tertiary": "#363b36",
+            "background": "#f7f5f0",
+            "on-secondary-fixed-variant": "#673c24",
+            "surface": "#f7f5f0",
+            "secondary-fixed-dim": "#f7b999",
+            "primary-container": "#28594f",
+            "secondary-fixed": "#ffdbca",
+            "surface-container-high": "#dfeae8",
+            "surface-tint": "#36675c",
+            "inverse-primary": "#9ed1c4",
+            "on-secondary-container": "#794b32",
+            "surface-container": "#e5f0ee",
+            "secondary": "#825339",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "on-tertiary-container": "#c0c5bd",
+            "on-background": "#141d1c",
+            "surface-bright": "#f7f5f0",
+            "error": "#ba1a1a",
+            "on-secondary-fixed": "#321201",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#0b4138",
+            "on-primary-container": "#9bcec1",
+            "surface-variant": "#dae5e3",
+            "inverse-surface": "#283231",
+            "inverse-on-surface": "#e8f3f1",
+            "surface-container-highest": "#dae5e3",
+            "on-primary-fixed": "#00201b",
+            "on-tertiary": "#ffffff",
+            "surface-container-low": "#ebf6f4",
+            "on-surface-variant": "#404946",
+            "on-error": "#ffffff",
+            "on-surface": "#141d1c",
+            "error-container": "#ffdad6",
+            "surface-dim": "#d1dcda",
+            "tertiary-fixed": "#dfe4dc",
+            "outline-variant": "#c0c8c5",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#baeddf"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "body-sm": ["Manrope"],
+            "label-md": ["Manrope"],
+            "display-lg-mobile": ["Newsreader"],
+            "label-sm": ["Manrope"],
+            "display-lg": ["Newsreader"],
+            "headline-sm": ["Manrope"],
+            "body-lg": ["Manrope"],
+            "label-lg": ["Manrope"],
+            "body-md": ["Manrope"]
+          },
+          "fontSize": {
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton-box {
+      background: linear-gradient(90deg, #e5f0ee 25%, #ffffff 50%, #e5f0ee 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Interactive State Switcher Bar (For testing paired states) -->
+<aside class="sticky top-0 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-2 flex flex-wrap items-center justify-between border-b border-outline shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container" data-icon="tune">tune</span>
+<span class="font-label-sm uppercase tracking-wider text-secondary-fixed">Live View States:</span>
+</div>
+<div class="flex flex-wrap gap-1.5 text-xs">
+<button class="px-2.5 py-1 rounded bg-primary-container text-white font-label-sm transition-colors" id="btn-populated" onclick="setState('populated')">Populated (Notifications &amp; Thread)</button>
+<button class="px-2.5 py-1 rounded bg-tertiary-container hover:bg-outline text-inverse-on-surface font-label-sm transition-colors" id="btn-empty-unread" onclick="setState('empty-unread')">Empty Unread</button>
+<button class="px-2.5 py-1 rounded bg-tertiary-container hover:bg-outline text-inverse-on-surface font-label-sm transition-colors" id="btn-empty-history" onclick="setState('empty-history')">Empty All History</button>
+<button class="px-2.5 py-1 rounded bg-tertiary-container hover:bg-outline text-inverse-on-surface font-label-sm transition-colors" id="btn-empty-thread" onclick="setState('empty-thread')">Empty Discussion Thread</button>
+<button class="px-2.5 py-1 rounded bg-tertiary-container hover:bg-outline text-inverse-on-surface font-label-sm transition-colors" id="btn-loading" onclick="setState('loading')">Loading Skeleton</button>
+</div>
+</aside>
+<!-- Shell Wrapper -->
+<div class="flex flex-1 min-h-0 relative">
+<!-- SHARED COMPONENT: SideNavBar (w-56 / 224px fixed grouped sidebar) -->
+<aside class="w-56 min-w-[224px] h-[calc(100vh-41px)] sticky top-[41px] flex flex-col justify-between p-4 border-r border-outline-variant bg-surface select-none">
+<div class="space-y-6">
+<!-- Brand & Wedding Context -->
+<div class="border-b border-outline-variant/60 pb-3">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-primary tracking-tight font-bold">Make My Event</span>
+<span class="text-xs bg-surface-container text-primary font-semibold px-1.5 py-0.5 rounded">ESTATE</span>
+</div>
+<div class="mt-2.5 flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary text-white flex items-center justify-center font-headline-md text-sm font-semibold shadow-inner">
+              P&amp;M
+            </div>
+<div class="leading-tight truncate">
+<p class="font-label-md text-on-surface font-semibold truncate">Pavithra &amp; Manish</p>
+<p class="font-body-sm text-on-surface-variant text-[11px] truncate">Feb 2027 · Estate Wedding</p>
+</div>
+</div>
+</div>
+<!-- Grouped Navigation -->
+<nav aria-label="Main Navigation" class="space-y-4">
+<!-- GROUP: PLANNING -->
+<div>
+<span class="block px-2 text-[10px] font-label-sm uppercase tracking-widest text-outline">PLANNING</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="event_upcoming">event_upcoming</span>
+<span>Functions</span>
+</a>
+<!-- Active Item: Tasks (Hosts the discussion thread and notifications) -->
+<a class="flex items-center gap-3 px-3 py-1.5 text-primary font-title-md bg-surface-container rounded-lg font-semibold" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="checklist" style="font-variation-settings: 'FILL' 1;">checklist</span>
+<span>Tasks</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-secondary"></span>
+</a>
+</div>
+</div>
+<!-- GROUP: PEOPLE -->
+<div>
+<span class="block px-2 text-[10px] font-label-sm uppercase tracking-widest text-outline">PEOPLE</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="group">group</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="storefront">storefront</span>
+<span>Vendors</span>
+</a>
+</div>
+</div>
+<!-- GROUP: MANAGEMENT -->
+<div>
+<span class="block px-2 text-[10px] font-label-sm uppercase tracking-widest text-outline">MANAGEMENT</span>
+<div class="mt-1 space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="payments">payments</span>
+<span>Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="tune">tune</span>
+<span>Wedding details</span>
+</a>
+</div>
+</div>
+</nav>
+</div>
+<!-- Footer SideNav Links & CTA -->
+<div class="pt-4 border-t border-outline-variant/60 space-y-2">
+<button class="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors font-label-sm text-xs font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span>+ Add Event</span>
+</button>
+<div class="pt-1 flex items-center justify-between text-on-surface-variant">
+<a class="flex items-center gap-1.5 px-2 py-1 text-xs hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-1.5 px-2 py-1 text-xs hover:text-on-surface" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="help_outline">help_outline</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Central Canvas -->
+<div class="flex-1 flex flex-col min-w-0 bg-surface">
+<!-- SHARED COMPONENT: TopNavBar -->
+<header class="flex justify-between items-center w-full h-14 px-6 border-b border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-4">
+<span class="text-primary font-title-md font-semibold text-headline-sm tracking-tight">Pavithra &amp; Manish · Feb 2027</span>
+<span class="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm bg-surface-container text-primary">
+            Run of Show Live Workspace
+          </span>
+</div>
+<!-- Trailing Actions & Profile -->
+<div class="flex items-center gap-4">
+<button class="hidden sm:inline-flex items-center gap-1.5 text-xs font-label-md px-3 py-1.5 rounded-lg bg-primary text-white hover:bg-primary/90 transition-colors">
+<span>Create new wedding</span>
+</button>
+<!-- Activity Bell Indicator Button -->
+<div class="relative">
+<button class="p-1.5 rounded-full hover:bg-surface-container text-on-surface-variant relative focus:outline-none focus:ring-2 focus:ring-primary/20" title="Notifications Activity">
+<span class="material-symbols-outlined text-[22px]" data-icon="notifications">notifications</span>
+<!-- Unread badge pill -->
+<span class="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-secondary ring-2 ring-surface-container-lowest" id="top-bell-badge"></span>
+</button>
+</div>
+<!-- User Profile Anchor -->
+<div class="flex items-center gap-2 pl-2 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center font-semibold text-primary text-xs">
+              PI
+            </div>
+<div class="hidden lg:block text-left">
+<p class="font-label-md text-xs font-semibold leading-tight">Pavithra Iyer</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant leading-none">Family Admin</p>
+</div>
+<span class="material-symbols-outlined text-outline text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Page Sub-Header / Context Bar -->
+<section class="px-8 py-5 border-b border-outline-variant/60 flex flex-wrap items-center justify-between gap-4 bg-surface">
+<div>
+<nav class="flex items-center gap-2 text-xs font-body-sm text-on-surface-variant mb-1">
+<span>Planning</span>
+<span>/</span>
+<span>Tasks</span>
+<span>/</span>
+<span class="text-primary font-semibold">Mandap &amp; Banquet Logistics (#TSK-409)</span>
+</nav>
+<h1 class="font-headline-md text-2xl text-on-surface tracking-tight font-serif">
+            Mandap Floral Canopy &amp; Traditional Feast Execution
+          </h1>
+</div>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm bg-primary/10 text-primary border border-primary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            IN PROGRESS · CEREMONY PRIORITY
+          </span>
+<button class="px-3 py-1.5 rounded-lg border border-secondary text-secondary hover:bg-secondary hover:text-white transition-colors text-xs font-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-xs" data-icon="verified">verified</span>
+            Publish Itinerary
+          </button>
+</div>
+</section>
+<!-- Main Dual-Panel Content Workspace -->
+<main class="flex-1 p-6 lg:p-8 max-w-[1440px] w-full mx-auto grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+<!-- ========================================================================= -->
+<!-- SECTION 1: NOTIFICATIONS CENTER (FLAT SINGLE PANEL LIST) -->
+<!-- ========================================================================= -->
+<section class="xl:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl p-5 shadow-[0_1px_3px_rgba(32,42,41,0.04),0_4px_12px_rgba(32,42,41,0.02)] flex flex-col min-h-[640px]">
+<!-- Notifications Header & Activity Refresh -->
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/60">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-md text-xl text-primary font-serif">Activity Center</h2>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-label-sm bg-secondary-fixed text-on-secondary-fixed font-bold" id="unread-counter-badge">
+                3 New
+              </span>
+</div>
+<!-- Explicit idle refresh button -->
+<button class="flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-primary px-2.5 py-1 rounded hover:bg-surface-container transition-colors" onclick="simulateRefresh()" title="Check for delayed updates (idle delivery)">
+<span class="material-symbols-outlined text-[16px]" data-icon="refresh">refresh</span>
+<span class="font-label-sm">Refresh activity</span>
+</button>
+</div>
+<!-- Notification Tabs -->
+<div class="flex items-center gap-2 mt-3 pb-3 border-b border-outline-variant/40">
+<button class="px-3 py-1.5 rounded-md text-xs font-label-md bg-surface-container text-primary font-semibold border border-outline-variant/40" id="tab-unread" onclick="switchTab('unread')">
+              Unread (3)
+            </button>
+<button class="px-3 py-1.5 rounded-md text-xs font-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors" id="tab-history" onclick="switchTab('history')">
+              All history (18)
+            </button>
+<div class="ml-auto text-[11px] text-outline font-body-sm">
+              Manual sync enabled
+            </div>
+</div>
+<!-- NOTIFICATIONS LIST WRAPPER -->
+<div class="flex-1 mt-2">
+<!-- STATE 1: POPULATED LIST VIEW -->
+<div class="space-y-4" id="notif-populated-view">
+<!-- DATE GROUP: TODAY -->
+<div>
+<div class="py-1 px-1 flex items-center justify-between text-[11px] font-label-sm uppercase tracking-wider text-outline">
+<span>Today</span>
+<button class="hover:text-primary lowercase text-[10px] capitalize">Mark day as read</button>
+</div>
+<!-- Row 1: Assignment -->
+<div class="group relative py-3 px-2 rounded-lg hover:bg-surface/70 transition-colors border-b border-outline-variant/30 flex items-start gap-3">
+<div class="relative shrink-0 mt-0.5">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary border border-primary/20 flex items-center justify-center font-semibold text-xs">
+                      MS
+                    </div>
+<!-- Unread copper indicator -->
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-secondary ring-2 ring-white"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1 flex-wrap">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-primary/10 text-primary border border-primary/20">
+                        ASSIGNMENT
+                      </span>
+<span class="text-xs text-outline font-body-sm">12 mins ago</span>
+</div>
+<p class="text-xs text-on-surface leading-snug">
+<strong class="font-semibold text-primary">Manish Sharma</strong> assigned you to
+                      <span class="font-medium text-on-surface">"Mandap floral canopy inspection"</span>.
+                    </p>
+<div class="mt-2 flex items-center gap-4 text-xs font-label-md">
+<a class="text-primary hover:underline flex items-center gap-0.5 font-semibold" href="#thread-card-anchor">
+<span>Open</span>
+<span class="text-xs">→</span>
+</a>
+<button aria-label="Mark as read" class="text-on-surface-variant hover:text-primary flex items-center gap-1 group/btn">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+<span class="text-[11px]">Mark read</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Row 2: Mention -->
+<div class="group relative py-3 px-2 rounded-lg hover:bg-surface/70 transition-colors border-b border-outline-variant/30 flex items-start gap-3">
+<div class="relative shrink-0 mt-0.5">
+<div class="w-8 h-8 rounded-full bg-secondary/15 text-secondary border border-secondary/30 flex items-center justify-center font-semibold text-xs">
+                      LS
+                    </div>
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-secondary ring-2 ring-white"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1 flex-wrap">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-secondary/10 text-secondary border border-secondary/20">
+                        MENTION
+                      </span>
+<span class="text-xs text-outline font-body-sm">Today 10:15 AM</span>
+</div>
+<p class="text-xs text-on-surface leading-snug">
+<strong class="font-semibold text-secondary">Lakshmi Sundaram</strong> mentioned you in 
+                      <span class="font-medium text-on-surface">"Sadya traditional banquet guest headcount"</span>.
+                    </p>
+<div class="mt-2 flex items-center gap-4 text-xs font-label-md">
+<a class="text-primary hover:underline flex items-center gap-0.5 font-semibold" href="#">
+<span>Open</span>
+<span class="text-xs">→</span>
+</a>
+<button aria-label="Mark as read" class="text-on-surface-variant hover:text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+<span class="text-[11px]">Mark read</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Row 3: Payment Recorded -->
+<div class="group relative py-3 px-2 rounded-lg hover:bg-surface/70 transition-colors border-b border-outline-variant/30 flex items-start gap-3">
+<div class="relative shrink-0 mt-0.5">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-tertiary border border-outline-variant flex items-center justify-center font-semibold text-xs">
+                      VS
+                    </div>
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-secondary ring-2 ring-white"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1 flex-wrap">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-surface-container-high text-on-surface-variant border border-outline-variant">
+                        PAYMENT RECORDED
+                      </span>
+<span class="text-xs text-outline font-body-sm">Today 8:40 AM</span>
+</div>
+<p class="text-xs text-on-surface leading-snug">
+<strong class="font-semibold text-on-surface">Veda Sound &amp; Light</strong> advance voucher 
+                      <span class="font-medium text-primary">#REC-8802</span> was verified by Finance.
+                    </p>
+<div class="mt-2 flex items-center gap-4 text-xs font-label-md">
+<a class="text-primary hover:underline flex items-center gap-0.5 font-semibold" href="#">
+<span>Open</span>
+<span class="text-xs">→</span>
+</a>
+<button aria-label="Mark as read" class="text-on-surface-variant hover:text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]" data-icon="check">check</span>
+<span class="text-[11px]">Mark read</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- DATE GROUP: YESTERDAY -->
+<div>
+<div class="py-1 px-1 text-[11px] font-label-sm uppercase tracking-wider text-outline">
+                  Yesterday
+                </div>
+<!-- Row: Yesterday Read Item -->
+<div class="group relative py-3 px-2 rounded-lg hover:bg-surface/70 transition-colors border-b border-outline-variant/30 flex items-start gap-3 opacity-90">
+<div class="shrink-0 mt-0.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant border border-outline-variant flex items-center justify-center font-semibold text-xs">
+                      PS
+                    </div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-secondary/10 text-secondary border border-secondary/20">
+                        MENTION
+                      </span>
+<span class="text-xs text-outline font-body-sm">Yesterday 4:18 PM</span>
+</div>
+<p class="text-xs text-on-surface leading-snug">
+<strong class="font-semibold text-on-surface">Pt. Venkatesh Shastri</strong> tagged you regarding auspicious Muhurtham timing alignments.
+                    </p>
+<div class="mt-2 flex items-center gap-4 text-xs font-label-md">
+<a class="text-primary hover:underline flex items-center gap-0.5 font-semibold" href="#">
+<span>Open</span>
+<span class="text-xs">→</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- DATE GROUP: EARLIER THIS WEEK -->
+<div>
+<div class="py-1 px-1 text-[11px] font-label-sm uppercase tracking-wider text-outline">
+                  Earlier this week
+                </div>
+<div class="group relative py-3 px-2 rounded-lg hover:bg-surface/70 transition-colors flex items-start gap-3 opacity-80">
+<div class="shrink-0 mt-0.5">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary border border-primary/20 flex items-center justify-center font-semibold text-xs">
+                      MS
+                    </div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-sm bg-primary/10 text-primary border border-primary/20">
+                        ASSIGNMENT
+                      </span>
+<span class="text-xs text-outline font-body-sm">Monday 11:00 AM</span>
+</div>
+<p class="text-xs text-on-surface leading-snug">
+                      Updated guest suite allocation list was finalized by <strong class="font-semibold text-primary">Manish Sharma</strong>.
+                    </p>
+<div class="mt-2 flex items-center gap-4 text-xs font-label-md">
+<a class="text-primary hover:underline flex items-center gap-0.5 font-semibold" href="#">
+<span>Open</span>
+<span class="text-xs">→</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- STATE 2: EMPTY UNREAD NOTIFICATIONS -->
+<div class="hidden flex-col items-center justify-center py-16 px-4 text-center" id="notif-empty-unread">
+<div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center text-primary mb-3">
+<span class="material-symbols-outlined text-[28px]" data-icon="task_alt">task_alt</span>
+</div>
+<h3 class="font-headline-sm text-base text-primary font-semibold">You're all caught up!</h3>
+<p class="font-body-md text-xs text-on-surface-variant max-w-xs mt-1 mb-5">
+                No unread notifications right now. Any new mentions or assignments will appear immediately.
+              </p>
+<button class="px-3.5 py-1.5 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors text-xs font-label-md" onclick="switchTab('history')">
+                View all history
+              </button>
+</div>
+<!-- STATE 3: EMPTY ALL HISTORY -->
+<div class="hidden flex-col items-center justify-center py-16 px-4 text-center" id="notif-empty-history">
+<div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center text-secondary mb-3">
+<span class="material-symbols-outlined text-[28px]" data-icon="history_edu">history_edu</span>
+</div>
+<h3 class="font-headline-sm text-base text-secondary font-semibold">A quiet moment.</h3>
+<p class="font-body-md text-xs text-on-surface-variant max-w-xs mt-1">
+                Assignments and mentions for your family celebration will appear here as wedding operations unfold.
+              </p>
+</div>
+<!-- STATE 4: LOADING SKELETON -->
+<div class="hidden space-y-4 pt-2" id="notif-skeleton">
+<div class="w-20 h-3 skeleton-box rounded"></div>
+<div class="py-3 px-2 border-b border-outline-variant/30 flex items-start gap-3">
+<div class="w-8 h-8 rounded-full skeleton-box shrink-0"></div>
+<div class="flex-1 space-y-2">
+<div class="flex gap-2">
+<div class="w-16 h-4 skeleton-box rounded"></div>
+<div class="w-20 h-4 skeleton-box rounded"></div>
+</div>
+<div class="w-3/4 h-3 skeleton-box rounded"></div>
+<div class="w-1/2 h-3 skeleton-box rounded"></div>
+</div>
+</div>
+<div class="py-3 px-2 border-b border-outline-variant/30 flex items-start gap-3">
+<div class="w-8 h-8 rounded-full skeleton-box shrink-0"></div>
+<div class="flex-1 space-y-2">
+<div class="flex gap-2">
+<div class="w-14 h-4 skeleton-box rounded"></div>
+<div class="w-24 h-4 skeleton-box rounded"></div>
+</div>
+<div class="w-5/6 h-3 skeleton-box rounded"></div>
+<div class="w-2/5 h-3 skeleton-box rounded"></div>
+</div>
+</div>
+<div class="py-3 px-2 flex items-start gap-3">
+<div class="w-8 h-8 rounded-full skeleton-box shrink-0"></div>
+<div class="flex-1 space-y-2">
+<div class="flex gap-2">
+<div class="w-24 h-4 skeleton-box rounded"></div>
+<div class="w-16 h-4 skeleton-box rounded"></div>
+</div>
+<div class="w-4/5 h-3 skeleton-box rounded"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Micro-footer info -->
+<div class="pt-3 border-t border-outline-variant/50 text-[11px] text-outline flex items-center justify-between">
+<span>Delivered via Make My Event Dispatch</span>
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+              Family Sync Idle
+            </span>
+</div>
+</section>
+<!-- ========================================================================= -->
+<!-- SECTION 2: TASK DISCUSSION & COORDINATION THREAD -->
+<!-- ========================================================================= -->
+<section class="xl:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl p-5 lg:p-6 shadow-[0_1px_3px_rgba(32,42,41,0.04),0_4px_12px_rgba(32,42,41,0.02)] flex flex-col justify-between min-h-[640px]" id="thread-card-anchor">
+<div>
+<!-- Thread Context Header -->
+<div class="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-outline-variant/60">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-label-sm text-secondary uppercase font-semibold">Discussion Thread</span>
+<span class="text-outline text-xs">·</span>
+<span class="text-xs text-outline font-body-sm">3 Participants</span>
+</div>
+<h2 class="font-headline-md text-xl text-primary font-serif mt-0.5">
+                  Mandap Canopy Clearance &amp; Priest Arrival Timings
+                </h2>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container" title="Subscribe to task updates">
+<span class="material-symbols-outlined text-[18px]" data-icon="bookmark_border">bookmark_border</span>
+</button>
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container" title="Print Run-of-Show cue">
+<span class="material-symbols-outlined text-[18px]" data-icon="print">print</span>
+</button>
+</div>
+</div>
+<!-- CONVERSATION TIMELINE WRAPPER (CHRONOLOGICAL: OLDEST TO NEWEST) -->
+<div class="py-5 space-y-6" id="thread-content">
+<!-- COMMENT 1 (Oldest) -->
+<article class="bg-surface/50 border border-outline-variant/50 rounded-lg p-4 transition-all">
+<!-- Header: Strictly avatar, author info, timestamp, and edit/removal actions in top right -->
+<div class="flex items-start justify-between gap-2 pb-2 mb-2 border-b border-outline-variant/30">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center text-xs font-bold shadow-sm">
+                      PI
+                    </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-label-md font-bold text-on-surface">Pavithra Iyer</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-secondary/10 text-secondary border border-secondary/20">
+                          Host
+                        </span>
+</div>
+<span class="text-[11px] text-outline font-body-sm">Thursday at 2:30 PM</span>
+</div>
+</div>
+<!-- Strict top-right header actions -->
+<div class="flex items-center gap-1 text-outline">
+<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Edit Note">
+<span class="material-symbols-outlined text-[15px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container hover:text-error transition-colors" title="Remove Note">
+<span class="material-symbols-outlined text-[15px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Message Body: Multiline normal block flow, inline highlight tags -->
+<div class="text-[14px] leading-relaxed text-on-surface font-body-md">
+                  I verified with the Courtyard Estate operations team today. The natural jasmine garlands and copper pillars must be completed by 5:00 AM on Sunday so that 
+                  <span class="inline-flex items-center font-medium px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-sm text-xs border border-primary/20 mx-0.5">
+                    @Pt. Venkatesh Shastri
+                  </span>
+                  can commence the purifying Gauri Puja homam without any floral scaffold debris around the sacred fire pit.
+                </div>
+</article>
+<!-- COMMENT 2 -->
+<article class="bg-surface/50 border border-outline-variant/50 rounded-lg p-4 transition-all">
+<div class="flex items-start justify-between gap-2 pb-2 mb-2 border-b border-outline-variant/30">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold shadow-sm">
+                      MS
+                    </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-label-md font-bold text-on-surface">Manish Sharma</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-primary/10 text-primary border border-primary/20">
+                          Lead Coordinator
+                        </span>
+</div>
+<span class="text-[11px] text-outline font-body-sm">Yesterday at 11:14 AM</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-outline">
+<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Edit Note">
+<span class="material-symbols-outlined text-[15px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container hover:text-error transition-colors" title="Remove Note">
+<span class="material-symbols-outlined text-[15px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="text-[14px] leading-relaxed text-on-surface font-body-md">
+                  Noted. I have dispatched the amended schedule directly to the floral vendor lead. 
+                  <span class="inline-flex items-center font-medium px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-xs border border-secondary/30 mx-0.5">
+                    @Lakshmi Sundaram
+                  </span>
+                  will hold the master clearance clipboard at the south gate starting at 4:30 AM to escort the delivery trucks.
+                </div>
+</article>
+<!-- COMMENT 3 (Newest) -->
+<article class="bg-surface-container-lowest border-2 border-primary/20 rounded-lg p-4 shadow-sm transition-all">
+<div class="flex items-start justify-between gap-2 pb-2 mb-2 border-b border-outline-variant/30">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-secondary/20 text-secondary border border-secondary/40 flex items-center justify-center text-xs font-bold shadow-sm">
+                      LS
+                    </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-label-md font-bold text-on-surface">Lakshmi Sundaram</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-surface-container text-on-surface-variant">
+                          Ceremony Host
+                        </span>
+</div>
+<span class="text-[11px] text-outline font-body-sm">Today at 10:15 AM</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-outline">
+<button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Edit Note">
+<span class="material-symbols-outlined text-[15px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container hover:text-error transition-colors" title="Remove Note">
+<span class="material-symbols-outlined text-[15px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="text-[14px] leading-relaxed text-on-surface font-body-md">
+                  Confirmed! We also secured the brass lamps and ghee canisters in the side pavilion. Please ensure 
+                  <span class="inline-flex items-center font-medium px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-sm text-xs border border-primary/20 mx-0.5">
+                    @Manish Sharma
+                  </span>
+                  keeps the guest passage open so the nadaswaram musicians have an unobstructed path when walking down from the villa.
+                </div>
+</article>
+</div>
+<!-- EMPTY CONVERSATION STATE (Shown when no messages exist) -->
+<div class="hidden flex-col items-center justify-center py-14 px-6 text-center border border-dashed border-outline-variant rounded-lg my-4 bg-surface/30" id="thread-empty-state">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary mb-3">
+<span class="material-symbols-outlined text-[24px]" data-icon="forum">forum</span>
+</div>
+<h3 class="font-headline-sm text-base text-primary font-semibold">No discussion notes yet</h3>
+<p class="font-body-md text-xs text-on-surface-variant max-w-sm mt-1 mb-2">
+                Start the conversation with your family co-hosts and coordinators below. All logged updates are preserved in the family archive.
+              </p>
+</div>
+</div>
+<!-- DOCKED COMPOSER (Placed at bottom AFTER conversation flow) -->
+<div class="pt-4 border-t border-outline-variant/60 mt-4 relative">
+<!-- Mention suggestions flyout token popup (Visible only when unresolved '@' is triggered) -->
+<div class="hidden absolute bottom-full mb-2 left-0 w-72 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg z-20 p-1.5" id="mention-suggestions">
+<div class="px-2 py-1 text-[10px] font-label-sm uppercase tracking-wider text-outline border-b border-outline-variant/40">
+                Mention Coordinator / Host
+              </div>
+<div class="mt-1 space-y-0.5">
+<button class="w-full flex items-center gap-2 px-2 py-1.5 rounded hover:bg-surface-container text-left text-xs text-on-surface transition-colors" onclick="insertMention('Manish Sharma')">
+<div class="w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">MS</div>
+<span class="font-medium">Manish Sharma</span>
+<span class="text-[10px] text-outline ml-auto">Lead Coordinator</span>
+</button>
+<button class="w-full flex items-center gap-2 px-2 py-1.5 rounded hover:bg-surface-container text-left text-xs text-on-surface transition-colors" onclick="insertMention('Lakshmi Sundaram')">
+<div class="w-5 h-5 rounded-full bg-secondary text-white text-[10px] font-bold flex items-center justify-center">LS</div>
+<span class="font-medium">Lakshmi Sundaram</span>
+<span class="text-[10px] text-outline ml-auto">Ceremony Host</span>
+</button>
+<button class="w-full flex items-center gap-2 px-2 py-1.5 rounded hover:bg-surface-container text-left text-xs text-on-surface transition-colors" onclick="insertMention('Pt. Venkatesh Shastri')">
+<div class="w-5 h-5 rounded-full bg-tertiary-fixed text-tertiary text-[10px] font-bold flex items-center justify-center">VS</div>
+<span class="font-medium">Pt. Venkatesh Shastri</span>
+<span class="text-[10px] text-outline ml-auto">Priest</span>
+</button>
+</div>
+</div>
+<!-- Multiline Input Text Area -->
+<div class="relative bg-surface rounded-lg border border-outline-variant focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10 transition-all">
+<label class="sr-only" for="task-comment-input">Post a coordination note</label>
+<textarea class="w-full bg-transparent border-0 p-3 text-xs md:text-sm text-on-surface placeholder:text-outline focus:ring-0 resize-none font-body-md" id="task-comment-input" oninput="handleInput(event)" placeholder="Write a message or type '@' to notify a family co-host or vendor..." rows="3"></textarea>
+<!-- Composer Action Tray -->
+<div class="flex items-center justify-between px-3 py-2 border-t border-outline-variant/40 bg-surface/50 rounded-b-lg">
+<div class="flex items-center gap-2 text-outline">
+<button class="hover:text-primary p-1 rounded hover:bg-surface-container transition-colors" onclick="triggerMentionBtn()" title="Mention someone" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="alternate_email">alternate_email</span>
+</button>
+<button class="hover:text-primary p-1 rounded hover:bg-surface-container transition-colors" title="Attach run-of-show attachment" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="attach_file">attach_file</span>
+</button>
+<span class="text-[11px] text-outline font-body-sm pl-1 hidden sm:inline">Normal text mode</span>
+</div>
+<button class="px-4 py-1.5 rounded-lg bg-primary text-white hover:bg-primary/90 text-xs font-label-md font-semibold transition-colors shadow-sm flex items-center gap-1.5" onclick="postMockComment()" type="button">
+<span>Post note</span>
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+</button>
+</div>
+</div>
+<!-- Clear helper notice -->
+<p class="mt-2 text-[11px] text-outline font-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" data-icon="info">info</span>
+<span>Coordinators will receive a notification in their workspace.</span>
+</p>
+</div>
+</section>
+</main>
+<!-- Subdued Page Footer -->
+<footer class="mt-auto px-8 py-4 border-t border-outline-variant bg-surface flex flex-wrap items-center justify-between text-xs text-outline font-body-sm">
+<div class="flex items-center gap-2">
+<span>Make My Event Enterprise</span>
+<span>·</span>
+<span>High-Density Hospitality Architecture</span>
+</div>
+<div>
+<span>Workspace Timezone: Asia/Kolkata (IST)</span>
+</div>
+</footer>
+</div>
+</div>
+<!-- Interactive State Controller Script -->
+<script>
+    // State switcher implementation for demonstration
+    function setState(state) {
+      // Reset button styles
+      ['btn-populated', 'btn-empty-unread', 'btn-empty-history', 'btn-empty-thread', 'btn-loading'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.className = "px-2.5 py-1 rounded bg-tertiary-container hover:bg-outline text-inverse-on-surface font-label-sm transition-colors";
+        }
+      });
+
+      const activeBtn = document.getElementById('btn-' + state);
+      if (activeBtn) {
+        activeBtn.className = "px-2.5 py-1 rounded bg-primary-container text-white font-label-sm transition-colors";
+      }
+
+      // Notification views
+      const notifPop = document.getElementById('notif-populated-view');
+      const notifEmptyUnread = document.getElementById('notif-empty-unread');
+      const notifEmptyHistory = document.getElementById('notif-empty-history');
+      const notifSkeleton = document.getElementById('notif-skeleton');
+      const tabUnread = document.getElementById('tab-unread');
+      const tabHistory = document.getElementById('tab-history');
+      const unreadBadge = document.getElementById('unread-counter-badge');
+      const topBadge = document.getElementById('top-bell-badge');
+
+      // Discussion views
+      const threadContent = document.getElementById('thread-content');
+      const threadEmptyState = document.getElementById('thread-empty-state');
+
+      // Reset default displays
+      notifPop.classList.add('hidden');
+      notifEmptyUnread.classList.add('hidden');
+      notifEmptyHistory.classList.add('hidden');
+      notifSkeleton.classList.add('hidden');
+
+      threadContent.classList.remove('hidden');
+      threadEmptyState.classList.add('hidden');
+
+      if (state === 'populated') {
+        notifPop.classList.remove('hidden');
+        tabUnread.textContent = 'Unread (3)';
+        tabUnread.className = "px-3 py-1.5 rounded-md text-xs font-label-md bg-surface-container text-primary font-semibold border border-outline-variant/40";
+        tabHistory.className = "px-3 py-1.5 rounded-md text-xs font-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors";
+        unreadBadge.style.display = 'inline-block';
+        if (topBadge) topBadge.style.display = 'block';
+      } 
+      else if (state === 'empty-unread') {
+        notifEmptyUnread.classList.remove('hidden');
+        tabUnread.textContent = 'Unread (0)';
+        tabUnread.className = "px-3 py-1.5 rounded-md text-xs font-label-md bg-surface-container text-primary font-semibold border border-outline-variant/40";
+        tabHistory.className = "px-3 py-1.5 rounded-md text-xs font-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors";
+        unreadBadge.style.display = 'none';
+        if (topBadge) topBadge.style.display = 'none';
+      } 
+      else if (state === 'empty-history') {
+        notifEmptyHistory.classList.remove('hidden');
+        tabUnread.textContent = 'Unread (0)';
+        tabHistory.className = "px-3 py-1.5 rounded-md text-xs font-label-md bg-surface-container text-primary font-semibold border border-outline-variant/40";
+        tabUnread.className = "px-3 py-1.5 rounded-md text-xs font-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors";
+        unreadBadge.style.display = 'none';
+        if (topBadge) topBadge.style.display = 'none';
+      } 
+      else if (state === 'empty-thread') {
+        notifPop.classList.remove('hidden');
+        threadContent.classList.add('hidden');
+        threadEmptyState.classList.remove('hidden');
+      } 
+      else if (state === 'loading') {
+        notifSkeleton.classList.remove('hidden');
+      }
+    }
+
+    // Tab Switcher between Unread and All History
+    function switchTab(type) {
+      if (type === 'unread') {
+        setState('populated');
+      } else {
+        const notifPop = document.getElementById('notif-populated-view');
+        const notifEmptyUnread = document.getElementById('notif-empty-unread');
+        const notifEmptyHistory = document.getElementById('notif-empty-history');
+        const notifSkeleton = document.getElementById('notif-skeleton');
+        const tabUnread = document.getElementById('tab-unread');
+        const tabHistory = document.getElementById('tab-history');
+
+        notifEmptyUnread.classList.add('hidden');
+        notifEmptyHistory.classList.add('hidden');
+        notifSkeleton.classList.add('hidden');
+        notifPop.classList.remove('hidden');
+
+        tabHistory.className = "px-3 py-1.5 rounded-md text-xs font-label-md bg-surface-container text-primary font-semibold border border-outline-variant/40";
+        tabUnread.className = "px-3 py-1.5 rounded-md text-xs font-label-md text-on-surface-variant hover:bg-surface-container-low transition-colors";
+      }
+    }
+
+    // Refresh simulation with brief loading state
+    function simulateRefresh() {
+      const currentPop = !document.getElementById('notif-populated-view').classList.contains('hidden');
+      document.getElementById('notif-populated-view').classList.add('hidden');
+      document.getElementById('notif-empty-unread').classList.add('hidden');
+      document.getElementById('notif-skeleton').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('notif-skeleton').classList.add('hidden');
+        if (currentPop) {
+          document.getElementById('notif-populated-view').classList.remove('hidden');
+        } else {
+          document.getElementById('notif-empty-unread').classList.remove('hidden');
+        }
+      }, 450);
+    }
+
+    // Mention trigger detection
+    function handleInput(e) {
+      const val = e.target.value;
+      const suggestions = document.getElementById('mention-suggestions');
+      const cursor = e.target.selectionStart;
+      const lastChar = val.slice(cursor - 1, cursor);
+      if (lastChar === '@') {
+        suggestions.classList.remove('hidden');
+      } else if (lastChar === ' ' || val.trim() === '') {
+        suggestions.classList.add('hidden');
+      }
+    }
+
+    function triggerMentionBtn() {
+      const input = document.getElementById('task-comment-input');
+      input.value += '@';
+      input.focus();
+      document.getElementById('mention-suggestions').classList.remove('hidden');
+    }
+
+    function insertMention(name) {
+      const input = document.getElementById('task-comment-input');
+      const currentVal = input.value;
+      // replace trailing @ if present
+      if (currentVal.endsWith('@')) {
+        input.value = currentVal.slice(0, -1) + '@' + name + ' ';
+      } else {
+        input.value += '@' + name + ' ';
+      }
+      document.getElementById('mention-suggestions').classList.add('hidden');
+      input.focus();
+    }
+
+    function postMockComment() {
+      const input = document.getElementById('task-comment-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const thread = document.getElementById('thread-content');
+      const emptyState = document.getElementById('thread-empty-state');
+      
+      emptyState.classList.add('hidden');
+      thread.classList.remove('hidden');
+
+      // Create new comment element
+      const article = document.createElement('article');
+      article.className = "bg-surface-container-lowest border border-outline-variant/60 rounded-lg p-4 shadow-sm transition-all";
+      
+      // Parse @mentions into inline highlight chips
+      const parsedText = text.replace(/(@[A-Za-z0-9_.\s]+?)(?=\s|$)/g, '<span class="inline-flex items-center font-medium px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-sm text-xs border border-primary/20 mx-0.5">$1</span>');
+
+      article.innerHTML = `
+        <div class="flex items-start justify-between gap-2 pb-2 mb-2 border-b border-outline-variant/30">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold shadow-sm">
+              PI
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-label-md font-bold text-on-surface">Pavithra Iyer</span>
+                <span class="px-1.5 py-0.2 rounded text-[10px] font-label-sm uppercase bg-primary/10 text-primary border border-primary/20">
+                  Family Admin
+                </span>
+              </div>
+              <span class="text-[11px] text-outline font-body-sm">Just now</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 text-outline">
+            <button class="p-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors" title="Edit Note">
+              <span class="material-symbols-outlined text-[15px]" data-icon="edit">edit</span>
+            </button>
+            <button class="p-1 rounded hover:bg-surface-container hover:text-error transition-colors" title="Remove Note">
+              <span class="material-symbols-outlined text-[15px]" data-icon="delete">delete</span>
+            </button>
+          </div>
+        </div>
+        <div class="text-[14px] leading-relaxed text-on-surface font-body-md">
+          ${parsedText}
+        </div>
+      `;
+
+      thread.appendChild(article);
+      input.value = '';
+      article.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body></html>

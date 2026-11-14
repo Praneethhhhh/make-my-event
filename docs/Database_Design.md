@@ -1,5 +1,14 @@
 # MAKE MY EVENT
 
+**14 November 2026 approved redesign:** Tasks retain assigneeUserId as required active human owner on writes and add independent optional vendorId. Legacy vendor-only/ownerless rows remain readable until reassigned. Mentions store field/userId/start/end ranges and derive notifications from assignment/new mention changes. Vendors add controlled color; vendorAssignments are historical only. expenses.modelVersion=2 stores real obligations with optional vendorId and status ACTIVE/VOID; expensePayments stores expenseId, expenseSource (expenses/vendorCharges), amountPaise, paidAt, method/notes, status POSTED/VOID and revision. Legacy paid expenses produce virtual settled payments only while not converted; never count them twice. Include expensePayments in wedding cascade. Migration is explicit, backed up, reconciled and tested before retained-data application. See [implementation plan](OPERATIONS_REDESIGN_PLAN.md).
+
+**14 November 2026 product decision:** Vendors have no application access: no portal, private URLs, capability sessions, self-service task completion or vendor/photographer uploads. Administrators and organizers maintain vendor contacts, responsibilities, task status, charges and payments internally. Guest invitation access is unchanged. Google Places discovery remains deferred. Any earlier design exports or historical test notes describing vendor access are superseded.
+
+
+**Phase 2 amendment — 13 November 2026:** Places discovery is deferred. Add `notifications`: weddingId, recipientUserId, actorUserId, taskId, commentId, createdAt, readAt (nullable). Unique `(weddingId,commentId,recipientUserId)` deduplicates mentions; index `(weddingId,recipientUserId,readAt,_id)` supports unread/history. Author/task labels are resolved only for authorized reads. Include notifications in tenant deletion. Tasks/vendors/financial entries gain positive integer revision for stale-edit protection; financial create requests use persisted idempotency keys. Historical Google requirements below are deferred reference, not a dependency. See [plan](PHASE_2_OPERATIONS_PLAN.md).
+
+Implemented operations use tasks/taskComments/vendors/expenses/expensePayments and notifications; vendorCharges/vendorPayments remain legacy-compatible sources and vendorAssignments are historical only. Comments are revisioned and recipient/comment pairs deduplicate notifications. All management writes coordinate on the wedding document and revalidate membership transactionally. Vendor access has been removed. Legacy vendor accessLinks/portalSessions are inert and retained only for historical cleanup; they grant no access. Guest capability collection plans remain guest-only.
+
 ## Database Design Document — Version 1.0
 
 **Status:** Implementation-ready design proposal; subject to security testing and architecture approval  
@@ -9,7 +18,7 @@
 **Architecture:** Multi-tenant modular monolith, multiple wedding memberships per management account
 **Initial sizing assumption:** Up to ~200 guest recipients per wedding; multiple independent wedding tenants
 
-> **Design rule:** A **wedding** is the tenant. All management users in that wedding share operational data. Guests and vendors do not have accounts: their individually scoped, revocable private links authorize narrow portal access. We store **actual expenses and payments**, never planned budgets. Photos are made visible after technical validation, **without human moderation**.
+> **Design rule:** A **wedding** is the tenant. All management users in that wedding share operational data. Guests have revocable invitation links without accounts. Vendors have no application access. We store **actual expenses and payments**, never planned budgets. Photos are made visible after technical validation, **without human moderation**.
 
 **12 November 2026 implementation amendment:** The schema/index changes below support multiple wedding memberships and admin-revealed/manual invitation codes. The guarded migration has been applied to the development database without removing business records. Other environments must apply it before accepting multi-wedding writes. Follow [the coordinated migration and rollback plan](MULTI_WEDDING_AND_INVITATION_CODES_PLAN.md#4-persistence-secret-lifetime-and-migration).
 
@@ -31,7 +40,7 @@ This document specifies the MongoDB persistence design needed to implement the a
 
 **In scope:** Admin/organizer identities and roles; wedding setup and functions; tasks and comments; guest invitation/RVSP; vendor directory, assignments and charges; manual expense/payment tracking; Resend email outbox and daily reminders; R2 photo metadata and upload states; audit records, rate-limit counters, Google Places usage tracking.
 
-**Out of scope:** Private organizer financial records, budget allocations, payment gateways, vendor bookings, guest/vendor authentication, Google OAuth, mandatory signup email verification, manually approved photo queues, public wedding profiles, and permanent Google Places listing caches.
+**Out of scope:** Private organizer financial records, budget allocations, payment gateways, vendor bookings, guest authentication, Google OAuth, mandatory signup email verification, manually approved photo queues, public wedding profiles, and permanent Google Places listing caches.
 
 ### 1.1 Binding choices versus technical defaults
 
@@ -41,7 +50,7 @@ This document specifies the MongoDB persistence design needed to implement the a
 | Isolation                       | `weddingId` is the canonical tenant key                                                                          | Approved architecture                        |
 | Management members              | Multiple weddings per account; one lifetime membership row per `(weddingId,userId)` with per-wedding role/status | Updated product direction; migration pending |
 | Management authentication       | Custom email/password, opaque DB-backed sessions                                                                 | Approved architecture                        |
-| Guest/vendor access             | Unique private bearer links; no accounts                                                                         | Approved product rule                        |
+| Guest access             | Unique private bearer links; no accounts                                                                         | Approved product rule                        |
 | Finance                         | Standalone expenses + vendor charges/payments; no budgets                                                        | Approved product rule                        |
 | Photography                     | Immediate publication after technical checks; no review queue                                                    | Approved product rule                        |
 | Email                           | Resend, Mongo outbox, bounded immediate sending, daily Vercel Cron                                               | Approved architecture                        |
@@ -105,7 +114,7 @@ flowchart TD
     W --> AU[Audit events]
 ```
 
-**Cardinality overview:** Wedding 1:N functions, memberships, guests, vendors, tasks, expenses, photos, outbox rows; user 0:N wedding memberships, with one row per wedding/user pair; guest 1:N function invitations; function 1:N function invitations, tasks and photos; vendor 1:N assignments and charges; charge 1:N payments; access link 1:N short-lived portal sessions. A photographer is a vendor with authorized upload scope, not an independently authenticated user.
+**Cardinality overview:** Wedding 1:N functions, memberships, guests, vendors, tasks, expenses, photos, outbox rows; user 0:N wedding memberships, with one row per wedding/user pair; guest 1:N function invitations; function 1:N function invitations, tasks and photos; vendor 1:N assignments and charges; charge 1:N payments; access link 1:N short-lived portal sessions. Photographers may be internal vendor records but have no upload or application capability.
 
 ## 4. Collection inventory
 
@@ -120,14 +129,16 @@ flowchart TD
 | `functions`           | Domain        | Wedding functions, schedule and venue                                                         |
 | `tasks`               | Domain        | Organizer/vendor work and Kanban state                                                        |
 | `taskComments`        | Domain        | Collaboration and @mentions                                                                   |
+| `notifications`       | Domain        | Recipient-only in-app task mentions, unread/read history                                       |
 | `guests`              | Domain        | Guest/family-head contact and preferences                                                     |
 | `functionInvitations` | Domain        | Recipient-to-function access, RSVP, headcount and deadline                                    |
-| `vendors`             | Domain        | Vendor directory and own portal information                                                   |
-| `vendorAssignments`   | Domain        | Vendor responsibilities per function                                                          |
+| `vendors`             | Domain        | Internal vendor contacts and responsibilities                                                   |
+| `vendorAssignments`   | Domain        | Historical vendor/function responsibility records (no writes)                                                          |
 | `vendorCharges`       | Finance       | Agreed vendor financial obligations                                                           |
 | `vendorPayments`      | Finance       | Actual payment records against a charge                                                       |
-| `expenses`            | Finance       | Other paid expenses, without vendor-payment duplication                                       |
-| `accessLinks`         | Security      | Revocable private guest/vendor capability links                                               |
+| `expenses` | Finance | Real obligations (modelVersion 2) plus preserved legacy paid expense rows |
+| `expensePayments` | Finance | Scoped full/partial payments against expenses or legacy charges; correction history |
+| `accessLinks`         | Security      | Revocable private guest capability links; legacy vendor rows inert                                               |
 | `portalSessions`      | Security      | Limited-scope sessions after private-link exchange                                            |
 | `photos`              | Media         | R2 object references and technical publication state                                          |
 | `emailOutbox`         | Jobs          | Invitations/reminders, queue and provider status                                              |
@@ -251,15 +262,19 @@ Invitations also store `creationKey`/`requestHash`, `failedAttempts`, `emailStat
 
 ### 6.2 `tasks`
 
-`weddingId`, `functionId?`, `title`, `description?`, `assigneeType: USER|VENDOR|UNASSIGNED`, `assigneeUserId?`, `assigneeVendorId?`, `status: TODO|IN_PROGRESS|COMPLETED`, `priority: LOW|NORMAL|HIGH`, `dueAt?`, `sortOrder?`, `completedAt?`, `createdByUserId`, `deletedAt?`, timestamps.
+`weddingId`, optional `functionId`, bounded `title` (160)/`description` (4000), required active `assigneeUserId` on new/edited rows, compatibility `assigneeType: USER`, `assigneeVendorId: null`, independent optional `vendorId`, `mentions[]: {userId,field:title|description,start,end}` (bounded UTF-16 text ranges), status TODO/IN_PROGRESS/COMPLETED, priority LOW/NORMAL/HIGH, dueAt/completedAt, revision, creator, deletedAt and timestamps.
 
-**Invariants:** Exactly one assignee reference when type is USER or VENDOR; function and assignee must belong to the same wedding. Vendor may transition **only its assigned task to COMPLETED**, not edit title, deadline, payment or other tasks.
+All references are same-wedding validated. Owner must be an active manager. Retain an unchanged archived function or existing inactive vendor reference; new links require active records. Legacy ownerless/vendor-only documents are not rewritten or guessed: DTOs show Needs an owner and optional historical vendor context. Mutations require a UUID creationKey, persisted through scoped idempotencyRecords; revision guards edits. Task and new assignment/mention notifications share the wedding-locked transaction.
 
-**Indexes:** `{ weddingId: 1, status: 1, dueAt: 1 }`; `{ weddingId: 1, functionId: 1, status: 1 }`; `{ weddingId: 1, assigneeVendorId: 1, status: 1 }`; `{ weddingId: 1, assigneeUserId: 1, status: 1 }`.
+Indexes include `{weddingId:1,_id:-1}` and `{weddingId:1,deletedAt:1,status:1,assigneeUserId:1,_id:-1}`. Filters and status counts run before pagination.
 
 ### 6.3 `taskComments`
 
-`weddingId`, `taskId`, `authorUserId`, `body` (bounded plain/sanitized text), `mentionedUserIds[]` (bounded ObjectId array), `createdAt`, `updatedAt`, `deletedAt?`. Guest/vendor comments are not part of v1. Index `{ weddingId: 1, taskId: 1, createdAt: 1 }`. Verify that task and mentioned users are same-wedding records before writing.
+`weddingId`, `taskId`, `authorUserId`, `body` (bounded plain/sanitized text), `mentionedUserIds[]` (bounded ObjectId array), optional `mentionRanges[]: {userId,start,end}` for inline editing, `createdAt`, `updatedAt`, `deletedAt?`. Guest comments are not part of v1. Index `{ weddingId: 1, taskId: 1, createdAt: 1 }`. Verify that task and mentioned users are same-wedding records before writing.
+
+### 6.4 `notifications`
+
+Recipient-owned wedding rows contain actorUserId, recipientUserId, taskId, optional commentId, kind ASSIGNED/TASK_MENTION/ASSIGNED_MENTION (legacy comment mention rows remain valid), targetType TASK for task events, eventKey `task:<taskId>:<revision>`, createdAt/readAt and revision. New task events have null commentId. Unique partial `{weddingId,eventKey,recipientUserId}` covers string event keys; unique partial `{weddingId,commentId,recipientUserId}` covers ObjectId comments. Startup installs the replacement comment constraint before retiring its old all-row counterpart, preserving comment deduplication while allowing multiple task events. No data is deleted by that index transition. Actor/target previews are resolved only for scoped, available targets.
 
 ## 7. Guest invitation and RSVP schemas
 
@@ -334,15 +349,13 @@ Invitations also store `creationKey`/`requestHash`, `failedAttempts`, `emailStat
 
 ### 8.1 `vendors`
 
-`weddingId`, `name`, `category`, `phones[]` (bounded 1..5), `email?`, `internalNotes?` (management only), `googlePlaceId?` (allowed persistent Places reference), `status: ACTIVE|INACTIVE`, `createdByUserId`, timestamps.
+`weddingId`, `name`, `category`, `phones[]` (1..5), `internalNotes`, `color: forest|copper|marigold|rose|plum|slate`, status ACTIVE/INACTIVE, creator, revision and timestamps. Color is required for new/edited vendors; missing legacy color renders neutral. Legacy email/place fields are preserved as history but are not new form/API inputs. Discovery is deferred. No vendor capabilities/accounts.
 
-**Indexes:** `{ weddingId: 1, category: 1, name: 1 }`; optional sparse `{ weddingId: 1, googlePlaceId: 1 }` (not unique by default: one business could be recorded in different internal roles). Store **organizer-owned** vendor details; do not retain a Google Places search-result cache in the vendor collection. Google `placeId` may be retained as allowed, and fresh permitted details may be fetched for display with required attribution.
+### 8.2 `vendorAssignments` — historical only
 
-### 8.2 `vendorAssignments`
+Retain existing wedding/vendor/function responsibility records and their unique index/cascade cleanup. No new assignment UI, route or service is exposed. Optional task vendorId replaces the operational need to assign a function to a vendor.
 
-`weddingId`, `vendorId`, `functionId`, `responsibilities[]` (bounded list of text items), `startsAt?`, `endsAt?`, `notes?`, `status: ACTIVE|COMPLETED|CANCELLED`, timestamps. Unique `{ weddingId: 1, vendorId: 1, functionId: 1 }` for one assignment record per vendor/function. A vendor can have many assignments in different functions. Assigned `tasks` remain separate documents.
-
-### 8.3 `vendorCharges`
+### 8.3 `vendorCharges` — legacy compatibility source
 
 | Field                                 | Type / constraints    | Meaning                                              |
 | ------------------------------------- | --------------------- | ---------------------------------------------------- |
@@ -358,7 +371,7 @@ Invitations also store `creationKey`/`requestHash`, `failedAttempts`, `emailStat
 
 **Indexes:** `{ weddingId: 1, vendorId: 1, status: 1 }`; `{ weddingId: 1, functionId: 1, status: 1 }`. Charge is not included in **actual spent** until payments have been recorded.
 
-### 8.4 `vendorPayments`
+### 8.4 `vendorPayments` — legacy compatibility source
 
 `weddingId`, `vendorId`, `chargeId`, `amountPaise` (safe positive integer), `paidAt` (UTC Date), `paymentMethod?` (e.g. CASH/UPI/BANK/OTHER, informational only), `reference?`, `notes?`, `status: POSTED|VOID`, `createdByUserId`, `voidedByUserId?`, `voidReason?`, `createdAt`, `updatedAt`, `idempotencyKey?`.
 
@@ -366,26 +379,17 @@ Invitations also store `creationKey`/`requestHash`, `failedAttempts`, `emailStat
 
 **Invariants:** Payment, vendor and charge must all belong to the same wedding, and payment's vendor must match the charge vendor. A POSTED payment must be positive. A charge with POSTED payments cannot be voided or reduced below the posted total without first correcting/voiding the associated payments. If enforcing no overpayment, compute existing POSTED sum and atomically/transactionally prevent total paid exceeding charge `amountPaise`. Never simply subtract from a cached balance without concurrency protection. Editing or deleting an existing payment should use **void + replacement with audit**, not silently rewrite history.
 
-### 8.5 `expenses` (non-vendor standalone paid expenses)
+### 8.5 `expenses` and `expensePayments`
 
-`weddingId`, `functionId?`, `category`, `description`, `amountPaise` (safe positive integer), `paidAt`, `notes?`, `status: POSTED|VOID`, `createdByUserId`, `voidedByUserId?`, `voidReason?`, timestamps, `idempotencyKey?`.
+New expenses use `modelVersion:2`, weddingId, optional vendorId, description/category/notes, integer positive amountPaise (at most 10,000,000,000), currency INR, status ACTIVE/VOID, revision, creator, timestamps and correction metadata. They represent obligations, not paid money. Legacy rows without modelVersion 2 retain their POSTED/VOID paid-expense meaning.
 
-**Indexes:** `{ weddingId: 1, status: 1, paidAt: -1 }`; `{ weddingId: 1, functionId: 1, status: 1 }`; unique partial `{ weddingId: 1, idempotencyKey: 1 }`.
+`expensePayments` stores weddingId, expenseId, expenseSource (`expenses` or unmigrated `vendorCharges`), server-derived optional vendorId, amountPaise, currency INR, paidAt, paymentMethod CASH/UPI/BANK/OTHER, notes, status POSTED/VOID, revision, creator/timestamps and correction metadata. Payment reference, source and tenant must match an active cost. Date conversion includes the wedding-time-zone precondition. Index `{weddingId:1,expenseSource:1,expenseId:1,status:1}` supports serialized balance checks; `{weddingId:1,_id:-1}` supports tenant inventory. Add this collection to permanent wedding deletion and isolation fixtures.
 
-**No double counting:** Vendor cash payments go to `vendorPayments`, not again into `expenses`. `expenses` is for other actual paid costs. A direct vendor payment without a charge should first create a charge, or be deliberately recorded as a standalone expense instead—not both.
+### 8.6 Financial definitions and legacy compatibility
 
-### 8.6 Financial definitions and query formulas
+Actual paid sums POSTED expensePayments + unmigrated POSTED vendorPayments + unmigrated legacy POSTED expenses once. Outstanding sums remaining amounts of active v2 expenses and unmigrated active vendorCharges. Legacy paid expenses project as settled costs plus virtual payment rows and contribute zero outstanding. Ledger cursors include source plus ID so equal IDs in different collections never collide. Monetary corrections retain original rows, actors and reasons.
 
-| Display figure            | Formula                                                                                |
-| ------------------------- | -------------------------------------------------------------------------------------- |
-| Actual total paid         | `SUM(POSTED expenses.amountPaise) + SUM(POSTED vendorPayments.amountPaise)`            |
-| Vendor agreed             | `SUM(ACTIVE vendorCharges.amountPaise)` for that vendor                                |
-| Vendor paid               | `SUM(POSTED vendorPayments.amountPaise)` for that vendor's active charge scope         |
-| Vendor outstanding        | `MAX(0, Vendor agreed − Vendor paid)`; investigate any negative discrepancy            |
-| Function actual paid      | Standalone expenses with function + vendor payments through charges linked to function |
-| Total agreed but not paid | Active charges minus their posted payments; **not actual spent**                       |
-
-Money is stored as whole-number paise; display rupees using locale-aware formatting. Refunds, discounts, overpayments, multi-currency, and split-family contributions are not modeled in v1. Decide a simple correction/void policy rather than quietly introducing negative payments.
+Optional `scripts/migrate-finance-v2.mjs` defaults to selected-wedding dry run. Apply requires exact current title/revision and a new BSON backup directory. A coordinationVersion precondition rejects changes after backup. Within the wedding lock it creates deterministic v2 target IDs, preserves legacy source documents with migratedTo markers, retargets any new payments against legacy charges and reconciles paid/outstanding before commit. Legacy readers exclude migrated sources; old writers reject migrated references. No retained-data apply is part of normal UI deployment.
 
 ### 8.7 Recommended transaction boundaries
 
@@ -394,29 +398,29 @@ Money is stored as whole-number paise; display rupees using locale-aware formatt
 - Voiding/replacing payment: transaction with audit event and valid recalculation.
 - Expense edit after posting: prefer `VOID` followed by new entry and audit, avoiding historical ambiguity.
 
-## 9. Guest/vendor private access and upload schemas
+## 9. Guest private access and upload schemas
 
 ### 9.1 `accessLinks`
 
-`weddingId`, `subjectType: GUEST|VENDOR`, `guestId?`, `vendorId?`, `tokenHash` (unique), `encryptedSecret?`, `secretNonce?`, `secretAuthTag?`, `secretKeyVersion?`, `status: ACTIVE|REVOKED`, `createdAt`, `rotatedAt?`, `revokedAt?`, `expiresAt?`, `lastUsedAt?`, `createdByUserId`.
+`weddingId`, `subjectType: GUEST`, `guestId`, `tokenHash` (unique), `encryptedSecret?`, `secretNonce?`, `secretAuthTag?`, `secretKeyVersion?`, `status: ACTIVE|REVOKED`, `createdAt`, `rotatedAt?`, `revokedAt?`, `expiresAt?`, `lastUsedAt?`, `createdByUserId`.
 
-**Indexes:** unique `{ tokenHash: 1 }`; `{ weddingId: 1, subjectType: 1, status: 1 }`; unique partial active `{ weddingId: 1, guestId: 1, status: 1 }` for GUEST and similarly vendor, if policy is _one active link per recipient_. If the app supports several simultaneous links later, remove this limit deliberately.
+**Indexes:** unique `{ tokenHash: 1 }`; `{ weddingId: 1, subjectType: 1, status: 1 }`; unique partial active `{ weddingId: 1, guestId: 1, status: 1 }` for GUEST if policy is _one active link per recipient_. If the app supports several simultaneous links later, remove this limit deliberately.
 
 Create cryptographically secure random secrets (at least 256 bits). Store a one-way `tokenHash` for lookup and validation. Where an existing private URL must be copied or resent, also store the same secret separately encrypted with AES-256-GCM. Store a unique nonce, authentication tag, and key version with the ciphertext; keep encryption keys outside MongoDB and source control. Authorized management copy actions and the email sender may decrypt only the currently active link. Outbox rows, logs, audit metadata, webhooks, analytics, and ordinary portal responses must never contain plaintext secrets or signed URLs. Rotate/revoke old links and portal sessions together. Key rotation requires a controlled re-encryption procedure; loss of an old key makes its encrypted secrets unrecoverable, so key backup and access control are operational requirements. A stolen link still grants its scoped capability until revocation, and authorized reveal must use `no-store` responses and audit without recording the secret.
 
 ### 9.2 `portalSessions`
 
-`weddingId`, `linkId`, `subjectType`, `guestId?`, `vendorId?`, `sessionTokenHash` (unique), `expiresAt`, `revokedAt?`, `createdAt`, `lastSeenAt`. TTL on `expiresAt` and immediate server expiry check. Opening `/invite/{secret}` or `/vendor/{secret}` verifies the link, creates a limited-scope cookie session, and redirects to a token-free URL. Revoking/rotating an `accessLinks` row must also invalidate sessions tied to that link (or enforce link status at every request).
+`weddingId`, `linkId`, `subjectType`, `guestId`, `sessionTokenHash` (unique), `expiresAt`, `revokedAt?`, `createdAt`, `lastSeenAt`. TTL on `expiresAt` and immediate server expiry check. Opening `/invite/{secret}` verifies the link, creates a limited-scope cookie session, and redirects to a token-free URL. Revoking/rotating an `accessLinks` row must also invalidate sessions tied to that link (or enforce link status at every request).
 
-**No account required:** A portal session is temporary capability-based access, not a guest/vendor account. It never provides organizer access.
+**No account required:** A portal session is temporary capability-based access, not a guest account. It never provides organizer access.
 
 ### 9.3 `photos`
 
 | Field                                                      | Type / constraints                                      | Meaning                                |
 | ---------------------------------------------------------- | ------------------------------------------------------- | -------------------------------------- |
 | `weddingId`, `functionId`                                  | ObjectId                                                | Scope of photo and gallery             |
-| `uploaderType`                                             | `USER \| GUEST \| VENDOR`                               | Upload principal kind                  |
-| `uploaderUserId?`, `uploaderGuestId?`, `uploaderVendorId?` | ObjectId?                                               | Exactly one principal reference        |
+| `uploaderType`                                             | `USER \| GUEST`                               | Upload principal kind                  |
+| `uploaderUserId?`, `uploaderGuestId?` | ObjectId?                                               | Exactly one principal reference        |
 | `storageKey`                                               | string, unique                                          | Private R2 object key (not public URL) |
 | `mimeType`                                                 | allowlisted string                                      | Validated actual format                |
 | `sizeBytes`, `width`, `height`                             | bounded integers                                        | Final stored media metadata            |
@@ -474,7 +478,7 @@ For `ADMIN_INVITE`, `weddingId` and `membershipInviteId` are mandatory; the send
 
 ### 10.6 `auditEvents`
 
-`weddingId?`, `actorType: USER|GUEST|VENDOR|SYSTEM`, `actorRef?`, `action`, `entityType`, `entityId?`, `occurredAt`, `requestId`, `beforeSummary?`, `afterSummary?`, `ipPrefixHash?`. Index `{ weddingId: 1, occurredAt: -1 }`; avoid storing secrets or full personal data snapshots. Record admin membership changes, access-link revocation, expense/payment voiding, photo deletion/retag, and email send requests. Audit records are not a replacement for provider/network application logs.
+`weddingId?`, `actorType: USER|GUEST|SYSTEM`, `actorRef?`, `action`, `entityType`, `entityId?`, `occurredAt`, `requestId`, `beforeSummary?`, `afterSummary?`, `ipPrefixHash?`. Index `{ weddingId: 1, occurredAt: -1 }`; avoid storing secrets or full personal data snapshots. Record admin membership changes, access-link revocation, expense/payment voiding, photo deletion/retag, and email send requests. Audit records are not a replacement for provider/network application logs.
 
 ## 11. Google Places vendor discovery: persistence boundary
 
@@ -502,6 +506,7 @@ Google permits storing place IDs; most other Places content is subject to cachin
 | `vendorCharges`       | `{ weddingId: 1, vendorId: 1, status: 1 }`                                    | Vendor balances                                                                         |
 | `vendorPayments`      | `{ weddingId: 1, chargeId: 1, status: 1, paidAt: 1 }`                         | Charge paid total                                                                       |
 | `expenses`            | `{ weddingId: 1, status: 1, paidAt: -1 }`                                     | Spend summaries                                                                         |
+| `expensePayments` | `{ weddingId: 1, expenseSource: 1, expenseId: 1, status: 1 }`; `{ weddingId: 1, _id: -1 }` | Balance checks and tenant cursor |
 | `accessLinks`         | `{ tokenHash: 1 }`                                                            | Unique private link lookup                                                              |
 | `portalSessions`      | `{ sessionTokenHash: 1 }`, `{ expiresAt: 1 }`                                 | Unique / TTL                                                                            |
 | `photos`              | `{ weddingId: 1, functionId: 1, uploadState: 1, visibleAt: -1 }`              | Gallery page                                                                            |
@@ -521,8 +526,8 @@ Google permits storing place IDs; most other Places content is subject to cachin
 | Update a task             | `tasks.findOneAndUpdate({ _id: taskId, weddingId })`                                                                               | Member, then business rules                         |
 | Guest portal functions    | `ACTIVE` function-invitation records filtered by `guestId` + `weddingId`, then joined to active functions                          | Valid portal session                                |
 | Update RSVP               | `functionInvitations.findOneAndUpdate({ _id, weddingId, guestId, eligibilityStatus: 'ACTIVE', revision })`                         | Guest portal session + deadline                     |
-| Vendor portal charges     | `vendorCharges.find({ weddingId, vendorId, status: 'ACTIVE' })`                                                                    | Vendor portal session                               |
-| Show vendor paid          | Aggregate `vendorPayments` by vendor/charge; check charge tenant                                                                   | Vendor portal scope                                 |
+| Internal vendor charges     | `vendorCharges.find({ weddingId, vendorId, status: 'ACTIVE' })`                                                                    | Validated management membership                               |
+| Show vendor paid          | Aggregate `vendorPayments` by vendor/charge; check charge tenant                                                                   | Validated management membership                                 |
 | Photo gallery             | `photos.find({ weddingId, functionId, uploadState: 'READY' })`                                                                     | Function invitation check before issuing media URLs |
 | Email reminder candidates | `functionInvitations.find({ weddingId, functionId, eligibilityStatus: 'ACTIVE', status: 'PENDING' })` + guest valid email/settings | Worker authorized internally                        |
 
@@ -556,7 +561,7 @@ Persist `emailOutbox` job with deterministic dedupe identity; process a bounded 
 
 ### 14.7 Upload and publish photo without approval
 
-1. Guest/vendor/member is authorized for the target function; check upload quota.
+1. Guest/member is authorized for the target function; check upload quota.
 2. Create `photos` record in INITIATED; issue short-lived R2 presigned PUT for that object.
 3. Client uploads compressed photo directly to **private** R2 bucket.
 4. Finalization verifies uploaded object's ownership, size, signature/MIME/dimensions and expected key.
@@ -653,7 +658,7 @@ type FunctionInvitation = {
 | Phase                | Collections introduced / hardened                                                                                                                              | Completion gate                                                             |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | **P1 — Foundation**  | `users`, `authSessions`, `passwordResetTokens`, `weddings`, `weddingMemberships`, `membershipInvites`, `functions`, baseline `rateLimitWindows`, `auditEvents` | Cross-tenant, auth and last-admin tests pass                                |
-| **P2 — Operations**  | `tasks`, `taskComments`, `vendors`, `vendorAssignments`, `vendorCharges`, `vendorPayments`, `expenses`, vendor `accessLinks`, Google `serviceUsage`            | Task assignment and expense consistency, vendor privacy, Places quota tests |
+| **P2 — Operations**  | `tasks`, `taskComments`, `vendors`, `vendorAssignments`, `vendorCharges`, `vendorPayments`, `expenses`, `expensePayments`, `notifications` (vendor access removed; discovery deferred)            | Task assignment and expense consistency, management tenant isolation and notification privacy tests |
 | **P3 — Guests/RSVP** | `guests`, `functionInvitations`, guest `accessLinks`, `portalSessions`, `idempotencyRecords`                                                                   | Revocation and deadline/limit tests pass                                    |
 | **P4 — Email**       | `emailOutbox`, `emailWebhookEvents`, service quotas, reminder settings                                                                                         | No duplicate provider sends, pending-only reminder tests pass               |
 | **P5 — Media**       | `photos`, R2 references, media quota counters                                                                                                                  | Upload-finish and private gallery access tests pass                         |
@@ -696,3 +701,7 @@ The `emailOutbox.status = PROCESSING` row is also the durable wedding-deletion r
 ### Invitation redemption session fencing — 13 November 2026
 
 Redemption transactionally consumes the exact authenticated, active, unexpired current session before accepting the code or minting a replacement. Password changes and logout write that same row, so a paused request authenticated earlier receives 401 AUTH_REQUIRED after revocation; invitation/membership changes roll back and no replacement cookie is sent. If redemption commits first, a subsequent password change revokes its newly created session. Session rotation is single-use: parallel redemptions sharing one old cookie may require retry with the fresh session, while independently authenticated sessions can join separate weddings concurrently. Other legitimate sessions are not revoked by redemption itself.
+
+## Operations refinement storage - 14 November 2026
+
+The paid-expenses convenience operation adds no collection: insert a modelVersion 2 ACTIVE expenses row and one POSTED expensePayments row for the same amount in one wedding-locked, membership-validated transaction. Both use the same tenant and resolved optional vendor; operation idempotency key PAID_COST_CREATE prevents duplicate purchases on retry. Removal retains VOID records, reason, actor and revision; it is not physical deletion. Existing cascade inventory includes both collections. Notification badge reads count unread notifications by weddingId and recipientUserId with readAt null; no additional stored counter or delivery channel is introduced.

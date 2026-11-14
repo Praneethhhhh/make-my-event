@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event - Task List, Segmented Views &amp; Advanced Accessible Filters</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface": "#141d1c",
+            "surface-tint": "#36675c",
+            "surface-container-high": "#dfeae8",
+            "primary": "#0b4138",
+            "on-background": "#141d1c",
+            "secondary-fixed-dim": "#f7b999",
+            "primary-container": "#28594f",
+            "on-error": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#794b32",
+            "on-secondary-fixed-variant": "#673c24",
+            "tertiary-fixed": "#dfe4dc",
+            "background": "#F7F5F0",
+            "primary-fixed": "#baeddf",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#00201b",
+            "error": "#ba1a1a",
+            "inverse-on-surface": "#e8f3f1",
+            "outline-variant": "#E6E4DC",
+            "on-tertiary-fixed-variant": "#434842",
+            "surface-container-low": "#F4F2EB",
+            "outline": "#707976",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "on-tertiary-container": "#c0c5bd",
+            "surface": "#F7F5F0",
+            "inverse-surface": "#283231",
+            "inverse-primary": "#9ed1c4",
+            "on-tertiary-fixed": "#181d18",
+            "error-container": "#ffdad6",
+            "secondary-fixed": "#ffdbca",
+            "on-surface-variant": "#404946",
+            "surface-container-highest": "#ECE9DF",
+            "secondary": "#B98265",
+            "surface-container": "#F1EEE6",
+            "surface-variant": "#ECE9DF",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#9bcec1",
+            "tertiary-container": "#4d524c",
+            "tertiary": "#363b36",
+            "on-primary-fixed-variant": "#1d4f45",
+            "secondary-container": "#fdbe9e",
+            "on-secondary-fixed": "#321201",
+            "surface-dim": "#d1dcda",
+            "on-primary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#FAF9F5",
+            "primary-fixed-dim": "#9ed1c4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-xl": "2.5rem"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Newsreader", "serif"],
+            "body-md": ["Manrope", "sans-serif"],
+            "label-md": ["Manrope", "sans-serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "body-sm": ["Manrope", "sans-serif"],
+            "headline-sm": ["Manrope", "sans-serif"],
+            "label-lg": ["Manrope", "sans-serif"],
+            "display-lg": ["Newsreader", "serif"],
+            "body-lg": ["Manrope", "sans-serif"],
+            "label-sm": ["Manrope", "sans-serif"],
+            "headline-lg": ["Newsreader", "serif"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #F1EEE6;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #C0C8C5;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md min-h-screen flex selection:bg-primary-container selection:text-white">
+<!-- ================= PERSISTENT LEFT SIDEBAR (w-56 / 224px) ================= -->
+<aside class="w-56 h-screen flex flex-col justify-between p-4 border-r border-outline-variant bg-surface fixed top-0 left-0 z-30 select-none">
+<!-- Top Brand & Monogram -->
+<div class="space-y-4">
+<div class="flex items-center gap-2.5 px-1 py-1">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-white flex items-center justify-center font-display-lg text-lg font-semibold tracking-tight shadow-sm">
+          M
+        </div>
+<div>
+<span class="text-title-md font-headline-sm text-primary tracking-tight font-bold block leading-tight">Make My Event</span>
+<span class="font-label-sm text-[10px] text-secondary tracking-wider uppercase font-semibold">Concierge OS</span>
+</div>
+</div>
+<!-- Wedding Badge Anchor -->
+<div class="p-2.5 rounded-xl bg-surface-container-lowest border border-outline-variant shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-secondary tracking-wide uppercase">Active Wedding</span>
+</div>
+<p class="font-headline-sm text-xs font-semibold text-primary truncate leading-tight">Pavithra &amp; Manish</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Feb 2027 · Estate Wedding</p>
+</div>
+<!-- Navigation Sections -->
+<div class="space-y-4 pt-1">
+<!-- Section: Planning -->
+<div>
+<span class="px-2 font-label-sm text-[10px] uppercase text-outline tracking-wider block mb-1.5 font-bold">Planning</span>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg">event_upcoming</span>
+<span>Functions</span>
+</a>
+<!-- Active Task Item -->
+<a class="flex items-center justify-between px-3 py-2 text-primary font-headline-sm text-sm bg-surface-container rounded-lg border-l-2 border-primary-container shadow-xs" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg text-primary-container" style="font-variation-settings: 'FILL' 1;">checklist</span>
+<span class="font-semibold">Tasks</span>
+</div>
+<span class="font-label-sm text-[11px] bg-primary-container text-white px-1.5 py-0.5 rounded-full font-bold">14</span>
+</a>
+</nav>
+</div>
+<!-- Section: People -->
+<div>
+<span class="px-2 font-label-sm text-[10px] uppercase text-outline tracking-wider block mb-1.5 font-bold">People</span>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg">group</span>
+<span>Team</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg">storefront</span>
+<span>Vendors</span>
+</a>
+</nav>
+</div>
+<!-- Section: Management -->
+<div>
+<span class="px-2 font-label-sm text-[10px] uppercase text-outline tracking-wider block mb-1.5 font-bold">Management</span>
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg">payments</span>
+<span>Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant font-body-sm rounded-lg hover:bg-surface-container-low hover:text-on-surface transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-lg">tune</span>
+<span>Wedding details</span>
+</a>
+</nav>
+</div>
+</div>
+</div>
+<!-- Sidebar Bottom Anchors -->
+<div class="pt-3 border-t border-outline-variant space-y-2">
+<!-- Family Private Mode Indicator -->
+<div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-surface-container-highest/60 text-on-surface-variant text-[11px] font-medium">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-xs text-primary">lock</span>
+<span>Family Private</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+</div>
+<!-- Timezone cue -->
+<div class="flex items-center gap-1.5 px-2 text-[11px] text-outline font-label-sm">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>Asia/Kolkata (IST)</span>
+</div>
+<!-- Quick support action -->
+<div class="pt-1 flex justify-between items-center text-on-surface-variant px-2">
+<button class="flex items-center gap-1.5 hover:text-primary transition-colors text-xs font-label-md">
+<span class="material-symbols-outlined text-sm">help_outline</span> Support
+        </button>
+<button class="hover:text-primary transition-colors p-1" title="Settings">
+<span class="material-symbols-outlined text-sm">settings</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ================= MAIN CONTENT WRAPPER (with 224px margin-left) ================= -->
+<div class="ml-56 flex-1 flex flex-col min-h-screen bg-background">
+<!-- TOP APP BAR / HEADER -->
+<header class="h-16 px-8 border-b border-outline-variant bg-surface-container-lowest flex items-center justify-between sticky top-0 z-20 shadow-xs">
+<!-- Left: Breadcrumb trail & Active Workspace indicator -->
+<div class="flex items-center gap-3">
+<div class="flex items-center text-xs text-outline gap-1.5 font-label-md">
+<span>Planning</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-on-surface font-semibold">Tasks &amp; Milestones</span>
+</div>
+<span class="text-outline-variant">|</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold tracking-wide uppercase bg-secondary/10 text-secondary border border-secondary/20">
+          Run-of-Show Stage
+        </span>
+</div>
+<!-- Right: Global Actions, Notifications & Host Admin Profile -->
+<div class="flex items-center gap-4">
+<!-- New Task CTA Button -->
+<button class="h-9 px-3.5 rounded-lg bg-primary-container text-white text-xs font-label-lg font-semibold flex items-center gap-1.5 hover:bg-primary transition-colors duration-150 shadow-xs">
+<span class="material-symbols-outlined text-base">add</span>
+<span>Add Task</span>
+</button>
+<div class="h-5 w-px bg-outline-variant"></div>
+<!-- Notification Bell with Active Indicator Badge -->
+<div class="relative">
+<button aria-label="Notifications (3 unread)" class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-secondary rounded-full ring-2 ring-surface-container-lowest" title="3 unread alerts"></span>
+</div>
+<!-- User Profile Avatar & Host Admin Pill -->
+<div class="flex items-center gap-2.5 pl-1.5 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-secondary text-white font-headline-sm text-xs font-semibold flex items-center justify-center ring-2 ring-surface-container-highest">
+            PI
+          </div>
+<div class="text-left leading-tight">
+<div class="font-label-lg text-xs font-bold text-on-surface">Pavithra Iyer</div>
+<div class="font-label-sm text-[10px] text-primary uppercase font-bold tracking-wider">Host Admin</div>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-base">expand_more</span>
+</button>
+</div>
+</div>
+</header>
+<!-- WORKSPACE CANVAS -->
+<main class="p-8 max-w-[1440px] mx-auto w-full space-y-6 flex-1">
+<!-- 1. EDITORIAL PAGE HEADER & SEGMENTED CONTROL ARCHITECTURE -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-secondary uppercase tracking-widest text-[11px]">Production Runway</span>
+<span class="text-xs text-outline">•</span>
+<span class="text-xs text-outline">Estate at Green Pastures</span>
+</div>
+<h1 class="font-headline-lg text-3xl md:text-4xl text-primary font-normal tracking-tight">Run-of-Show Task Master</h1>
+</div>
+<!-- Segmented Scope Control (All vs My tasks) -->
+<div class="flex items-center bg-surface-container p-1 rounded-xl border border-outline-variant self-start md:self-auto">
+<button class="px-4 py-2 rounded-lg text-xs font-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all" id="pill-all-tasks">
+            All team tasks <span class="ml-1 opacity-70">(22)</span>
+</button>
+<button class="px-4 py-2 rounded-lg text-xs font-label-lg font-semibold bg-primary-container text-white shadow-sm transition-all flex items-center gap-1.5" id="pill-my-tasks">
+<span class="material-symbols-outlined text-sm">person</span>
+            My tasks <span class="bg-white/20 px-1.5 py-0.2 rounded-full text-[10px]">5</span>
+</button>
+</div>
+</section>
+<!-- EXPLICIT SCOPE DYNAMIC FEEDBACK BANNER (DEFENSIVE UI) -->
+<section class="bg-surface-container-low border border-outline-variant/80 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-md bg-secondary/15 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">filter_alt</span>
+</span>
+<span class="text-on-surface-variant">
+            Scoped View: <strong class="text-primary font-semibold">Showing tasks assigned to you (Pavithra Iyer)</strong> across all active functions.
+          </span>
+<span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-medium">
+            3 Critical / 2 Normal
+          </span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-outline text-[11px]">Filtered: Owner: PI · Status: Open</span>
+<button class="inline-flex items-center gap-1 text-secondary hover:text-on-secondary-container font-label-md font-bold text-xs transition-colors">
+<span class="material-symbols-outlined text-sm">refresh</span>
+            Reset all filters
+          </button>
+</div>
+</section>
+<!-- 2. COMPACT & ACCESSIBLE FILTER TOOLBAR -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-4 shadow-xs space-y-3.5">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+<!-- Search Bar with accessible Clear -->
+<div class="md:col-span-4 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg pointer-events-none">search</span>
+<input class="w-full pl-9 pr-8 py-2 rounded-lg border border-outline-variant text-xs font-body-md text-on-surface placeholder:text-outline focus:border-primary-container focus:ring-2 focus:ring-primary-container/10 bg-surface-bright outline-none" placeholder="Search task title, notes, or cues..." type="text" value="Vedic Muhurtham stage"/>
+<button class="absolute right-2.5 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface" title="Clear query">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+</div>
+<!-- Filter Pickers (Owner, Function, Status, Priority) -->
+<div class="md:col-span-8 flex flex-wrap items-center gap-2 justify-start md:justify-end">
+<!-- Owner Picker (Explicit dropdown trigger) -->
+<button class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-primary-container/30 bg-primary-container/5 text-primary text-xs font-label-md font-semibold hover:bg-primary-container/10 transition-colors">
+<div class="w-4 h-4 rounded-full bg-secondary text-white text-[9px] flex items-center justify-center font-bold">PI</div>
+<span>Owner: Pavithra Iyer</span>
+<span class="material-symbols-outlined text-sm text-outline">arrow_drop_down</span>
+</button>
+<!-- Function / Ceremony Filter -->
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-outline-variant bg-surface-bright text-on-surface-variant hover:border-outline text-xs font-label-md transition-colors">
+<span class="material-symbols-outlined text-sm text-secondary">festival</span>
+<span>Function: <strong>Vedic Muhurtham (6)</strong></span>
+<span class="material-symbols-outlined text-sm text-outline">arrow_drop_down</span>
+</button>
+<!-- Status Filter -->
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-outline-variant bg-surface-bright text-on-surface-variant hover:border-outline text-xs font-label-md transition-colors">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span>Status: <strong>Open (To Do + Active)</strong></span>
+<span class="material-symbols-outlined text-sm text-outline">arrow_drop_down</span>
+</button>
+<!-- Priority Filter -->
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-outline-variant bg-surface-bright text-on-surface-variant hover:border-outline text-xs font-label-md transition-colors">
+<span class="material-symbols-outlined text-sm text-secondary">flag</span>
+<span>Priority: <strong>High &amp; Urgent</strong></span>
+<span class="material-symbols-outlined text-sm text-outline">arrow_drop_down</span>
+</button>
+<!-- View Switcher -->
+<div class="flex items-center bg-surface-container p-0.5 rounded-lg border border-outline-variant ml-auto md:ml-2">
+<button class="p-1.5 rounded-md bg-surface-container-lowest text-primary shadow-xs" title="Table List View">
+<span class="material-symbols-outlined text-base">format_list_bulleted</span>
+</button>
+<button class="p-1.5 rounded-md text-on-surface-variant hover:text-on-surface" title="Kanban Board View">
+<span class="material-symbols-outlined text-base">view_kanban</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Active Filter Token Tray -->
+<div class="flex flex-wrap items-center gap-2 pt-2 border-t border-outline-variant/60 text-xs">
+<span class="text-outline text-[11px] font-label-sm uppercase tracking-wider">Active Filters:</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-md text-xs border border-outline-variant">
+<span>Owner: <strong>Pavithra Iyer</strong></span>
+<button class="hover:text-error ml-1"><span class="material-symbols-outlined text-xs">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-md text-xs border border-outline-variant">
+<span>Function: <strong>Vedic Muhurtham</strong></span>
+<button class="hover:text-error ml-1"><span class="material-symbols-outlined text-xs">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-md text-xs border border-outline-variant">
+<span>Search: <strong>"Vedic Muhurtham stage"</strong></span>
+<button class="hover:text-error ml-1"><span class="material-symbols-outlined text-xs">close</span></button>
+</span>
+<button class="text-xs text-secondary underline hover:text-primary font-semibold ml-1">
+            Clear all
+          </button>
+</div>
+</section>
+<!-- 3. PRODUCTION HIGH-DENSITY TASK TABLE -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-2xl shadow-xs overflow-hidden">
+<!-- Table Header Bar with Column Titles -->
+<div class="px-5 py-3 bg-surface-container-low/60 border-b border-outline-variant flex items-center justify-between text-xs text-outline font-label-sm uppercase tracking-wider">
+<div class="flex items-center gap-4">
+<span class="font-bold text-on-surface font-headline-sm text-sm">Matched Tasks (5)</span>
+<span class="text-outline-variant">|</span>
+<span class="text-[11px] normal-case tracking-normal text-on-surface-variant">Press <kbd class="px-1.5 py-0.5 bg-surface-container rounded border border-outline-variant text-[10px]">Space</kbd> on focused row to check</span>
+</div>
+<div class="flex items-center gap-3">
+<span>Sort: <strong>Deadline (Earliest)</strong></span>
+<span class="material-symbols-outlined text-sm">swap_vert</span>
+</div>
+</div>
+<div class="overflow-x-auto custom-scroll">
+<table class="w-full text-left border-collapse min-w-[980px]">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container/40 text-[11px] font-label-sm uppercase tracking-wider text-outline">
+<th class="py-3 px-4 w-10 text-center" scope="col">
+<input aria-label="Select all displayed tasks" class="rounded border-outline text-primary-container focus:ring-primary-container/20 w-4 h-4 cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-4 font-bold text-on-surface-variant" scope="col">Task Title &amp; Notes</th>
+<th class="py-3 px-4 font-bold text-on-surface-variant w-44" scope="col">Assignee</th>
+<th class="py-3 px-4 font-bold text-on-surface-variant w-40" scope="col">Function</th>
+<th class="py-3 px-4 font-bold text-on-surface-variant w-44" scope="col">Vendor Partner</th>
+<th class="py-3 px-4 font-bold text-on-surface-variant w-44" scope="col">Due Date &amp; Cue</th>
+<th class="py-3 px-4 font-bold text-on-surface-variant w-28" scope="col">Priority</th>
+<th class="py-3 px-4 font-bold text-on-surface-variant w-28" scope="col">Status</th>
+<th class="py-3 px-4 text-right w-24" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-xs">
+<!-- ROW 1: Critical Stage Milestone (Copper Left Border) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors border-l-4 border-l-secondary">
+<td class="py-3.5 px-4 text-center">
+<input aria-label="Mark task done: Final Mandap Floral Sign-off" class="rounded border-outline text-primary-container focus:ring-primary-container/20 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-body-md font-semibold text-on-surface text-sm">Final Mandap Floral Sign-off &amp; Garland Arrival</div>
+<div class="font-body-sm text-outline text-[12px] flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-xs">nest_eco_leaf</span>
+<span>Verify 108 lotus blooms + jasmine canopy freshness</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-white font-label-sm text-[10px] flex items-center justify-center font-bold ring-1 ring-secondary/30">
+                      PI
+                    </div>
+<span class="font-medium text-on-surface">Pavithra Iyer</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-secondary/15 text-secondary border border-secondary/30">
+                    Vedic Muhurtham
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-outline">local_florist</span>
+<span class="truncate">Vrindavan Floral Arts</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">19 Feb 2027</div>
+<div class="text-[11px] text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>06:30 AM Cue</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase tracking-wider bg-secondary/15 text-secondary border border-secondary/30">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    High
+                  </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-amber-500/10 text-amber-800 border border-amber-500/30">
+                    In Progress
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-on-surface" title="Edit task details">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-error" title="Archive task">
+<span class="material-symbols-outlined text-base">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 2: Nadaswaram & Priest Coordination (Urgent Flag) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors border-l-4 border-l-error">
+<td class="py-3.5 px-4 text-center">
+<input aria-label="Mark task done: Priest &amp; Nadaswaram Ensemble Check" class="rounded border-outline text-primary-container focus:ring-primary-container/20 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-body-md font-semibold text-on-surface text-sm">Priest Welcome &amp; Nadaswaram Ensemble Soundcheck</div>
+<div class="font-body-sm text-outline text-[12px] flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-xs">mic</span>
+<span>Wireless lapel mic for Chief Priest + 4 ambient mics for thavil</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-white font-label-sm text-[10px] flex items-center justify-center font-bold ring-1 ring-secondary/30">
+                      PI
+                    </div>
+<span class="font-medium text-on-surface">Pavithra Iyer</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-secondary/15 text-secondary border border-secondary/30">
+                    Vedic Muhurtham
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-outline">speaker</span>
+<span class="truncate">Acoustics South India</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">19 Feb 2027</div>
+<div class="text-[11px] text-error font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">warning</span>
+<span>07:15 AM (Firm)</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase tracking-wider bg-error/10 text-error border border-error/20">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                    Urgent
+                  </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-surface-container text-outline border border-outline-variant">
+                    To Do
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-on-surface" title="Edit task details">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-error" title="Archive task">
+<span class="material-symbols-outlined text-base">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 3: Mangala Snanam Kanjivaram Delivery -->
+<tr class="hover:bg-surface-container-low/50 transition-colors border-l-4 border-l-transparent">
+<td class="py-3.5 px-4 text-center">
+<input aria-label="Mark task done: Kanjivaram Bridal Drapes Steaming" class="rounded border-outline text-primary-container focus:ring-primary-container/20 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-body-md font-semibold text-on-surface text-sm">Muhurtham Kanjivaram Silk Drapes &amp; Gold Vanki Handover</div>
+<div class="font-body-sm text-outline text-[12px] flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-xs">lock</span>
+<span>Transferred from Bridal Suite safe with signature log</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-white font-label-sm text-[10px] flex items-center justify-center font-bold ring-1 ring-secondary/30">
+                      PI
+                    </div>
+<span class="font-medium text-on-surface">Pavithra Iyer</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-secondary/15 text-secondary border border-secondary/30">
+                    Vedic Muhurtham
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-outline">
+<span>— (Family Vault)</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">19 Feb 2027</div>
+<div class="text-[11px] text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>07:45 AM</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase tracking-wider bg-secondary/15 text-secondary border border-secondary/30">
+                    High
+                  </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-amber-500/10 text-amber-800 border border-amber-500/30">
+                    In Progress
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-on-surface" title="Edit task details">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-error" title="Archive task">
+<span class="material-symbols-outlined text-base">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 4: Traditional Breakfast Seating Protocol -->
+<tr class="hover:bg-surface-container-low/50 transition-colors border-l-4 border-l-transparent">
+<td class="py-3.5 px-4 text-center">
+<input aria-label="Mark task done: Banana Leaf Dining Hall Inspection" class="rounded border-outline text-primary-container focus:ring-primary-container/20 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-body-md font-semibold text-on-surface text-sm">Banana Leaf Traditional Dining Hall Inspection (Batch 1: 180 VIPs)</div>
+<div class="font-body-sm text-outline text-[12px] flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-xs">restaurant</span>
+<span>Warm filtered ghee canisters + silver tumblers placement</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-white font-label-sm text-[10px] flex items-center justify-center font-bold ring-1 ring-secondary/30">
+                      PI
+                    </div>
+<span class="font-medium text-on-surface">Pavithra Iyer</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-secondary/15 text-secondary border border-secondary/30">
+                    Vedic Muhurtham
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-outline">dinner_dining</span>
+<span class="truncate">Mysore Royal Banquets</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">19 Feb 2027</div>
+<div class="text-[11px] text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>08:30 AM</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase tracking-wider bg-surface-container text-outline border border-outline-variant">
+                    Normal
+                  </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-surface-container text-outline border border-outline-variant">
+                    To Do
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-on-surface" title="Edit task details">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-error" title="Archive task">
+<span class="material-symbols-outlined text-base">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 5: Mangalya Sutra Box Live Escort -->
+<tr class="hover:bg-surface-container-low/50 transition-colors border-l-4 border-l-secondary">
+<td class="py-3.5 px-4 text-center">
+<input aria-label="Mark task done: Mangalya Dharanam Casket Handoff" class="rounded border-outline text-primary-container focus:ring-primary-container/20 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-body-md font-semibold text-on-surface text-sm">Mangalya Dharanam Casket Handoff to Manish's Parents</div>
+<div class="font-body-sm text-outline text-[12px] flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-xs">military_tech</span>
+<span>Includes turmeric root, sacred yellow cord, and kumkum cup</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary text-white font-label-sm text-[10px] flex items-center justify-center font-bold ring-1 ring-secondary/30">
+                      PI
+                    </div>
+<span class="font-medium text-on-surface">Pavithra Iyer</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-label-sm font-semibold bg-secondary/15 text-secondary border border-secondary/30">
+                    Vedic Muhurtham
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-outline">
+<span>— (Family Escort)</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">19 Feb 2027</div>
+<div class="text-[11px] text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">schedule</span>
+<span>09:15 AM (Sacred Window)</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-bold uppercase tracking-wider bg-secondary/15 text-secondary border border-secondary/30">
+                    High
+                  </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-surface-container text-outline border border-outline-variant">
+                    To Do
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-on-surface" title="Edit task details">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-outline hover:text-error" title="Archive task">
+<span class="material-symbols-outlined text-base">archive</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Sticky Table Footer with Run-of-Show Metrics -->
+<div class="p-4 bg-surface-container-lowest border-t border-outline-variant flex flex-wrap items-center justify-between gap-4 text-xs">
+<div class="flex items-center gap-3">
+<span class="text-on-surface-variant">Showing <strong>5 of 22</strong> tasks across 1 filter group</span>
+<div class="flex items-center gap-1.5 pl-3 border-l border-outline-variant">
+<span class="w-2.5 h-2.5 rounded-sm bg-secondary"></span>
+<span class="text-outline text-[11px]">Milestone Highlight</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface-variant hover:text-on-surface disabled:opacity-40" disabled="">
+              Previous
+            </button>
+<span class="px-2 text-on-surface font-semibold">1</span>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface-variant hover:text-on-surface">
+              Next
+            </button>
+</div>
+</div>
+</section>
+<!-- 4. STATE SHOWCASE & DEFENSIVE UI BENCHMARKS -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+<!-- Showcase A: Filter-Aware Empty State Preview (Never claims 'No tasks exist') -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-bold">Defensive Pattern Showcase #1</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm bg-surface-container-highest text-on-surface-variant font-semibold">Filter Aware State</span>
+</div>
+<div class="p-6 rounded-xl bg-surface-container-low/60 border border-dashed border-outline-variant text-center space-y-3">
+<div class="w-12 h-12 rounded-full bg-surface-container mx-auto flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-2xl">search_off</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-sm text-base text-on-surface font-semibold">No tasks matching "Sangeet" assigned to Suresh Iyer</h3>
+<p class="text-xs text-outline max-w-sm mx-auto">
+                  Suresh currently has 3 tasks in <em>Vedic Muhurtham</em> and 2 in <em>Reception Logistics</em>, but none in this specific ceremony.
+                </p>
+</div>
+<div class="pt-2 flex items-center justify-center gap-2">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest border border-outline text-xs font-label-md font-semibold text-primary hover:bg-surface-container transition-colors shadow-xs">
+                  Reset "Sangeet" filter
+                </button>
+<button class="px-3.5 py-2 rounded-lg bg-primary-container text-white text-xs font-label-md font-semibold hover:bg-primary transition-colors">
+                  Assign Task to Suresh
+                </button>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant flex items-center gap-2 text-[11px] text-outline">
+<span class="material-symbols-outlined text-xs text-emerald-600">verified</span>
+<span>Prevents false negative panic by explicitly citing active query parameters.</span>
+</div>
+</div>
+<!-- Showcase B: Genuine Loading Shimmer Skeleton State -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-sm text-[11px] uppercase tracking-wider text-secondary font-bold">Defensive Pattern Showcase #2</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm bg-primary-container/10 text-primary-container font-semibold">Network Sync State</span>
+</div>
+<!-- Skeleton Mock Rows -->
+<div class="space-y-3 p-4 rounded-xl bg-surface-container-low/40 border border-outline-variant/60">
+<div class="flex items-center justify-between">
+<div class="h-3 w-32 bg-outline-variant/60 rounded animate-pulse"></div>
+<div class="h-3 w-16 bg-outline-variant/40 rounded animate-pulse"></div>
+</div>
+<!-- Row skeleton 1 -->
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/60 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3 flex-1">
+<div class="w-4 h-4 rounded bg-outline-variant/60 animate-pulse"></div>
+<div class="space-y-1.5 flex-1">
+<div class="h-3.5 bg-outline-variant/80 rounded w-3/4 animate-pulse"></div>
+<div class="h-2.5 bg-outline-variant/50 rounded w-1/2 animate-pulse"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-outline-variant/60 animate-pulse"></div>
+<div class="h-5 w-16 bg-outline-variant/50 rounded-full animate-pulse"></div>
+</div>
+</div>
+<!-- Row skeleton 2 -->
+<div class="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/60 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3 flex-1">
+<div class="w-4 h-4 rounded bg-outline-variant/60 animate-pulse"></div>
+<div class="space-y-1.5 flex-1">
+<div class="h-3.5 bg-outline-variant/80 rounded w-2/3 animate-pulse"></div>
+<div class="h-2.5 bg-outline-variant/50 rounded w-2/5 animate-pulse"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-outline-variant/60 animate-pulse"></div>
+<div class="h-5 w-16 bg-outline-variant/50 rounded-full animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant flex items-center gap-2 text-[11px] text-outline">
+<span class="material-symbols-outlined text-xs text-primary">sync</span>
+<span>Retains UI spatial geometry during server pagination; zero content jump.</span>
+</div>
+</div>
+</section>
+<!-- TOUCH ACCESSIBILITY & PROTOCOL SPECIFICATION NOTES -->
+<footer class="pt-4 border-t border-outline-variant text-xs text-outline flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-sm text-primary">touch_app</span>
+<span>Touch Target Standard: 44px minimum hit-box on all table action nodes</span>
+</span>
+<span>•</span>
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-sm text-secondary">visibility</span>
+<span>Contrast: AAA Compliance on Newsreader headings &amp; tags</span>
+</span>
+</div>
+<div class="text-[11px]">
+          Make My Event · System Architectural Spec 2.4 · Run-of-Show Protocol
+        </div>
+</footer>
+</main>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    // Primary segmented scope toggle interaction
+    const btnAll = document.getElementById('pill-all-tasks');
+    const btnMy = document.getElementById('pill-my-tasks');
+
+    btnAll.addEventListener('click', () => {
+      btnAll.className = "px-4 py-2 rounded-lg text-xs font-label-lg font-semibold bg-primary-container text-white shadow-sm transition-all flex items-center gap-1.5";
+      btnMy.className = "px-4 py-2 rounded-lg text-xs font-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all";
+    });
+
+    btnMy.addEventListener('click', () => {
+      btnMy.className = "px-4 py-2 rounded-lg text-xs font-label-lg font-semibold bg-primary-container text-white shadow-sm transition-all flex items-center gap-1.5";
+      btnAll.className = "px-4 py-2 rounded-lg text-xs font-label-lg font-semibold text-on-surface-variant hover:text-on-surface transition-all";
+    });
+  </script>
+</body></html>

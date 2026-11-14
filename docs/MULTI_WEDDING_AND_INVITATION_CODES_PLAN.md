@@ -1,5 +1,8 @@
 # Multiple weddings and manually shared invitation codes
 
+**14 November 2026 product decision:** Vendors have no application access: no portal, private URLs, capability sessions, self-service task completion or vendor/photographer uploads. Administrators and organizers maintain vendor contacts, responsibilities, task status, charges and payments internally. Guest invitation access is unchanged. Google Places discovery remains deferred. Any earlier design exports or historical test notes describing vendor access are superseded.
+
+
 **Status:** Implemented on 12 November 2026 after user authorization, including the guarded development database migration. This document remains the delivery contract; PROJECT_STATUS.md records verification and remaining dependencies.
 
 This amendment supersedes the single-wedding-per-account and email-only management-invitation rules. The PRD, architecture, API and database documents describe the target behavior; PROJECT_STATUS distinguishes it from the working baseline. Deliver this as one complete, reviewable feature rather than stopping after sending or after code generation.
@@ -28,7 +31,7 @@ This amendment supersedes the single-wedding-per-account and email-only manageme
 
 Legacy `/wedding`, `/wedding/functions`, `/wedding/details` and `/wedding/team` go to the selector rather than guessing the first membership. Legacy setup/join routes redirect to their new account-level counterparts. Update all links, authentication destinations, email instructions and redirect tests together. Opening or refreshing a scoped URL validates access; a foreign/nonexistent/removed wedding shows safe access feedback and a way back to Your weddings.
 
-Retain existing singular business API routes to limit unrelated rewrites, but require `X-Wedding-Id` on every tenant-owned management request. The route's wedding ID is only a candidate. The server authenticates the account, validates that exact ACTIVE membership and ACTIVE wedding, derives that wedding's role and scopes all referenced records. No fallback to the first membership and no server-wide `activeWeddingId`. Auth, account wedding listing, wedding creation and invitation redemption are context-free exceptions; guest/vendor capabilities remain unchanged.
+Retain existing singular business API routes to limit unrelated rewrites, but require `X-Wedding-Id` on every tenant-owned management request. The route's wedding ID is only a candidate. The server authenticates the account, validates that exact ACTIVE membership and ACTIVE wedding, derives that wedding's role and scopes all referenced records. No fallback to the first membership and no server-wide `activeWeddingId`. Auth, account wedding listing, wedding creation and invitation redemption are context-free exceptions; guest capabilities remain unchanged.
 
 Use a centralized client request helper scoped to the route ID. Query keys, cached data, forms, optimistic changes, abort controllers and error reconciliation must include that ID. Clear old wedding data before showing another wedding, cancel obsolete requests and ignore late responses from the old context. Never redispatch an old draft or failed write under a newly selected wedding. Warn before discarding unsaved changes. Preserve financial/function revisions and the existing wedding/date/time-zone constraints inside each wedding.
 
