@@ -1,4 +1,5 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { WeddingHeader } from "@/modules/weddings/wedding-shell";
 import { WorkspaceNav } from "@/modules/weddings/workspace-nav";
@@ -177,7 +178,7 @@ export function FinancePage() {
                 setForm({ kind: "expense" });
               }}
             >
-              Add entry
+              <UiIcon name="plus" /> Add entry
             </button>
           </div>
         </header>
@@ -193,7 +194,11 @@ export function FinancePage() {
             </button>
           </div>
         )}
-        {message && <p role="status">{message}</p>}
+        {message && (
+          <p role="status" className="ui-feedback">
+            {message}
+          </p>
+        )}
         {summary && (
           <div className="finance-summary">
             <article>
@@ -233,8 +238,8 @@ export function FinancePage() {
         </div>
         <p className="finance-view-explainer">
           {tab === "expenses"
-            ? "Expenses are costs you have recorded. Open an expense to record its payment."
-            : "Payments are money already paid, linked to their expense."}
+            ? "Recorded costs. Open an expense to add a payment."
+            : "Payments made against your expenses."}
         </p>
         {(loading || !resultsCurrent) && !error && (
           <p className="operations-subtle" role="status">

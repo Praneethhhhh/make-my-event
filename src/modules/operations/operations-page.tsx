@@ -1,4 +1,5 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { WeddingHeader } from "@/modules/weddings/wedding-shell";
@@ -307,7 +308,7 @@ export function OperationsPage({
           disabled={busy || !!form}
           onClick={() => openForm({ kind: "task", initial: task })}
         >
-          Edit
+          <ActionIcon name="edit" /> Edit
         </button>
         <button
           className="secondary-action"
@@ -321,7 +322,7 @@ export function OperationsPage({
             confirmDialog.current?.showModal();
           }}
         >
-          Delete
+          <ActionIcon name="remove" /> Delete
         </button>
       </div>
     </article>
@@ -396,7 +397,7 @@ export function OperationsPage({
               disabled={busy}
               onClick={() => openForm({ kind: "task" })}
             >
-              New task
+              <UiIcon name="plus" /> New task
             </button>
           )}
           {area === "vendors" && (
@@ -405,7 +406,7 @@ export function OperationsPage({
               disabled={busy}
               onClick={() => openForm({ kind: "vendor" })}
             >
-              Add vendor
+              <UiIcon name="plus" /> Add vendor
             </button>
           )}
         </header>
@@ -428,7 +429,11 @@ export function OperationsPage({
             </button>
           </div>
         )}
-        {message && <p role="status">{message}</p>}
+        {message && (
+          <p role="status" className="ui-feedback">
+            {message}
+          </p>
+        )}
         {loading && !overview ? (
           <p className="loading-state" role="status">
             Loading your workspace…
@@ -678,7 +683,9 @@ export function OperationsPage({
               )}
               {area === "tasks" && taskId && detail && (
                 <>
-                  <Link href={`${prefix}/tasks`}>← All tasks</Link>
+                  <Link href={`${prefix}/tasks`}>
+                    <UiIcon name="arrow-left" /> All tasks
+                  </Link>
                   <div className="task-detail-summary">
                     {taskCard(detail.task)}
                   </div>
@@ -927,7 +934,7 @@ export function OperationsPage({
                             openForm({ kind: "vendor", initial: v })
                           }
                         >
-                          Edit
+                          <ActionIcon name="edit" /> Edit
                         </button>
                       </article>
                     ))}
@@ -1032,8 +1039,9 @@ export function OperationsPage({
                                       }}
                                     >
                                       {n.commentId
-                                        ? "Open comment →"
-                                        : "Open task →"}
+                                        ? "Open comment"
+                                        : "Open task"}{" "}
+                                      <UiIcon name="arrow-right" />
                                     </Link>
                                   ) : (
                                     <span>

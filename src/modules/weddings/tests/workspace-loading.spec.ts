@@ -1,8 +1,8 @@
-import { test, expect } from "../../auth/tests/fixtures";
+import { test, expect, navigateWorkspace } from "../../auth/tests/fixtures";
 import { onboard, write, ceremony } from "../../functions/tests/fixtures";
 
 for (const width of [390, 1440]) {
-  test(`overview guidance and workspace loading at ${width}px`, async ({
+  test(`dashboard guidance and workspace loading at ${width}px`, async ({
     page,
     database,
   }) => {
@@ -11,47 +11,53 @@ for (const width of [390, 1440]) {
     const prefix = `/weddings/${wedding.id}`;
     await page.goto(prefix);
     await expect(
-      page.getByRole("heading", { name: "Create your first function" }),
+      page.getByRole("heading", { name: wedding.title, exact: true }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Invite family organizers" }),
+      page.getByText("Add a function to see guest responses here.", {
+        exact: true,
+      }),
     ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Open all tasks" }),
+    ).toHaveAttribute("href", `${prefix}/tasks`);
     expect((await write(page.request, "functions", ceremony)).status()).toBe(
       201,
     );
     await page.reload();
+    await expect(page.locator(".guest-summary-row strong")).toHaveText(
+      ceremony.name,
+    );
     await expect(
-      page.getByText("1 active function in your wedding schedule."),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: "Create your first function" }),
+      page.getByText("Add a function to see guest responses here.", {
+        exact: true,
+      }),
     ).toHaveCount(0);
-    // This fixture database is isolated; no retained tester records are modified.
     await database
       .collection("weddingMemberships")
       .updateMany({}, { $set: { role: "ORGANIZER" } });
     await page.reload();
     await expect(
-      page.getByRole("heading", { name: "Meet your organizing team" }),
+      page.getByRole("heading", { name: wedding.title, exact: true }),
     ).toBeVisible();
+    // Dashboard no longer gives admin-only invitations as onboarding guidance.
     await expect(
       page.getByRole("heading", { name: "Invite family organizers" }),
     ).toHaveCount(0);
-    await page.getByRole("link", { name: "View team →" }).click();
+    await navigateWorkspace(page, "Team");
     await expect(page).toHaveURL(`${prefix}/team`);
     await expect(
       page.getByRole("heading", { name: "Your organizing team" }),
     ).toBeVisible();
-    await page.getByRole("link", { name: "Functions", exact: true }).click();
+    await expect(page.getByLabel("Recipient email")).toHaveCount(0);
+    await navigateWorkspace(page, "Functions");
     await expect(
       page.getByRole("heading", { name: ceremony.name, exact: true }),
     ).toBeVisible();
     await expect(
       page.getByText("Could not load functions. Reload the page to try again."),
     ).toHaveCount(0);
-    await page
-      .getByRole("link", { name: "Wedding details", exact: true })
-      .click();
+    await navigateWorkspace(page, "Wedding details");
     await expect(page.getByLabel("Wedding title")).toHaveValue(wedding.title);
     await expect(
       page.getByText("Could not load wedding setup. Try again."),
@@ -64,22 +70,38 @@ for (const width of [390, 1440]) {
   });
 }
 
-test("real loading failures remain visible and failed function summaries stay neutral", async ({
+test("real loading failures remain visible and dashboard recovers without false empty guidance", async ({
   page,
 }) => {
   const wedding = await onboard(page.request);
   const prefix = `/weddings/${wedding.id}`;
-  await page.route("**/api/v1/functions", (route) =>
+  const dashboard = "**/api/v1/operations?view=dashboard";
+  await page.route(dashboard, (route) =>
     route.fulfill({ status: 503, json: { error: { code: "UNAVAILABLE" } } }),
   );
   await page.goto(prefix);
+  const failure = page
+    .getByRole("alert")
+    .filter({ hasText: "Your dashboard couldn’t load. Please try again." });
+  await expect(failure).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Manage your functions" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Create your first function" }),
+    page.getByRole("status", { name: "Loading dashboard" }),
   ).toHaveCount(0);
-  await page.getByRole("link", { name: "Manage functions →" }).click();
+  await expect(
+    page.getByText("Add a function to see guest responses here.", {
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await page.unroute(dashboard);
+  await failure.getByRole("button", { name: "Try again", exact: true }).click();
+  await expect(
+    page.getByRole("link", { name: "Open all tasks" }),
+  ).toBeVisible();
+  await expect(failure).toHaveCount(0);
+  await page.route("**/api/v1/functions", (route) =>
+    route.fulfill({ status: 503, json: { error: { code: "UNAVAILABLE" } } }),
+  );
+  await navigateWorkspace(page, "Functions");
   await expect(
     page.getByText("Could not load functions. Reload the page to try again."),
   ).toBeVisible();
@@ -92,8 +114,15 @@ test("real loading failures remain visible and failed function summaries stay ne
   await page.route("**/api/v1/wedding", (route) =>
     route.fulfill({ status: 503, json: { error: { code: "UNAVAILABLE" } } }),
   );
-  await page.goto(prefix);
+  // The canonical Dashboard does not read /wedding; details is its current consumer.
+  await page.goto(`${prefix}/details`);
   await expect(
-    page.getByText("Could not load your wedding workspace."),
+    page.getByText("Could not load wedding setup. Try again.", { exact: true }),
   ).toBeVisible();
+  await page.unroute("**/api/v1/wedding");
+  await page.reload();
+  await expect(page.getByLabel("Wedding title")).toHaveValue(wedding.title);
+  await expect(
+    page.getByText("Could not load wedding setup. Try again.", { exact: true }),
+  ).toHaveCount(0);
 });

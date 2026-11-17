@@ -1,4 +1,5 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
@@ -384,7 +385,7 @@ export function AccountProfile() {
           </fieldset>
         </form>
         <Link href="/weddings" className="profile-back">
-          ← Your weddings
+          <UiIcon name="arrow-left" /> Your weddings
         </Link>
       </div>
       <dialog

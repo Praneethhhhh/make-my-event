@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guest invitation — Add or edit recipient — Make My Event</title>
+  <!-- Google Fonts: Newsreader & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet"/>
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              ivory: "#F7F5F0",
+              white: "#FFFFFF",
+              forest: "#28594F",
+              charcoal: "#202A29",
+              muted: "#5A6664",
+              border: "#E6E4DC",
+              copper: "#B98265",
+              copperDark: "#825339",
+              forestLight: "#ebf6f4",
+              forestDark: "#1b3f37",
+              goldWarm: "#D4A373",
+              error: "#BA1A1A",
+              errorBg: "#FFDAD6",
+              surfaceDim: "#EBE9E2"
+            }
+          },
+          fontFamily: {
+            serif: ["Newsreader", "Georgia", "serif"],
+            sans: ["Manrope", "sans-serif"]
+          },
+          boxShadow: {
+            subtle: "0 1px 3px rgba(32, 42, 41, 0.04), 0 4px 12px rgba(32, 42, 41, 0.02)",
+            drawer: "-8px 0 32px rgba(32, 42, 41, 0.12)",
+            elevation: "0 8px 24px -4px rgba(32, 42, 41, 0.08)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #202A29;
+      font-family: 'Manrope', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 20px;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    .paper-card {
+      background: #FFFFFF;
+      border: 1px solid #E6E4DC;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex antialiased bg-[#F7F5F0] text-[#202A29] relative overflow-x-hidden">
+
+  <!-- PERSISTENT LEFT SIDEBAR (224px / w-56 standard) -->
+  <aside class="w-56 bg-brand-white border-r border-brand-border shrink-0 flex flex-col justify-between hidden md:flex sticky top-0 h-screen z-10 opacity-75">
+    <div class="flex flex-col">
+      <div class="p-4 border-b border-brand-border/70 flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-md bg-brand-forest text-brand-white flex items-center justify-center font-serif font-bold text-sm tracking-tighter">
+          M
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif font-semibold text-brand-forest leading-tight tracking-tight">Make My Event</span>
+          <span class="text-[10px] text-brand-muted tracking-wide uppercase">Family Concierge</span>
+        </div>
+      </div>
+      <div class="px-4 py-3 border-b border-brand-border/50 bg-brand-forestLight/30">
+        <div class="flex items-center gap-1.5 text-xs font-semibold text-brand-charcoal">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-forest"></span>
+          <span>Pavithra & Manish</span>
+        </div>
+        <div class="text-[11px] text-brand-muted mt-0.5">18–20 Feb 2027 · Asia/Kolkata</div>
+      </div>
+      <nav class="p-3 space-y-4 text-xs font-medium">
+        <div>
+          <span class="px-3 text-[10px] font-bold text-brand-muted/70 uppercase tracking-wider">Planning</span>
+          <div class="mt-1 space-y-0.5 text-brand-muted">
+            <div class="px-3 py-2">Dashboard</div>
+            <div class="px-3 py-2">Functions</div>
+            <div class="px-3 py-2">Tasks</div>
+          </div>
+        </div>
+        <div>
+          <span class="px-3 text-[10px] font-bold text-brand-muted/70 uppercase tracking-wider">People</span>
+          <div class="mt-1 space-y-0.5">
+            <div class="px-3 py-2 text-brand-muted">Team</div>
+            <div class="px-3 py-2 text-brand-muted">Vendors</div>
+            <div class="px-3 py-2 rounded-lg bg-brand-forestLight text-brand-forest font-semibold flex items-center justify-between">
+              <span>Guests</span>
+              <span class="text-[10px] bg-brand-forest/10 px-1.5 py-0.5 rounded-full font-bold">30</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="p-3 border-t border-brand-border text-[11px] text-brand-muted">
+      <div class="px-2">Private link mode · v2.7</div>
+    </div>
+  </aside>
+
+  <!-- BACKGROUND MAIN VIEW (Dimmed & Blurred underneath side drawer) -->
+  <div class="flex-1 flex flex-col min-w-0 pointer-events-none filter blur-[1.5px] opacity-40 select-none">
+    <header class="h-14 bg-brand-white border-b border-brand-border px-6 flex items-center justify-between">
+      <div class="text-xs text-brand-muted">Pavithra & Manish / Guest invitations</div>
+      <div class="w-7 h-7 rounded-full bg-brand-copperDark text-brand-white text-xs font-semibold flex items-center justify-center">PI</div>
+    </header>
+    <div class="p-8 max-w-7xl mx-auto w-full space-y-6">
+      <div class="h-10 bg-brand-white rounded w-1/3 border border-brand-border"></div>
+      <div class="h-40 bg-brand-white rounded-xl border border-brand-border"></div>
+      <div class="h-72 bg-brand-white rounded-xl border border-brand-border"></div>
+    </div>
+  </div>
+
+  <!-- DIMMED BACKDROP OVERLAY -->
+  <div class="fixed inset-0 bg-[#202A29]/25 backdrop-blur-[2px] z-40 transition-opacity" onclick="confirmCancel()"></div>
+
+  <!-- FOCUSED SIDE DRAWER (approx 580px width as specified, Fullscreen on mobile) -->
+  <aside aria-label="Invite guest drawer" class="fixed inset-y-0 right-0 w-full md:w-[580px] bg-brand-white shadow-drawer z-50 flex flex-col border-l border-brand-border text-xs">
+    
+    <!-- Drawer Header -->
+    <header class="h-16 px-6 border-b border-brand-border flex items-center justify-between bg-brand-ivory/60 shrink-0">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-bold tracking-wider uppercase text-brand-copper">Private Management Flow</span>
+          <span class="text-brand-border">·</span>
+          <span class="text-[11px] text-brand-muted">Admin / Organizer access</span>
+        </div>
+        <h2 id="drawer-title" class="font-serif text-xl font-semibold text-brand-forest">Invite guest</h2>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <!-- Mode switcher for testing: Add Mode vs Edit Mode vs Validation Error State -->
+        <div class="hidden sm:flex items-center gap-1 bg-brand-white px-2 py-1 rounded border border-brand-border mr-1 text-[11px]">
+          <span class="text-brand-muted">Mode:</span>
+          <button onclick="setMode('add')" id="btn-mode-add" class="text-brand-forest font-bold">New</button>
+          <span class="text-brand-border">|</span>
+          <button onclick="setMode('edit')" id="btn-mode-edit" class="text-brand-muted hover:text-brand-charcoal">Edit</button>
+          <span class="text-brand-border">|</span>
+          <button onclick="setMode('valError')" id="btn-mode-val" class="text-brand-muted hover:text-brand-error">Validation State</button>
+        </div>
+        <button type="button" onclick="confirmCancel()" aria-label="Close drawer" class="w-8 h-8 rounded-full hover:bg-brand-border/40 text-brand-muted hover:text-brand-charcoal flex items-center justify-center transition">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Drawer Scrollable Form Body -->
+    <form id="invitation-form" onsubmit="handleFormSubmit(event)" class="flex-1 overflow-y-auto p-6 space-y-6">
+
+      <!-- VALIDATION ERROR ALERT BANNER (Shown in validation state) -->
+      <div id="validation-banner" class="hidden p-3.5 rounded-lg border border-brand-error bg-brand-errorBg/40 text-brand-error text-xs space-y-1">
+        <div class="font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[16px]">error</span>
+          <span>Please address the following requirements:</span>
+        </div>
+        <ul class="list-disc pl-5 space-y-0.5 text-[11px] text-brand-charcoal">
+          <li id="err-name-msg" class="hidden">Recipient name is required.</li>
+          <li id="err-func-msg" class="hidden">Select at least one ceremony to invite this guest.</li>
+          <li id="err-cap-msg" class="hidden">Maximum capacity cannot be zero or lower than already confirmed guests.</li>
+        </ul>
+      </div>
+
+      <!-- SECTION 1: RECIPIENT IDENTITY -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <label for="recipient-name" class="font-semibold text-brand-charcoal">
+            Recipient name <span class="text-brand-copper font-normal">*</span>
+          </label>
+          <span class="text-[11px] text-brand-muted">Individual or family label</span>
+        </div>
+        <div>
+          <input type="text" id="recipient-name" required value="Elon Musk & family" placeholder="e.g. Elon Musk & family or Ananya Rao" class="w-full h-10 px-3.5 rounded-lg border border-brand-border bg-brand-white text-xs text-brand-charcoal focus:outline-none focus:border-brand-forest focus:ring-1 focus:ring-brand-forest placeholder:text-brand-muted/60 transition"/>
+          <p class="text-[11px] text-brand-muted mt-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[13px] text-brand-forest">info</span>
+            <span>One person or a family. Appears on their private personalized welcome screen.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 2: PERSONALIZED WELCOME NOTE -->
+      <section class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label for="welcome-note" class="font-semibold text-brand-charcoal">
+            Personalized note <span class="text-[11px] text-brand-muted font-normal">(Optional)</span>
+          </label>
+          <span class="text-[11px] text-brand-muted">Warm, concise greeting</span>
+        </div>
+        <textarea id="welcome-note" rows="3" class="w-full p-3 rounded-lg border border-brand-border bg-brand-white text-xs text-brand-charcoal focus:outline-none focus:border-brand-forest focus:ring-1 focus:ring-brand-forest placeholder:text-brand-muted/60 leading-relaxed transition">We warmly invite you to celebrate our union across three days of traditional rituals, music, and joy. Please confirm your attendance below so we may arrange your welcome amenities.</textarea>
+        <div class="text-[10px] text-brand-muted flex justify-between">
+          <span>Displayed directly on their confidential invitation page.</span>
+          <span id="char-count">196 / 350</span>
+        </div>
+      </section>
+
+      <!-- SECTION 3: FUNCTION SELECTION & PRIVATE MANAGEMENT CAPS -->
+      <section class="space-y-4 pt-2 border-t border-brand-border">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-semibold text-brand-charcoal text-sm">Ceremony selection & maximums</h3>
+            <p class="text-[11px] text-brand-muted">Select which functions this recipient is eligible to RSVP for.</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <button type="button" onclick="selectAllFunctions(true)" class="text-brand-forest hover:underline font-semibold text-[11px]">Select all</button>
+            <span class="text-brand-border">·</span>
+            <button type="button" onclick="selectAllFunctions(false)" class="text-brand-muted hover:text-brand-charcoal text-[11px]">Clear</button>
+          </div>
+        </div>
+
+        <!-- Function 1: Mehndi -->
+        <div class="paper-card rounded-xl p-4 border border-brand-border space-y-3 bg-brand-white hover:border-brand-forest/40 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+              <input type="checkbox" id="fn-mehndi" checked onchange="toggleFunctionControls('mehndi')" class="mt-0.5 h-4 w-4 rounded border-brand-border text-brand-forest focus:ring-brand-forest cursor-pointer"/>
+              <div>
+                <label for="fn-mehndi" class="font-semibold text-brand-charcoal cursor-pointer flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#E59866]"></span>
+                  <span>Mehndi & Welcome High Tea</span>
+                </label>
+                <div class="text-[11px] text-brand-muted mt-0.5">Thu 18 Feb 2027 · 4:00 PM – 8:30 PM · Poolside Pavilion</div>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#E59866]/15 text-brand-charcoal">Day 1</span>
+          </div>
+
+          <!-- Capacity Control (Enabled when selected) -->
+          <div id="cap-mehndi-box" class="pt-2.5 border-t border-brand-border/60 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-medium text-brand-charcoal">Maximum people:</span>
+              <span class="text-[11px] text-brand-muted block">Includes the named guest (Private internal limit)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <input type="number" id="cap-mehndi" min="1" max="25" value="4" class="w-16 h-8 text-center rounded border border-brand-border bg-brand-white text-xs text-brand-charcoal font-semibold focus:outline-none focus:border-brand-forest"/>
+              <span class="text-[11px] text-brand-muted">guests</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Function 2: Sangeet -->
+        <div class="paper-card rounded-xl p-4 border border-brand-border space-y-3 bg-brand-white hover:border-brand-forest/40 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+              <input type="checkbox" id="fn-sangeet" checked onchange="toggleFunctionControls('sangeet')" class="mt-0.5 h-4 w-4 rounded border-brand-border text-brand-forest focus:ring-brand-forest cursor-pointer"/>
+              <div>
+                <label for="fn-sangeet" class="font-semibold text-brand-charcoal cursor-pointer flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#AF7AC5]"></span>
+                  <span>Sangeet & Musical Night</span>
+                </label>
+                <div class="text-[11px] text-brand-muted mt-0.5">Fri 19 Feb 2027 · 6:00 PM – Midnight · Grand Ballroom</div>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#AF7AC5]/15 text-brand-charcoal">Day 2</span>
+          </div>
+
+          <div id="cap-sangeet-box" class="pt-2.5 border-t border-brand-border/60 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-medium text-brand-charcoal">Maximum people:</span>
+              <span class="text-[11px] text-brand-muted block">Includes the named guest (Private internal limit)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <input type="number" id="cap-sangeet" min="1" max="25" value="6" class="w-16 h-8 text-center rounded border border-brand-border bg-brand-white text-xs text-brand-charcoal font-semibold focus:outline-none focus:border-brand-forest"/>
+              <span class="text-[11px] text-brand-muted">guests</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Function 3: Vedic Wedding -->
+        <div class="paper-card rounded-xl p-4 border border-brand-border space-y-3 bg-brand-white hover:border-brand-forest/40 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+              <input type="checkbox" id="fn-wedding" checked onchange="toggleFunctionControls('wedding')" class="mt-0.5 h-4 w-4 rounded border-brand-border text-brand-forest focus:ring-brand-forest cursor-pointer"/>
+              <div>
+                <label for="fn-wedding" class="font-semibold text-brand-charcoal cursor-pointer flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#48C9B0]"></span>
+                  <span>Vedic Wedding & Muhurtham</span>
+                </label>
+                <div class="text-[11px] text-brand-muted mt-0.5">Sat 20 Feb 2027 · 9:00 AM – 1:30 PM · Temple Mandapam</div>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#48C9B0]/15 text-brand-charcoal">Day 3</span>
+          </div>
+
+          <div id="cap-wedding-box" class="pt-2.5 border-t border-brand-border/60 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-medium text-brand-charcoal">Maximum people:</span>
+              <span class="text-[11px] text-brand-muted block">Includes the named guest (Private internal limit)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <input type="number" id="cap-wedding" min="1" max="25" value="5" class="w-16 h-8 text-center rounded border border-brand-border bg-brand-white text-xs text-brand-charcoal font-semibold focus:outline-none focus:border-brand-forest"/>
+              <span class="text-[11px] text-brand-muted">guests</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Design handoff annotation note regarding mock default value -->
+        <div class="p-3 bg-brand-forestLight/40 rounded-lg border border-brand-forest/20 text-[11px] text-brand-muted space-y-1">
+          <div class="font-semibold text-brand-forest flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">tune</span>
+            <span>Design Specification Note (Default Cap: 4)</span>
+          </div>
+          <p class="leading-relaxed">
+            Newly checked functions prefill with mock default maximum value <strong>4</strong>. Guests never see quota badges; the guest RSVP interface simply lets them select attending members up to this private organizer cap.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 4: ADVANCED RSVP DEADLINE CONTROLS (Expandable neat accordion) -->
+      <section class="border border-brand-border rounded-xl overflow-hidden bg-brand-white">
+        <button type="button" onclick="toggleAdvancedDeadlines()" class="w-full px-4 py-3 bg-brand-ivory/50 flex items-center justify-between text-xs font-semibold text-brand-charcoal hover:bg-brand-ivory transition">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px] text-brand-muted">event_upcoming</span>
+            <span>Per-function RSVP response deadlines</span>
+          </div>
+          <div class="flex items-center gap-1 text-[11px] text-brand-muted">
+            <span id="deadline-summary">Configured (3–5 days prior)</span>
+            <span id="deadline-chevron" class="material-symbols-outlined text-[16px] transition-transform">expand_more</span>
+          </div>
+        </button>
+
+        <div id="advanced-deadline-content" class="p-4 space-y-3 hidden border-t border-brand-border bg-brand-white text-xs">
+          <p class="text-[11px] text-brand-muted">Deadlines cannot exceed ceremony start times. After this timestamp, the guest interface presents polite inquiry guidance.</p>
+          
+          <div class="space-y-2">
+            <div class="flex items-center justify-between p-2 rounded bg-brand-ivory/40">
+              <span class="font-medium text-brand-charcoal">Mehndi deadline</span>
+              <input type="datetime-local" value="2027-02-15T18:00" class="h-8 px-2 rounded border border-brand-border text-[11px] bg-brand-white"/>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded bg-brand-ivory/40">
+              <span class="font-medium text-brand-charcoal">Sangeet deadline</span>
+              <input type="datetime-local" value="2027-02-16T18:00" class="h-8 px-2 rounded border border-brand-border text-[11px] bg-brand-white"/>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded bg-brand-ivory/40">
+              <span class="font-medium text-brand-charcoal">Wedding deadline</span>
+              <input type="datetime-local" value="2027-02-16T18:00" class="h-8 px-2 rounded border border-brand-border text-[11px] bg-brand-white"/>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STRICT SECURITY NOTICE: NO EMAILS OR AUTOMATED HARVESTING -->
+      <div class="p-3 rounded-lg bg-brand-ivory border border-brand-border/70 text-[11px] text-brand-muted space-y-1">
+        <div class="font-semibold text-brand-charcoal flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px] text-brand-copper">lock</span>
+          <span>Zero Guest Spam Guarantee</span>
+        </div>
+        <p>No email delivery or third-party mailing queues are attached. Saving generates a unique encrypted link ready for manual copy.</p>
+      </div>
+    </form>
+
+    <!-- Drawer Footer Actions -->
+    <footer class="h-16 px-6 border-t border-brand-border flex items-center justify-between bg-brand-white shrink-0">
+      <button type="button" onclick="confirmCancel()" class="px-4 py-2 rounded-lg border border-brand-border text-xs font-semibold text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory transition">
+        Cancel
+      </button>
+
+      <div class="flex items-center gap-2">
+        <span id="saving-indicator" class="hidden text-[11px] text-brand-muted flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-forest animate-ping"></span> Saving...
+        </span>
+        <button type="button" onclick="handleFormSubmit(event)" id="submit-btn" class="h-10 px-5 rounded-lg bg-brand-forest text-xs font-semibold text-brand-white hover:bg-brand-forestDark transition shadow-sm flex items-center gap-1.5 active:scale-[0.98]">
+          <span class="material-symbols-outlined text-[16px]">check</span>
+          <span id="submit-btn-label">Create invitation</span>
+        </button>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- CONFIRMATION MODAL: Unsaved changes discard alert -->
+  <div id="discard-modal" class="fixed inset-0 z-50 bg-[#202A29]/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="paper-card rounded-xl max-w-sm w-full p-5 shadow-elevation space-y-4">
+      <div class="flex items-center gap-2 text-brand-copperDark font-serif text-lg font-semibold">
+        <span class="material-symbols-outlined text-brand-copper">warning</span>
+        <span>Discard unsaved changes?</span>
+      </div>
+      <p class="text-xs text-brand-muted leading-relaxed">
+        You have modified recipient details. Exiting now will discard these edits and preserve the current directory state.
+      </p>
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-brand-border">
+        <button onclick="closeDiscardModal()" class="px-3 py-1.5 rounded-lg border border-brand-border text-xs font-semibold hover:bg-brand-ivory">Keep editing</button>
+        <button onclick="forceCloseDrawer()" class="px-3.5 py-1.5 rounded-lg bg-brand-error text-brand-white text-xs font-semibold hover:bg-rose-700">Discard</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isEditMode = false;
+
+    function setMode(mode) {
+      const banner = document.getElementById('validation-banner');
+      const nameErr = document.getElementById('err-name-msg');
+      const funcErr = document.getElementById('err-func-msg');
+      const title = document.getElementById('drawer-title');
+      const submitBtnLabel = document.getElementById('submit-btn-label');
+
+      if (mode === 'add') {
+        isEditMode = false;
+        title.textContent = "Invite guest";
+        submitBtnLabel.textContent = "Create invitation";
+        document.getElementById('recipient-name').value = "Elon Musk & family";
+        banner.classList.add('hidden');
+        nameErr.classList.add('hidden');
+        funcErr.classList.add('hidden');
+      } else if (mode === 'edit') {
+        isEditMode = true;
+        title.textContent = "Edit invitation — Elon Musk & family";
+        submitBtnLabel.textContent = "Save changes";
+        document.getElementById('recipient-name').value = "Elon Musk & family";
+        banner.classList.add('hidden');
+        nameErr.classList.add('hidden');
+        funcErr.classList.add('hidden');
+      } else if (mode === 'valError') {
+        banner.classList.remove('hidden');
+        nameErr.classList.remove('hidden');
+        funcErr.classList.remove('hidden');
+        document.getElementById('recipient-name').value = "";
+        selectAllFunctions(false);
+      }
+    }
+
+    function toggleFunctionControls(fnKey) {
+      const chk = document.getElementById(`fn-${fnKey}`);
+      const box = document.getElementById(`cap-${fnKey}-box`);
+      if (chk.checked) {
+        box.classList.remove('opacity-40', 'pointer-events-none');
+      } else {
+        box.classList.add('opacity-40', 'pointer-events-none');
+      }
+    }
+
+    function selectAllFunctions(select) {
+      ['mehndi', 'sangeet', 'wedding'].forEach(fn => {
+        const chk = document.getElementById(`fn-${fn}`);
+        if (chk) {
+          chk.checked = select;
+          toggleFunctionControls(fn);
+        }
+      });
+    }
+
+    function toggleAdvancedDeadlines() {
+      const content = document.getElementById('advanced-deadline-content');
+      const chevron = document.getElementById('deadline-chevron');
+      content.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('recipient-name').value.trim();
+      const fnCount = ['mehndi', 'sangeet', 'wedding'].filter(fn => document.getElementById(`fn-${fn}`).checked).length;
+
+      if (!name || fnCount === 0) {
+        setMode('valError');
+        return;
+      }
+
+      const saving = document.getElementById('saving-indicator');
+      const submitBtn = document.getElementById('submit-btn');
+      saving.classList.remove('hidden');
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        saving.classList.add('hidden');
+        submitBtn.disabled = false;
+        alert(`Success! Invitation saved for "${name}". Opening Screen 3 (Details & share link) to copy the personalized private link.`);
+      }, 700);
+    }
+
+    function confirmCancel() {
+      document.getElementById('discard-modal').classList.remove('hidden');
+    }
+
+    function closeDiscardModal() {
+      document.getElementById('discard-modal').classList.add('hidden');
+    }
+
+    function forceCloseDrawer() {
+      document.getElementById('discard-modal').classList.add('hidden');
+      alert("Closed drawer. Returned to main guest invitations dashboard.");
+    }
+  </script>
+</body>
+</html>
+

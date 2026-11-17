@@ -1,3 +1,4 @@
+import { navigateWorkspace, openWorkspaceNav } from "../../auth/tests/fixtures";
 import { randomUUID } from "node:crypto";
 import { test, expect, account, origin } from "../../auth/tests/fixtures";
 import { onboard, profile } from "../../functions/tests/fixtures";
@@ -48,7 +49,7 @@ for (const width of [390, 1440]) {
       .filter({ hasText: a.title })
       .getByRole("link", { name: "Open wedding", exact: true })
       .click();
-    await page.getByRole("link", { name: "Team", exact: true }).click();
+    await navigateWorkspace(page, "Team");
     await page
       .getByLabel("Recipient email")
       .fill("manual-relative@example.invalid");
@@ -128,7 +129,7 @@ for (const width of [390, 1440]) {
         .filter({ hasText: a.title })
         .getByRole("link", { name: "Open wedding", exact: true })
         .click();
-      await join.getByRole("link", { name: "Team", exact: true }).click();
+      await navigateWorkspace(join, "Team");
       await expect(
         join.getByRole("heading", { name: "Invite a team member" }),
       ).toHaveCount(0);
@@ -206,12 +207,14 @@ for (const width of [390, 1440]) {
     await expect(guard).not.toBeVisible();
     await expect(other).toHaveURL(`/weddings/${b.id}/functions`);
     const header = await page.locator(".wedding-header").boundingBox();
+    await openWorkspaceNav(page);
     const navigation = await page
       .getByRole("navigation", { name: "Wedding workspace" })
       .boundingBox();
     expect(navigation!.y).toBeGreaterThanOrEqual(
       header!.y + header!.height - 1,
     );
+    if (width < 961) await page.keyboard.press("Escape");
     await page.screenshot({ path: `.next/scoped-wedding-${width}.png` });
     const records = await database.collection("functions").find({}).toArray();
     expect(records).toHaveLength(1);
@@ -226,11 +229,9 @@ for (const width of [390, 1440]) {
         () => document.documentElement.scrollWidth > innerWidth,
       ),
     ).toBe(false);
-    await page
-      .getByRole("link", { name: "Wedding details", exact: true })
-      .click();
+    await navigateWorkspace(page, "Wedding details");
     await page.getByLabel("Wedding title").fill("Discard within same wedding");
-    await page.getByRole("link", { name: "Functions", exact: true }).click();
+    await navigateWorkspace(page, "Functions");
     await expect(guard).toBeVisible();
     await guard.getByRole("button", { name: "Discard and continue" }).click();
     await expect(page).toHaveURL(`/weddings/${b.id}/functions`);

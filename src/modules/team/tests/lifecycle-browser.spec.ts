@@ -1,3 +1,4 @@
+import { navigateWorkspace } from "../../auth/tests/fixtures";
 import { scopedGet, weddingRoute } from "../../auth/tests/fixtures";
 import {
   test,
@@ -120,7 +121,7 @@ for (const width of [390, 1440]) {
         join.getByRole("link", { name: "Open this wedding" }),
       ).toBeVisible();
       await join.getByRole("link", { name: "Open this wedding" }).click();
-      await join.getByRole("link", { name: "Team", exact: true }).click();
+      await navigateWorkspace(join, "Team");
       await expect(
         join.getByText("Only administrators can invite team members.", {
           exact: false,

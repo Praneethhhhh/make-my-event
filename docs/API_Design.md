@@ -1,5 +1,21 @@
 # MAKE MY EVENT
 
+**14 November 2026 guest-invitation approved scope:** Admins and organizers invite individuals/families only through manually shared personalized private links. Guest emails, Resend guest delivery and guest reminders are excluded; management-team email invitations are unchanged. One common image-free invitation theme shows the couple and only the recipient's eligible functions, with inline venue/Google Maps directions, per-function countdowns and RSVP/headcounts. Management summaries distinguish recipient responses from attending people per function. Earlier guest email/reminder requirements below are superseded for this feature. See [guest invitation design brief](../design/guest-invitations/BRIEF.md). Implementation is authorized; current behavior and verification are recorded in PROJECT_STATUS.md and GUEST_INVITATIONS_IMPLEMENTATION_PLAN.md.
+
+
+### Implemented guest invitation contracts — 14 November 2026
+
+This section and [the guest implementation plan](GUEST_INVITATIONS_IMPLEMENTATION_PLAN.md) supersede older guest tables, exchange examples, separate function-invitation writers and reminder sequences below. All paths use /api/v1 and no-store responses. Both active ADMIN and ORGANIZER members may manage invitations in their exact X-Wedding-Id scope; mutations require CSRF and persisted management quotas.
+
+- GET /guests accepts q, state=active|removed, function, response and cursor; response requires function. Returns items, nextCursor and full filtered total, at most 25 rows. GET /guests/context supplies current presentation/function metadata; GET /guests/summary supplies totalRecipients and per-function invited/accepted/declined/pending recipient counts plus accepted people. Dashboard adds the same guestResponses summary. Recipients are not summed across functions as unique people.
+- POST /guests and PATCH /guests/{id} atomically save displayName, personalMessage, functions[{functionId,maxAttendees,deadlineOverrideAt,revision?}], creationKey; PATCH also requires recipient revision. Names are bounded to160 characters, messages500, maximum1–200, functions1–100 with unique IDs. An existing invitation revision is checked when its private settings change. Unrelated newer RSVP data is preserved. Responses contain safe IDs, not links. GET /guests/{id} contains management-only limits, revisions and linkActive.
+- POST /guests/{id}/links/reveal requires revision/creationKey and explicitly returns {url}; the secret is in /invite#token=..., never a path/query. POST /guests/{id}/links/rotate, DELETE /guests/{id}/links and POST /guests/{id}/disable require revision/creationKey and return metadata only. Replace invalidates old sessions but retains RSVPs; revoke excludes the link from active totals; remove also revokes eligibility but retains historical responses. Re-copy is available only through explicit authorized reveal.
+- GET /guests/preview accepts an optional recipient ID and returns the same allowlisted Invitation presentation as guests; absent recipient shows all active functions in read-only mode. No secret or private maximum is included.
+- POST /guest/access/exchange accepts {token}, validates CSRF/Origin and persisted source/token quotas, establishes a separate invitation-scoped HttpOnly cookie and returns {guestId}. Production cookie is __Host-mme_guest_{id}, Secure, SameSite=Lax, Path=/, lifetime24h. The entry page removes the fragment before exchange and replaces the route with /guest/{id}. No token is stored in browser storage. Multiple invitation cookies do not retarget other tabs.
+- GET /guest/me and GET /guest/functions both return the complete safe Invitation object: guestId, displayName, personalMessage, coupleNames, title, timeZone, startsOn, endsOn, serverTime and eligible functions. X-Guest-Id selects the cookie but grants no authority. Only current active wedding/guest/link/version/session/function eligibility is accepted. DTOs omit private limits, ciphertext and other recipients.
+- PUT /guest/function-invitations/{id}/rsvp accepts {status,attendeeCount,revision,creationKey}: ACCEPTED requires integer1..current private maximum; DECLINED requires0. PENDING is not accepted. Returns {id,status,attendeeCount,revision,respondedAt}. Effective cutoff is min(override or function deadline or function start, function start). PATCH /function-invitations/{id}/rsvp is the manager correction endpoint and additionally requires reason; managers may correct after cutoff. Both serialize against revocation, deletion and limit edits.
+- 409 STALE_REVISION and RSVP_DEADLINE_PASSED, 422 ATTENDANCE_LIMIT_EXCEEDED, 404 INVITATION_UNAVAILABLE, 429 RATE_LIMITED are safe stable errors. Over-limit errors do not disclose the private maximum. Rate limits return Retry-After. No guest email/reminder APIs are implemented.
+
 **14 November 2026 approved redesign:** Task writes require assigneeUserId, optional vendorId, bounded mentions and creationKey; vendor ownership is rejected. Lists accept validated server-side q/mine/assignee/function/status/priority filters with cursors and accurate counts. GET /operations?view=context and /operations?view=choices provide lightweight scoped context and searched choices. GET /finance/expenses, /finance/payments, /finance/summary and explicit /finance/vendor-balances; POST /finance/expenses and /finance/payments; POST /finance/{expenses|payments}/{id}/correct preserve history with reason/revision. Source-aware legacy rows are readable; new expense obligations/payment events do not double count existing records. Vendor function-assignment endpoints return 404. Notifications distinguish assignment, task mention and comment mention, combine same-save recipients and preserve unread/history behavior. See [implementation plan](OPERATIONS_REDESIGN_PLAN.md).
 
 **14 November 2026 product decision:** Vendors have no application access: no portal, private URLs, capability sessions, self-service task completion or vendor/photographer uploads. Administrators and organizers maintain vendor contacts, responsibilities, task status, charges and payments internally. Guest invitation access is unchanged. Google Places discovery remains deferred. Any earlier design exports or historical test notes describing vendor access are superseded.
@@ -372,7 +388,6 @@ These routes use a guest cookie; **they never receive a raw private link token, 
     "functionId": "66c0d49e7a00cb84f0810111",
     "status": "ACCEPTED",
     "attendeeCount": 3,
-    "maxAttendees": 5,
     "revision": 3,
     "respondedAt": "2026-12-08T10:30:00.000Z"
   },
@@ -538,14 +553,13 @@ Cross-document refs are checked in service/repository layers, not only by Zod. R
 {
   "error": {
     "code": "ATTENDANCE_LIMIT_EXCEEDED",
-    "message": "The attendee count exceeds the invitation limit.",
-    "details": { "maxAttendees": 5 }
+    "message": "Please choose fewer people or contact your hosts."
   },
   "meta": { "requestId": "req_example" }
 }
 ```
 
-Do not disclose a guest's private maximum to someone with no valid guest session; the example applies only after successful capability authorization.
+Never disclose a guest's private maximum in the public DTO or error, including after capability authorization.
 
 ## 15. Rate limiting, quotas and idempotency
 
@@ -705,3 +719,7 @@ Redemption transactionally consumes the exact authenticated, active, unexpired c
 - POST /api/v1/finance/paid-expenses takes costInput (description, category, optional vendorId, amountPaise, currency INR, notes, UUID creationKey) plus weddingTimeZone, ISO paidAt and paymentMethod CASH/UPI/BANK/OTHER. It creates one expense and its full payment atomically; response 201 data contains expense and payment DTOs. Tenant/member/vendor/time-zone guards and creation-key replay/conflict rules apply. Invalid input leaves neither record.
 - POST /api/v1/finance/{expenses|payments}/{id}/remove uses the existing source, revision, reason and creationKey body. It marks the entry VOID with retained history. Existing /correct remains a compatibility alias. Removing an expense with posted payments is rejected.
 - Client bell requests are coalesced after successful selected-wedding data API responses (excluding notification endpoints to prevent feedback loops), focus/visibility return and notification mutations. No periodic timer; rapid requests share a count refresh.
+
+## Appearance preference
+
+Theme selection is entirely browser-local. It adds no endpoint and does not change authentication, tenant, guest capability or existing response contracts.

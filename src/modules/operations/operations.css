@@ -44,7 +44,7 @@
 .operations-workspace textarea {
   border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  background: white;
+  background: var(--color-surface);
   color: var(--color-text);
   padding: 11px 12px;
   font: inherit;
@@ -63,7 +63,7 @@
 }
 .operations-tabs button {
   border: 1px solid var(--color-border);
-  background: white;
+  background: var(--color-surface);
   border-radius: 8px;
   padding: 10px 16px;
   cursor: pointer;
@@ -71,7 +71,7 @@
 }
 .operations-tabs button[aria-pressed="true"] {
   background: var(--color-primary);
-  color: white;
+  color: var(--color-on-primary);
 }
 .operations-grid {
   display: grid;
@@ -87,7 +87,7 @@
 .operations-empty {
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  background: white;
+  background: var(--color-surface);
   padding: 24px;
   min-width: 0;
 }
@@ -175,11 +175,15 @@
 .operations-form small {
   color: var(--color-danger);
 }
+.operations-form small[role="status"] {
+  color: var(--color-text-muted);
+}
+
 .operations-alert {
   padding: 16px;
   border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: white;
+  background: var(--color-surface);
   margin-bottom: 20px;
   color: var(--color-danger);
 }
@@ -190,7 +194,7 @@
   margin-bottom: 32px;
 }
 .operations-summary article {
-  background: white;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 24px;
@@ -259,7 +263,7 @@
   top: 0;
   right: 0;
   background: var(--color-accent-text);
-  color: white;
+  color: var(--color-on-accent);
   font-size: 10px;
   border-radius: 12px;
   min-width: 16px;
@@ -327,11 +331,5 @@
     padding-left: 16px;
     padding-right: 16px;
     gap: 4px;
-  }
-  .wedding-header:has(.notification-bell) .wedding-brand strong {
-    font-size: 10px;
-  }
-  .wedding-header:has(.notification-bell) .wedding-brand span {
-    font-size: 9px;
   }
 }

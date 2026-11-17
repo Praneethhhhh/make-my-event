@@ -18,7 +18,7 @@ for (const screen of [
       await hero.evaluate((image) => (image as HTMLImageElement).decode());
       await expect(hero).toHaveAttribute(
         "src",
-        "/images/celebration-pixels.jpg",
+        "/images/celebration-transparent.png",
       );
       await expect(hero).toHaveAttribute("loading", "eager");
       await expect(page.locator(".hero-visual")).toHaveCSS(
@@ -60,9 +60,9 @@ for (const width of [390, 1440]) {
         )
         .toBeGreaterThan(0);
     }
-    await expect(hero).toHaveAttribute("src", /celebration-pixels/);
+    await expect(hero).toHaveAttribute("src", /celebration-transparent/);
     await expect(palace).toHaveAttribute("src", /palace-celebration/);
-    await expect(closing).toHaveAttribute("src", /wedding-pixels/);
+    await expect(closing).toHaveAttribute("src", /wedding-transparent/);
     const frame = await palace.boundingBox();
     expect(frame!.width / frame!.height).toBeCloseTo(1200 / 896, 1);
     const heroFit = await hero.evaluate((element) => ({
@@ -84,7 +84,7 @@ for (const width of [390, 1440]) {
       fullPage: true,
       animations: "disabled",
     });
-    await page.getByRole("link", { name: "Sign In", exact: true }).click();
+    await page.getByRole("link", { name: "Sign in", exact: true }).click();
     await expect(
       page.getByRole("heading", { name: "Welcome back" }),
     ).toBeVisible();
@@ -136,7 +136,7 @@ test("reduced motion disables entry, navigation and press animations", async ({
           .filter((animation) => animation.playState === "running").length,
     ),
   ).toBe(0);
-  await page.getByRole("link", { name: "Sign In", exact: true }).click();
+  await page.getByRole("link", { name: "Sign in", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Welcome back" }),
   ).toBeVisible();

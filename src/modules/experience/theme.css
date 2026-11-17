@@ -1,0 +1,110 @@
+.theme-control {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  z-index: 60;
+}
+.theme-trigger {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+}
+.theme-trigger:hover {
+  background: var(--color-selected);
+  border-color: var(--color-border-strong);
+}
+.theme-trigger:focus-visible,
+.theme-picker button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+.theme-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 224px;
+  padding: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 12px;
+  box-shadow: 0 12px 36px #0003;
+}
+.theme-picker > p {
+  font: 600 12px/1.5 var(--font-interface);
+  color: var(--color-text-muted);
+  margin: 0 0 10px;
+  letter-spacing: normal;
+}
+.theme-picker > div {
+  display: grid;
+  gap: 6px;
+}
+.theme-picker button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text);
+  font: 500 13px/1.4 var(--font-interface);
+  cursor: pointer;
+  text-align: left;
+}
+.theme-picker button span {
+  flex: 1;
+}
+.theme-picker button:hover {
+  background: var(--color-surface-subtle);
+}
+.theme-picker button[aria-pressed="true"] {
+  background: var(--color-selected);
+  border-color: var(--color-selected-border);
+  color: var(--color-primary);
+}
+.account-theme-mobile {
+  display: none;
+}
+.account-topline-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.public-theme {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 1000px;
+  margin: 0 auto 12px;
+}
+.guest-public-page .theme-popover {
+  z-index: 70;
+}
+.ui-empty-page > .public-theme {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+.standalone-theme {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px 0;
+}
+@media (max-width: 600px) {
+  .workspace-theme-desktop {
+    display: none;
+  }
+  .account-theme-mobile {
+    display: block;
+    padding: 12px;
+    border-top: 1px solid var(--color-border);
+  }
+}

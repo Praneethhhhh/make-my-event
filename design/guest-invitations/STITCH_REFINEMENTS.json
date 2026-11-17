@@ -1,0 +1,557 @@
+[
+  {
+    "actor": "Agent",
+    "eventId": "05b3412d",
+    "eventPayload": {
+      "dom_operations": [
+        {
+          "action": "remove_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": null,
+          "selector": "div.bg-brand-forestLight\\/40",
+          "selector_strategy": "The note card is inside section:nth-of-type(3), specifically the last div child. We target it with the unique class `bg-brand-forestLight/40`.",
+          "target_element_goal": "Remove the Design Specification Note (Default Cap: 4) block from ceremony selection to eliminate technical clutter",
+          "verified_html_context": "<div class=\"p-3 bg-brand-forestLight/40 rounded-lg border border-brand-forest/20 text-[11px] text-brand-muted space-y-1\">"
+        },
+        {
+          "action": "remove_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": null,
+          "selector": "form#invitation-form > div.border-brand-border\\/70",
+          "selector_strategy": "Target the technical privacy disclaimer box directly with unique class `border-brand-border/70` inside the form.",
+          "target_element_goal": "Remove technical security notice clutter at the bottom of the form body",
+          "verified_html_context": "<div class=\"p-3 rounded-lg bg-brand-ivory border border-brand-border/70 text-[11px] text-brand-muted space-y-1\">"
+        },
+        {
+          "action": "remove_class",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": "space-y-6",
+          "content": null,
+          "selector": "#invitation-form",
+          "selector_strategy": "Target #invitation-form and replace oversized spacing space-y-6 with space-y-5 and p-6 with px-6 py-5.",
+          "target_element_goal": "Refine vertical padding and spacing in form body while maintaining generous touch targets and polished compact layout",
+          "verified_html_context": "<form id=\"invitation-form\" onsubmit=\"handleFormSubmit(event)\" class=\"flex-1 overflow-y-auto p-6 space-y-6\">"
+        },
+        {
+          "action": "add_class",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": "space-y-4",
+          "content": null,
+          "selector": "#invitation-form",
+          "selector_strategy": "Target #invitation-form to add tighter elegant vertical rhythm.",
+          "target_element_goal": "Add refined compact vertical spacing to form body",
+          "verified_html_context": "<form id=\"invitation-form\" onsubmit=\"handleFormSubmit(event)\" class=\"flex-1 overflow-y-auto p-6 space-y-6\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "We warmly invite you to celebrate our union across three days of traditional rituals, music, and joy.",
+          "selector": "#welcome-note",
+          "selector_strategy": "Target #welcome-note directly by its unique ID.",
+          "target_element_goal": "Ensure recipient welcome note text matches requested warm copy concisely",
+          "verified_html_context": "<textarea id=\"welcome-note\" rows=\"3\" class=\"w-full p-3 rounded-lg border border-brand-border bg-brand-white text-xs text-brand-charcoal focus:outline-none focus:border-brand-forest focus:ring-1 focus:ring-brand-forest placeholder:text-brand-muted/60 leading-relaxed transition\">We warmly invite you to celebrate our union across three days of traditional rituals, music, and joy. Please confirm your attendance below so we may arrange your welcome amenities.</textarea>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "98 / 350",
+          "selector": "#char-count",
+          "selector_strategy": "Target #char-count directly by unique ID.",
+          "target_element_goal": "Update character counter for the revised concise welcome note",
+          "verified_html_context": "<span id=\"char-count\">196 / 350</span>"
+        }
+      ],
+      "payload_type": "DomOperationEvent",
+      "screen_id": "f5963f783cf143558236ec0432b5fa53"
+    },
+    "eventTime": "2026-11-14T05:42:03.316286494Z",
+    "eventType": "project.file_update"
+  },
+  {
+    "actor": "Agent",
+    "eventId": "98a3672f",
+    "eventPayload": {
+      "dom_operations": [
+        {
+          "action": "remove_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": null,
+          "selector": "div.bg-brand-ivory.border-b > div.text-\\[11px\\].text-brand-muted",
+          "selector_strategy": "The preview state header contains a right-aligned div with text 'Independent function headcounts · No synthetic global %'. Target via its unique parent and classes.",
+          "target_element_goal": "Delete 'No synthetic global %' footnote text in the design preview states bar",
+          "verified_html_context": "<div class=\"text-[11px] text-brand-muted hidden xl:block\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "Responses by function",
+          "selector": "section[aria-label=\"Ceremony invitations status summary\"] h2",
+          "selector_strategy": "Target the h2 heading inside section[aria-label='Ceremony invitations status summary'].",
+          "target_element_goal": "Replace 'Function response ledger' heading with 'Responses by function'",
+          "verified_html_context": "<h2 class=\"text-sm font-semibold text-brand-charcoal\">Function response ledger</h2>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<strong>Make My Event</strong>",
+          "selector": "footer div.flex.items-center.gap-2 > span:nth-child(2)",
+          "selector_strategy": "Target the span containing 'Luxury Guest Experience Architecture' in the footer.",
+          "target_element_goal": "Remove 'luxury architecture' text in the footer",
+          "verified_html_context": "<span><strong>Make My Event</strong> · Luxury Guest Experience Architecture</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<span class=\"inline-flex items-center gap-1 text-[11px] font-medium text-emerald-800 bg-brand-forestLight px-1.5 py-0.5 rounded border border-brand-border/60\"><span class=\"w-1.5 h-1.5 rounded-full bg-emerald-600\"></span>Active private link</span>",
+          "selector": "#state-populated tbody tr:nth-child(1) td:nth-child(1) > div:nth-child(2)",
+          "selector_strategy": "Target the subtitle div in the first tbody tr first cell.",
+          "target_element_goal": "Update Elon Musk row subtitle to remove 'Max 6 per ceremony' and present clean active private link status pill/label",
+          "verified_html_context": "<div class=\"text-[11px] text-brand-muted\">Private link: active · Max 6 per ceremony</div>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<span class=\"inline-flex items-center gap-1 text-[11px] font-medium text-emerald-800 bg-brand-forestLight px-1.5 py-0.5 rounded border border-brand-border/60\"><span class=\"w-1.5 h-1.5 rounded-full bg-emerald-600\"></span>Active private link</span>",
+          "selector": "#state-populated tbody tr:nth-child(2) td:nth-child(1) > div:nth-child(2)",
+          "selector_strategy": "Target the subtitle div in the second tbody tr first cell.",
+          "target_element_goal": "Update Ananya Rao row subtitle to remove individual quota note and show active private link pill",
+          "verified_html_context": "<div class=\"text-[11px] text-brand-muted\">Private link: active · Individual</div>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<span class=\"inline-flex items-center gap-1 text-[11px] font-medium text-brand-muted bg-brand-ivory px-1.5 py-0.5 rounded border border-brand-border/60\"><span class=\"w-1.5 h-1.5 rounded-full bg-brand-muted\"></span>Active link · Polite regrets</span>",
+          "selector": "#state-populated tbody tr:nth-child(3) td:nth-child(1) > div:nth-child(2)",
+          "selector_strategy": "Target the subtitle div in the third tbody tr first cell.",
+          "target_element_goal": "Update Rao family row subtitle to show active private link pill with polite regrets",
+          "verified_html_context": "<div class=\"text-[11px] text-brand-muted\">Private link: active · Polite regrets received</div>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<span class=\"inline-flex items-center gap-1 text-[11px] font-medium text-emerald-800 bg-brand-forestLight px-1.5 py-0.5 rounded border border-brand-border/60\"><span class=\"w-1.5 h-1.5 rounded-full bg-emerald-600\"></span>Active private link</span>",
+          "selector": "#state-populated tbody tr:nth-child(4) td:nth-child(1) > div:nth-child(2)",
+          "selector_strategy": "Target the subtitle div in the fourth tbody tr first cell.",
+          "target_element_goal": "Update Dr. Vikram & Sunita Sarabhai row subtitle to remove 'Max 2' and show active link pill",
+          "verified_html_context": "<div class=\"text-[11px] text-brand-muted\">Private link: active · Max 2</div>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<span class=\"inline-flex items-center gap-1 text-[11px] font-medium text-emerald-800 bg-brand-forestLight px-1.5 py-0.5 rounded border border-brand-border/60\"><span class=\"w-1.5 h-1.5 rounded-full bg-emerald-600\"></span>Active private link</span>",
+          "selector": "#state-populated tbody tr:nth-child(5) td:nth-child(1) > div:nth-child(2)",
+          "selector_strategy": "Target the subtitle div in the fifth tbody tr first cell.",
+          "target_element_goal": "Update Krishnamurthy Family row subtitle to remove 'Max 5' and show active link pill",
+          "verified_html_context": "<div class=\"text-[11px] text-brand-muted\">Private link: active · Max 5</div>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<span class=\"inline-flex items-center gap-1 text-[11px] font-medium text-emerald-800 bg-brand-forestLight px-1.5 py-0.5 rounded border border-brand-border/60\"><span class=\"w-1.5 h-1.5 rounded-full bg-emerald-600\"></span>Active private link</span>",
+          "selector": "#state-populated tbody tr:nth-child(6) td:nth-child(1) > div:nth-child(2)",
+          "selector_strategy": "Target the subtitle div in the sixth tbody tr first cell.",
+          "target_element_goal": "Update Justice P.N. Sharma row subtitle to remove 'Max 2' and show active link pill",
+          "verified_html_context": "<div class=\"text-[11px] text-brand-muted\">Private link: active · Max 2</div>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "group",
+          "selector": "nav a.bg-brand-forestLight span.material-symbols-outlined",
+          "selector_strategy": "Target the active Guests sidebar nav item icon and replace 'mark_email_read' with 'group'.",
+          "target_element_goal": "Use link and people icons instead of email-envelope icons across summary rows and navigation",
+          "verified_html_context": "<span class=\"material-symbols-outlined text-[18px] fill-icon\">mark_email_read</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "group",
+          "selector": "section[aria-label=\"Ceremony invitations status summary\"] div.space-y-3 > div:nth-child(1) span.material-symbols-outlined",
+          "selector_strategy": "Target the first summary row's invited metric icon.",
+          "target_element_goal": "Replace mail envelope icon with people/group icon in Mehndi summary row",
+          "verified_html_context": "<span class=\"material-symbols-outlined text-[16px]\">mail</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "group",
+          "selector": "section[aria-label=\"Ceremony invitations status summary\"] div.space-y-3 > div:nth-child(2) span.material-symbols-outlined",
+          "selector_strategy": "Target the second summary row's invited metric icon.",
+          "target_element_goal": "Replace mail envelope icon with people/group icon in Sangeet summary row",
+          "verified_html_context": "<span class=\"material-symbols-outlined text-[16px]\">mail</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "group",
+          "selector": "section[aria-label=\"Ceremony invitations status summary\"] div.space-y-3 > div:nth-child(3) span.material-symbols-outlined",
+          "selector_strategy": "Target the third summary row's invited metric icon.",
+          "target_element_goal": "Replace mail envelope icon with people/group icon in Wedding summary row",
+          "verified_html_context": "<span class=\"material-symbols-outlined text-[16px]\">mail</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "link",
+          "selector": "#state-populated tbody td:nth-child(4) span.material-symbols-outlined",
+          "selector_strategy": "Target all .material-symbols-outlined inside copy buttons in tbody td:nth-child(4).",
+          "target_element_goal": "Replace content_copy with link icon in table copy buttons for refined link semantics",
+          "verified_html_context": "<span class=\"material-symbols-outlined text-[14px]\">content_copy</span>"
+        }
+      ],
+      "payload_type": "DomOperationEvent",
+      "screen_id": "be27540abb554ecf89595a919590a361"
+    },
+    "eventTime": "2026-11-14T05:42:03.316294665Z",
+    "eventType": "project.file_update"
+  },
+  {
+    "actor": "Agent",
+    "eventId": "24a38ad8",
+    "eventPayload": {
+      "dom_operations": [
+        {
+          "action": "remove_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": null,
+          "selector": "header > div.rounded-full",
+          "selector_strategy": "The confidential recipient badge in the header is a div with class rounded-full inside header",
+          "target_element_goal": "Remove confidential access badge from the public header",
+          "verified_html_context": "<div class=\"flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant border border-outline-variant/40\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"2\" y=\"2\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"6\" y=\"2\" width=\"4\" height=\"4\" fill=\"#28594F\"/><rect x=\"2\" y=\"6\" width=\"4\" height=\"4\" fill=\"#28594F\"/><rect x=\"6\" y=\"6\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"10\" y=\"2\" width=\"4\" height=\"4\" fill=\"#B98265\" fill-opacity=\"0.6\"/><rect x=\"2\" y=\"10\" width=\"4\" height=\"4\" fill=\"#B98265\" fill-opacity=\"0.6\"/><rect x=\"14\" y=\"2\" width=\"4\" height=\"2\" fill=\"#B98265\" fill-opacity=\"0.4\"/><rect x=\"2\" y=\"14\" width=\"2\" height=\"4\" fill=\"#B98265\" fill-opacity=\"0.4\"/></svg>",
+          "selector": "article#main-stationery-card > div.absolute.top-4.left-4",
+          "selector_strategy": "Target the top-left decorative motif container",
+          "target_element_goal": "Update corner motifs with subtle, tasteful pixel/voxel geometric floral corner SVG accents in copper and forest green",
+          "verified_html_context": "<div class=\"absolute top-4 left-4 pointer-events-none opacity-40\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"30\" y=\"2\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"26\" y=\"2\" width=\"4\" height=\"4\" fill=\"#28594F\"/><rect x=\"30\" y=\"6\" width=\"4\" height=\"4\" fill=\"#28594F\"/><rect x=\"26\" y=\"6\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"22\" y=\"2\" width=\"4\" height=\"4\" fill=\"#B98265\" fill-opacity=\"0.6\"/><rect x=\"30\" y=\"10\" width=\"4\" height=\"4\" fill=\"#B98265\" fill-opacity=\"0.6\"/><rect x=\"18\" y=\"2\" width=\"4\" height=\"2\" fill=\"#B98265\" fill-opacity=\"0.4\"/><rect x=\"32\" y=\"14\" width=\"2\" height=\"4\" fill=\"#B98265\" fill-opacity=\"0.4\"/></svg>",
+          "selector": "article#main-stationery-card > div.absolute.top-4.right-4",
+          "selector_strategy": "Target the top-right decorative motif container",
+          "target_element_goal": "Update top-right corner motif with matching pixel/voxel floral corner SVG accent",
+          "verified_html_context": "<div class=\"absolute top-4 right-4 pointer-events-none opacity-40\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<div class=\"w-12 h-[1px] bg-gradient-to-r from-transparent to-[#B98265]/60\"></div><div class=\"flex items-center gap-2 text-[#B98265]\"><svg width=\"32\" height=\"20\" viewBox=\"0 0 32 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"4\" y=\"4\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"8\" y=\"0\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"12\" y=\"4\" width=\"4\" height=\"4\" fill=\"#28594F\"/><rect x=\"16\" y=\"0\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"20\" y=\"4\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"0\" y=\"8\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"24\" y=\"8\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"4\" y=\"12\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"20\" y=\"12\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"8\" y=\"16\" width=\"4\" height=\"4\" fill=\"#28594F\"/><rect x=\"16\" y=\"16\" width=\"4\" height=\"4\" fill=\"#28594F\"/><rect x=\"12\" y=\"16\" width=\"4\" height=\"4\" fill=\"#B98265\"/></svg></div><div class=\"w-12 h-[1px] bg-gradient-to-l from-transparent to-[#B98265]/60\"></div>",
+          "selector": "header.text-center > div.flex.items-center.justify-center.gap-3.mb-4",
+          "selector_strategy": "Target the header crest container above 'Together With Our Families'",
+          "target_element_goal": "Update paired geometric heart line accent to pixelated/geometric copper & forest green motif",
+          "verified_html_context": "<div class=\"flex items-center justify-center gap-3 mb-4\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<div class=\"border-b border-[#E6E4DC] pb-3 mb-3\"><h2 class=\"font-headline-md text-headline-md text-primary-container italic font-normal\">Dear Elon Musk &amp; family,</h2></div><p class=\"font-body-md text-body-md text-on-surface-variant leading-relaxed\">We would love to celebrate with you.</p>",
+          "selector": "header.text-center > div.mt-8.bg-\\[\\#F7F5F0\\]",
+          "selector_strategy": "Target the personalized greeting well container inside header",
+          "target_element_goal": "Clean greeting section: remove quota badge, system copy, private link labels, and simplify invitation note",
+          "verified_html_context": "<div class=\"mt-8 bg-[#F7F5F0] border border-[#E6E4DC] rounded-xl p-5 sm:p-6 text-left relative\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<div class=\"flex flex-col sm:flex-row sm:items-center justify-between gap-4\"><div><h4 class=\"font-label-sm text-label-sm text-[#825339] uppercase tracking-wider mb-1 flex items-center gap-1\"><span class=\"material-symbols-outlined text-[14px]\">apartment</span> Venue</h4><p class=\"font-body-md text-body-md font-semibold text-[#202A29]\">Lotus Pool Terrace, The Leela Palace</p><p class=\"font-body-sm text-body-sm text-[#5A6664] mt-0.5\">23 HAL Old Airport Rd, Kodihalli, Bengaluru</p></div><div><a class=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E6E4DC] bg-white text-[12px] font-label-lg font-semibold text-primary hover:border-[#28594F] hover:bg-[#F7F5F0] transition\" href=\"https://maps.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"material-symbols-outlined text-[16px] text-[#B98265]\">pin_drop</span> Open in Google Maps</a></div></div>",
+          "selector": "#func-1-card > div.rounded-b-xl",
+          "selector_strategy": "Target disclosure block inside #func-1-card",
+          "target_element_goal": "Clean Ceremony 01 disclosure details: remove unrequested dress code, valet/parking, amenities copy, keep only venue name, address, time, and maps link",
+          "verified_html_context": "<div class=\"mt-4 pt-4 border-t border-[#E6E4DC]/70 bg-[#F7F5F0]/50 -mx-5 -mb-5 p-5 rounded-b-xl\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<div class=\"flex flex-col sm:flex-row sm:items-center justify-between gap-4\"><div><h4 class=\"font-label-sm text-label-sm text-[#825339] uppercase tracking-wider mb-1 flex items-center gap-1\"><span class=\"material-symbols-outlined text-[14px]\">apartment</span> Venue</h4><p class=\"font-body-md text-body-md font-semibold text-[#202A29]\">Grand Ballroom, The Leela Palace</p><p class=\"font-body-sm text-body-sm text-[#5A6664] mt-0.5\">23 HAL Old Airport Rd, Kodihalli, Bengaluru</p></div><div><a class=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E6E4DC] bg-white text-[12px] font-label-lg font-semibold text-primary hover:border-[#28594F] hover:bg-[#F7F5F0] transition\" href=\"https://maps.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"material-symbols-outlined text-[16px] text-[#B98265]\">pin_drop</span> Open in Google Maps</a></div></div>",
+          "selector": "#details-func-2",
+          "selector_strategy": "Target #details-func-2 inside #func-2-card",
+          "target_element_goal": "Clean Ceremony 02 disclosure details: remove dress code, keep only venue name, address, and maps link",
+          "verified_html_context": "<div class=\"hidden mt-3 p-4 bg-[#F7F5F0] rounded-lg border border-[#E6E4DC] text-[13px] text-on-surface-variant\" id=\"details-func-2\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<button class=\"px-3.5 py-1.5 rounded-lg text-[13px] font-label-md font-semibold border border-[#B98265] text-[#825339] hover:bg-[#B98265] hover:text-white transition active:scale-[0.98]\" id=\"save-btn-2\" type=\"button\">Save response</button><div class=\"text-[11px] font-label-md text-[#28594F] flex items-center gap-1\" id=\"save-status-2\"><span class=\"material-symbols-outlined text-[14px]\">done</span> Saved yesterday at 05:15 PM IST</div>",
+          "selector": "#func-2-card > div:nth-child(2) > div.justify-end",
+          "selector_strategy": "Target the save action container in #func-2-card interactive controls row",
+          "target_element_goal": "Standardize save response button on Ceremony 02 and ensure consistent controls layout",
+          "verified_html_context": "<div class=\"flex items-center gap-2 justify-end\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<div class=\"flex flex-col sm:flex-row sm:items-center justify-between gap-4\"><div><h4 class=\"font-label-sm text-label-sm text-[#825339] uppercase tracking-wider mb-1 flex items-center gap-1\"><span class=\"material-symbols-outlined text-[14px]\">apartment</span> Venue</h4><p class=\"font-body-md text-body-md font-semibold text-[#202A29]\">The Mandapam, Heritage Gardens, The Leela Palace</p><p class=\"font-body-sm text-body-sm text-[#5A6664] mt-0.5\">23 HAL Old Airport Rd, Kodihalli, Bengaluru</p></div><div><a class=\"inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E6E4DC] bg-white text-[12px] font-label-lg font-semibold text-primary hover:border-[#28594F] hover:bg-[#F7F5F0] transition\" href=\"https://maps.google.com\" rel=\"noopener noreferrer\" target=\"_blank\"><span class=\"material-symbols-outlined text-[16px] text-[#B98265]\">pin_drop</span> Open in Google Maps</a></div></div>",
+          "selector": "#details-func-3",
+          "selector_strategy": "Target #details-func-3 inside #func-3-card",
+          "target_element_goal": "Clean Ceremony 03 disclosure details: remove attire and rituals text, keep only venue name, address, and maps link",
+          "verified_html_context": "<div class=\"hidden mt-3 p-4 bg-[#F7F5F0] rounded-lg border border-[#E6E4DC] text-[13px] text-on-surface-variant\" id=\"details-func-3\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "View venue &amp; directions",
+          "selector": "#func-3-card button[onclick*=\"details-func-3\"] > span.label-text",
+          "selector_strategy": "Target .label-text inside the disclosure toggle button of #func-3-card",
+          "target_element_goal": "Update Ceremony 03 expander button text to remove rituals copy",
+          "verified_html_context": "<span class=\"label-text\">View venue, muhurtham timing &amp; rituals</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<div class=\"flex items-center gap-2\"><button class=\"rsvp-btn-attend px-4 py-2 rounded-lg text-[13px] font-label-lg font-semibold bg-white border border-[#E6E4DC] text-[#202A29] hover:border-[#28594F] hover:bg-[#F7F5F0] transition active:scale-[0.98]\" type=\"button\">Will attend</button><button class=\"rsvp-btn-decline px-4 py-2 rounded-lg text-[13px] font-label-lg font-semibold bg-white border border-[#E6E4DC] text-[#5A6664] hover:bg-[#F7F5F0] active:scale-[0.98] transition\" type=\"button\">Cannot attend</button></div><div class=\"hidden items-center gap-3 bg-[#F7F5F0] px-3 py-1.5 rounded-lg border border-[#E6E4DC]\" id=\"stepper-func3\"><span class=\"text-[12px] font-label-md text-[#5A6664]\">People attending:</span><div class=\"flex items-center gap-2\"><button class=\"w-7 h-7 rounded border border-[#E6E4DC] bg-white text-[#202A29] flex items-center justify-center hover:bg-slate-50\" type=\"button\"><span class=\"material-symbols-outlined text-[16px]\">remove</span></button><span class=\"font-headline-sm text-headline-sm font-semibold text-[#202A29] w-5 text-center\" id=\"guest-count-3\">1</span><button class=\"w-7 h-7 rounded border border-[#E6E4DC] bg-white text-[#202A29] flex items-center justify-center hover:bg-slate-50\" type=\"button\"><span class=\"material-symbols-outlined text-[16px]\">add</span></button></div></div><div class=\"flex items-center gap-2 justify-end\"><button class=\"px-3.5 py-1.5 rounded-lg text-[13px] font-label-md font-semibold border border-[#B98265] text-[#825339] hover:bg-[#B98265] hover:text-white transition active:scale-[0.98]\" id=\"save-btn-3\" type=\"button\">Save response</button></div>",
+          "selector": "#func-3-card > div:nth-child(2)",
+          "selector_strategy": "Target the interactive controls row inside #func-3-card",
+          "target_element_goal": "Clean Ceremony 03 controls to match standard layout: hide stepper until attending chosen and use 'Save response' button label",
+          "verified_html_context": "<div class=\"mt-4 pt-4 border-t border-[#E6E4DC] flex flex-col md:flex-row md:items-center justify-between gap-4\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<div class=\"flex items-center justify-center gap-2 mb-4 text-[#B98265]\"><span class=\"h-[1px] w-8 bg-[#B98265]/40\"></span><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect x=\"6\" y=\"2\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"2\" y=\"6\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"10\" y=\"6\" width=\"4\" height=\"4\" fill=\"#B98265\"/><rect x=\"6\" y=\"10\" width=\"4\" height=\"4\" fill=\"#28594F\"/></svg><span class=\"h-[1px] w-8 bg-[#B98265]/40\"></span></div><p class=\"font-headline-md text-headline-md italic text-[#202A29] mb-1\">With love,</p><p class=\"font-headline-sm text-headline-sm font-semibold text-primary mb-2\">Pavithra &amp; Manish</p>",
+          "selector": "#main-stationery-card > footer",
+          "selector_strategy": "Target the footer element inside #main-stationery-card",
+          "target_element_goal": "Clean stationery footer: remove invented family names (Iyer & Sharma) and technical portal explanation, update to 'With love, Pavithra & Manish'",
+          "verified_html_context": "<footer class=\"mt-12 pt-8 border-t border-[#E6E4DC] text-center\">"
+        },
+        {
+          "action": "remove_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": null,
+          "selector": "main > div > section.grid",
+          "selector_strategy": "Target the section.grid-cols-1.md\\:grid-cols-2 immediately following #main-stationery-card inside main",
+          "target_element_goal": "Remove system architecture showcase callout cards from bottom of public guest page",
+          "verified_html_context": "<section class=\"grid grid-cols-1 md:grid-cols-2 gap-4 mt-2\">"
+        }
+      ],
+      "payload_type": "DomOperationEvent",
+      "screen_id": "5e7d2b8442404a24b4a4c5259c443e2e"
+    },
+    "eventTime": "2026-11-14T05:42:03.316303208Z",
+    "eventType": "project.file_update"
+  },
+  {
+    "actor": "Agent",
+    "eventId": "862fee1f",
+    "eventPayload": {
+      "dom_operations": [
+        {
+          "action": "set_attribute",
+          "attr_name": "class",
+          "attr_value": "bg-[#F7F5F0] font-body-md text-[#1F2421] antialiased min-h-screen flex selection:bg-primary selection:text-on-primary",
+          "class_name": null,
+          "content": null,
+          "selector": "body",
+          "selector_strategy": "Target the body element directly and replace its layout classes to support a flex row with min-h-screen and ivory/neutral backdrop",
+          "target_element_goal": "Transform body layout to support the standard 224px left sidebar shell and main preview content area with neutral background",
+          "verified_html_context": "<body class=\"bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary\">"
+        },
+        {
+          "action": "replace_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<aside class=\"w-56 shrink-0 bg-white border-r border-[#E6E2DA] flex flex-col justify-between min-h-screen sticky top-0 z-50 shadow-[1px_0_4px_rgba(0,0,0,0.02)]\">\n  <div class=\"flex flex-col\">\n    <!-- Brand & Event Identity -->\n    <div class=\"px-5 py-4 border-b border-[#E6E2DA]\">\n      <div class=\"text-headline-md font-headline-md font-medium text-primary tracking-tight text-[18px]\">Make My Event</div>\n      <div class=\"mt-1 text-[11px] font-label-md text-on-surface-variant flex items-center gap-1.5\">\n        <span class=\"material-symbols-outlined text-[14px] text-primary\">event</span>\n        <span class=\"truncate\">Pavithra &amp; Manish</span>\n      </div>\n    </div>\n    <!-- Navigation Links -->\n    <nav class=\"px-3 py-4 space-y-1\">\n      <a href=\"#\" class=\"flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors\">\n        <span class=\"material-symbols-outlined text-[18px]\">dashboard</span>\n        <span>Dashboard</span>\n      </a>\n      <a href=\"#\" class=\"flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors\">\n        <span class=\"material-symbols-outlined text-[18px]\">celebration</span>\n        <span>Functions</span>\n      </a>\n      <a href=\"#\" class=\"flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors\">\n        <span class=\"material-symbols-outlined text-[18px]\">checklist</span>\n        <span>Tasks</span>\n      </a>\n      <!-- Active Navigation Link: Guests & RSVPs -->\n      <a href=\"#\" class=\"flex items-center justify-between px-3 py-2 rounded-lg text-[13px] font-label-md bg-primary text-on-primary font-semibold shadow-xs\">\n        <div class=\"flex items-center gap-2.5\">\n          <span class=\"material-symbols-outlined text-[18px]\">group</span>\n          <span>Guests &amp; RSVPs</span>\n        </div>\n        <span class=\"w-1.5 h-1.5 rounded-full bg-secondary-fixed\"></span>\n      </a>\n      <a href=\"#\" class=\"flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors\">\n        <span class=\"material-symbols-outlined text-[18px]\">groups</span>\n        <span>Team</span>\n      </a>\n      <a href=\"#\" class=\"flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors\">\n        <span class=\"material-symbols-outlined text-[18px]\">storefront</span>\n        <span>Vendors</span>\n      </a>\n      <a href=\"#\" class=\"flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors\">\n        <span class=\"material-symbols-outlined text-[18px]\">payments</span>\n        <span>Finance</span>\n      </a>\n      <a href=\"#\" class=\"flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors\">\n        <span class=\"material-symbols-outlined text-[18px]\">diamond</span>\n        <span>Wedding details</span>\n      </a>\n    </nav>\n  </div>\n  <!-- Bottom User Profile and Notification -->\n  <div class=\"p-3 border-t border-[#E6E2DA] flex items-center justify-between\">\n    <div class=\"flex items-center gap-2.5 min-w-0\">\n      <div class=\"w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center font-bold tracking-tight shadow-sm shrink-0\" title=\"Pavithra Iyer\">\n        PI\n      </div>\n      <div class=\"truncate\">\n        <p class=\"text-[12px] font-semibold text-on-surface truncate\">Pavithra Iyer</p>\n        <p class=\"text-[10px] text-on-surface-variant truncate\">Bride / Host</p>\n      </div>\n    </div>\n    <button class=\"p-1.5 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors shrink-0\" title=\"Notifications\">\n      <span class=\"material-symbols-outlined text-[18px]\">notifications</span>\n    </button>\n  </div>\n</aside>",
+          "selector": "header",
+          "selector_strategy": "Target the header element directly to replace it with the sidebar navigation structure with Guests & RSVPs highlighted active and host profile avatar at the bottom",
+          "target_element_goal": "Replace obsolete top header with the standard Make My Event 224px grouped left sidebar shell",
+          "verified_html_context": "<header class=\"sticky top-0 z-50 flex items-center justify-between w-full px-6 lg:px-8 py-3.5 bg-surface-container-lowest/95 backdrop-blur-sm shadow-[0_1px_3px_rgba(32,42,41,0.04)]\">"
+        },
+        {
+          "action": "replace_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<header class=\"sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-[#E6E2DA] px-6 py-2.5 flex items-center justify-between gap-4\">\n  <div class=\"flex items-center gap-4\">\n    <a href=\"#\" class=\"inline-flex items-center gap-1.5 text-on-surface-variant hover:text-primary font-label-md text-[13px] transition-colors\">\n      <span class=\"material-symbols-outlined text-[16px]\">arrow_back</span>\n      <span>Back to guests</span>\n    </a>\n    <span class=\"h-4 w-px bg-outline-variant/40\"></span>\n    <div class=\"flex items-center gap-2\">\n      <h1 class=\"text-[14px] font-semibold text-on-surface\">Invitation preview</h1>\n      <span class=\"inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#EFECE6] text-on-surface-variant\">\n        Read-only preview\n      </span>\n    </div>\n  </div>\n  <div class=\"flex items-center gap-3\">\n    <div class=\"flex items-center gap-2\">\n      <label class=\"text-[12px] font-label-md text-on-surface-variant\">View as:</label>\n      <div class=\"relative inline-block text-left\">\n        <select class=\"pl-2.5 pr-8 py-1 rounded-md bg-[#FAF9F6] border border-[#D9D4CB] text-on-surface font-body-sm text-[12px] focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer transition-colors\">\n          <option selected=\"\" value=\"all\">All functions (Master view)</option>\n          <option value=\"elon\">Elon Musk &amp; family</option>\n          <option value=\"suresh\">Suresh Uncle &amp; Aunt</option>\n          <option value=\"karthik\">Karthik Iyer</option>\n        </select>\n      </div>\n    </div>\n  </div>\n</header>",
+          "selector": "body > section",
+          "selector_strategy": "Target the section immediately preceding main",
+          "target_element_goal": "Replace the invitation preview strip with the requested compact top toolbar (title, view selector, back link, no token copying in general view)",
+          "verified_html_context": "<section class=\"bg-surface-container-lowest border-b border-outline-variant/30 py-3 px-6 lg:px-8\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "<!-- Discreet Preview Notice Banner -->\n<div class=\"w-full max-w-[760px] mb-4 flex items-center justify-between px-4 py-2 rounded-lg bg-[#FAF8F5] border border-[#E6E0D5] text-[12px] text-on-surface-variant\">\n  <div class=\"flex items-center gap-2\">\n    <span class=\"material-symbols-outlined text-[16px] text-secondary\">visibility</span>\n    <span>Preview only — responses are not saved. Controls are simulated.</span>\n  </div>\n  <span class=\"text-[11px] text-outline font-medium\">Organizer view</span>\n</div>\n\n<!-- Central Stationery Invitation Frame -->\n<div class=\"w-full max-w-[760px] bg-white rounded-xl border border-[#E6E2DA] shadow-[0_2px_12px_rgba(0,0,0,0.03),0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden\">\n  <!-- Top Thin Decorative Filigree Ribbon -->\n  <div class=\"h-1 w-full bg-gradient-to-r from-[#825339]/30 via-[#825339] to-[#825339]/30\"></div>\n\n  <!-- Hero Stationery Section -->\n  <section class=\"p-8 sm:p-12 text-center relative border-b border-[#EFECE6] bg-[#FCFBF9]\">\n    <!-- Delicate Corner Geometric Floral Ornaments -->\n    <div aria-hidden=\"true\" class=\"absolute top-5 left-5 text-[#825339] opacity-35 select-none pointer-events-none\">\n      <svg fill=\"none\" height=\"36\" stroke=\"currentColor\" viewBox=\"0 0 40 40\" width=\"36\">\n        <path d=\"M4 4H18M4 4V18M4 4L14 14\" stroke-linecap=\"round\" stroke-width=\"1.2\"></path>\n        <circle cx=\"18\" cy=\"8\" fill=\"currentColor\" r=\"1.2\"></circle>\n        <circle cx=\"8\" cy=\"18\" fill=\"currentColor\" r=\"1.2\"></circle>\n      </svg>\n    </div>\n    <div aria-hidden=\"true\" class=\"absolute top-5 right-5 text-[#825339] opacity-35 select-none pointer-events-none\">\n      <svg fill=\"none\" height=\"36\" stroke=\"currentColor\" viewBox=\"0 0 40 40\" width=\"36\">\n        <path d=\"M36 4H22M36 4V18M36 4L26 14\" stroke-linecap=\"round\" stroke-width=\"1.2\"></path>\n        <circle cx=\"22\" cy=\"8\" fill=\"currentColor\" r=\"1.2\"></circle>\n        <circle cx=\"32\" cy=\"18\" fill=\"currentColor\" r=\"1.2\"></circle>\n      </svg>\n    </div>\n\n    <!-- Crest Iconography -->\n    <div class=\"inline-flex items-center justify-center mb-4 text-[#825339]\">\n      <div class=\"w-9 h-9 rounded-full border border-[#D5C9B8] flex items-center justify-center bg-white shadow-xs\">\n        <span class=\"material-symbols-outlined text-[18px] text-[#825339]\">spa</span>\n      </div>\n    </div>\n\n    <!-- Overline -->\n    <p class=\"font-label-sm text-[11px] uppercase tracking-widest text-[#825339] font-bold mb-2.5\">\n      Together With Our Families\n    </p>\n\n    <!-- Main Headline in Newsreader -->\n    <h2 class=\"font-headline-lg text-[34px] sm:text-[38px] text-[#0b4138] mb-2 font-normal font-headline-md tracking-tight\">\n      Pavithra &amp; Manish\n    </h2>\n\n    <!-- Date & Location -->\n    <p class=\"font-display-lg text-[16px] italic text-[#615C55] font-normal mb-7 font-headline-md\">\n      18 – 20 February 2027 · Bengaluru, India\n    </p>\n\n    <!-- Invitation Welcome Note -->\n    <div class=\"max-w-lg mx-auto p-4 rounded-lg bg-white border border-[#E6E2DA] shadow-xs text-left\">\n      <h3 class=\"font-headline-md text-[16px] text-primary font-medium mb-1\">\n        Celebration of Union\n      </h3>\n      <p class=\"font-body-sm text-[13px] text-on-surface-variant leading-relaxed\">\n        We warmly welcome our family, friends, and esteemed guests to join us across three auspicious days of ritual, music, and celebration.\n      </p>\n      <div class=\"mt-2.5 pt-2 border-t border-[#EFECE6] flex items-center justify-between text-on-surface-variant text-[11px]\">\n        <span class=\"flex items-center gap-1\">\n          <span class=\"material-symbols-outlined text-[13px] text-secondary\">schedule</span>\n          Times displayed in IST (Bengaluru)\n        </span>\n        <span class=\"text-[#825339] font-medium tracking-wide\">MASTER PROGRAM PREVIEW</span>\n      </div>\n    </div>\n  </section>\n\n  <!-- Celebrations Function Cards Section -->\n  <section class=\"p-6 sm:p-8 space-y-5 bg-white\">\n    <div class=\"flex items-center justify-between pb-2 border-b border-[#EFECE6]\">\n      <h3 class=\"font-headline-md text-[20px] text-primary\">The Celebrations</h3>\n      <span class=\"font-label-md text-[12px] text-on-surface-variant\">3 Ceremonies Scheduled</span>\n    </div>\n\n    <!-- Card 1: Mehndi & Welcome High Tea -->\n    <article class=\"rounded-xl border border-[#E6E2DA] bg-[#FCFBF9] p-5 border-l-4 border-l-[#825339] shadow-xs\">\n      <div class=\"flex flex-col sm:flex-row sm:items-start justify-between gap-3\">\n        <div class=\"space-y-1.5 flex-1\">\n          <div class=\"flex items-center gap-2\">\n            <span class=\"text-[10px] font-label-sm uppercase px-2 py-0.5 rounded bg-[#F4EFEA] text-[#825339] font-semibold border border-[#E7DCD0]\">\n              Day 1 · Welcome Ritual\n            </span>\n            <span class=\"text-[11px] text-on-surface-variant flex items-center gap-1\">\n              <span class=\"material-symbols-outlined text-[13px]\">schedule</span>\n              4:00 PM – 8:30 PM\n            </span>\n          </div>\n          <h4 class=\"font-headline-md text-[17px] text-on-surface font-semibold\">\n            Mehndi &amp; Welcome High Tea\n          </h4>\n          <div class=\"flex items-center gap-2 text-on-surface-variant text-[13px]\">\n            <span class=\"material-symbols-outlined text-[16px] text-secondary\">calendar_today</span>\n            <span>Thursday, 18 February 2027</span>\n          </div>\n        </div>\n        <span class=\"self-start inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#E8F3EE] text-primary text-[11px] font-label-md border border-[#C5DFD6]\">\n          <span class=\"material-symbols-outlined text-[14px]\">check_circle</span>\n          Attending\n        </span>\n      </div>\n\n      <!-- Read-only RSVP Preview bar -->\n      <div class=\"mt-4 pt-3 border-t border-[#EFECE6] flex flex-wrap items-center justify-between gap-3 text-[12px]\">\n        <div class=\"flex items-center gap-2\">\n          <span class=\"text-on-surface-variant text-[11px]\">Guest RSVP:</span>\n          <span class=\"px-2.5 py-1 rounded bg-[#EAE6DE] text-[#595349] font-medium cursor-not-allowed select-none opacity-80\">\n            Will attend\n          </span>\n          <span class=\"px-2.5 py-1 rounded bg-transparent border border-[#E0DBD2] text-[#8C8476] cursor-not-allowed select-none opacity-60\">\n            Cannot attend\n          </span>\n        </div>\n        <span class=\"text-on-surface-variant text-[11px] italic\">\n          Venue: Lotus Pool Terrace, The Leela Palace\n        </span>\n      </div>\n    </article>\n\n    <!-- Card 2: Sangeet & Musical Gala -->\n    <article class=\"rounded-xl border border-[#E6E2DA] bg-[#FCFBF9] p-5 border-l-4 border-l-primary shadow-xs\">\n      <div class=\"flex flex-col sm:flex-row sm:items-start justify-between gap-3\">\n        <div class=\"space-y-1.5 flex-1\">\n          <div class=\"flex items-center gap-2\">\n            <span class=\"text-[10px] font-label-sm uppercase px-2 py-0.5 rounded bg-[#E5F0EE] text-primary font-semibold border border-[#BED7D2]\">\n              Day 2 · Music &amp; Dinner\n            </span>\n            <span class=\"text-[11px] text-on-surface-variant flex items-center gap-1\">\n              <span class=\"material-symbols-outlined text-[13px]\">schedule</span>\n              6:00 PM – Midnight\n            </span>\n          </div>\n          <h4 class=\"font-headline-md text-[17px] text-on-surface font-semibold\">\n            Sangeet &amp; Musical Gala\n          </h4>\n          <div class=\"flex items-center gap-2 text-on-surface-variant text-[13px]\">\n            <span class=\"material-symbols-outlined text-[16px] text-primary\">calendar_today</span>\n            <span>Friday, 19 February 2027</span>\n          </div>\n        </div>\n        <span class=\"self-start inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#E8F3EE] text-primary text-[11px] font-label-md border border-[#C5DFD6]\">\n          <span class=\"material-symbols-outlined text-[14px]\">check_circle</span>\n          Attending\n        </span>\n      </div>\n\n      <!-- Read-only RSVP Preview bar -->\n      <div class=\"mt-4 pt-3 border-t border-[#EFECE6] flex flex-wrap items-center justify-between gap-3 text-[12px]\">\n        <div class=\"flex items-center gap-2\">\n          <span class=\"text-on-surface-variant text-[11px]\">Guest RSVP:</span>\n          <span class=\"px-2.5 py-1 rounded bg-[#EAE6DE] text-[#595349] font-medium cursor-not-allowed select-none opacity-80\">\n            Will attend\n          </span>\n          <span class=\"px-2.5 py-1 rounded bg-transparent border border-[#E0DBD2] text-[#8C8476] cursor-not-allowed select-none opacity-60\">\n            Cannot attend\n          </span>\n        </div>\n        <span class=\"text-on-surface-variant text-[11px] italic\">\n          Venue: Grand Ballroom, The Leela Palace\n        </span>\n      </div>\n    </article>\n\n    <!-- Card 3: Vedic Wedding & Muhurtham -->\n    <article class=\"rounded-xl border border-[#E6E2DA] bg-[#FCFBF9] p-5 border-l-4 border-l-[#C0C8C5] shadow-xs\">\n      <div class=\"flex flex-col sm:flex-row sm:items-start justify-between gap-3\">\n        <div class=\"space-y-1.5 flex-1\">\n          <div class=\"flex items-center gap-2\">\n            <span class=\"text-[10px] font-label-sm uppercase px-2 py-0.5 rounded bg-[#F0EEEA] text-[#615C55] font-semibold border border-[#DFDACF]\">\n              Day 3 · Sacred Ceremony\n            </span>\n            <span class=\"text-[11px] text-on-surface-variant flex items-center gap-1\">\n              <span class=\"material-symbols-outlined text-[13px]\">schedule</span>\n              9:00 AM – 1:30 PM\n            </span>\n          </div>\n          <h4 class=\"font-headline-md text-[17px] text-on-surface font-semibold\">\n            Vedic Wedding &amp; Muhurtham\n          </h4>\n          <div class=\"flex items-center gap-2 text-on-surface-variant text-[13px]\">\n            <span class=\"material-symbols-outlined text-[16px] text-on-surface-variant\">calendar_today</span>\n            <span>Saturday, 20 February 2027</span>\n          </div>\n        </div>\n        <span class=\"self-start inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#F4F1EA] text-[#6E685F] text-[11px] font-label-md border border-[#DDD7CB]\">\n          <span class=\"material-symbols-outlined text-[14px]\">hourglass_empty</span>\n          Awaiting reply\n        </span>\n      </div>\n\n      <!-- Read-only RSVP Preview bar -->\n      <div class=\"mt-4 pt-3 border-t border-[#EFECE6] flex flex-wrap items-center justify-between gap-3 text-[12px]\">\n        <div class=\"flex items-center gap-2\">\n          <span class=\"text-on-surface-variant text-[11px]\">Guest RSVP:</span>\n          <span class=\"px-2.5 py-1 rounded bg-transparent border border-[#D5CFBF] text-[#787165] cursor-not-allowed select-none opacity-80\">\n            Will attend\n          </span>\n          <span class=\"px-2.5 py-1 rounded bg-transparent border border-[#E0DBD2] text-[#8C8476] cursor-not-allowed select-none opacity-60\">\n            Cannot attend\n          </span>\n        </div>\n        <span class=\"text-on-surface-variant text-[11px] italic\">\n          Venue: Temple Mandapam Lawn\n        </span>\n      </div>\n    </article>\n  </section>\n\n  <!-- Stationery Footer Warm Note -->\n  <footer class=\"p-6 text-center bg-[#FAF8F5] border-t border-[#EFECE6] text-on-surface-variant\">\n    <p class=\"font-headline-md text-[17px] italic mb-1 text-primary\">With Love &amp; Gratitude,</p>\n    <p class=\"font-label-md text-[11px] uppercase tracking-wider text-secondary font-semibold\">The Iyer &amp; Sharma Families</p>\n  </footer>\n</div>",
+          "selector": "main",
+          "selector_strategy": "Target main and replace its content with refined ivory stationery, Newsreader typography, delicate artwork, read-only controls with discrete note, and no public cap badges",
+          "target_element_goal": "Replace main content container with refined stationery preview matching public page artwork and remove extraneous diagnostic drawer",
+          "verified_html_context": "<main class=\"flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center\">"
+        },
+        {
+          "action": "set_attribute",
+          "attr_name": "class",
+          "attr_value": "flex-1 w-full py-8 px-4 sm:px-6 lg:px-8 flex flex-col items-center overflow-y-auto",
+          "class_name": null,
+          "content": null,
+          "selector": "main",
+          "selector_strategy": "Set classes on main to ensure proper flex sizing and clean padding on the canvas",
+          "target_element_goal": "Wrap the top toolbar and main preview canvas in a scrollable content flex container to cleanly pair with the sidebar shell",
+          "verified_html_context": "<main class=\"flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center\">"
+        }
+      ],
+      "payload_type": "DomOperationEvent",
+      "screen_id": "a104382fcd71443dab12b88cce4712ea"
+    },
+    "eventTime": "2026-11-14T05:42:03.316306844Z",
+    "eventType": "project.file_update"
+  },
+  {
+    "actor": "Agent",
+    "eventId": "2dacb816",
+    "eventPayload": {
+      "dom_operations": [
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "Single private link for all functions",
+          "selector": "aside[aria-label=\"Guest invitation details drawer\"] section:nth-child(3) p.text-\\[11px\\]",
+          "selector_strategy": "Target the recipient subtitle paragraph directly inside section:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p",
+          "target_element_goal": "Remove the raw token ID and keep clean recipient subtitle 'Single private link for all functions'",
+          "verified_html_context": "<p class=\"text-[11px] text-brand-muted\">Unique token: <code class=\"font-mono text-[10px] bg-brand-ivory px-1 rounded\">tok_9f2b8e</code> · Single private link for all functions</p>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "“We warmly invite you to celebrate our union across three days of traditional rituals, music, and joy.”",
+          "selector": "aside[aria-label=\"Guest invitation details drawer\"] section:nth-child(3) .bg-brand-ivory\\/70 p",
+          "selector_strategy": "Target the italic paragraph inside the personalized note block",
+          "target_element_goal": "Update personalized note to clean, concise warm wording",
+          "verified_html_context": "<p class=\"italic leading-relaxed\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "Pending response",
+          "selector": "aside[aria-label=\"Guest invitation details drawer\"] section:nth-child(4) .space-y-2\\.5 > div:nth-child(3) span.text-amber-700",
+          "selector_strategy": "Target the status span in the 3rd ceremony card's bottom line",
+          "target_element_goal": "Replace Vedic Wedding tracking text 'Link visited · No submission yet' with clean 'Pending response'",
+          "verified_html_context": "<span class=\"text-amber-700 font-medium\">Link visited · No submission yet</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "Copy and share this invitation with the recipient.",
+          "selector": "aside[aria-label=\"Guest invitation details drawer\"] section:nth-child(5) > p",
+          "selector_strategy": "Target the description paragraph in section:nth-child(5)",
+          "target_element_goal": "Replace wordy explainer copy in private link module with 'Copy and share this invitation with the recipient.'",
+          "verified_html_context": "<p class=\"text-[11px] text-brand-muted leading-relaxed\">"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "https://makemyevent.app/invite/pm-2027?token=••••••••••••",
+          "selector": "#link-text",
+          "selector_strategy": "Target #link-text",
+          "target_element_goal": "Mask the secret token portion completely with 12 dots",
+          "verified_html_context": "<span id=\"link-text\">https://makemyevent.app/invite/pm-2027?token=••••••••9f2b</span>"
+        },
+        {
+          "action": "replace_content",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": "Copy link",
+          "selector": "#btn-copy-label",
+          "selector_strategy": "Target #btn-copy-label",
+          "target_element_goal": "Update primary copy button in link module to have clean 'Copy link' label and alongside Share",
+          "verified_html_context": "<span id=\"btn-copy-label\">Copy private link</span>"
+        },
+        {
+          "action": "remove_element",
+          "attr_name": null,
+          "attr_value": null,
+          "class_name": null,
+          "content": null,
+          "selector": "aside[aria-label=\"Guest invitation details drawer\"] footer > div > button:nth-child(2)",
+          "selector_strategy": "Target the copy button inside drawer footer > div:nth-child(2) > button:nth-child(2)",
+          "target_element_goal": "Remove redundant duplicate 'Copy link' button in the bottom drawer footer",
+          "verified_html_context": "<button type=\"button\" onclick=\"triggerCopyAction()\" class=\"px-4 py-2 rounded-lg bg-brand-forest text-xs font-semibold text-brand-white hover:bg-brand-forestDark transition shadow-sm flex items-center gap-1 active:scale-[0.98]\">"
+        }
+      ],
+      "payload_type": "DomOperationEvent",
+      "screen_id": "783bbe726e964a889524aa37ca957d87"
+    },
+    "eventTime": "2026-11-14T05:42:03.316312547Z",
+    "eventType": "project.file_update"
+  }
+]

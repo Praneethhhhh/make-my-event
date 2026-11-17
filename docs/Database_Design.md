@@ -1,5 +1,19 @@
 # MAKE MY EVENT
 
+**14 November 2026 guest-invitation approved scope:** Admins and organizers invite individuals/families only through manually shared personalized private links. Guest emails, Resend guest delivery and guest reminders are excluded; management-team email invitations are unchanged. One common image-free invitation theme shows the couple and only the recipient's eligible functions, with inline venue/Google Maps directions, per-function countdowns and RSVP/headcounts. Management summaries distinguish recipient responses from attending people per function. Earlier guest email/reminder requirements below are superseded for this feature. See [guest invitation design brief](../design/guest-invitations/BRIEF.md). Implementation is authorized; current behavior and verification are recorded in PROJECT_STATUS.md and GUEST_INVITATIONS_IMPLEMENTATION_PLAN.md.
+
+### Implemented manual guest storage — 14 November 2026
+
+[The guest implementation plan](GUEST_INVITATIONS_IMPLEMENTATION_PLAN.md) defines the current schema and supersedes older guest email/reminder/token-path examples below. No guest email/phone/outbox rows are written. guests holds weddingId, displayName, personalMessage, ACTIVE/DISABLED, revision and creator/timestamps. functionInvitations is the RSVP source of truth: unique weddingId+guestId+functionId, independent ACTIVE/REVOKED eligibility, PENDING/ACCEPTED/DECLINED response, private maxAttendees, attendeeCount, deadlineOverrideAt, revision/respondedAt. Removing eligibility preserves response history; explicitly re-adding begins PENDING/0 with an audit of the prior value.
+
+accessLinks stores GUEST subject, weddingId/guestId, unique SHA256 tokenHash, AES256GCM encryptedSecret/secretNonce/secretAuthTag/secretKeyVersion, revision, state, optional expiry and timestamps. The recoverable secret exists solely for explicit manager reveal. Derive a separate encryption key from INVITATION_CODE_SECRET with HMAC domain guest-link-encryption:v1; deployment must retain that configured key. Exactly one ACTIVE GUEST link per wedding/guest is enforced by a partial unique index. Revocation clears encrypted fields and blocks all sessions immediately.
+
+portalSessions holds subjectType=GUEST, weddingId, guestId, linkId, linkVersion, sessionTokenHash, createdAt, expiresAt, revokedAt. guest_session_token is unique only for GUEST rows with a string sessionTokenHash, preserving inert legacy vendor rows. TTL cleans expired sessions; every authorization also checks current expiry/link version/wedding/guest. No destructive legacy index migration is performed at startup. Existing equivalent TTL/hash indexes remain compatible.
+
+Guest writes reuse the wedding coordinationVersion lock, idempotencyRecords and safe auditEvents. Audit correction reasons and before/after response values, not credentials. Creation/rotation retry records contain IDs only. All four collections remain in the explicit permanent-wedding cascade and are covered by populated guest deletion/isolation tests. Public DTOs are allowlists and omit maxAttendees and all encrypted material.
+
+
+
 **14 November 2026 approved redesign:** Tasks retain assigneeUserId as required active human owner on writes and add independent optional vendorId. Legacy vendor-only/ownerless rows remain readable until reassigned. Mentions store field/userId/start/end ranges and derive notifications from assignment/new mention changes. Vendors add controlled color; vendorAssignments are historical only. expenses.modelVersion=2 stores real obligations with optional vendorId and status ACTIVE/VOID; expensePayments stores expenseId, expenseSource (expenses/vendorCharges), amountPaise, paidAt, method/notes, status POSTED/VOID and revision. Legacy paid expenses produce virtual settled payments only while not converted; never count them twice. Include expensePayments in wedding cascade. Migration is explicit, backed up, reconciled and tested before retained-data application. See [implementation plan](OPERATIONS_REDESIGN_PLAN.md).
 
 **14 November 2026 product decision:** Vendors have no application access: no portal, private URLs, capability sessions, self-service task completion or vendor/photographer uploads. Administrators and organizers maintain vendor contacts, responsibilities, task status, charges and payments internally. Guest invitation access is unchanged. Google Places discovery remains deferred. Any earlier design exports or historical test notes describing vendor access are superseded.
@@ -705,3 +719,7 @@ Redemption transactionally consumes the exact authenticated, active, unexpired c
 ## Operations refinement storage - 14 November 2026
 
 The paid-expenses convenience operation adds no collection: insert a modelVersion 2 ACTIVE expenses row and one POSTED expensePayments row for the same amount in one wedding-locked, membership-validated transaction. Both use the same tenant and resolved optional vendor; operation idempotency key PAID_COST_CREATE prevents duplicate purchases on retry. Removal retains VOID records, reason, actor and revision; it is not physical deletion. Existing cascade inventory includes both collections. Notification badge reads count unread notifications by weddingId and recipientUserId with readAt null; no additional stored counter or delivery channel is introduced.
+
+## Appearance preference
+
+Light/Dark is a non-secret browser-local preference (mme-theme), not a database field. No collection, index, migration, account revision or wedding ownership contract changes.

@@ -1,4 +1,5 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import { useWeddingClient } from "@/modules/weddings/wedding-scope";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
@@ -360,7 +361,9 @@ export function FunctionsPage() {
             </h2>
             {!functions.length && (
               <article className="function-tile empty-functions">
-                <span aria-hidden="true">✦</span>
+                <span aria-hidden="true">
+                  <UiIcon name="sparkle" size={28} />
+                </span>
                 <h3>Your celebration starts here</h3>
                 <p>Add your first function, from Haldi to the Reception.</p>
               </article>
@@ -472,7 +475,9 @@ export function FunctionsPage() {
                       style={{ background: color.hex }}
                       aria-hidden="true"
                     >
-                      <span>✓</span>
+                      <span>
+                        <UiIcon name="check" size={14} />
+                      </span>
                     </span>
                     <span>{color.label}</span>
                   </label>

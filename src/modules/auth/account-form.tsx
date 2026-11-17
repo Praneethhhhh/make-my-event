@@ -1,4 +1,7 @@
 "use client";
+import { ThemeControl } from "@/modules/experience/theme-control";
+import { UiIcon } from "@/modules/experience/ui-icon";
+import { BrandLockup } from "@/modules/experience/brand-lockup";
 import Link from "next/link";
 import {
   registration,
@@ -124,11 +127,19 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
     );
   return (
     <main className="account-page mx-auto grid min-h-screen max-w-5xl content-center px-4 py-10">
-      <div className="account-panel grid overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white md:grid-cols-2">
+      <div className="account-panel grid overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] md:grid-cols-2">
         <section className="grid gap-5 p-6 sm:p-12">
-          <Link href="/" className="text-sm underline">
-            ← Back to home
-          </Link>
+          <div className="account-topline">
+            <Link href="/weddings" aria-label="Make My Event — Your weddings">
+              <BrandLockup />
+            </Link>
+            <div className="account-topline-actions">
+              <ThemeControl />{" "}
+              <Link href="/" className="account-home" aria-label="Back to home">
+                <UiIcon name="arrow-left" /> Home
+              </Link>
+            </div>
+          </div>
           <h1 className="font-[family-name:var(--font-editorial)] text-4xl">
             {signIn ? "Welcome back" : "Create an account"}
           </h1>
@@ -260,7 +271,7 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
             <button
               type="submit"
               disabled={busy}
-              className="rounded-lg bg-[var(--color-primary)] p-3 text-white disabled:opacity-60"
+              className="rounded-lg bg-[var(--color-primary)] p-3 text-[var(--color-on-primary)] disabled:opacity-60"
             >
               {busy ? "Please wait…" : signIn ? "Sign in" : "Create account"}
             </button>
@@ -273,9 +284,6 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
           </form>
         </section>
         <aside className="grid content-center gap-4 bg-[var(--color-surface-muted)] p-8 sm:p-12">
-          <p className="text-sm font-bold tracking-wider uppercase">
-            Make My Event
-          </p>
           <h2 className="font-[family-name:var(--font-editorial)] text-4xl">
             A little more together.
           </h2>

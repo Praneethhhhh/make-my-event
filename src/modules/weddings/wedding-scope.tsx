@@ -1,4 +1,5 @@
 "use client";
+import { ThemeControl } from "@/modules/experience/theme-control";
 import {
   createContext,
   useContext,
@@ -65,7 +66,7 @@ export function WeddingScope({
               : input.url;
         const path = new URL(inputPath, window.location.origin).pathname;
         const tenant =
-          /^\/api\/v1\/(wedding(?:$|\?)|functions(?:\/|$|\?)|members(?:\/|$|\?)|member-invitations(?:\/|$|\?)|(?:operations|tasks|vendors|vendor-charges|vendor-payments|expenses|finance|notifications)(?:\/|$|\?))/.test(
+          /^\/api\/v1\/(wedding(?:$|\?)|functions(?:\/|$|\?)|members(?:\/|$|\?)|member-invitations(?:\/|$|\?)|(?:guests|function-invitations|operations|tasks|vendors|vendor-charges|vendor-payments|expenses|finance|notifications)(?:\/|$|\?))/.test(
             path,
           ) && !path.endsWith("/redeem");
         const controller = new AbortController();
@@ -173,6 +174,9 @@ export function WeddingScope({
       >
         {lost ? (
           <main className="wedding-page">
+            <div className="standalone-theme">
+              <ThemeControl />
+            </div>
             <section className="team-workspace">
               <h1>Wedding access unavailable</h1>
               <p>

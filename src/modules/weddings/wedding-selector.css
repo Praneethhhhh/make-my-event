@@ -39,7 +39,7 @@
   border: 1px solid var(--color-border-strong);
   border-radius: 8px;
   padding: 12px;
-  background: white;
+  background: var(--color-surface);
   max-width: 480px;
   width: 100%;
   min-width: 0;
@@ -53,7 +53,7 @@
 .wedding-choice-card {
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  background: white;
+  background: var(--color-surface);
   padding: 24px;
   overflow-wrap: anywhere;
 }
@@ -122,7 +122,7 @@
 }
 .account-trigger:hover,
 .account-trigger[aria-expanded="true"] {
-  background: #f4f5f0;
+  background: var(--color-surface-subtle);
   border-color: var(--color-border);
 }
 .account-trigger strong {
@@ -133,7 +133,7 @@
 }
 .account-avatar {
   background: var(--color-primary);
-  color: white;
+  color: var(--color-on-primary);
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -158,7 +158,7 @@
   max-width: calc(100vw - 32px);
   max-height: min(75dvh, 620px);
   overflow: auto;
-  background: white;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 16px;
   box-shadow: 0 16px 60px #202a291a;
@@ -213,10 +213,10 @@
 }
 .account-menu-group a:hover,
 .account-menu-group button:hover {
-  background: #f4f5f0;
+  background: var(--color-surface-subtle);
 }
 .account-menu-group a[aria-current="page"] {
-  background: #eaf0e9;
+  background: var(--color-selected);
   color: var(--color-primary);
 }
 .account-menu-group > span {
@@ -243,14 +243,14 @@
 .wedding-danger {
   max-width: 1040px;
   margin: 40px auto 0;
-  border: 1px solid #ead9d5;
+  border: 1px solid var(--color-danger-border);
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   padding: 24px 32px;
-  background: #fffdfb;
+  background: var(--color-surface-warm);
 }
 .wedding-danger h2 {
   font-family: var(--font-editorial);
@@ -272,7 +272,7 @@
 }
 .danger-action {
   background: var(--color-danger);
-  color: white;
+  color: var(--color-on-danger);
   font-weight: 600;
   font-size: 13px;
   padding: 12px 18px;
@@ -281,7 +281,7 @@
   cursor: pointer;
 }
 .danger-action:hover:not(:disabled) {
-  background: #94322b;
+  background: var(--color-danger-hover);
 }
 .danger-action:disabled {
   opacity: 0.45;
@@ -410,12 +410,6 @@
     flex-wrap: nowrap;
     padding: 12px 16px;
     gap: 10px;
-  }
-  .wedding-brand div > span {
-    font-size: 9px;
-  }
-  .wedding-brand strong {
-    font-size: 10px;
   }
   .account-trigger {
     max-width: 160px;

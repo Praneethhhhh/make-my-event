@@ -234,7 +234,7 @@ for (const width of [390, 768, 1440])
         }),
       ).toBeVisible();
       await joined
-        .getByRole("link", { name: "Open comment →", exact: true })
+        .getByRole("link", { name: "Open comment", exact: true })
         .click();
       await expect(
         joined.getByText("Please confirm @Family Helper", { exact: true }),

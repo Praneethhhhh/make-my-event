@@ -72,3 +72,16 @@ References: design/operations-redesign/{dashboard,tasks,finance}.{png,html}. Kee
 ## Minimal operations states - 14 November 2026
 
 Use design/operations-refinements for the refined discussion, filters, Finance and paired empty/populated Stitch references. Keep canonical ivory/forest/copper tokens rather than generated teal substitutions. Do not copy preview switchers, invented role badges, payment notifications, markdown promises or permission controls from generated boards. One primary action per header; flat date-grouped notification rows, readable 14-16px message bodies, inline mention highlights and a bottom composer. Separate no-data, no-filter-match, loading and recoverable error states. Finance has one Add entry action with two explicit choices; contextual existing-expense payment always shows its payee and remaining balance.
+
+
+## Consistency polish — 14 November 2026
+
+Preserve approved layouts, illustrations, function colors and palette. The shared BrandLockup uses the existing mark and title-case Newsreader wordmark across landing, workspace and account surfaces; image-free guest stationery uses the same wordmark without the mark. Do not add a second uppercase wordmark or repeated tagline in compact headers. Shared primary/secondary controls use Manrope14px/1.4 semibold, at least44px targets and a consistent gap for decorative icons. Keep Newsreader for editorial headings, not controls or dense data. Use the shared UiIcon outlined SVGs for arrows, menus and close controls rather than font glyphs; icons remain aria-hidden and icon-only buttons retain explicit accessible names. Keep useful labels on destructive controls. Feedback banners use compact13px copy with safe wrapping. Shorten repeated prose, preserving deadlines, security/finance meaning, validation and confirmation details. Marketing art framing and motion behavior stay unchanged. This is a consistency pass against existing Stitch compositions, not a new design direction.
+
+Management route headings share the32px desktop/28px mobile editorial scale; compact row actions may use13px. Mobile text/select fields use at least16px to avoid focus zoom and keep input legible. Brand sizing remains22–24px desktop and18px in compact mobile workspace headers (16px only below380px), while retaining the same wordmark face and case.
+
+Consistency verification completed16 November 2026. Loading captions use muted text, not danger red; error messages retain danger styling. Actual-route evidence and remaining coverage are recorded in docs/PROJECT_STATUS.md. Preserve the supplied artwork and approved composition when applying these shared finishing rules.
+
+## Dark appearance
+
+Use semantic tokens rather than component-specific white/black overrides. Dark canvas is #121a17, surface #1b2621, text #eeeae2, muted text #b1bdb4 and primary #9ad5be with #13271f action text. Preserve function palette identity, visible borders, focus rings, error feedback and native color-scheme. Landing illustrations use genuine transparent PNG assets with natural skin and stable warm colors in both themes. Never invert, hue-rotate or screen-blend the characters. Keep the palace image unchanged. Appearance offers Light/Dark, defaults to Light and preserves form drafts. See dark-mode/REFERENCE.md for the Stitch composition reference. Keep existing reduced-motion behavior.

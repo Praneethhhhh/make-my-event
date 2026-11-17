@@ -37,7 +37,7 @@ for (const width of [390, 1440]) {
       ).toBeVisible();
       await page.getByRole("button", { name: "Account menu" }).click();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
-      await page.getByRole("link", { name: "Sign In", exact: true }).click();
+      await page.getByRole("link", { name: "Sign in", exact: true }).click();
       await expect(
         page.getByRole("heading", { name: "Welcome back" }),
       ).toBeVisible();
@@ -72,7 +72,7 @@ for (const width of [390, 1440]) {
       await page.getByRole("button", { name: "Account menu" }).click();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
       await expect(
-        page.getByRole("link", { name: "Sign In", exact: true }),
+        page.getByRole("link", { name: "Sign in", exact: true }),
       ).toBeVisible();
       expect(await database.collection("users").countDocuments()).toBe(1);
       expect(

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make My Event — Wedding Invitation Master Preview</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "surface": "#f1fcfa",
+            "on-tertiary": "#ffffff",
+            "inverse-primary": "#9ed1c4",
+            "primary-fixed-dim": "#9ed1c4",
+            "on-tertiary-fixed-variant": "#434842",
+            "on-primary-container": "#9bcec1",
+            "surface-container-highest": "#dae5e3",
+            "on-tertiary-fixed": "#181d18",
+            "secondary-fixed": "#ffdbca",
+            "surface-tint": "#36675c",
+            "surface-container": "#e5f0ee",
+            "tertiary": "#363b36",
+            "surface-dim": "#d1dcda",
+            "outline-variant": "#c0c8c5",
+            "primary-fixed": "#baeddf",
+            "primary": "#0b4138",
+            "on-tertiary-container": "#c0c5bd",
+            "error-container": "#ffdad6",
+            "on-background": "#141d1c",
+            "inverse-on-surface": "#e8f3f1",
+            "on-secondary-fixed-variant": "#673c24",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "primary-container": "#28594f",
+            "on-secondary-container": "#794b32",
+            "on-surface": "#141d1c",
+            "tertiary-fixed-dim": "#c3c8c0",
+            "surface-bright": "#f1fcfa",
+            "inverse-surface": "#283231",
+            "on-primary": "#ffffff",
+            "on-primary-fixed-variant": "#1d4f45",
+            "background": "#f1fcfa",
+            "tertiary-container": "#4d524c",
+            "tertiary-fixed": "#dfe4dc",
+            "secondary-container": "#fdbe9e",
+            "secondary": "#825339",
+            "on-secondary-fixed": "#321201",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#f7b999",
+            "on-surface-variant": "#404946",
+            "surface-container-low": "#ebf6f4",
+            "surface-container-high": "#dfeae8",
+            "outline": "#707976",
+            "surface-variant": "#dae5e3",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#00201b"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Manrope"],
+            "display-lg": ["Newsreader"],
+            "body-md": ["Manrope"],
+            "label-md": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "display-lg-mobile": ["Newsreader"],
+            "body-sm": ["Manrope"],
+            "label-lg": ["Manrope"],
+            "headline-sm": ["Manrope"],
+            "headline-lg": ["Newsreader"],
+            "headline-md": ["Newsreader"]
+          },
+          "fontSize": {
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Shell (Shared Components JSON Anchor) -->
+<header class="sticky top-0 z-50 flex items-center justify-between w-full px-6 lg:px-8 py-3.5 bg-surface-container-lowest/95 backdrop-blur-sm shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<!-- Left: Brand Logo & Event Pill -->
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-medium text-primary tracking-tight">Make My Event</span>
+<span class="h-4 w-px bg-outline-variant/40"></span>
+<div class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container-high/60 border border-outline-variant/30 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary text-[15px]">event</span>
+<span>Pavithra &amp; Manish · Feb 2027</span>
+</div>
+</div>
+<!-- Center: Navigation Links -->
+<nav class="hidden xl:flex items-center gap-7">
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors font-label-md text-label-md" href="#">Overview</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors font-label-md text-label-md" href="#">Functions</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors font-label-md text-label-md" href="#">Tasks</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors font-label-md text-label-md" href="#">Vendors</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors font-label-md text-label-md" href="#">Finance</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors font-label-md text-label-md" href="#">Team</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 transition-colors font-label-md text-label-md" href="#">Wedding details</a>
+<!-- Active Context: Guests & RSVPs -->
+<a class="border-b-2 border-primary text-primary font-semibold pb-1 font-label-md text-label-md flex items-center gap-1.5" href="#">
+<span>Guests &amp; RSVPs</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</a>
+</nav>
+<!-- Right: Trailing Actions, Icon Buttons & Avatar -->
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center justify-center px-4 py-1.5 rounded-lg bg-surface-container-high/40 hover:bg-surface-container-high text-primary font-label-md text-label-md border border-outline-variant/40 active:scale-[0.98] transition-all" type="button">
+        Save Draft
+      </button>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<button class="p-1.5 rounded-full hover:bg-surface-container-high/40 text-on-surface-variant hover:text-on-surface transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="p-1.5 rounded-full hover:bg-surface-container-high/40 text-on-surface-variant hover:text-on-surface transition-colors" title="Help">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center font-bold tracking-tight shadow-sm ring-1 ring-surface-container-lowest" title="Host profile: Pavithra Iyer">
+        PI
+      </div>
+</div>
+</header>
+<!-- Invitation Preview & Link Management Strip -->
+<section class="bg-surface-container-lowest border-b border-outline-variant/30 py-3 px-6 lg:px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<!-- Mode Badge & Context Selection -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-primary/10 text-primary border border-primary/20 font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>ORGANIZER MODE · LIVE GUEST INVITATION PREVIEW</span>
+</div>
+<span class="hidden sm:inline-block text-outline-variant">|</span>
+<!-- Preview Switcher Dropdown Group -->
+<div class="flex items-center gap-2">
+<label class="text-on-surface-variant font-label-md text-label-md">Viewing as:</label>
+<div class="relative inline-block text-left">
+<select class="pl-3 pr-8 py-1.5 rounded-lg bg-surface border border-outline-variant/50 text-on-surface font-body-sm text-body-sm focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer transition-colors">
+<option selected="" value="recipient-1">Elon Musk &amp; family (Invited to 3 functions)</option>
+<option value="recipient-2">Suresh Uncle &amp; Aunt (Invited to 2 functions)</option>
+<option value="recipient-3">Karthik Iyer (Solo · Vedic Wedding)</option>
+<option value="master">All wedding functions (Master View)</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Action Buttons & Diagnostic Warning -->
+<div class="flex flex-wrap items-center gap-3 self-stretch md:self-auto justify-end">
+<div class="flex items-center gap-1.5 px-3 py-1 rounded bg-secondary/10 border border-secondary/25 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">info</span>
+<span>RSVP controls simulated for organizers</span>
+</div>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container active:scale-[0.98] transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Copy private guest link</span>
+</button>
+<a class="inline-flex items-center gap-1 text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors px-2 py-1" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Back to Guests &amp; RSVPs</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Main Canvas Workspace -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col items-center">
+<!-- Stationery Frame Container (Max 820px) -->
+<div class="w-full max-w-[820px] bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-[0_1px_3px_rgba(32,42,41,0.04),0_4px_12px_rgba(32,42,41,0.02)] overflow-hidden">
+<!-- Top Decorative Border Filigree -->
+<div class="h-1.5 w-full bg-gradient-to-r from-primary via-secondary to-primary opacity-80"></div>
+<!-- Hero Stationery Section -->
+<section class="p-8 sm:p-12 text-center relative border-b border-outline-variant/30">
+<!-- Corner Vector Floral / Geometric Accents -->
+<div aria-hidden="true" class="absolute top-5 left-5 text-secondary opacity-40 select-none pointer-events-none">
+<svg fill="none" height="40" stroke="currentColor" viewbox="0 0 40 40" width="40">
+<path d="M4 4H20M4 4V20M4 4L16 16" stroke-linecap="round" stroke-width="1.2"></path>
+<circle cx="20" cy="8" fill="currentColor" r="1.5"></circle>
+<circle cx="8" cy="20" fill="currentColor" r="1.5"></circle>
+</svg>
+</div>
+<div aria-hidden="true" class="absolute top-5 right-5 text-secondary opacity-40 select-none pointer-events-none">
+<svg fill="none" height="40" stroke="currentColor" viewbox="0 0 40 40" width="40">
+<path d="M36 4H20M36 4V20M36 4L24 16" stroke-linecap="round" stroke-width="1.2"></path>
+<circle cx="20" cy="8" fill="currentColor" r="1.5"></circle>
+<circle cx="32" cy="20" fill="currentColor" r="1.5"></circle>
+</svg>
+</div>
+<!-- Crest Iconography -->
+<div class="inline-flex items-center justify-center mb-5 text-secondary">
+<div class="w-10 h-10 rounded-full border border-secondary/30 flex items-center justify-center bg-surface-bright">
+<span class="material-symbols-outlined text-[20px] text-secondary">spa</span>
+</div>
+</div>
+<!-- Overline Tagline -->
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold mb-3">
+          TOGETHER WITH OUR FAMILIES
+        </p>
+<!-- Main Headline -->
+<h1 class="font-headline-lg text-headline-lg text-primary mb-3">
+          Pavithra &amp; Manish
+        </h1>
+<!-- Date & Location -->
+<p class="font-display-lg text-headline-sm italic text-on-surface-variant font-normal mb-8">
+          18 – 20 February 2027 · Bengaluru, India
+        </p>
+<!-- Personalized Greeting Box -->
+<div class="max-w-xl mx-auto rounded-lg bg-surface/80 border border-outline-variant/40 p-5 text-left transition-all">
+<div class="flex items-start justify-between gap-2 mb-2">
+<h2 class="font-headline-md text-headline-sm text-primary font-medium">
+              Dear Elon Musk &amp; family,
+            </h2>
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-semibold">
+<span class="material-symbols-outlined text-[13px]">group</span>
+              4 Pax Allocation
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            We warmly invite you to celebrate our union across three days of traditional rituals, music, and joy. Kindly confirm your attendance for the ceremonies below.
+          </p>
+<div class="mt-3 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1 text-[12px]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+              All times displayed in Asia/Kolkata (IST)
+            </span>
+<span class="text-secondary font-label-sm text-label-sm font-semibold">PRIVATE GUEST LINK ACTIVE</span>
+</div>
+</div>
+</section>
+<!-- Chronological Function Cards ('The Celebrations') -->
+<section class="p-6 sm:p-10 space-y-6 bg-surface-container-lowest">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+<h2 class="font-headline-md text-headline-md text-primary">The Celebrations</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">3 Invitations Issued</span>
+</div>
+<!-- Card 1: Mehndi & Welcome High Tea -->
+<article class="relative rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-6 transition-all shadow-[0_1px_3px_rgba(32,42,41,0.02)] border-l-4 border-l-[#B98265]">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<!-- Left Info -->
+<div class="space-y-2 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded bg-secondary/10 text-secondary border border-secondary/20">
+                  DAY 1 · WELCOME RITUAL
+                </span>
+<span class="inline-flex items-center gap-1 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                  Starts in 2 days, 4 hours
+                </span>
+</div>
+<h3 class="font-headline-md text-headline-sm text-on-surface font-semibold">
+                Mehndi &amp; Welcome High Tea
+              </h3>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px] text-secondary">calendar_today</span>
+<span>Thursday, 18 February 2027 · 4:00 PM – 8:30 PM IST</span>
+</div>
+</div>
+<!-- Right Status Badge -->
+<div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+                Attending (3 people)
+              </span>
+</div>
+</div>
+<!-- RSVP Interactive Preview Controls (Disabled) -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-3 bg-surface/50 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant mr-1">RSVP Status:</span>
+<!-- Will Attend (Selected) -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md opacity-90 cursor-not-allowed shadow-xs" disabled="" title="Preview simulation: Controls disabled">
+<span class="material-symbols-outlined text-[16px]">check</span>
+                Will attend
+              </button>
+<!-- Cannot Attend -->
+<button class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface border border-outline-variant/40 text-on-surface-variant font-label-md text-label-md opacity-60 cursor-not-allowed" disabled="">
+                Cannot attend
+              </button>
+</div>
+<!-- Stepper Preview -->
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">People attending:</span>
+<div class="inline-flex items-center rounded-lg border border-outline-variant/50 bg-surface-container-lowest px-2 py-0.5 text-on-surface font-label-md text-label-md">
+<button class="text-outline hover:text-on-surface px-1 cursor-not-allowed" disabled="">-</button>
+<span class="px-2 font-semibold text-primary">3</span>
+<button class="text-outline hover:text-on-surface px-1 cursor-not-allowed" disabled="">+</button>
+</div>
+<span class="text-on-surface-variant font-body-sm text-body-sm">(Max 4)</span>
+</div>
+</div>
+<!-- Inline Disclosure Expanded: Venue & Details -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 grid grid-cols-1 md:grid-cols-2 gap-4 text-on-surface-variant font-body-sm text-body-sm">
+<div class="space-y-1">
+<span class="font-label-md text-label-md text-on-surface block">Venue &amp; Directions</span>
+<p class="font-semibold text-primary">Lotus Pool Terrace, The Leela Palace</p>
+<p>23 HAL Old Airport Rd, Kodihalli, Bengaluru, Karnataka 560008</p>
+<div class="pt-2">
+<a class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-surface border border-outline-variant/40 text-primary hover:bg-surface-container font-label-md text-label-md transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px] text-secondary">pin_drop</span>
+                  Open in Google Maps
+                </a>
+</div>
+</div>
+<div class="space-y-2 border-l border-outline-variant/30 pl-0 md:pl-4">
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Attire Guidance</span>
+<p>Festive Pastel / Traditional Silk</p>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Host Contact</span>
+<p>Hospitality Concierge: +91 98450 12345</p>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2: Sangeet & Musical Gala -->
+<article class="relative rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-6 transition-all shadow-[0_1px_3px_rgba(32,42,41,0.02)] border-l-4 border-l-primary">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="space-y-2 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                  DAY 2 · MUSIC &amp; DINNER
+                </span>
+<span class="inline-flex items-center gap-1 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                  Starts in 3 days, 6 hours
+                </span>
+</div>
+<h3 class="font-headline-md text-headline-sm text-on-surface font-semibold">
+                Sangeet &amp; Musical Gala
+              </h3>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px] text-primary">calendar_today</span>
+<span>Friday, 19 February 2027 · 6:00 PM – Midnight IST</span>
+</div>
+</div>
+<!-- Right Status Badge -->
+<div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+                Attending (4 people)
+              </span>
+</div>
+</div>
+<!-- RSVP Interactive Preview Controls (Disabled) -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-3 bg-surface/50 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant mr-1">RSVP Status:</span>
+<!-- Will Attend (Selected) -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md opacity-90 cursor-not-allowed shadow-xs" disabled="" title="Preview simulation: Controls disabled">
+<span class="material-symbols-outlined text-[16px]">check</span>
+                Will attend
+              </button>
+<!-- Cannot Attend -->
+<button class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface border border-outline-variant/40 text-on-surface-variant font-label-md text-label-md opacity-60 cursor-not-allowed" disabled="">
+                Cannot attend
+              </button>
+</div>
+<!-- Stepper Preview -->
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">People attending:</span>
+<div class="inline-flex items-center rounded-lg border border-outline-variant/50 bg-surface-container-lowest px-2 py-0.5 text-on-surface font-label-md text-label-md">
+<button class="text-outline hover:text-on-surface px-1 cursor-not-allowed" disabled="">-</button>
+<span class="px-2 font-semibold text-primary">4</span>
+<button class="text-outline hover:text-on-surface px-1 cursor-not-allowed" disabled="">+</button>
+</div>
+<span class="text-on-surface-variant font-body-sm text-body-sm">(Max 4)</span>
+</div>
+</div>
+<!-- Collapsed Inline Disclosure Action -->
+<div class="mt-4 pt-3 flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
+<span class="text-body-sm text-on-surface-variant">Grand Ballroom, The Leela Palace · Western Formal / Indo-Western</span>
+<button class="inline-flex items-center gap-1 text-primary hover:underline" type="button">
+<span>View venue &amp; directions</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</article>
+<!-- Card 3: Vedic Wedding & Muhurtham -->
+<article class="relative rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-6 transition-all shadow-[0_1px_3px_rgba(32,42,41,0.02)] border-l-4 border-l-outline-variant">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+<div class="space-y-2 flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                  DAY 3 · SACRED CEREMONY
+                </span>
+<span class="inline-flex items-center gap-1 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                  Starts in 4 days
+                </span>
+</div>
+<h3 class="font-headline-md text-headline-sm text-on-surface font-semibold">
+                Vedic Wedding &amp; Muhurtham
+              </h3>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">calendar_today</span>
+<span>Saturday, 20 February 2027 · 9:00 AM – 1:30 PM IST</span>
+</div>
+</div>
+<!-- Right Status Badge (Pending) -->
+<div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">hourglass_empty</span>
+                Awaiting your reply
+              </span>
+</div>
+</div>
+<!-- RSVP Interactive Preview Controls (Awaiting Reply) -->
+<div class="mt-5 pt-4 border-t border-outline-variant/30 flex flex-wrap items-center justify-between gap-3 bg-surface/50 -mx-6 -mb-6 p-4 rounded-b-xl">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant mr-1">RSVP Action:</span>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-primary text-primary bg-surface-container-lowest font-label-md text-label-md opacity-75 cursor-not-allowed" disabled="">
+                Will attend
+              </button>
+<button class="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-lg border border-outline-variant/50 text-on-surface-variant bg-surface font-label-md text-label-md opacity-75 cursor-not-allowed" disabled="">
+                Cannot attend
+              </button>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+<span>Invited for up to 4 guests</span>
+</div>
+</div>
+<!-- Collapsed Inline Disclosure Action -->
+<div class="mt-4 pt-3 flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
+<span class="text-body-sm text-on-surface-variant">Temple Mandapam Lawn · Traditional South Indian Festive</span>
+<button class="inline-flex items-center gap-1 text-primary hover:underline" type="button">
+<span>View venue &amp; directions</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</article>
+</section>
+<!-- Stationery Footer Warm Note -->
+<footer class="p-8 text-center bg-surface border-t border-outline-variant/30 text-on-surface-variant">
+<p class="font-headline-md text-headline-sm italic mb-1 text-primary">With Love &amp; Gratitude,</p>
+<p class="font-label-md text-label-md uppercase tracking-wider text-secondary font-semibold">The Iyer &amp; Sharma Families</p>
+<div class="mt-4 text-[11px] text-outline">
+          Invitations powered by Make My Event · Luxury Guest Experience Architecture
+        </div>
+</footer>
+</div>
+<!-- Bottom Diagnostic / Link Management Drawer (Organizer Utilities) -->
+<aside class="w-full max-w-[820px] mt-6 bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-5 shadow-[0_1px_3px_rgba(32,42,41,0.04)]">
+<div class="flex items-start justify-between gap-4">
+<div class="flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[20px]">link</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-label-lg text-label-lg font-bold text-on-surface">Recipient Capacity Decoupling Diagnostic</h4>
+<span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-surface-container-high text-on-surface-variant">Active Configuration</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+              Recipient: <strong class="text-on-surface">Elon Musk &amp; family</strong> (Private ceiling: 4 pax). 1 recipient link representing multiple attendees. Distinct from capacity constraints.
+            </p>
+</div>
+</div>
+<!-- Copy Link Mini Widget -->
+<div class="shrink-0 flex items-center gap-2">
+<code class="px-2.5 py-1 rounded bg-surface border border-outline-variant/30 text-on-surface-variant font-mono text-[11px]">
+            makemyevent.app/invite/pm-2027?token=••••9f2b
+          </code>
+<button class="p-1.5 rounded-lg border border-outline-variant/50 hover:bg-surface text-primary" title="Copy Tokenized URL" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Mobile Preview Adaptation Panel Toggle -->
+<div class="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">devices</span>
+<span>Responsive adaptation: Verified for mobile screen widths (375px – 430px) without content reduction.</span>
+</div>
+<button class="inline-flex items-center gap-1 font-label-sm text-label-sm text-primary hover:underline" type="button">
+<span>Toggle Mobile Simulation Inspector</span>
+<span class="material-symbols-outlined text-[14px]">tune</span>
+</button>
+</div>
+</aside>
+</main>
+</body></html>

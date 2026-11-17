@@ -1,3 +1,4 @@
+import { guestSummary } from "@/modules/guests/guest-service";
 import mongoose from "mongoose";
 import { financeSummary, paidAgainst } from "./finance-service";
 import {
@@ -1023,6 +1024,7 @@ export async function workspaceDashboard(weddingId: string, userId: string) {
     ]);
   if (!profile) missing();
   return {
+    guestResponses: await guestSummary(weddingId),
     title: String(profile!.title),
     timeZone: String(profile!.timeZone),
     displayName: String(user?.displayName ?? ""),

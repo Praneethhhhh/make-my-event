@@ -16,13 +16,20 @@ for (const width of [390, 1440]) {
       page.getByRole("link", { name: "Create your wedding" }),
     ).toHaveCount(0);
     await expect(
-      page.getByRole("link", { name: "Sign In", exact: true }),
+      page.getByRole("link", { name: "Sign in", exact: true }),
     ).toHaveCount(0);
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth,
       ),
     ).toBe(false);
+    const headerAction = page
+      .locator(".masthead")
+      .getByRole("link", { name: "Your weddings", exact: true });
+    await expect(headerAction).toBeInViewport();
+    const actionBounds = await headerAction.boundingBox();
+    expect(actionBounds!.x).toBeGreaterThanOrEqual(0);
+    expect(actionBounds!.x + actionBounds!.width).toBeLessThanOrEqual(width);
     await page.screenshot({
       path: `.next/signed-in-home-${width}.png`,
       fullPage: true,
@@ -60,7 +67,7 @@ for (const width of [390, 1440]) {
       page.getByRole("link", { name: "Create your wedding" }),
     ).toHaveCount(width === 390 ? 2 : 3);
     await expect(
-      page.getByRole("link", { name: "Sign In", exact: true }),
+      page.getByRole("link", { name: "Sign in", exact: true }),
     ).toBeVisible();
   });
   test(`signed-in account without a wedding continues setup at ${width}px`, async ({

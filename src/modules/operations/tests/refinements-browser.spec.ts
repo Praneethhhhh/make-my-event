@@ -224,6 +224,12 @@ test("notification count refreshes after scoped activity without idle polling", 
 }) => {
   void database;
   const wedding = await onboard(page.request);
+  const pending = new Set<import("@playwright/test").Request>();
+  page.on("request", (request) => {
+    if (request.url().includes("/api/v1/")) pending.add(request);
+  });
+  page.on("requestfinished", (request) => pending.delete(request));
+  page.on("requestfailed", (request) => pending.delete(request));
   let requests = 0;
   await page.route(/\/api\/v1\/notifications\?view=count$/, (route) => {
     requests++;
@@ -234,10 +240,21 @@ test("notification count refreshes after scoped activity without idle polling", 
   await expect(
     page.getByRole("heading", { name: "No tasks yet", exact: true }),
   ).toBeVisible();
+  // Both delayed filter-choice reads must finish before measuring idle.
   await page.clock.runFor(5000);
-  await page.waitForLoadState("networkidle");
-  await page.clock.runFor(5000);
-  await page.waitForLoadState("networkidle");
+  await expect(page.locator(".record-picker select")).toHaveCount(2);
+  await expect(
+    page.locator('.record-picker select[aria-busy="true"]'),
+  ).toHaveCount(0);
+  // Drain activity refreshes only after the actual API responses finish.
+  // A response can complete after a simulated-clock advance has returned.
+  for (let cycle = 0; cycle < 3; cycle++) {
+    await expect.poll(() => pending.size).toBe(0);
+    await page.evaluate(() => Promise.resolve());
+    await page.clock.runFor(5000);
+  }
+  await expect.poll(() => pending.size).toBe(0);
+  await page.evaluate(() => Promise.resolve());
   const settled = requests;
   expect(settled).toBeGreaterThan(0);
   await page.clock.runFor(120000);
@@ -251,7 +268,14 @@ test("notification count refreshes after scoped activity without idle polling", 
   );
   await page.clock.runFor(5000);
   expect(requests).toBe(settled);
+  const mineLoaded = page.waitForResponse(
+    (response) =>
+      response.url().includes("/api/v1/tasks?") &&
+      new URL(response.url()).searchParams.get("mine") === "true",
+  );
   await page.getByRole("button", { name: "My tasks", exact: true }).click();
+  await page.clock.runFor(1000);
+  await (await mineLoaded).finished();
   await expect(page.locator(".task-audience")).toContainText(
     "Tasks assigned to you",
   );

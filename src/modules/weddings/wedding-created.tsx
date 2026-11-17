@@ -1,4 +1,5 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import { useWeddingClient } from "@/modules/weddings/wedding-scope";
 
 import { useEffect, useState } from "react";
@@ -84,9 +85,13 @@ export function WeddingCreated({
       <WorkspaceNav active="overview" />
       {confirmation && (
         <div className="wedding-progress">
-          <span>✓ Account created</span>
+          <span>
+            <UiIcon name="check" size={14} /> Account created
+          </span>
           <i>•</i>
-          <span>✓ Wedding setup</span>
+          <span>
+            <UiIcon name="check" size={14} /> Wedding setup
+          </span>
           <i>•</i>
           <strong>Workspace ready</strong>
         </div>
@@ -94,7 +99,7 @@ export function WeddingCreated({
       <section className="created-card">
         {confirmation && (
           <div className="success-icon" aria-hidden="true">
-            ✓
+            <UiIcon name="check" size={28} />
           </div>
         )}
         <p className="created-eyebrow">
@@ -135,7 +140,7 @@ export function WeddingCreated({
             type="button"
             onClick={() => router.push(prefix)}
           >
-            Go to wedding overview →
+            Open wedding <UiIcon name="arrow-right" />
           </button>
         )}
         <section className="future-actions">
@@ -155,13 +160,17 @@ export function WeddingCreated({
                     ? "Add Haldi, Sangeet, Wedding or Reception timings."
                     : `${functionCount} active ${functionCount === 1 ? "function" : "functions"} in your wedding schedule.`}
               </p>
-              <Link href={`${prefix}/functions`}>Manage functions →</Link>
+              <Link href={`${prefix}/functions`}>
+                Manage functions <UiIcon name="arrow-right" />
+              </Link>
             </article>
             <article>
               <b>2</b>
               <h3>Add venue details</h3>
               <p>Attach locations, directions and arrival notes.</p>
-              <Link href={`${prefix}/functions`}>Edit venues →</Link>
+              <Link href={`${prefix}/functions`}>
+                Edit venues <UiIcon name="arrow-right" />
+              </Link>
             </article>
             <article>
               <b>3</b>
@@ -176,7 +185,7 @@ export function WeddingCreated({
                   : "View your team. Only administrators can invite or manage members."}
               </p>
               <Link href={`${prefix}/team`}>
-                {role === "ADMIN" ? "Manage team →" : "View team →"}
+                {role === "ADMIN" ? "Manage team" : "View team"}
               </Link>
             </article>
           </div>

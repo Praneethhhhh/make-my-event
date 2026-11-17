@@ -23,7 +23,7 @@
   color: var(--color-text-muted);
 }
 .profile-card {
-  background: white;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 16px;
   margin-bottom: 24px;
@@ -75,7 +75,7 @@
     box-shadow 0.18s;
 }
 .profile-card input[readonly] {
-  background: #f8f8f4;
+  background: var(--color-surface-subtle);
   color: var(--color-text-muted);
 }
 .profile-card input:focus-visible {
@@ -132,8 +132,8 @@
   outline-offset: 3px;
 }
 .profile-error {
-  background: #fbefed;
-  border: 1px solid #ead9d5;
+  background: var(--color-danger-surface);
+  border: 1px solid var(--color-danger-border);
   border-radius: 8px;
   padding: 16px;
   font-size: 14px;
@@ -147,7 +147,7 @@
   padding: 8px 0;
 }
 .account-popover .account-panel-heading:hover {
-  background: #f3f5ef;
+  background: var(--color-surface-subtle);
   border-radius: 8px;
 }
 .profile-card:disabled,

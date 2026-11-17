@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guest invitations — Dashboard & directory — Make My Event</title>
+  <!-- Google Fonts: Newsreader & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet"/>
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              ivory: "#F7F5F0",
+              white: "#FFFFFF",
+              forest: "#28594F",
+              charcoal: "#202A29",
+              muted: "#5A6664",
+              border: "#E6E4DC",
+              copper: "#B98265",
+              copperDark: "#825339",
+              forestLight: "#ebf6f4",
+              forestDark: "#1b3f37",
+              goldWarm: "#D4A373",
+              error: "#BA1A1A",
+              errorBg: "#FFDAD6",
+              surfaceDim: "#EBE9E2"
+            }
+          },
+          fontFamily: {
+            serif: ["Newsreader", "Georgia", "serif"],
+            sans: ["Manrope", "sans-serif"]
+          },
+          boxShadow: {
+            subtle: "0 1px 3px rgba(32, 42, 41, 0.04), 0 4px 12px rgba(32, 42, 41, 0.02)",
+            elevation: "0 8px 24px -4px rgba(32, 42, 41, 0.08)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #202A29;
+      font-family: 'Manrope', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 20px;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    .paper-card {
+      background: #FFFFFF;
+      border: 1px solid #E6E4DC;
+      box-shadow: 0 1px 3px rgba(32, 42, 41, 0.04);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex antialiased bg-[#F7F5F0] text-[#202A29]">
+
+  <!-- PERSISTENT LEFT SIDEBAR (224px / w-56 standard from Make My Event boards) -->
+  <aside class="w-56 bg-brand-white border-r border-brand-border shrink-0 flex flex-col justify-between hidden md:flex sticky top-0 h-screen z-30">
+    <div class="flex flex-col">
+      <!-- App Brand & Crest -->
+      <div class="p-4 border-b border-brand-border/70 flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-md bg-brand-forest text-brand-white flex items-center justify-center font-serif font-bold text-sm tracking-tighter">
+          M
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif font-semibold text-brand-forest leading-tight tracking-tight">Make My Event</span>
+          <span class="text-[10px] text-brand-muted tracking-wide uppercase">Family Concierge</span>
+        </div>
+      </div>
+
+      <!-- Active Wedding Context Indicator -->
+      <div class="px-4 py-3 border-b border-brand-border/50 bg-brand-forestLight/30">
+        <div class="flex items-center gap-1.5 text-xs font-semibold text-brand-charcoal">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-forest"></span>
+          <span>Pavithra & Manish</span>
+        </div>
+        <div class="text-[11px] text-brand-muted mt-0.5">18–20 Feb 2027 · Asia/Kolkata</div>
+      </div>
+
+      <!-- Navigation Hierarchy -->
+      <nav class="p-3 space-y-4 text-xs font-medium">
+        <div>
+          <span class="px-3 text-[10px] font-bold text-brand-muted/70 uppercase tracking-wider">Planning</span>
+          <div class="mt-1 space-y-0.5">
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-brand-muted hover:bg-brand-ivory hover:text-brand-charcoal transition-colors">
+              <span class="material-symbols-outlined text-[18px]">dashboard</span>
+              <span>Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-brand-muted hover:bg-brand-ivory hover:text-brand-charcoal transition-colors">
+              <span class="material-symbols-outlined text-[18px]">calendar_month</span>
+              <span>Functions</span>
+            </a>
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-brand-muted hover:bg-brand-ivory hover:text-brand-charcoal transition-colors">
+              <span class="material-symbols-outlined text-[18px]">check_circle</span>
+              <span>Tasks</span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <span class="px-3 text-[10px] font-bold text-brand-muted/70 uppercase tracking-wider">People</span>
+          <div class="mt-1 space-y-0.5">
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-brand-muted hover:bg-brand-ivory hover:text-brand-charcoal transition-colors">
+              <span class="material-symbols-outlined text-[18px]">group</span>
+              <span>Team</span>
+            </a>
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-brand-muted hover:bg-brand-ivory hover:text-brand-charcoal transition-colors">
+              <span class="material-symbols-outlined text-[18px]">storefront</span>
+              <span>Vendors</span>
+            </a>
+            <!-- Active Tab: Guests -->
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-brand-forestLight text-brand-forest font-semibold transition-colors">
+              <span class="material-symbols-outlined text-[18px] fill-icon">mark_email_read</span>
+              <span>Guests</span>
+              <span class="ml-auto text-[10px] bg-brand-forest/10 text-brand-forest px-1.5 py-0.5 rounded-full font-bold">30</span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <span class="px-3 text-[10px] font-bold text-brand-muted/70 uppercase tracking-wider">Management</span>
+          <div class="mt-1 space-y-0.5">
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-brand-muted hover:bg-brand-ivory hover:text-brand-charcoal transition-colors">
+              <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+              <span>Finance</span>
+            </a>
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-brand-muted hover:bg-brand-ivory hover:text-brand-charcoal transition-colors">
+              <span class="material-symbols-outlined text-[18px]">settings</span>
+              <span>Wedding details</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-3 border-t border-brand-border text-[11px] text-brand-muted">
+      <div class="flex items-center justify-between px-2">
+        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Private link mode</span>
+        <span class="font-mono text-[10px]">v2.7</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN COLUMN -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <!-- Top Header -->
+    <header class="h-14 bg-brand-white border-b border-brand-border px-6 flex items-center justify-between sticky top-0 z-20">
+      <div class="flex items-center gap-3">
+        <div class="text-xs text-brand-muted flex items-center gap-1.5">
+          <span>Pavithra & Manish</span>
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-brand-charcoal font-medium">Guest invitations</span>
+        </div>
+      </div>
+      <!-- Right actions: Bell beside profile avatar -->
+      <div class="flex items-center gap-3">
+        <button type="button" aria-label="Notifications" class="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory relative transition">
+          <span class="material-symbols-outlined text-[18px]">notifications</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-copper absolute top-2 right-2"></span>
+        </button>
+        <div class="flex items-center gap-2 pl-2 border-l border-brand-border">
+          <div class="w-7 h-7 rounded-full bg-brand-copperDark text-brand-white text-xs font-semibold flex items-center justify-center">
+            PI
+          </div>
+          <div class="text-left hidden sm:block">
+            <div class="text-xs font-semibold leading-tight">Pavithra Iyer</div>
+            <div class="text-[10px] text-brand-muted leading-tight">Organizer (Host)</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Interactive State Bar for Demonstration -->
+    <div class="bg-brand-ivory border-b border-brand-border px-6 py-2 flex flex-wrap items-center justify-between text-xs text-brand-muted gap-2">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-brand-forest">Design Preview States:</span>
+        <button onclick="setScreenState('populated')" id="tab-pop" class="px-2.5 py-1 rounded bg-brand-forest text-brand-white text-[11px] font-semibold transition">Populated (30 recipients)</button>
+        <button onclick="setScreenState('empty')" id="tab-empty" class="px-2.5 py-1 rounded bg-brand-white border border-brand-border text-brand-charcoal hover:bg-brand-ivory text-[11px] font-medium transition">Genuinely Empty</button>
+        <button onclick="setScreenState('filteredEmpty')" id="tab-fempty" class="px-2.5 py-1 rounded bg-brand-white border border-brand-border text-brand-charcoal hover:bg-brand-ivory text-[11px] font-medium transition">No Filter Matches</button>
+        <button onclick="setScreenState('skeleton')" id="tab-skel" class="px-2.5 py-1 rounded bg-brand-white border border-brand-border text-brand-charcoal hover:bg-brand-ivory text-[11px] font-medium transition">Skeleton Loading</button>
+        <button onclick="setScreenState('error')" id="tab-err" class="px-2.5 py-1 rounded bg-brand-white border border-brand-border text-brand-charcoal hover:bg-brand-ivory text-[11px] font-medium transition">Recoverable Error</button>
+        <button onclick="toggleDashboardWidget()" id="tab-widget" class="px-2.5 py-1 rounded bg-brand-white border border-brand-copper text-brand-copper hover:bg-brand-copper/10 text-[11px] font-medium transition flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">view_quilt</span> Dashboard Integration Card
+        </button>
+      </div>
+      <div class="text-[11px] text-brand-muted hidden xl:block">
+        Independent function headcounts · No synthetic global %
+      </div>
+    </div>
+
+    <!-- MAIN BODY CANVAS -->
+    <main class="flex-1 p-6 md:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+      <!-- EXISTING DASHBOARD INTEGRATION SAMPLE (Toggleable modal/banner) -->
+      <section id="dashboard-integration-section" class="hidden paper-card p-5 rounded-xl border border-brand-border bg-brand-white shadow-subtle space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-brand-border/60">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-brand-forest">mark_email_read</span>
+            <h3 class="font-serif font-semibold text-base text-brand-forest">Guest responses by function</h3>
+            <span class="text-[11px] bg-brand-forestLight text-brand-forest px-2 py-0.5 rounded font-medium">Dashboard widget example</span>
+          </div>
+          <button onclick="toggleDashboardWidget()" class="text-xs text-brand-muted hover:text-brand-charcoal flex items-center gap-1">
+            <span>Dismiss widget</span>
+            <span class="material-symbols-outlined text-[14px]">close</span>
+          </button>
+        </div>
+        <p class="text-xs text-brand-muted">
+          Placement alongside tasks & finance in the main Overview screen. Provides ceremony-by-ceremony attendance reconciliation without masking varying guest responses.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+          <div class="p-3 rounded-lg bg-brand-ivory border border-brand-border/60">
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="text-brand-charcoal">Mehndi & Welcome Tea</span>
+              <span class="text-brand-forest font-bold">28 attending</span>
+            </div>
+            <div class="text-[11px] text-brand-muted mt-1">18 invited · 10 accepted · 2 declined · 6 pending</div>
+          </div>
+          <div class="p-3 rounded-lg bg-brand-ivory border border-brand-border/60">
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="text-brand-charcoal">Sangeet Musical Night</span>
+              <span class="text-brand-forest font-bold">50 attending</span>
+            </div>
+            <div class="text-[11px] text-brand-muted mt-1">24 invited · 16 accepted · 3 declined · 5 pending</div>
+          </div>
+          <div class="p-3 rounded-lg bg-brand-ivory border border-brand-border/60">
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="text-brand-charcoal">Vedic Muhurtham & Wedding</span>
+              <span class="text-brand-forest font-bold">42 attending</span>
+            </div>
+            <div class="text-[11px] text-brand-muted mt-1">20 invited · 12 accepted · 3 declined · 5 pending</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN HEADER -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[11px] font-bold tracking-wider uppercase text-brand-copper">Private Invitations Roster</span>
+            <span class="text-brand-border">|</span>
+            <span class="text-xs text-brand-muted">18–20 Feb 2027</span>
+          </div>
+          <h1 class="text-3xl font-serif text-brand-forest font-medium tracking-tight">Guest invitations</h1>
+          <p class="text-sm text-brand-muted mt-0.5">Your people, beautifully welcomed.</p>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <button type="button" onclick="alert('Opening Screen 3 (Organizer master preview) in read-only guest perspective');" class="h-10 px-4 rounded-lg border border-brand-border bg-brand-white text-xs font-semibold text-brand-charcoal hover:bg-brand-ivory transition shadow-sm flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">visibility</span>
+            <span>Preview invitation</span>
+          </button>
+          <button type="button" onclick="alert('Opening Screen 2: Add Recipient Drawer');" class="h-10 px-4 rounded-lg bg-brand-forest text-xs font-semibold text-brand-white hover:bg-brand-forestDark transition shadow-sm flex items-center gap-1.5 active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[16px]">person_add</span>
+            <span>Invite guest</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- COMPACT OVERVIEW: FUNCTION-SUMMARY ROWS (Exact Arithmetic Main Invitation Dashboard) -->
+      <section aria-label="Ceremony invitations status summary" class="paper-card rounded-xl p-5 border border-brand-border space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brand-border/60 pb-3">
+          <div>
+            <h2 class="text-sm font-semibold text-brand-charcoal">Function response ledger</h2>
+            <p class="text-xs text-brand-muted">30 invitation recipients total across all events. Breakdown reflects independent responses per ceremony.</p>
+          </div>
+          <div class="flex items-center gap-3 text-xs text-brand-muted">
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-600"></span> Accepted</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-600"></span> Pending</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-600"></span> Declined</span>
+          </div>
+        </div>
+
+        <!-- 3 Dense, Calm Function Rows -->
+        <div class="space-y-3">
+          <!-- Row 1: Mehndi -->
+          <div class="p-3.5 rounded-lg bg-brand-ivory/70 border border-brand-border/70 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-brand-ivory transition">
+            <div class="flex items-center gap-3 min-w-[220px]">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#E59866] shrink-0"></span>
+              <div>
+                <div class="text-xs font-bold text-brand-charcoal">Mehndi & Welcome High Tea</div>
+                <div class="text-[11px] text-brand-muted">Thu 18 Feb · 4:00 PM · Poolside Pavilion</div>
+              </div>
+            </div>
+
+            <!-- Recipient breakdown: 18 invited = 10 accepted + 2 declined + 6 pending -->
+            <div class="flex flex-wrap items-center gap-4 text-xs">
+              <div class="flex items-center gap-1.5 text-brand-muted" title="18 recipients invited to this function">
+                <span class="material-symbols-outlined text-[16px]">mail</span>
+                <span class="font-semibold text-brand-charcoal">18</span> <span class="text-[11px]">invited</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-emerald-800" title="10 recipients accepted">
+                <span class="material-symbols-outlined text-[16px] text-emerald-700">check_circle</span>
+                <span class="font-semibold">10</span> <span class="text-[11px]">accepted</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-rose-800" title="2 recipients declined">
+                <span class="material-symbols-outlined text-[16px] text-rose-600">cancel</span>
+                <span class="font-semibold">2</span> <span class="text-[11px]">declined</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-amber-800" title="6 recipients awaiting reply">
+                <span class="material-symbols-outlined text-[16px] text-amber-600">hourglass_top</span>
+                <span class="font-semibold">6</span> <span class="text-[11px]">pending</span>
+              </div>
+            </div>
+
+            <!-- People attending: 28 people -->
+            <div class="flex items-center justify-between md:justify-end gap-3 min-w-[170px] pt-2 md:pt-0 border-t md:border-t-0 border-brand-border/50">
+              <div class="text-right">
+                <div class="text-sm font-bold text-brand-forest">28 people</div>
+                <div class="text-[10px] text-brand-muted uppercase tracking-wider font-medium">Attending</div>
+              </div>
+              <button onclick="filterByFunction('Mehndi')" class="text-xs text-brand-forest hover:underline font-semibold px-2 py-1 rounded bg-brand-forestLight/50">Filter list</button>
+            </div>
+          </div>
+
+          <!-- Row 2: Sangeet -->
+          <div class="p-3.5 rounded-lg bg-brand-ivory/70 border border-brand-border/70 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-brand-ivory transition">
+            <div class="flex items-center gap-3 min-w-[220px]">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#AF7AC5] shrink-0"></span>
+              <div>
+                <div class="text-xs font-bold text-brand-charcoal">Sangeet & Musical Night</div>
+                <div class="text-[11px] text-brand-muted">Fri 19 Feb · 6:00 PM · Grand Ballroom</div>
+              </div>
+            </div>
+
+            <!-- Recipient breakdown: 24 invited = 16 accepted + 3 declined + 5 pending -->
+            <div class="flex flex-wrap items-center gap-4 text-xs">
+              <div class="flex items-center gap-1.5 text-brand-muted" title="24 recipients invited to this function">
+                <span class="material-symbols-outlined text-[16px]">mail</span>
+                <span class="font-semibold text-brand-charcoal">24</span> <span class="text-[11px]">invited</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-emerald-800" title="16 recipients accepted">
+                <span class="material-symbols-outlined text-[16px] text-emerald-700">check_circle</span>
+                <span class="font-semibold">16</span> <span class="text-[11px]">accepted</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-rose-800" title="3 recipients declined">
+                <span class="material-symbols-outlined text-[16px] text-rose-600">cancel</span>
+                <span class="font-semibold">3</span> <span class="text-[11px]">declined</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-amber-800" title="5 recipients awaiting reply">
+                <span class="material-symbols-outlined text-[16px] text-amber-600">hourglass_top</span>
+                <span class="font-semibold">5</span> <span class="text-[11px]">pending</span>
+              </div>
+            </div>
+
+            <!-- People attending: 50 people -->
+            <div class="flex items-center justify-between md:justify-end gap-3 min-w-[170px] pt-2 md:pt-0 border-t md:border-t-0 border-brand-border/50">
+              <div class="text-right">
+                <div class="text-sm font-bold text-brand-forest">50 people</div>
+                <div class="text-[10px] text-brand-muted uppercase tracking-wider font-medium">Attending</div>
+              </div>
+              <button onclick="filterByFunction('Sangeet')" class="text-xs text-brand-forest hover:underline font-semibold px-2 py-1 rounded bg-brand-forestLight/50">Filter list</button>
+            </div>
+          </div>
+
+          <!-- Row 3: Vedic Wedding -->
+          <div class="p-3.5 rounded-lg bg-brand-ivory/70 border border-brand-border/70 flex flex-col md:flex-row md:items-center justify-between gap-3 hover:bg-brand-ivory transition">
+            <div class="flex items-center gap-3 min-w-[220px]">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#48C9B0] shrink-0"></span>
+              <div>
+                <div class="text-xs font-bold text-brand-charcoal">Vedic Wedding & Muhurtham</div>
+                <div class="text-[11px] text-brand-muted">Sat 20 Feb · 9:00 AM · Temple Mandapam</div>
+              </div>
+            </div>
+
+            <!-- Recipient breakdown: 20 invited = 12 accepted + 3 declined + 5 pending -->
+            <div class="flex flex-wrap items-center gap-4 text-xs">
+              <div class="flex items-center gap-1.5 text-brand-muted" title="20 recipients invited to this function">
+                <span class="material-symbols-outlined text-[16px]">mail</span>
+                <span class="font-semibold text-brand-charcoal">20</span> <span class="text-[11px]">invited</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-emerald-800" title="12 recipients accepted">
+                <span class="material-symbols-outlined text-[16px] text-emerald-700">check_circle</span>
+                <span class="font-semibold">12</span> <span class="text-[11px]">accepted</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-rose-800" title="3 recipients declined">
+                <span class="material-symbols-outlined text-[16px] text-rose-600">cancel</span>
+                <span class="font-semibold">3</span> <span class="text-[11px]">declined</span>
+              </div>
+              <div class="flex items-center gap-1.5 text-amber-800" title="5 recipients awaiting reply">
+                <span class="material-symbols-outlined text-[16px] text-amber-600">hourglass_top</span>
+                <span class="font-semibold">5</span> <span class="text-[11px]">pending</span>
+              </div>
+            </div>
+
+            <!-- People attending: 42 people -->
+            <div class="flex items-center justify-between md:justify-end gap-3 min-w-[170px] pt-2 md:pt-0 border-t md:border-t-0 border-brand-border/50">
+              <div class="text-right">
+                <div class="text-sm font-bold text-brand-forest">42 people</div>
+                <div class="text-[10px] text-brand-muted uppercase tracking-wider font-medium">Attending</div>
+              </div>
+              <button onclick="filterByFunction('Wedding')" class="text-xs text-brand-forest hover:underline font-semibold px-2 py-1 rounded bg-brand-forestLight/50">Filter list</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INVITATION DIRECTORY SECTION -->
+      <section class="space-y-4">
+        <!-- Filter and Search Toolbar -->
+        <div class="paper-card rounded-xl p-4 border border-brand-border flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <!-- Search input -->
+          <div class="relative flex-1 min-w-[260px]">
+            <span class="material-symbols-outlined absolute left-3 top-2.5 text-brand-muted text-[18px]">search</span>
+            <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Search recipient or family name..." class="w-full h-10 pl-9 pr-3 rounded-lg border border-brand-border bg-brand-white text-xs text-brand-charcoal focus:outline-none focus:border-brand-forest focus:ring-1 focus:ring-brand-forest placeholder:text-brand-muted/70"/>
+          </div>
+
+          <!-- Function Filter & Response Filter scoped to selected function -->
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Function select -->
+            <select id="function-filter" onchange="applyFunctionFilter(this.value)" class="h-10 px-3 rounded-lg border border-brand-border bg-brand-white text-xs text-brand-charcoal focus:outline-none focus:border-brand-forest">
+              <option value="all">All functions (3)</option>
+              <option value="Mehndi">Mehndi & Welcome High Tea</option>
+              <option value="Sangeet">Sangeet & Musical Night</option>
+              <option value="Wedding">Vedic Wedding & Muhurtham</option>
+            </select>
+
+            <!-- Response Filter scoped to function -->
+            <select id="response-filter" onchange="applyResponseFilter(this.value)" class="h-10 px-3 rounded-lg border border-brand-border bg-brand-white text-xs text-brand-charcoal focus:outline-none focus:border-brand-forest">
+              <option value="all">Any response</option>
+              <option value="accepted">Accepted (attending)</option>
+              <option value="pending">Pending reply</option>
+              <option value="declined">Declined</option>
+            </select>
+
+            <button onclick="resetFilters()" class="h-10 px-3 text-xs text-brand-muted hover:text-brand-forest hover:underline">
+              Clear filters
+            </button>
+          </div>
+        </div>
+
+        <!-- RECIPIENTS DIRECTORY TABLE (POPULATED STATE) -->
+        <div id="state-populated" class="paper-card rounded-xl border border-brand-border overflow-hidden">
+          <div class="px-5 py-3 border-b border-brand-border/60 bg-brand-ivory/50 flex items-center justify-between text-xs text-brand-muted font-medium">
+            <span>Showing <strong class="text-brand-charcoal">30 invitation recipients</strong></span>
+            <span>Manual private link dispatch · No automated spam</span>
+          </div>
+
+          <!-- Dense, Calm Table Structure with Accessible Keyboard Focus and Long-name Wrapping -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-brand-border bg-brand-white text-[11px] uppercase tracking-wider text-brand-muted font-semibold">
+                  <th class="py-3 px-5">Recipient / Family Name</th>
+                  <th class="py-3 px-4">Invited Functions</th>
+                  <th class="py-3 px-4">Ceremony Response & Headcount</th>
+                  <th class="py-3 px-4 text-center">Private Link</th>
+                  <th class="py-3 px-5 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-brand-border/50 bg-brand-white">
+
+                <!-- Row 1: Elon Musk & family (Explicit Prompt Spec: Mehndi accepted3, Sangeet accepted4, Wedding pending) -->
+                <tr class="hover:bg-brand-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-5">
+                    <div class="font-serif text-sm font-semibold text-brand-charcoal break-words">Elon Musk & family</div>
+                    <div class="text-[11px] text-brand-muted">Private link: active · Max 6 per ceremony</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex flex-wrap gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#E59866]/15 text-brand-charcoal border border-[#E59866]/30">Mehndi</span>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#AF7AC5]/15 text-brand-charcoal border border-[#AF7AC5]/30">Sangeet</span>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#48C9B0]/15 text-brand-charcoal border border-[#48C9B0]/30">Wedding</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="space-y-1">
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span class="text-brand-muted">Mehndi:</span>
+                        <span class="font-semibold text-emerald-800">Accepted (3 attending)</span>
+                      </div>
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span class="text-brand-muted">Sangeet:</span>
+                        <span class="font-semibold text-emerald-800">Accepted (4 attending)</span>
+                      </div>
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                        <span class="text-brand-muted">Wedding:</span>
+                        <span class="text-amber-800 font-medium">Pending reply</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-center">
+                    <button onclick="copyMockLink('Elon Musk & family')" class="px-2.5 py-1 rounded border border-brand-border bg-brand-ivory/60 hover:bg-brand-ivory text-[11px] font-medium text-brand-charcoal transition inline-flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[14px]">content_copy</span> Copy link
+                    </button>
+                  </td>
+                  <td class="py-3.5 px-5 text-right">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <button onclick="alert('Viewing Screen 3: Details & share link for Elon Musk & family');" class="px-2.5 py-1 rounded bg-brand-forestLight text-brand-forest text-xs font-semibold hover:bg-brand-forest hover:text-brand-white transition">View</button>
+                      <button onclick="alert('Opening Screen 2: Edit invitation for Elon Musk & family');" class="p-1 rounded text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory" title="Edit recipient">
+                        <span class="material-symbols-outlined text-[16px]">edit</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 2: Ananya Rao (Explicit Prompt Spec: Wedding accepted1) -->
+                <tr class="hover:bg-brand-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-5">
+                    <div class="font-serif text-sm font-semibold text-brand-charcoal break-words">Ananya Rao</div>
+                    <div class="text-[11px] text-brand-muted">Private link: active · Individual</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex flex-wrap gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#48C9B0]/15 text-brand-charcoal border border-[#48C9B0]/30">Wedding</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex items-center gap-1.5 text-[11px]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                      <span class="text-brand-muted">Wedding:</span>
+                      <span class="font-semibold text-emerald-800">Accepted (1 attending)</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-center">
+                    <button onclick="copyMockLink('Ananya Rao')" class="px-2.5 py-1 rounded border border-brand-border bg-brand-ivory/60 hover:bg-brand-ivory text-[11px] font-medium text-brand-charcoal transition inline-flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[14px]">content_copy</span> Copy link
+                    </button>
+                  </td>
+                  <td class="py-3.5 px-5 text-right">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <button onclick="alert('Viewing Screen 3: Details & share link for Ananya Rao');" class="px-2.5 py-1 rounded bg-brand-forestLight text-brand-forest text-xs font-semibold hover:bg-brand-forest hover:text-brand-white transition">View</button>
+                      <button onclick="alert('Opening Screen 2: Edit invitation for Ananya Rao');" class="p-1 rounded text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory" title="Edit recipient">
+                        <span class="material-symbols-outlined text-[16px]">edit</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 3: Rao family (Explicit Prompt Spec: Sangeet declined0) -->
+                <tr class="hover:bg-brand-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-5">
+                    <div class="font-serif text-sm font-semibold text-brand-charcoal break-words">Rao family</div>
+                    <div class="text-[11px] text-brand-muted">Private link: active · Polite regrets received</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex flex-wrap gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#AF7AC5]/15 text-brand-charcoal border border-[#AF7AC5]/30">Sangeet</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex items-center gap-1.5 text-[11px]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span>
+                      <span class="text-brand-muted">Sangeet:</span>
+                      <span class="text-rose-800 font-medium">Declined (0 attending)</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-center">
+                    <button onclick="copyMockLink('Rao family')" class="px-2.5 py-1 rounded border border-brand-border bg-brand-ivory/60 hover:bg-brand-ivory text-[11px] font-medium text-brand-charcoal transition inline-flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[14px]">content_copy</span> Copy link
+                    </button>
+                  </td>
+                  <td class="py-3.5 px-5 text-right">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <button onclick="alert('Viewing Screen 3: Details & share link for Rao family');" class="px-2.5 py-1 rounded bg-brand-forestLight text-brand-forest text-xs font-semibold hover:bg-brand-forest hover:text-brand-white transition">View</button>
+                      <button onclick="alert('Opening Screen 2: Edit invitation for Rao family');" class="p-1 rounded text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory" title="Edit recipient">
+                        <span class="material-symbols-outlined text-[16px]">edit</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 4: Dr. Vikram & Sunita Sarabhai (Sample populated row) -->
+                <tr class="hover:bg-brand-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-5">
+                    <div class="font-serif text-sm font-semibold text-brand-charcoal break-words">Dr. Vikram & Sunita Sarabhai</div>
+                    <div class="text-[11px] text-brand-muted">Private link: active · Max 2</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex flex-wrap gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#AF7AC5]/15 text-brand-charcoal border border-[#AF7AC5]/30">Sangeet</span>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#48C9B0]/15 text-brand-charcoal border border-[#48C9B0]/30">Wedding</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="space-y-1">
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span class="text-brand-muted">Sangeet:</span>
+                        <span class="font-semibold text-emerald-800">Accepted (2 attending)</span>
+                      </div>
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span class="text-brand-muted">Wedding:</span>
+                        <span class="font-semibold text-emerald-800">Accepted (2 attending)</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-center">
+                    <button onclick="copyMockLink('Dr. Vikram & Sunita Sarabhai')" class="px-2.5 py-1 rounded border border-brand-border bg-brand-ivory/60 hover:bg-brand-ivory text-[11px] font-medium text-brand-charcoal transition inline-flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[14px]">content_copy</span> Copy link
+                    </button>
+                  </td>
+                  <td class="py-3.5 px-5 text-right">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <button class="px-2.5 py-1 rounded bg-brand-forestLight text-brand-forest text-xs font-semibold hover:bg-brand-forest hover:text-brand-white transition">View</button>
+                      <button class="p-1 rounded text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 5: Krishnamurthy Family (Cousins) -->
+                <tr class="hover:bg-brand-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-5">
+                    <div class="font-serif text-sm font-semibold text-brand-charcoal break-words">Krishnamurthy Family (Karthik & Deepu)</div>
+                    <div class="text-[11px] text-brand-muted">Private link: active · Max 5</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex flex-wrap gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#E59866]/15 text-brand-charcoal border border-[#E59866]/30">Mehndi</span>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#AF7AC5]/15 text-brand-charcoal border border-[#AF7AC5]/30">Sangeet</span>
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#48C9B0]/15 text-brand-charcoal border border-[#48C9B0]/30">Wedding</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="space-y-1">
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span class="text-brand-muted">Mehndi:</span>
+                        <span class="font-semibold text-emerald-800">Accepted (4 attending)</span>
+                      </div>
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span class="text-brand-muted">Sangeet:</span>
+                        <span class="font-semibold text-emerald-800">Accepted (5 attending)</span>
+                      </div>
+                      <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        <span class="text-brand-muted">Wedding:</span>
+                        <span class="font-semibold text-emerald-800">Accepted (5 attending)</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-center">
+                    <button onclick="copyMockLink('Krishnamurthy Family')" class="px-2.5 py-1 rounded border border-brand-border bg-brand-ivory/60 hover:bg-brand-ivory text-[11px] font-medium text-brand-charcoal transition inline-flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[14px]">content_copy</span> Copy link
+                    </button>
+                  </td>
+                  <td class="py-3.5 px-5 text-right">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <button class="px-2.5 py-1 rounded bg-brand-forestLight text-brand-forest text-xs font-semibold hover:bg-brand-forest hover:text-brand-white transition">View</button>
+                      <button class="p-1 rounded text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Row 6: Justice P.N. Sharma (Elder Guest) -->
+                <tr class="hover:bg-brand-ivory/40 transition-colors group">
+                  <td class="py-3.5 px-5">
+                    <div class="font-serif text-sm font-semibold text-brand-charcoal break-words">Justice P.N. Sharma & Mrs. Kanta Sharma</div>
+                    <div class="text-[11px] text-brand-muted">Private link: active · Max 2</div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex flex-wrap gap-1">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-[#48C9B0]/15 text-brand-charcoal border border-[#48C9B0]/30">Wedding</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4">
+                    <div class="flex items-center gap-1.5 text-[11px]">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                      <span class="text-brand-muted">Wedding:</span>
+                      <span class="font-semibold text-emerald-800">Accepted (2 attending)</span>
+                    </div>
+                  </td>
+                  <td class="py-3.5 px-4 text-center">
+                    <button onclick="copyMockLink('Justice P.N. Sharma')" class="px-2.5 py-1 rounded border border-brand-border bg-brand-ivory/60 hover:bg-brand-ivory text-[11px] font-medium text-brand-charcoal transition inline-flex items-center gap-1">
+                      <span class="material-symbols-outlined text-[14px]">content_copy</span> Copy link
+                    </button>
+                  </td>
+                  <td class="py-3.5 px-5 text-right">
+                    <div class="flex items-center justify-end gap-1.5">
+                      <button class="px-2.5 py-1 rounded bg-brand-forestLight text-brand-forest text-xs font-semibold hover:bg-brand-forest hover:text-brand-white transition">View</button>
+                      <button class="p-1 rounded text-brand-muted hover:text-brand-charcoal hover:bg-brand-ivory"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination / Result Count footer -->
+          <div class="px-5 py-3.5 border-t border-brand-border bg-brand-white flex items-center justify-between text-xs text-brand-muted">
+            <div>Showing 6 of 30 invitation recipients (5 pages total)</div>
+            <div class="flex items-center gap-1">
+              <button disabled class="px-2.5 py-1 rounded border border-brand-border text-brand-muted/50 cursor-not-allowed">Previous</button>
+              <button class="px-2.5 py-1 rounded bg-brand-forest text-brand-white font-semibold">1</button>
+              <button class="px-2.5 py-1 rounded border border-brand-border hover:bg-brand-ivory">2</button>
+              <button class="px-2.5 py-1 rounded border border-brand-border hover:bg-brand-ivory">3</button>
+              <span class="px-1 text-brand-muted">...</span>
+              <button class="px-2.5 py-1 rounded border border-brand-border hover:bg-brand-ivory">5</button>
+              <button class="px-2.5 py-1 rounded border border-brand-border text-brand-charcoal hover:bg-brand-ivory">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAIRED STATE: Genuinely Empty State (Starts Here) -->
+        <div id="state-empty" class="hidden paper-card rounded-xl p-12 text-center border border-brand-border bg-brand-white space-y-4">
+          <div class="w-12 h-12 rounded-full bg-brand-forestLight text-brand-forest flex items-center justify-center mx-auto">
+            <span class="material-symbols-outlined text-[24px]">mark_email_unread</span>
+          </div>
+          <div class="max-w-md mx-auto">
+            <h3 class="font-serif text-xl font-semibold text-brand-forest">Your guest list starts here</h3>
+            <p class="text-xs text-brand-muted mt-1 leading-relaxed">
+              Create your first personalized invitation. Assign individual ceremonies, set private attendance caps, and copy unique links for your guests with no account creation needed.
+            </p>
+          </div>
+          <div class="pt-2">
+            <button onclick="alert('Opening Add Recipient Drawer');" class="px-4 py-2 rounded-lg bg-brand-forest text-xs font-semibold text-brand-white hover:bg-brand-forestDark transition inline-flex items-center gap-1.5 shadow-sm">
+              <span class="material-symbols-outlined text-[16px]">person_add</span>
+              <span>Invite first guest</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PAIRED STATE: No Filter Matches -->
+        <div id="state-filteredEmpty" class="hidden paper-card rounded-xl p-10 text-center border border-brand-border bg-brand-white space-y-3">
+          <div class="w-10 h-10 rounded-full bg-brand-ivory text-brand-muted flex items-center justify-center mx-auto">
+            <span class="material-symbols-outlined text-[20px]">filter_alt_off</span>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-brand-charcoal">No invitations match this view</h3>
+          <p class="text-xs text-brand-muted max-w-sm mx-auto">
+            Try adjusting your search query or function scope. No records match the active criteria.
+          </p>
+          <button onclick="resetFilters()" class="px-3 py-1.5 rounded-lg border border-brand-border text-xs font-medium text-brand-forest hover:bg-brand-ivory transition">
+            Clear all filters
+          </button>
+        </div>
+
+        <!-- PAIRED STATE: Skeleton Loading -->
+        <div id="state-skeleton" class="hidden paper-card rounded-xl p-6 border border-brand-border bg-brand-white space-y-4 animate-pulse">
+          <div class="h-4 bg-brand-border/60 rounded w-1/4"></div>
+          <div class="space-y-3">
+            <div class="h-10 bg-brand-ivory rounded"></div>
+            <div class="h-10 bg-brand-ivory rounded"></div>
+            <div class="h-10 bg-brand-ivory rounded"></div>
+          </div>
+          <div class="h-4 bg-brand-border/40 rounded w-1/3 pt-2"></div>
+        </div>
+
+        <!-- PAIRED STATE: Recoverable Error / Retry -->
+        <div id="state-error" class="hidden paper-card rounded-xl p-8 text-center border border-rose-200 bg-rose-50/40 space-y-3">
+          <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center mx-auto">
+            <span class="material-symbols-outlined text-[20px]">sync_problem</span>
+          </div>
+          <h3 class="font-serif text-lg font-semibold text-brand-charcoal">Unable to load guest roster</h3>
+          <p class="text-xs text-brand-muted max-w-md mx-auto">
+            A temporary network interruption prevented loading the invitation records. Your saved guest data and links remain secure.
+          </p>
+          <button onclick="setScreenState('populated')" class="px-4 py-2 rounded-lg bg-brand-forest text-brand-white text-xs font-semibold hover:bg-brand-forestDark transition">
+            Retry loading
+          </button>
+        </div>
+      </section>
+
+      <!-- Mobile Adaptation Footnote Component -->
+      <footer class="mt-8 pt-6 border-t border-brand-border text-xs text-brand-muted flex flex-col md:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-brand-forest"></span>
+          <span><strong>Make My Event</strong> · Luxury Guest Experience Architecture</span>
+        </div>
+        <div class="text-[11px] text-brand-muted">
+          Mobile 390px Adaptation: Table collapses to stacked card tiles with touch-friendly 44px tap targets.
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Toast for Copy Action -->
+  <div id="copy-toast" class="fixed bottom-6 right-6 bg-brand-charcoal text-brand-white px-4 py-2.5 rounded-lg text-xs font-medium shadow-elevation hidden flex items-center gap-2 z-50">
+    <span class="material-symbols-outlined text-emerald-400 text-[18px]">done</span>
+    <span id="copy-toast-msg">Private invitation link copied to clipboard</span>
+  </div>
+
+  <script>
+    function setScreenState(state) {
+      const states = ['populated', 'empty', 'filteredEmpty', 'skeleton', 'error'];
+      states.forEach(s => {
+        const el = document.getElementById(`state-${s}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      const target = document.getElementById(`state-${state}`);
+      if (target) target.classList.remove('hidden');
+
+      // Update button highlights
+      ['pop', 'empty', 'fempty', 'skel', 'err'].forEach(b => {
+        const btn = document.getElementById(`tab-${b}`);
+        if (btn) {
+          btn.className = "px-2.5 py-1 rounded bg-brand-white border border-brand-border text-brand-charcoal hover:bg-brand-ivory text-[11px] font-medium transition";
+        }
+      });
+      if (state === 'populated') document.getElementById('tab-pop').className = "px-2.5 py-1 rounded bg-brand-forest text-brand-white text-[11px] font-semibold transition";
+      if (state === 'empty') document.getElementById('tab-empty').className = "px-2.5 py-1 rounded bg-brand-forest text-brand-white text-[11px] font-semibold transition";
+      if (state === 'filteredEmpty') document.getElementById('tab-fempty').className = "px-2.5 py-1 rounded bg-brand-forest text-brand-white text-[11px] font-semibold transition";
+      if (state === 'skeleton') document.getElementById('tab-skel').className = "px-2.5 py-1 rounded bg-brand-forest text-brand-white text-[11px] font-semibold transition";
+      if (state === 'error') document.getElementById('tab-err').className = "px-2.5 py-1 rounded bg-brand-forest text-brand-white text-[11px] font-semibold transition";
+    }
+
+    function toggleDashboardWidget() {
+      const sec = document.getElementById('dashboard-integration-section');
+      sec.classList.toggle('hidden');
+    }
+
+    function copyMockLink(name) {
+      const toast = document.getElementById('copy-toast');
+      const msg = document.getElementById('copy-toast-msg');
+      msg.textContent = `Private invitation link for ${name} copied`;
+      toast.classList.remove('hidden');
+      setTimeout(() => { toast.classList.add('hidden'); }, 2800);
+    }
+
+    function handleSearch(val) {
+      if (val.trim().toLowerCase() === 'xyz') {
+        setScreenState('filteredEmpty');
+      } else {
+        setScreenState('populated');
+      }
+    }
+
+    function applyFunctionFilter(val) {
+      if (val === 'all') {
+        setScreenState('populated');
+      }
+    }
+
+    function filterByFunction(fName) {
+      const sel = document.getElementById('function-filter');
+      sel.value = fName;
+      alert(`Scoped directory to ${fName} ceremony attendees.`);
+    }
+
+    function applyResponseFilter(val) {
+      // preview handler
+    }
+
+    function resetFilters() {
+      document.getElementById('search-input').value = '';
+      document.getElementById('function-filter').value = 'all';
+      document.getElementById('response-filter').value = 'all';
+      setScreenState('populated');
+    }
+  </script>
+</body>
+</html>
+

@@ -68,6 +68,7 @@ test("dashboard aggregates the selected wedding and filters before pagination", 
   });
   expect(Object.keys(summary).sort()).toEqual([
     "displayName",
+    "guestResponses",
     "summary",
     "timeZone",
     "title",

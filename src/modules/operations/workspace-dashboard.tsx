@@ -1,5 +1,8 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import Link from "next/link";
+import { GuestResponses } from "@/modules/guests/guest-summary";
+import type { GuestSummary } from "@/modules/guests/guest-types";
 import { useEffect, useState } from "react";
 import { WeddingHeader } from "@/modules/weddings/wedding-shell";
 import { WorkspaceNav } from "@/modules/weddings/workspace-nav";
@@ -8,6 +11,7 @@ import { money } from "./operations-types";
 import "./workspace-dashboard.css";
 
 type Dashboard = {
+  guestResponses?: GuestSummary;
   title: string;
   displayName: string;
   timeZone: string;
@@ -40,6 +44,11 @@ export function WorkspaceDashboard() {
       });
     return () => controller.abort();
   }, [read, attempt]);
+  useEffect(() => {
+    const refresh = () => setAttempt((v) => v + 1);
+    window.addEventListener("focus", refresh);
+    return () => window.removeEventListener("focus", refresh);
+  }, []);
   return (
     <main className="wedding-page">
       <WeddingHeader displayName={data?.displayName ?? ""} />
@@ -50,6 +59,14 @@ export function WorkspaceDashboard() {
           <h1>{data?.title ?? "Dashboard"}</h1>
           <span>A little clarity for the days ahead.</span>
         </header>
+        {data?.guestResponses && (
+          <>
+            <GuestResponses data={data.guestResponses} />
+            <Link className="guest-text-button" href={`${prefix}/guests`}>
+              Guest invitations <UiIcon name="arrow-right" />
+            </Link>
+          </>
+        )}
         {error ? (
           <div className="dashboard-error" role="alert">
             <h2>Let’s try that again</h2>
@@ -84,7 +101,7 @@ export function WorkspaceDashboard() {
               <div className="dashboard-section-heading">
                 <h2 id="dashboard-tasks">Tasks</h2>
                 <Link href={`${prefix}/tasks`}>
-                  Open all tasks <span aria-hidden="true">↗</span>
+                  Open all tasks <UiIcon name="arrow-up-right" />
                 </Link>
               </div>
               <div className="dashboard-task-metrics">
@@ -117,7 +134,7 @@ export function WorkspaceDashboard() {
                   >
                     <span>
                       {label}
-                      <i aria-hidden="true">↗</i>
+                      <UiIcon name="arrow-up-right" />
                     </span>
                     <strong>{count}</strong>
                     <small>{hint}</small>
@@ -132,7 +149,7 @@ export function WorkspaceDashboard() {
               <div className="dashboard-section-heading">
                 <h2 id="dashboard-finances">Finances</h2>
                 <Link href={`${prefix}/finance`}>
-                  Open finance <span aria-hidden="true">↗</span>
+                  Open finance <UiIcon name="arrow-up-right" />
                 </Link>
               </div>
               <div className="dashboard-finance-metrics">
@@ -158,7 +175,7 @@ export function WorkspaceDashboard() {
                 </h2>
               </div>
               <Link href={`${prefix}/vendors`}>
-                Open vendor directory <span aria-hidden="true">↗</span>
+                Open vendor directory <UiIcon name="arrow-up-right" />
               </Link>
             </section>
             <p className="dashboard-caption">

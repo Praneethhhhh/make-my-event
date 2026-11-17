@@ -1,5 +1,7 @@
 "use client";
-import Image from "next/image";
+import { ThemeControl, ThemePicker } from "@/modules/experience/theme-control";
+import { UiIcon } from "@/modules/experience/ui-icon";
+import { BrandLockup } from "@/modules/experience/brand-lockup";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { useWeddingScope } from "./wedding-scope";
@@ -109,13 +111,12 @@ export function WeddingHeader({ displayName }: { displayName: string }) {
         href="/weddings"
         aria-label="Make My Event — Your weddings"
       >
-        <Image src="/brand-mark.png" alt="" width={36} height={36} />
-        <div>
-          <strong>MAKE MY EVENT</strong>
-          <span>Celebrate together</span>
-        </div>
+        <BrandLockup />
       </Link>
       <div className="wedding-header-actions">
+        <div className="workspace-theme-desktop">
+          <ThemeControl />
+        </div>
         <NotificationBell />
         <div
           className="account-dropdown"
@@ -147,7 +148,7 @@ export function WeddingHeader({ displayName }: { displayName: string }) {
               aria-hidden="true"
               className={open ? "chevron is-open" : "chevron"}
             >
-              ⌄
+              <UiIcon name="chevron-down" />
             </span>
           </button>
           {open && (
@@ -188,15 +189,18 @@ export function WeddingHeader({ displayName }: { displayName: string }) {
               </div>
               <div className="account-menu-group">
                 <Link href="/weddings">
-                  Your weddings <span aria-hidden="true">↗</span>
+                  Your weddings <UiIcon name="arrow-up-right" />
                 </Link>
                 <Link href="/weddings/new">Create wedding</Link>
                 <Link href="/weddings/join">Join with code</Link>
               </div>
+              <div className="account-theme-mobile">
+                <ThemePicker />
+              </div>
               <div className="account-menu-group">
                 <button onClick={() => void signOut()} disabled={busy}>
                   {busy ? "Signing out…" : "Sign out"}
-                  <span aria-hidden="true">↪</span>
+                  <UiIcon name="signout" />
                 </button>
               </div>
               {error && (

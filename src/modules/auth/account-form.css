@@ -65,16 +65,16 @@
 .account-page aside {
   position: relative;
   isolation: isolate;
-  background: var(--color-canvas) url("/images/celebration-pixels.jpg") center
-    10% / 125% auto no-repeat;
-  color: var(--color-text);
+  background: var(--color-art-canvas) url("/images/celebration-pixels.jpg")
+    center 10% / 125% auto no-repeat;
+  color: var(--color-art-text);
   min-height: 500px;
   align-content: end;
 }
 .account-page aside p {
   font-size: 11px;
   letter-spacing: 0.12em;
-  color: var(--color-accent-text);
+  color: var(--color-art-accent);
 }
 .account-page aside h2 {
   font-size: 46px;
@@ -85,17 +85,17 @@
 .account-page aside p:last-child {
   font-size: 13px;
   letter-spacing: 0;
-  color: var(--color-text-muted);
+  color: var(--color-art-muted);
 }
 .account-page section {
-  background: #fffefb;
+  background: var(--color-surface-warm);
 }
 .account-page button[type="submit"] {
   font-weight: 600;
   min-height: 48px;
 }
 .account-page input {
-  background: white;
+  background: var(--color-surface);
   border-color: var(--color-border-strong);
 }
 @media (max-width: 767px) {

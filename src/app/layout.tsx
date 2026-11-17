@@ -1,3 +1,4 @@
+import { themeScript } from "@/modules/experience/theme-script";
 import type { Metadata } from "next";
 import { Manrope, Newsreader } from "next/font/google";
 import "./globals.css";
@@ -18,7 +19,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${newsreader.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${manrope.variable} ${newsreader.variable}`}
+    >
+      <head>
+        <script
+          id="mme-theme-init"
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
+      </head>
       <body>
         <ExperienceMotion>{children}</ExperienceMotion>
       </body>

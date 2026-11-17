@@ -1,4 +1,5 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import { useWeddingClient } from "@/modules/weddings/wedding-scope";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
@@ -186,7 +187,9 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
       {editing && <WorkspaceNav active="details" />}
       {!editing && (
         <div className="wedding-progress" aria-label="Setup progress">
-          <span>✓ Account created</span>
+          <span>
+            <UiIcon name="check" size={14} /> Account created
+          </span>
           <i>•</i>
           <strong>Wedding setup</strong>
         </div>
@@ -195,7 +198,7 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
         {!editing && (
           <p>
             <Link href="/weddings/join">
-              Already invited? Join a wedding instead →
+              Join an existing wedding <UiIcon name="arrow-right" />
             </Link>
           </p>
         )}
@@ -339,7 +342,9 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
                 A time-zone change keeps function instants unchanged. Review
                 their new local times afterward.
               </p>
-              <Link href={`${prefix}/functions`}>Review functions →</Link>
+              <Link href={`${prefix}/functions`}>
+                Review functions <UiIcon name="arrow-right" />
+              </Link>
             </>
           ) : (
             <>
@@ -395,7 +400,7 @@ export function WeddingSetup({ editing = false }: { editing?: boolean }) {
                 : "Creating wedding…"
               : editing
                 ? "Save changes"
-                : "Create wedding →"}
+                : "Create wedding"}
           </button>
         </div>
       </form>

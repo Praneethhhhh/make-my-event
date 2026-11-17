@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FINAL — Guest invitation — Pavithra & Manish</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: '#F7F5F0',
+            primary: '#28594F',
+            'primary-dark': '#1e433b',
+            secondary: '#B98265',
+            'secondary-dark': '#825339',
+            charcoal: '#202A29',
+            'muted-text': '#586361',
+            border: '#E6E4DC',
+            card: '#FFFFFF'
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #202A29;
+      font-family: 'Manrope', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+      display: inline-block;
+      line-height: 1;
+    }
+    /* Tasteful geometric pixel floral SVG styling */
+    .pixel-flower {
+      width: 32px;
+      height: 32px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F7F5F0] text-[#202A29] flex flex-col items-center py-6 px-4 sm:px-6">
+
+  <!-- Floating Design Reviewer Controls (Strictly outside public stationery canvas) -->
+  <aside aria-label="Reviewer preview bar" class="w-full max-w-2xl mb-6 bg-white/90 backdrop-blur-sm border border-[#E6E4DC] rounded-xl px-4 py-2.5 shadow-sm flex flex-wrap items-center justify-between gap-2 text-xs">
+    <div class="flex items-center gap-2 text-[#586361]">
+      <span class="w-2 h-2 rounded-full bg-[#28594F]"></span>
+      <span class="font-semibold text-[#202A29]">Reviewer State Switcher:</span>
+      <span class="text-[#586361] hidden sm:inline">(Simulates interactive public RSVP edge states)</span>
+    </div>
+    <div class="flex flex-wrap items-center gap-1.5" id="state-buttons">
+      <button onclick="setSimState('standard')" class="px-2.5 py-1 rounded bg-[#28594F] text-white font-medium shadow-xs" id="btn-standard">Standard Live</button>
+      <button onclick="setSimState('saved')" class="px-2.5 py-1 rounded bg-white hover:bg-neutral-50 text-[#586361] border border-[#E6E4DC]" id="btn-saved">Saved Feedback</button>
+      <button onclick="setSimState('deadline')" class="px-2.5 py-1 rounded bg-white hover:bg-neutral-50 text-[#586361] border border-[#E6E4DC]" id="btn-deadline">Deadline Passed</button>
+      <button onclick="setSimState('revoked')" class="px-2.5 py-1 rounded bg-white hover:bg-neutral-50 text-[#825339] border border-[#B98265]/40" id="btn-revoked">Link Revoked</button>
+    </div>
+  </aside>
+
+  <!-- REVOKED LINK STATE CONTAINER (Initially hidden) -->
+  <main id="revoked-state" class="hidden w-full max-w-xl mx-auto my-12 bg-white rounded-2xl border border-[#E6E4DC] p-8 sm:p-12 text-center shadow-sm">
+    <div class="w-12 h-12 rounded-full bg-[#F7F5F0] border border-[#E6E4DC] flex items-center justify-center mx-auto mb-4 text-[#825339]">
+      <span class="material-symbols-outlined text-2xl">lock</span>
+    </div>
+    <h1 class="font-serif text-2xl sm:text-3xl text-[#202A29] mb-2 font-normal">Invitation Link Inactive</h1>
+    <p class="text-sm text-[#586361] leading-relaxed max-w-md mx-auto mb-6">
+      This private invitation link is no longer active or has been re-issued. Please connect directly with your wedding hosts to request an updated celebration link.
+    </p>
+    <div class="pt-4 border-t border-[#E6E4DC] text-xs text-[#586361]">
+      <span>Make My Event · Private Family Celebrations</span>
+    </div>
+  </main>
+
+  <!-- MAIN STATIONERY INVITATION CANVAS -->
+  <main id="public-invitation" class="w-full max-w-2xl bg-white rounded-2xl border border-[#E6E4DC] shadow-[0_2px_12px_rgba(32,42,41,0.03)] p-6 sm:p-10 relative overflow-hidden transition-all duration-200">
+    
+    <!-- Tasteful Pixel / Voxel Geometric Corner Florals (SVG) -->
+    <div class="absolute top-4 left-4 pointer-events-none opacity-85" aria-hidden="true">
+      <svg class="pixel-flower" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="2" width="4" height="4" fill="#B98265"/>
+        <rect x="2" y="10" width="4" height="4" fill="#B98265"/>
+        <rect x="18" y="10" width="4" height="4" fill="#B98265"/>
+        <rect x="10" y="18" width="4" height="4" fill="#B98265"/>
+        <rect x="6" y="6" width="4" height="4" fill="#28594F"/>
+        <rect x="14" y="6" width="4" height="4" fill="#28594F"/>
+        <rect x="6" y="14" width="4" height="4" fill="#28594F"/>
+        <rect x="14" y="14" width="4" height="4" fill="#28594F"/>
+        <rect x="10" y="10" width="4" height="4" fill="#F7F5F0" stroke="#28594F" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="absolute top-4 right-4 pointer-events-none opacity-85" aria-hidden="true">
+      <svg class="pixel-flower" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="2" width="4" height="4" fill="#B98265"/>
+        <rect x="2" y="10" width="4" height="4" fill="#B98265"/>
+        <rect x="18" y="10" width="4" height="4" fill="#B98265"/>
+        <rect x="10" y="18" width="4" height="4" fill="#B98265"/>
+        <rect x="6" y="6" width="4" height="4" fill="#28594F"/>
+        <rect x="14" y="6" width="4" height="4" fill="#28594F"/>
+        <rect x="6" y="14" width="4" height="4" fill="#28594F"/>
+        <rect x="14" y="14" width="4" height="4" fill="#28594F"/>
+        <rect x="10" y="10" width="4" height="4" fill="#F7F5F0" stroke="#28594F" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <!-- Header Wordmark -->
+    <header class="text-center pt-2 pb-6">
+      <div class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider text-[#28594F] uppercase mb-5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6" cy="6" r="3" fill="#28594F"/>
+          <circle cx="14" cy="6" r="3" fill="#B98265"/>
+          <circle cx="6" cy="14" r="3" fill="#B98265"/>
+          <circle cx="14" cy="14" r="3" fill="#28594F"/>
+        </svg>
+        <span>Make My Event</span>
+      </div>
+
+      <!-- Hero Header & Couple Name -->
+      <p class="text-xs uppercase tracking-widest text-[#B98265] font-semibold mb-2">Together with our families</p>
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal tracking-tight text-[#202A29] leading-tight mb-2">
+        Pavithra &amp; Manish
+      </h1>
+      <p class="text-xs sm:text-sm text-[#586361] tracking-wide font-medium">
+        18–20 February 2027 · Bengaluru
+      </p>
+
+      <!-- Paired Hearts Thin Accent Line -->
+      <div class="flex items-center justify-center gap-2 mt-4 text-[#B98265]" aria-hidden="true">
+        <span class="w-10 h-px bg-[#E6E4DC]"></span>
+        <svg class="w-4 h-4 text-[#B98265]" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span class="w-10 h-px bg-[#E6E4DC]"></span>
+      </div>
+    </header>
+
+    <!-- Personalized Short Greeting Card (Clean single-line note, NO quota badges) -->
+    <section class="bg-[#F7F5F0] rounded-xl border border-[#E6E4DC] p-4 sm:p-5 mb-8 text-center sm:text-left">
+      <h2 class="font-serif text-lg sm:text-xl text-[#202A29] font-normal mb-1">
+        Dear Elon Musk &amp; family,
+      </h2>
+      <p class="text-sm text-[#586361] leading-relaxed">
+        We would love to celebrate with you.
+      </p>
+    </section>
+
+    <!-- The Celebrations Function Roster (3 Chronological Functions) -->
+    <section class="space-y-5" aria-label="Celebration Functions">
+      
+      <!-- 1. MEHNDI (Attending: 3, Venue Expanded Inline) -->
+      <article class="bg-white rounded-xl border border-[#E6E4DC] p-5 relative shadow-xs transition hover:border-[#28594F]/40" id="card-mehndi">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#B98265]"></span>
+              <h3 class="font-serif text-xl sm:text-2xl text-[#202A29] font-medium">Mehndi &amp; Welcome High Tea</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-[#586361] mt-0.5 ml-4">
+              Thursday, 18 February 2027 · 4:00 PM – 8:30 PM IST
+            </p>
+          </div>
+          <div class="flex flex-col items-end gap-1 flex-shrink-0">
+            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#586361] bg-[#F7F5F0] px-2 py-0.5 rounded border border-[#E6E4DC]">
+              <span class="material-symbols-outlined text-[13px]">timer</span>
+              <span>2d 4h</span>
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#28594F] bg-[#28594F]/10 px-2.5 py-0.5 rounded-full" id="badge-mehndi">
+              <span class="material-symbols-outlined text-[13px]">check_circle</span>
+              <span>Attending (3)</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- RSVP Controls Cluster (Attendance radio + Headcount Stepper + Save) -->
+        <div class="mt-4 pt-3.5 border-t border-[#E6E4DC] flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button type="button" class="px-3.5 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition bg-[#28594F] text-white border border-[#28594F] flex items-center gap-1.5 shadow-xs">
+              <span class="material-symbols-outlined text-base">check</span>
+              <span>Will attend</span>
+            </button>
+            <button type="button" class="px-3.5 py-2 min-h-[44px] rounded-lg text-sm font-medium transition bg-white text-[#586361] hover:text-[#202A29] border border-[#E6E4DC]">
+              Cannot attend
+            </button>
+          </div>
+
+          <!-- Headcount Stepper (Displayed only because Will attend is chosen) -->
+          <div class="flex items-center gap-2 bg-[#F7F5F0] p-1 rounded-lg border border-[#E6E4DC]">
+            <span class="text-xs text-[#586361] font-medium pl-1.5">Guests attending:</span>
+            <div class="flex items-center">
+              <button type="button" aria-label="Decrease headcount" class="w-8 h-8 rounded bg-white text-[#202A29] border border-[#E6E4DC] hover:bg-neutral-50 flex items-center justify-center font-bold text-sm">
+                −
+              </button>
+              <span class="w-8 text-center text-sm font-bold text-[#202A29]" id="count-mehndi">3</span>
+              <button type="button" aria-label="Increase headcount" class="w-8 h-8 rounded bg-white text-[#202A29] border border-[#E6E4DC] hover:bg-neutral-50 flex items-center justify-center font-bold text-sm">
+                +
+              </button>
+            </div>
+          </div>
+
+          <!-- Save Response Action Button -->
+          <div class="w-full sm:w-auto text-right">
+            <button type="button" class="w-full sm:w-auto px-4 py-2 min-h-[44px] rounded-lg bg-[#28594F] text-white text-xs sm:text-sm font-semibold hover:bg-[#1e433b] transition shadow-xs flex items-center justify-center gap-1.5">
+              <span>Save response</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Venue Inline Disclosure (Expanded by default for Mehndi) -->
+        <div class="mt-4 pt-3 border-t border-[#E6E4DC]/70" id="venue-mehndi">
+          <button type="button" onclick="toggleVenue('venue-content-mehndi', 'venue-icon-mehndi')" class="w-full flex items-center justify-between text-xs font-semibold text-[#28594F] py-1 text-left">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[17px] text-[#B98265]">location_on</span>
+              <span>Venue &amp; Location Details</span>
+            </span>
+            <span class="material-symbols-outlined text-base transition-transform" id="venue-icon-mehndi">expand_less</span>
+          </button>
+          <div class="mt-2.5 p-3 rounded-lg bg-[#F7F5F0] border border-[#E6E4DC] text-xs text-[#586361] space-y-1.5" id="venue-content-mehndi">
+            <div class="font-semibold text-[#202A29] text-sm">Lotus Terrace, Garden Pavilion</div>
+            <div>23 HAL Old Airport Road, Kodihalli, Bengaluru, Karnataka 560008</div>
+            <div class="pt-2 flex items-center justify-between">
+              <span class="text-[11px] text-[#586361]">Valet assistance at North Gate entrance</span>
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-white border border-[#E6E4DC] text-xs font-semibold text-[#28594F] hover:bg-neutral-50 shadow-xs">
+                <span>Open in Google Maps</span>
+                <span class="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. SANGEET (Attending: 4, Venue Collapsed) -->
+      <article class="bg-white rounded-xl border border-[#E6E4DC] p-5 relative shadow-xs transition hover:border-[#28594F]/40" id="card-sangeet">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#B98265]"></span>
+              <h3 class="font-serif text-xl sm:text-2xl text-[#202A29] font-medium">Sangeet &amp; Musical Night</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-[#586361] mt-0.5 ml-4">
+              Friday, 19 February 2027 · 6:00 PM – 11:30 PM IST
+            </p>
+          </div>
+          <div class="flex flex-col items-end gap-1 flex-shrink-0">
+            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#586361] bg-[#F7F5F0] px-2 py-0.5 rounded border border-[#E6E4DC]">
+              <span class="material-symbols-outlined text-[13px]">timer</span>
+              <span>3d 6h</span>
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#28594F] bg-[#28594F]/10 px-2.5 py-0.5 rounded-full" id="badge-sangeet">
+              <span class="material-symbols-outlined text-[13px]">check_circle</span>
+              <span>Attending (4)</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- RSVP Controls Cluster -->
+        <div class="mt-4 pt-3.5 border-t border-[#E6E4DC] flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button type="button" class="px-3.5 py-2 min-h-[44px] rounded-lg text-sm font-semibold transition bg-[#28594F] text-white border border-[#28594F] flex items-center gap-1.5 shadow-xs">
+              <span class="material-symbols-outlined text-base">check</span>
+              <span>Will attend</span>
+            </button>
+            <button type="button" class="px-3.5 py-2 min-h-[44px] rounded-lg text-sm font-medium transition bg-white text-[#586361] hover:text-[#202A29] border border-[#E6E4DC]">
+              Cannot attend
+            </button>
+          </div>
+
+          <!-- Stepper -->
+          <div class="flex items-center gap-2 bg-[#F7F5F0] p-1 rounded-lg border border-[#E6E4DC]">
+            <span class="text-xs text-[#586361] font-medium pl-1.5">Guests attending:</span>
+            <div class="flex items-center">
+              <button type="button" aria-label="Decrease headcount" class="w-8 h-8 rounded bg-white text-[#202A29] border border-[#E6E4DC] hover:bg-neutral-50 flex items-center justify-center font-bold text-sm">
+                −
+              </button>
+              <span class="w-8 text-center text-sm font-bold text-[#202A29]">4</span>
+              <button type="button" aria-label="Increase headcount" class="w-8 h-8 rounded bg-white text-[#202A29] border border-[#E6E4DC] hover:bg-neutral-50 flex items-center justify-center font-bold text-sm">
+                +
+              </button>
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <div class="w-full sm:w-auto text-right">
+            <button type="button" class="w-full sm:w-auto px-4 py-2 min-h-[44px] rounded-lg bg-[#28594F] text-white text-xs sm:text-sm font-semibold hover:bg-[#1e433b] transition shadow-xs flex items-center justify-center gap-1.5">
+              <span>Save response</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Venue Inline Disclosure (Collapsed) -->
+        <div class="mt-4 pt-3 border-t border-[#E6E4DC]/70" id="venue-sangeet">
+          <button type="button" onclick="toggleVenue('venue-content-sangeet', 'venue-icon-sangeet')" class="w-full flex items-center justify-between text-xs font-semibold text-[#586361] hover:text-[#28594F] py-1 text-left">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[17px] text-[#B98265]">location_on</span>
+              <span>Venue &amp; Location Details</span>
+            </span>
+            <span class="material-symbols-outlined text-base transition-transform" id="venue-icon-sangeet">expand_more</span>
+          </button>
+          <div class="hidden mt-2.5 p-3 rounded-lg bg-[#F7F5F0] border border-[#E6E4DC] text-xs text-[#586361] space-y-1.5" id="venue-content-sangeet">
+            <div class="font-semibold text-[#202A29] text-sm">Grand Ballroom, The Leela Palace</div>
+            <div>23 HAL Old Airport Road, Kodihalli, Bengaluru, Karnataka 560008</div>
+            <div class="pt-2 flex items-center justify-end">
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-white border border-[#E6E4DC] text-xs font-semibold text-[#28594F] hover:bg-neutral-50 shadow-xs">
+                <span>Open in Google Maps</span>
+                <span class="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. VEDIC WEDDING (Pending Response, Headcount Stepper Hidden) -->
+      <article class="bg-white rounded-xl border border-[#E6E4DC] p-5 relative shadow-xs transition hover:border-[#28594F]/40" id="card-wedding">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#28594F]"></span>
+              <h3 class="font-serif text-xl sm:text-2xl text-[#202A29] font-medium">Vedic Wedding &amp; Muhurtham</h3>
+            </div>
+            <p class="text-xs sm:text-sm text-[#586361] mt-0.5 ml-4">
+              Saturday, 20 February 2027 · 9:00 AM – 1:30 PM IST
+            </p>
+          </div>
+          <div class="flex flex-col items-end gap-1 flex-shrink-0">
+            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#586361] bg-[#F7F5F0] px-2 py-0.5 rounded border border-[#E6E4DC]">
+              <span class="material-symbols-outlined text-[13px]">timer</span>
+              <span>4d 0h</span>
+            </span>
+            <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#825339] bg-[#B98265]/15 px-2.5 py-0.5 rounded-full" id="badge-wedding">
+              <span class="material-symbols-outlined text-[13px]">schedule</span>
+              <span>Awaiting response</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- RSVP Controls Cluster (Attending not chosen yet -> Stepper is hidden) -->
+        <div class="mt-4 pt-3.5 border-t border-[#E6E4DC] flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button type="button" class="px-3.5 py-2 min-h-[44px] rounded-lg text-sm font-medium transition bg-white text-[#202A29] hover:bg-neutral-50 border border-[#E6E4DC]">
+              Will attend
+            </button>
+            <button type="button" class="px-3.5 py-2 min-h-[44px] rounded-lg text-sm font-medium transition bg-white text-[#586361] hover:text-[#202A29] border border-[#E6E4DC]">
+              Cannot attend
+            </button>
+          </div>
+
+          <!-- Helper cue while pending -->
+          <div class="text-xs text-[#586361] italic" id="wedding-pending-hint">
+            Please choose attendance to specify guests
+          </div>
+
+          <!-- Save Button -->
+          <div class="w-full sm:w-auto text-right">
+            <button type="button" class="w-full sm:w-auto px-4 py-2 min-h-[44px] rounded-lg bg-[#28594F] text-white text-xs sm:text-sm font-semibold hover:bg-[#1e433b] transition shadow-xs flex items-center justify-center gap-1.5">
+              <span>Save response</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Venue Inline Disclosure (Collapsed) -->
+        <div class="mt-4 pt-3 border-t border-[#E6E4DC]/70" id="venue-wedding">
+          <button type="button" onclick="toggleVenue('venue-content-wedding', 'venue-icon-wedding')" class="w-full flex items-center justify-between text-xs font-semibold text-[#586361] hover:text-[#28594F] py-1 text-left">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[17px] text-[#B98265]">location_on</span>
+              <span>Venue &amp; Location Details</span>
+            </span>
+            <span class="material-symbols-outlined text-base transition-transform" id="venue-icon-wedding">expand_more</span>
+          </button>
+          <div class="hidden mt-2.5 p-3 rounded-lg bg-[#F7F5F0] border border-[#E6E4DC] text-xs text-[#586361] space-y-1.5" id="venue-content-wedding">
+            <div class="font-semibold text-[#202A29] text-sm">Temple Mandapam Lawn</div>
+            <div>23 HAL Old Airport Road, Kodihalli, Bengaluru, Karnataka 560008</div>
+            <div class="pt-2 flex items-center justify-end">
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-white border border-[#E6E4DC] text-xs font-semibold text-[#28594F] hover:bg-neutral-50 shadow-xs">
+                <span>Open in Google Maps</span>
+                <span class="material-symbols-outlined text-xs">open_in_new</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Warm Simple Footer (Strictly requested signature) -->
+    <footer class="mt-10 pt-6 border-t border-[#E6E4DC] text-center">
+      <p class="font-serif italic text-base text-[#586361] mb-1">With love,</p>
+      <p class="font-serif text-xl sm:text-2xl text-[#202A29] font-normal">Pavithra &amp; Manish</p>
+    </footer>
+
+  </main>
+
+  <!-- Interactive Demo Logic for Reviewer Switcher -->
+  <script>
+    function toggleVenue(contentId, iconId) {
+      const content = document.getElementById(contentId);
+      const icon = document.getElementById(iconId);
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.textContent = 'expand_less';
+      } else {
+        content.classList.add('hidden');
+        icon.textContent = 'expand_more';
+      }
+    }
+
+    function setSimState(state) {
+      const publicCanvas = document.getElementById('public-invitation');
+      const revokedCanvas = document.getElementById('revoked-state');
+      const btnStandard = document.getElementById('btn-standard');
+      const btnSaved = document.getElementById('btn-saved');
+      const btnDeadline = document.getElementById('btn-deadline');
+      const btnRevoked = document.getElementById('btn-revoked');
+
+      // Reset button classes
+      [btnStandard, btnSaved, btnDeadline, btnRevoked].forEach(btn => {
+        btn.className = "px-2.5 py-1 rounded bg-white hover:bg-neutral-50 text-[#586361] border border-[#E6E4DC]";
+      });
+
+      if (state === 'revoked') {
+        publicCanvas.classList.add('hidden');
+        revokedCanvas.classList.remove('hidden');
+        btnRevoked.className = "px-2.5 py-1 rounded bg-[#825339] text-white font-medium shadow-xs";
+        return;
+      }
+
+      publicCanvas.classList.remove('hidden');
+      revokedCanvas.classList.add('hidden');
+
+      const badgeMehndi = document.getElementById('badge-mehndi');
+
+      if (state === 'standard') {
+        btnStandard.className = "px-2.5 py-1 rounded bg-[#28594F] text-white font-medium shadow-xs";
+        badgeMehndi.className = "inline-flex items-center gap-1 text-xs font-semibold text-[#28594F] bg-[#28594F]/10 px-2.5 py-0.5 rounded-full";
+        badgeMehndi.innerHTML = '<span class="material-symbols-outlined text-[13px]">check_circle</span><span>Attending (3)</span>';
+      } else if (state === 'saved') {
+        btnSaved.className = "px-2.5 py-1 rounded bg-[#28594F] text-white font-medium shadow-xs";
+        badgeMehndi.className = "inline-flex items-center gap-1 text-xs font-semibold text-[#28594F] bg-[#28594F]/20 px-2.5 py-0.5 rounded-full ring-1 ring-[#28594F]";
+        badgeMehndi.innerHTML = '<span class="material-symbols-outlined text-[13px]">done</span><span>Saved just now</span>';
+      } else if (state === 'deadline') {
+        btnDeadline.className = "px-2.5 py-1 rounded bg-[#28594F] text-white font-medium shadow-xs";
+        badgeMehndi.className = "inline-flex items-center gap-1 text-xs font-medium text-[#586361] bg-[#F7F5F0] px-2.5 py-0.5 rounded-full border border-[#E6E4DC]";
+        badgeMehndi.innerHTML = '<span class="material-symbols-outlined text-[13px]">lock</span><span>Response deadline closed</span>';
+      }
+    }
+  </script>
+</body>
+</html>

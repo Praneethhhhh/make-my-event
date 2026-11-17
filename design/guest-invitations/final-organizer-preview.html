@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FINAL — Organizer invitation preview</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: '#F7F5F0',
+            primary: '#28594F',
+            'primary-dark': '#1e433b',
+            secondary: '#B98265',
+            'secondary-dark': '#825339',
+            charcoal: '#202A29',
+            'muted-text': '#586361',
+            border: '#E6E4DC',
+            card: '#FFFFFF'
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #202A29;
+      font-family: 'Manrope', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+      display: inline-block;
+      line-height: 1;
+    }
+    .pixel-flower {
+      width: 28px;
+      height: 28px;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#F7F5F0] text-[#202A29] flex">
+
+  <!-- ================= PERSISTENT 224px LEFT SIDEBAR ================= -->
+  <aside class="w-56 min-h-screen bg-white border-r border-[#E6E4DC] flex flex-col justify-between shrink-0 p-4 sticky top-0 h-screen select-none">
+    <div class="space-y-6">
+      
+      <!-- Brand & Workspace Header -->
+      <div class="space-y-3">
+        <div class="flex items-center gap-2.5 px-2">
+          <!-- Current Canonical Connected Four-Petal Floral Mark -->
+          <svg class="w-6 h-6 text-[#28594F]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="6" height="6" rx="2" fill="#28594F"/>
+            <rect x="14" y="4" width="6" height="6" rx="2" fill="#B98265"/>
+            <rect x="4" y="14" width="6" height="6" rx="2" fill="#B98265"/>
+            <rect x="14" y="14" width="6" height="6" rx="2" fill="#28594F"/>
+            <circle cx="12" cy="12" r="2" fill="#F7F5F0"/>
+          </svg>
+          <span class="font-serif text-lg font-medium text-[#202A29] tracking-tight">Make My Event</span>
+        </div>
+
+        <div class="p-2.5 rounded-xl bg-[#F7F5F0] border border-[#E6E4DC]">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#28594F]"></span>
+            <div class="min-w-0">
+              <h2 class="text-xs font-bold text-[#202A29] truncate">Pavithra &amp; Manish</h2>
+              <p class="text-[11px] text-[#586361] truncate">18–20 Feb 2027</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grouped Navigation -->
+      <nav class="space-y-4 text-xs font-medium" aria-label="Sidebar navigation">
+        
+        <!-- PLANNING GROUP -->
+        <div>
+          <span class="px-2 text-[10px] font-bold uppercase tracking-wider text-[#586361]">Planning</span>
+          <div class="mt-1.5 space-y-0.5">
+            <a href="#dashboard" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] transition">
+              <span class="material-symbols-outlined text-base">dashboard</span>
+              <span>Dashboard</span>
+            </a>
+            <a href="#functions" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] transition">
+              <span class="material-symbols-outlined text-base">celebration</span>
+              <span>Functions</span>
+            </a>
+            <a href="#tasks" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] transition">
+              <span class="material-symbols-outlined text-base">checklist</span>
+              <span>Tasks</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- PEOPLE GROUP (Guests active) -->
+        <div>
+          <span class="px-2 text-[10px] font-bold uppercase tracking-wider text-[#586361]">People</span>
+          <div class="mt-1.5 space-y-0.5">
+            <a href="#team" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] transition">
+              <span class="material-symbols-outlined text-base">group</span>
+              <span>Team</span>
+            </a>
+            <a href="#vendors" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] transition">
+              <span class="material-symbols-outlined text-base">storefront</span>
+              <span>Vendors</span>
+            </a>
+            <!-- GUESTS & RSVPS ACTIVE -->
+            <a href="#guests" class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#28594F]/10 text-[#28594F] font-semibold">
+              <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-base">mail</span>
+                <span>Guests &amp; RSVPs</span>
+              </div>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#28594F]"></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- MANAGEMENT GROUP -->
+        <div>
+          <span class="px-2 text-[10px] font-bold uppercase tracking-wider text-[#586361]">Management</span>
+          <div class="mt-1.5 space-y-0.5">
+            <a href="#finance" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] transition">
+              <span class="material-symbols-outlined text-base">payments</span>
+              <span>Finance</span>
+            </a>
+            <a href="#details" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] transition">
+              <span class="material-symbols-outlined text-base">settings</span>
+              <span>Wedding details</span>
+            </a>
+          </div>
+        </div>
+
+      </nav>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="pt-3 border-t border-[#E6E4DC] text-[11px] text-[#586361] flex items-center justify-between px-1">
+      <span class="flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#28594F]"></span>
+        <span>Online</span>
+      </span>
+      <span>Asia/Kolkata</span>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN WORKSPACE AREA ================= -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top App Bar with Notification Bell beside User Pill -->
+    <header class="h-14 bg-white border-b border-[#E6E4DC] px-6 flex items-center justify-between sticky top-0 z-30">
+      <!-- Breadcrumbs -->
+      <div class="flex items-center gap-2 text-xs text-[#586361]">
+        <span>Pavithra &amp; Manish</span>
+        <span>/</span>
+        <span>Guests &amp; RSVPs</span>
+        <span>/</span>
+        <span class="font-semibold text-[#202A29]">Invitation preview</span>
+      </div>
+
+      <!-- Trailing Profile & Bell Control -->
+      <div class="flex items-center gap-3">
+        <!-- Notification Bell directly beside User -->
+        <button type="button" aria-label="Notifications" class="p-1.5 text-[#586361] hover:text-[#202A29] hover:bg-[#F7F5F0] rounded-lg transition relative">
+          <span class="material-symbols-outlined text-xl">notifications</span>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#B98265]"></span>
+        </button>
+
+        <div class="h-4 w-px bg-[#E6E4DC]"></div>
+
+        <!-- User Profile Pill -->
+        <div class="flex items-center gap-2 pl-1">
+          <div class="w-7 h-7 rounded-full bg-[#28594F] text-white flex items-center justify-center font-bold text-xs">
+            PI
+          </div>
+          <div class="text-left hidden sm:block">
+            <span class="block text-xs font-semibold text-[#202A29] leading-tight">Pavithra Iyer</span>
+            <span class="block text-[10px] text-[#586361] leading-tight">Organizer</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Compact Organizer Toolbar -->
+    <div class="bg-white border-b border-[#E6E4DC] px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-3">
+        <a href="#back" class="inline-flex items-center gap-1 text-[#28594F] hover:underline font-semibold">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+          <span>Back to guests</span>
+        </a>
+        <div class="h-3.5 w-px bg-[#E6E4DC]"></div>
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-[#202A29]">Viewing:</span>
+          <!-- Selector: All Functions vs Elon Musk & Family -->
+          <select id="recipient-filter" onchange="switchRecipientView(this.value)" class="text-xs bg-[#F7F5F0] border-[#E6E4DC] rounded-lg py-1 px-2.5 font-medium text-[#202A29] focus:ring-1 focus:ring-[#28594F] focus:border-[#28594F]">
+            <option value="musk" selected>Elon Musk &amp; family (Recipient preview)</option>
+            <option value="all">All functions (Master template)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- One-line Clear Read-Only Preview Assurance -->
+      <div class="flex items-center gap-2 bg-[#F7F5F0] px-3 py-1 rounded-md border border-[#E6E4DC] text-[#586361] text-[11px]">
+        <span class="material-symbols-outlined text-xs text-[#B98265]">info</span>
+        <span>Preview only — responses are not saved.</span>
+      </div>
+    </div>
+
+    <!-- Central Preview Canvas Container -->
+    <main class="flex-1 p-6 lg:p-8 flex justify-center items-start overflow-y-auto">
+      
+      <!-- EXACT SAME INVITATION ARTWORK & STYLING AS PUBLIC PAGE -->
+      <div class="w-full max-w-2xl bg-white rounded-2xl border border-[#E6E4DC] shadow-[0_2px_12px_rgba(32,42,41,0.03)] p-6 sm:p-10 relative overflow-hidden">
+        
+        <!-- Corner Florals (SVG) -->
+        <div class="absolute top-4 left-4 pointer-events-none opacity-85" aria-hidden="true">
+          <svg class="pixel-flower" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="2" width="4" height="4" fill="#B98265"/>
+            <rect x="2" y="10" width="4" height="4" fill="#B98265"/>
+            <rect x="18" y="10" width="4" height="4" fill="#B98265"/>
+            <rect x="10" y="18" width="4" height="4" fill="#B98265"/>
+            <rect x="6" y="6" width="4" height="4" fill="#28594F"/>
+            <rect x="14" y="6" width="4" height="4" fill="#28594F"/>
+            <rect x="6" y="14" width="4" height="4" fill="#28594F"/>
+            <rect x="14" y="14" width="4" height="4" fill="#28594F"/>
+            <rect x="10" y="10" width="4" height="4" fill="#F7F5F0" stroke="#28594F" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="absolute top-4 right-4 pointer-events-none opacity-85" aria-hidden="true">
+          <svg class="pixel-flower" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="2" width="4" height="4" fill="#B98265"/>
+            <rect x="2" y="10" width="4" height="4" fill="#B98265"/>
+            <rect x="18" y="10" width="4" height="4" fill="#B98265"/>
+            <rect x="10" y="18" width="4" height="4" fill="#B98265"/>
+            <rect x="6" y="6" width="4" height="4" fill="#28594F"/>
+            <rect x="14" y="6" width="4" height="4" fill="#28594F"/>
+            <rect x="6" y="14" width="4" height="4" fill="#28594F"/>
+            <rect x="14" y="14" width="4" height="4" fill="#28594F"/>
+            <rect x="10" y="10" width="4" height="4" fill="#F7F5F0" stroke="#28594F" stroke-width="1"/>
+          </svg>
+        </div>
+
+        <!-- Header Wordmark -->
+        <header class="text-center pt-2 pb-6">
+          <div class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider text-[#28594F] uppercase mb-5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6" cy="6" r="3" fill="#28594F"/>
+              <circle cx="14" cy="6" r="3" fill="#B98265"/>
+              <circle cx="6" cy="14" r="3" fill="#B98265"/>
+              <circle cx="14" cy="14" r="3" fill="#28594F"/>
+            </svg>
+            <span>Make My Event</span>
+          </div>
+
+          <p class="text-xs uppercase tracking-widest text-[#B98265] font-semibold mb-2">Together with our families</p>
+          <h1 class="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal tracking-tight text-[#202A29] leading-tight mb-2">
+            Pavithra &amp; Manish
+          </h1>
+          <p class="text-xs sm:text-sm text-[#586361] tracking-wide font-medium">
+            18–20 February 2027 · Bengaluru
+          </p>
+
+          <div class="flex items-center justify-center gap-2 mt-4 text-[#B98265]" aria-hidden="true">
+            <span class="w-10 h-px bg-[#E6E4DC]"></span>
+            <svg class="w-4 h-4 text-[#B98265]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span class="w-10 h-px bg-[#E6E4DC]"></span>
+          </div>
+        </header>
+
+        <!-- Greeting Card (Dynamic per selector) -->
+        <section class="bg-[#F7F5F0] rounded-xl border border-[#E6E4DC] p-4 sm:p-5 mb-8 text-center sm:text-left" id="preview-greeting">
+          <h2 class="font-serif text-lg sm:text-xl text-[#202A29] font-normal mb-1" id="greeting-title">
+            Dear Elon Musk &amp; family,
+          </h2>
+          <p class="text-sm text-[#586361] leading-relaxed">
+            We would love to celebrate with you.
+          </p>
+        </section>
+
+        <!-- Function Roster (Visibly Read-Only in Preview) -->
+        <section class="space-y-5" aria-label="Celebration Functions">
+          
+          <!-- 1. MEHNDI -->
+          <article class="bg-white rounded-xl border border-[#E6E4DC] p-5 relative shadow-xs">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#B98265]"></span>
+                  <h3 class="font-serif text-xl sm:text-2xl text-[#202A29] font-medium">Mehndi &amp; Welcome High Tea</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-[#586361] mt-0.5 ml-4">
+                  Thursday, 18 February 2027 · 4:00 PM – 8:30 PM IST
+                </p>
+              </div>
+              <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#586361] bg-[#F7F5F0] px-2 py-0.5 rounded border border-[#E6E4DC]">
+                  <span class="material-symbols-outlined text-[13px]">timer</span>
+                  <span>2d 4h</span>
+                </span>
+                <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#28594F] bg-[#28594F]/10 px-2.5 py-0.5 rounded-full">
+                  <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  <span>Attending (3)</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Visibly Read-Only Controls Cluster -->
+            <div class="mt-4 pt-3.5 border-t border-[#E6E4DC] flex flex-wrap items-center justify-between gap-3 pointer-events-none opacity-90">
+              <div class="flex items-center gap-2">
+                <div class="px-3.5 py-2 rounded-lg text-sm font-semibold bg-[#28594F] text-white border border-[#28594F] flex items-center gap-1.5 shadow-xs">
+                  <span class="material-symbols-outlined text-base">check</span>
+                  <span>Will attend</span>
+                </div>
+                <div class="px-3.5 py-2 rounded-lg text-sm font-medium bg-white text-[#586361] border border-[#E6E4DC]">
+                  Cannot attend
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 bg-[#F7F5F0] p-1 rounded-lg border border-[#E6E4DC]">
+                <span class="text-xs text-[#586361] font-medium pl-1.5">Guests attending:</span>
+                <div class="flex items-center">
+                  <div class="w-8 h-8 rounded bg-white text-[#586361] border border-[#E6E4DC] flex items-center justify-center font-bold text-sm">−</div>
+                  <span class="w-8 text-center text-sm font-bold text-[#202A29]">3</span>
+                  <div class="w-8 h-8 rounded bg-white text-[#586361] border border-[#E6E4DC] flex items-center justify-center font-bold text-sm">+</div>
+                </div>
+              </div>
+
+              <div class="w-full sm:w-auto text-right">
+                <div class="px-4 py-2 rounded-lg bg-[#28594F] text-white text-xs sm:text-sm font-semibold shadow-xs flex items-center justify-center gap-1.5">
+                  <span>Save response</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Venue Details Expanded -->
+            <div class="mt-4 pt-3 border-t border-[#E6E4DC]/70">
+              <div class="w-full flex items-center justify-between text-xs font-semibold text-[#28594F] py-1">
+                <span class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[17px] text-[#B98265]">location_on</span>
+                  <span>Venue &amp; Location Details</span>
+                </span>
+                <span class="material-symbols-outlined text-base">expand_less</span>
+              </div>
+              <div class="mt-2.5 p-3 rounded-lg bg-[#F7F5F0] border border-[#E6E4DC] text-xs text-[#586361] space-y-1.5">
+                <div class="font-semibold text-[#202A29] text-sm">Lotus Terrace, Garden Pavilion</div>
+                <div>23 HAL Old Airport Road, Kodihalli, Bengaluru, Karnataka 560008</div>
+                <div class="pt-2 flex items-center justify-between">
+                  <span class="text-[11px] text-[#586361]">Valet assistance at North Gate entrance</span>
+                  <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded bg-white border border-[#E6E4DC] text-xs font-semibold text-[#28594F] shadow-xs">
+                    <span>Google Maps link</span>
+                    <span class="material-symbols-outlined text-xs">open_in_new</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. SANGEET -->
+          <article class="bg-white rounded-xl border border-[#E6E4DC] p-5 relative shadow-xs">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#B98265]"></span>
+                  <h3 class="font-serif text-xl sm:text-2xl text-[#202A29] font-medium">Sangeet &amp; Musical Night</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-[#586361] mt-0.5 ml-4">
+                  Friday, 19 February 2027 · 6:00 PM – 11:30 PM IST
+                </p>
+              </div>
+              <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#586361] bg-[#F7F5F0] px-2 py-0.5 rounded border border-[#E6E4DC]">
+                  <span class="material-symbols-outlined text-[13px]">timer</span>
+                  <span>3d 6h</span>
+                </span>
+                <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#28594F] bg-[#28594F]/10 px-2.5 py-0.5 rounded-full">
+                  <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  <span>Attending (4)</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Read Only Controls -->
+            <div class="mt-4 pt-3.5 border-t border-[#E6E4DC] flex flex-wrap items-center justify-between gap-3 pointer-events-none opacity-90">
+              <div class="flex items-center gap-2">
+                <div class="px-3.5 py-2 rounded-lg text-sm font-semibold bg-[#28594F] text-white border border-[#28594F] flex items-center gap-1.5 shadow-xs">
+                  <span class="material-symbols-outlined text-base">check</span>
+                  <span>Will attend</span>
+                </div>
+                <div class="px-3.5 py-2 rounded-lg text-sm font-medium bg-white text-[#586361] border border-[#E6E4DC]">
+                  Cannot attend
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 bg-[#F7F5F0] p-1 rounded-lg border border-[#E6E4DC]">
+                <span class="text-xs text-[#586361] font-medium pl-1.5">Guests attending:</span>
+                <div class="flex items-center">
+                  <div class="w-8 h-8 rounded bg-white text-[#586361] border border-[#E6E4DC] flex items-center justify-center font-bold text-sm">−</div>
+                  <span class="w-8 text-center text-sm font-bold text-[#202A29]">4</span>
+                  <div class="w-8 h-8 rounded bg-white text-[#586361] border border-[#E6E4DC] flex items-center justify-center font-bold text-sm">+</div>
+                </div>
+              </div>
+
+              <div class="w-full sm:w-auto text-right">
+                <div class="px-4 py-2 rounded-lg bg-[#28594F] text-white text-xs sm:text-sm font-semibold shadow-xs flex items-center justify-center gap-1.5">
+                  <span>Save response</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Venue Collapsed -->
+            <div class="mt-4 pt-3 border-t border-[#E6E4DC]/70">
+              <div class="w-full flex items-center justify-between text-xs font-semibold text-[#586361] py-1">
+                <span class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[17px] text-[#B98265]">location_on</span>
+                  <span>Venue &amp; Location Details</span>
+                </span>
+                <span class="material-symbols-outlined text-base">expand_more</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. VEDIC WEDDING -->
+          <article class="bg-white rounded-xl border border-[#E6E4DC] p-5 relative shadow-xs">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-[#28594F]"></span>
+                  <h3 class="font-serif text-xl sm:text-2xl text-[#202A29] font-medium">Vedic Wedding &amp; Muhurtham</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-[#586361] mt-0.5 ml-4">
+                  Saturday, 20 February 2027 · 9:00 AM – 1:30 PM IST
+                </p>
+              </div>
+              <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#586361] bg-[#F7F5F0] px-2 py-0.5 rounded border border-[#E6E4DC]">
+                  <span class="material-symbols-outlined text-[13px]">timer</span>
+                  <span>4d 0h</span>
+                </span>
+                <span class="inline-flex items-center gap-1 text-xs font-semibold text-[#825339] bg-[#B98265]/15 px-2.5 py-0.5 rounded-full">
+                  <span class="material-symbols-outlined text-[13px]">schedule</span>
+                  <span>Awaiting response</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Read Only Controls (Pending) -->
+            <div class="mt-4 pt-3.5 border-t border-[#E6E4DC] flex flex-wrap items-center justify-between gap-3 pointer-events-none opacity-90">
+              <div class="flex items-center gap-2">
+                <div class="px-3.5 py-2 rounded-lg text-sm font-medium bg-white text-[#202A29] border border-[#E6E4DC]">
+                  Will attend
+                </div>
+                <div class="px-3.5 py-2 rounded-lg text-sm font-medium bg-white text-[#586361] border border-[#E6E4DC]">
+                  Cannot attend
+                </div>
+              </div>
+
+              <div class="text-xs text-[#586361] italic">
+                Please choose attendance to specify guests
+              </div>
+
+              <div class="w-full sm:w-auto text-right">
+                <div class="px-4 py-2 rounded-lg bg-[#28594F] text-white text-xs sm:text-sm font-semibold shadow-xs flex items-center justify-center gap-1.5">
+                  <span>Save response</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Venue Collapsed -->
+            <div class="mt-4 pt-3 border-t border-[#E6E4DC]/70">
+              <div class="w-full flex items-center justify-between text-xs font-semibold text-[#586361] py-1">
+                <span class="flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[17px] text-[#B98265]">location_on</span>
+                  <span>Venue &amp; Location Details</span>
+                </span>
+                <span class="material-symbols-outlined text-base">expand_more</span>
+              </div>
+            </div>
+          </article>
+
+        </section>
+
+        <!-- Footer Signature -->
+        <footer class="mt-10 pt-6 border-t border-[#E6E4DC] text-center">
+          <p class="font-serif italic text-base text-[#586361] mb-1">With love,</p>
+          <p class="font-serif text-xl sm:text-2xl text-[#202A29] font-normal">Pavithra &amp; Manish</p>
+        </footer>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    function switchRecipientView(val) {
+      const greetingTitle = document.getElementById('greeting-title');
+      if (val === 'all') {
+        greetingTitle.textContent = "Dear Guest / Family Name,";
+      } else {
+        greetingTitle.textContent = "Dear Elon Musk & family,";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,4 +1,9 @@
-import { test as base, expect, type APIRequestContext } from "@playwright/test";
+import {
+  test as base,
+  expect,
+  type Page,
+  type APIRequestContext,
+} from "@playwright/test";
 import mongoose from "mongoose";
 import { readFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
@@ -79,6 +84,8 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
         "weddings",
         "weddingMemberships",
         "functions",
+        "guests",
+        "functionInvitations",
         "auditEvents",
         "membershipInvites",
         "emailOutbox",
@@ -91,7 +98,7 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
         "vendorCharges",
         "vendorPayments",
         "expenses",
-  "expensePayments",
+        "expensePayments",
         "accessLinks",
         "portalSessions",
       ])
@@ -105,6 +112,8 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
         "weddings",
         "weddingMemberships",
         "functions",
+        "guests",
+        "functionInvitations",
         "auditEvents",
         "membershipInvites",
         "emailOutbox",
@@ -117,7 +126,7 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
         "vendorCharges",
         "vendorPayments",
         "expenses",
-  "expensePayments",
+        "expensePayments",
         "accessLinks",
         "portalSessions",
       ])
@@ -127,3 +136,14 @@ export const test = base.extend<{ database: mongoose.mongo.Db }>({
   },
 });
 export { expect };
+
+// Follow the real responsive navigation rather than clicking a hidden sidebar.
+export async function openWorkspaceNav(page: Page) {
+  await page.locator(".workspace-navigation").waitFor({ state: "attached" });
+  const menu = page.getByRole("button", { name: "Wedding menu", exact: true });
+  if (await menu.isVisible()) await menu.click();
+}
+export async function navigateWorkspace(page: Page, name: string) {
+  await openWorkspaceNav(page);
+  await page.getByRole("link", { name, exact: true }).click();
+}

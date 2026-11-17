@@ -18,7 +18,7 @@ export const weddingOwnedCollections = [
   "expenses",
   "expensePayments",
   // Retain cleanup of legacy vendor capabilities; vendor routes are removed.
-  // These collections also belong to the future guest invitation feature.
+  // These collections also hold active guest invitation capabilities.
   "accessLinks",
   "portalSessions",
   "photos",

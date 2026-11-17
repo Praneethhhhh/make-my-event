@@ -1,4 +1,5 @@
 "use client";
+import { UiIcon } from "@/modules/experience/ui-icon";
 import {
   createContext,
   useContext,
@@ -8,6 +9,10 @@ import {
   type ReactNode,
 } from "react";
 const DraftContext = createContext<(() => void) | null>(null);
+const CleanContext = createContext<(() => void) | null>(null);
+export function usePanelClean() {
+  return useContext(CleanContext);
+}
 export function usePanelDraft() {
   return useContext(DraftContext);
 }
@@ -28,12 +33,15 @@ export function OperationsPanel({
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
-    dialog.current?.showModal();
+    const modal = dialog.current;
+    modal?.showModal();
     dialog.current
       ?.querySelector<HTMLElement>("input,textarea,select")
       ?.focus();
     return () => {
-      trigger?.focus();
+      // Outside controls are inert until the native modal is closed.
+      modal?.close();
+      if (trigger?.isConnected) trigger.focus();
     };
   }, []);
   function requestClose() {
@@ -65,7 +73,7 @@ export function OperationsPanel({
         disabled={busy}
         onClick={requestClose}
       >
-        ×
+        <UiIcon name="close" />
       </button>
       {confirm && (
         <div
@@ -96,7 +104,9 @@ export function OperationsPanel({
         </div>
       )}
       <DraftContext.Provider value={() => setDirty(true)}>
-        <div inert={confirm}>{children(requestClose)}</div>
+        <CleanContext.Provider value={() => setDirty(false)}>
+          <div inert={confirm}>{children(requestClose)}</div>
+        </CleanContext.Provider>
       </DraftContext.Provider>
     </dialog>
   );

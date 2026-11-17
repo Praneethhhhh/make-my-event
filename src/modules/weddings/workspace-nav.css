@@ -15,7 +15,7 @@
   width: 224px;
   min-height: calc(100vh - 72px);
   padding: 30px 16px;
-  background: #fff;
+  background: var(--color-surface);
   border-right: 1px solid var(--color-border);
 }
 .workspace-nav-group + .workspace-nav-group {
@@ -57,7 +57,7 @@
   color: var(--color-primary);
 }
 .workspace-nav-group a[aria-current="page"] {
-  background: #edf3ef;
+  background: var(--color-selected);
   color: var(--color-primary);
   font-weight: 700;
 }
@@ -85,7 +85,7 @@
   padding: 20px 16px;
   border: 0;
   border-right: 1px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   color: var(--color-text);
 }
 .workspace-drawer[open] {
@@ -106,7 +106,7 @@
   width: 44px;
   height: 44px;
   border: 1px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   border-radius: 50%;
   font-size: 24px;
   cursor: pointer;
@@ -148,7 +148,7 @@
     gap: 12px;
     min-height: 56px;
     padding: 6px 20px;
-    background: #fff;
+    background: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
   }
   .workspace-mobile-bar button {

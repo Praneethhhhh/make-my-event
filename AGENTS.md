@@ -45,3 +45,7 @@
 - Include standard form interactions as part of feature delivery, including accessible password visibility controls, autocomplete, validation feedback, loading states and prevention of duplicate submissions. Verify these interactions during review.
 
 - Operations UI must distinguish empty/loading/filter states. Keep selected mention ranges committed while continuing text; isolate discussion typography from task-row layouts. Finance uses one Add entry with unpaid/already-paid choices and contextual expense payments; Remove retains reasoned history. Notification refresh is coalesced from selected-wedding activity/focus, not recurring polling.
+
+- Appearance preference: offer Light and Dark only, default to Light regardless of OS. No System option or computer icon. Dark artwork must blend into the page without bright white panels; preserve original source assets.
+
+- Landing artwork: use genuine transparent assets with natural skin tones and consistent colors across Light/Dark. Never use negative/invert/hue-rotation filters or screen blending to remove image backgrounds. Preserve the original Stitch source files.

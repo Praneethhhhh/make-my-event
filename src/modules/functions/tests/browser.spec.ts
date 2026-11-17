@@ -1,3 +1,4 @@
+import { navigateWorkspace } from "../../auth/tests/fixtures";
 import { weddingRoute } from "../../auth/tests/fixtures";
 import { test, expect } from "../../auth/tests/fixtures";
 import { onboard } from "./fixtures";
@@ -113,9 +114,7 @@ for (const width of [390, 1440]) {
       path: `.next/functions-${width}.png`,
       fullPage: true,
     });
-    await page
-      .getByRole("link", { name: "Wedding details", exact: true })
-      .click();
+    await navigateWorkspace(page, "Wedding details");
     await expect(page.getByLabel("Wedding title")).toHaveValue(
       "Pavithra & Manish’s Wedding",
     );
@@ -164,11 +163,11 @@ for (const width of [390, 1440]) {
       path: `.next/wedding-details-${width}.png`,
       fullPage: true,
     });
-    await page.getByRole("link", { name: "Overview", exact: true }).click();
+    await navigateWorkspace(page, "Dashboard");
     await expect(
       page.getByRole("heading", { name: "Pavithra & Manish’s Celebration" }),
     ).toBeVisible();
-    await page.getByRole("link", { name: "Functions", exact: true }).click();
+    await navigateWorkspace(page, "Functions");
     page.once("dialog", (dialog) => dialog.dismiss());
     await page
       .getByRole("button", { name: "Remove Haldi ceremony", exact: true })

@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:unit": "node --experimental-strip-types --test src/modules/auth/account-validation.test.mjs",
+    "test:unit": "node --experimental-strip-types --test src/modules/auth/account-validation.test.mjs src/modules/guests/guest-link.test.mjs src/modules/experience/theme-script.test.mjs",
     "test:auth": "pnpm build && playwright test",
     "test": "pnpm test:unit && pnpm test:auth"
   },

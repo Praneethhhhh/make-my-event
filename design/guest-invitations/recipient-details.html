@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guest invitation — Details & share link — Make My Event</title>
+  <!-- Google Fonts: Newsreader & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet"/>
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              ivory: "#F7F5F0",
+              white: "#FFFFFF",
+              forest: "#28594F",
+              charcoal: "#202A29",
+              muted: "#5A6664",
+              border: "#E6E4DC",
+              copper: "#B98265",
+              copperDark: "#825339",
+              forestLight: "#ebf6f4",
+              forestDark: "#1b3f37",
+              goldWarm: "#D4A373",
+              error: "#BA1A1A",
+              errorBg: "#FFDAD6",
+              surfaceDim: "#EBE9E2"
+            }
+          },
+          fontFamily: {
+            serif: ["Newsreader", "Georgia", "serif"],
+            sans: ["Manrope", "sans-serif"]
+          },
+          boxShadow: {
+            subtle: "0 1px 3px rgba(32, 42, 41, 0.04), 0 4px 12px rgba(32, 42, 41, 0.02)",
+            drawer: "-8px 0 32px rgba(32, 42, 41, 0.12)",
+            elevation: "0 8px 24px -4px rgba(32, 42, 41, 0.08)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #F7F5F0;
+      color: #202A29;
+      font-family: 'Manrope', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 20px;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    .paper-card {
+      background: #FFFFFF;
+      border: 1px solid #E6E4DC;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex antialiased bg-[#F7F5F0] text-[#202A29] relative overflow-x-hidden">
+
+  <!-- PERSISTENT LEFT SIDEBAR (224px / w-56 standard) -->
+  <aside class="w-56 bg-brand-white border-r border-brand-border shrink-0 flex flex-col justify-between hidden md:flex sticky top-0 h-screen z-10 opacity-75">
+    <div class="flex flex-col">
+      <div class="p-4 border-b border-brand-border/70 flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-md bg-brand-forest text-brand-white flex items-center justify-center font-serif font-bold text-sm tracking-tighter">
+          M
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif font-semibold text-brand-forest leading-tight tracking-tight">Make My Event</span>
+          <span class="text-[10px] text-brand-muted tracking-wide uppercase">Family Concierge</span>
+        </div>
+      </div>
+      <div class="px-4 py-3 border-b border-brand-border/50 bg-brand-forestLight/30">
+        <div class="flex items-center gap-1.5 text-xs font-semibold text-brand-charcoal">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-forest"></span>
+          <span>Pavithra & Manish</span>
+        </div>
+        <div class="text-[11px] text-brand-muted mt-0.5">18–20 Feb 2027 · Asia/Kolkata</div>
+      </div>
+      <nav class="p-3 space-y-4 text-xs font-medium">
+        <div>
+          <span class="px-3 text-[10px] font-bold text-brand-muted/70 uppercase tracking-wider">Planning</span>
+          <div class="mt-1 space-y-0.5 text-brand-muted">
+            <div class="px-3 py-2">Dashboard</div>
+            <div class="px-3 py-2">Functions</div>
+            <div class="px-3 py-2">Tasks</div>
+          </div>
+        </div>
+        <div>
+          <span class="px-3 text-[10px] font-bold text-brand-muted/70 uppercase tracking-wider">People</span>
+          <div class="mt-1 space-y-0.5">
+            <div class="px-3 py-2 text-brand-muted">Team</div>
+            <div class="px-3 py-2 text-brand-muted">Vendors</div>
+            <div class="px-3 py-2 rounded-lg bg-brand-forestLight text-brand-forest font-semibold flex items-center justify-between">
+              <span>Guests</span>
+              <span class="text-[10px] bg-brand-forest/10 px-1.5 py-0.5 rounded-full font-bold">30</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="p-3 border-t border-brand-border text-[11px] text-brand-muted">
+      <div class="px-2">Private link mode · v2.7</div>
+    </div>
+  </aside>
+
+  <!-- BACKGROUND MAIN VIEW (Dimmed & Blurred underneath side drawer) -->
+  <div class="flex-1 flex flex-col min-w-0 pointer-events-none filter blur-[1.5px] opacity-40 select-none">
+    <header class="h-14 bg-brand-white border-b border-brand-border px-6 flex items-center justify-between">
+      <div class="text-xs text-brand-muted">Pavithra & Manish / Guest invitations</div>
+      <div class="w-7 h-7 rounded-full bg-brand-copperDark text-brand-white text-xs font-semibold flex items-center justify-center">PI</div>
+    </header>
+    <div class="p-8 max-w-7xl mx-auto w-full space-y-6">
+      <div class="h-10 bg-brand-white rounded w-1/3 border border-brand-border"></div>
+      <div class="h-40 bg-brand-white rounded-xl border border-brand-border"></div>
+      <div class="h-72 bg-brand-white rounded-xl border border-brand-border"></div>
+    </div>
+  </div>
+
+  <!-- DIMMED BACKDROP OVERLAY -->
+  <div class="fixed inset-0 bg-[#202A29]/25 backdrop-blur-[2px] z-40 transition-opacity" onclick="closeDrawer()"></div>
+
+  <!-- FOCUSED SIDE DRAWER: SCREEN 3 RECIPIENT DETAILS & SHARE LINK (approx 580px width) -->
+  <aside aria-label="Guest invitation details drawer" class="fixed inset-y-0 right-0 w-full md:w-[580px] bg-brand-white shadow-drawer z-50 flex flex-col border-l border-brand-border text-xs">
+    
+    <!-- Drawer Header -->
+    <header class="h-16 px-6 border-b border-brand-border flex items-center justify-between bg-brand-ivory/60 shrink-0">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-bold tracking-wider uppercase text-brand-copper">Invitation Summary</span>
+          <span class="text-brand-border">·</span>
+          <span id="header-status-badge" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+            Active link
+          </span>
+        </div>
+        <h2 id="recipient-header-title" class="font-serif text-xl font-semibold text-brand-forest">Elon Musk & family</h2>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <!-- Interactive State Switcher for Design Inspection -->
+        <div class="hidden sm:flex items-center gap-1 bg-brand-white px-2 py-1 rounded border border-brand-border mr-1 text-[11px]">
+          <span class="text-brand-muted">State:</span>
+          <button onclick="setDetailState('active')" id="tab-st-act" class="text-brand-forest font-bold">Active</button>
+          <span class="text-brand-border">|</span>
+          <button onclick="setDetailState('revoked')" id="tab-st-rev" class="text-brand-muted hover:text-brand-charcoal">Revoked</button>
+          <span class="text-brand-border">|</span>
+          <button onclick="setDetailState('replaced')" id="tab-st-rep" class="text-brand-muted hover:text-brand-charcoal">Replaced</button>
+          <span class="text-brand-border">|</span>
+          <button onclick="setDetailState('passed')" id="tab-st-pas" class="text-brand-muted hover:text-brand-charcoal">Deadline Passed</button>
+        </div>
+        <button type="button" onclick="closeDrawer()" aria-label="Close drawer" class="w-8 h-8 rounded-full hover:bg-brand-border/40 text-brand-muted hover:text-brand-charcoal flex items-center justify-center transition">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Drawer Scrollable Content Body -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-6">
+
+      <!-- REVOKED INVITATION BANNER NOTICE (Shown in revoked state) -->
+      <div id="banner-revoked" class="hidden p-3.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-900 text-xs space-y-1">
+        <div class="font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[16px] text-amber-700">lock_clock</span>
+          <span>Invitation Link Revoked on 15 Feb 2027</span>
+        </div>
+        <p class="text-[11px] leading-relaxed">
+          This confidential link is deactivated. Past response data is preserved below for organizer reference only and excluded from current active headcount calculations.
+        </p>
+      </div>
+
+      <!-- DEADLINE PASSED NOTICE (Shown in deadline passed state) -->
+      <div id="banner-passed" class="hidden p-3.5 rounded-lg border border-brand-border bg-brand-ivory text-brand-charcoal text-xs space-y-1">
+        <div class="font-semibold flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-brand-copper">schedule</span>
+            <span>Response Deadline Concluded (Read-Only)</span>
+          </div>
+          <button onclick="openCorrectionModal()" class="text-xs text-brand-forest hover:underline font-semibold flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-[14px]">tune</span>
+            <span>Manual host correction</span>
+          </button>
+        </div>
+        <p class="text-[11px] text-brand-muted leading-relaxed">
+          Guest access is locked to prevent late additions. Host administrators can apply verified offline adjustments with an audit reason.
+        </p>
+      </div>
+
+      <!-- SECTION 1: RECIPIENT PROFILE & PERSONALIZED MESSAGE -->
+      <section class="space-y-3">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="text-[11px] uppercase tracking-wider text-brand-muted font-semibold">Recipient / Party</span>
+            <h3 class="font-serif text-lg font-semibold text-brand-charcoal mt-0.5">Elon Musk & family</h3>
+            <p class="text-[11px] text-brand-muted">Unique token: <code class="font-mono text-[10px] bg-brand-ivory px-1 rounded">tok_9f2b8e</code> · Single private link for all functions</p>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="alert('Opening Screen 2 (Edit invitation drawer)');" class="px-2.5 py-1.5 rounded-lg border border-brand-border bg-brand-white hover:bg-brand-ivory text-xs font-semibold text-brand-charcoal transition flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">edit</span>
+              <span>Edit</span>
+            </button>
+            <button onclick="alert('Opening master guest view in new tab (Screen 5)');" class="px-2.5 py-1.5 rounded-lg bg-brand-forestLight text-brand-forest hover:bg-brand-forest hover:text-brand-white text-xs font-semibold transition flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+              <span>View guest page</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom personalized note as saved -->
+        <div class="p-3.5 rounded-lg bg-brand-ivory/70 border border-brand-border/80 text-xs text-brand-charcoal space-y-1">
+          <span class="text-[10px] font-bold tracking-wider uppercase text-brand-copper block">Personalized Note to Recipient</span>
+          <p class="italic leading-relaxed">
+            “We warmly invite you to celebrate our union across three days of traditional rituals, music, and joy. Please confirm your attendance below so we may arrange your welcome amenities.”
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 2: CEREMONY-BY-CEREMONY INVITATION BREAKDOWN & HEADCOUNT -->
+      <section class="space-y-3 pt-2 border-t border-brand-border">
+        <div class="flex items-center justify-between">
+          <h4 class="font-semibold text-brand-charcoal text-xs uppercase tracking-wider">Eligible Functions & RSVP Responses</h4>
+          <span class="text-[11px] text-brand-muted">3 of 3 Ceremonies Invited</span>
+        </div>
+
+        <div class="space-y-2.5">
+          <!-- Ceremony 1: Mehndi -->
+          <div class="paper-card rounded-xl p-3.5 border border-brand-border space-y-2 bg-brand-white">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#E59866]"></span>
+                <span class="font-semibold text-brand-charcoal">Mehndi & Welcome High Tea</span>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[12px] fill-icon">check_circle</span> Accepted (3 attending)
+              </span>
+            </div>
+            <div class="text-[11px] text-brand-muted flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-brand-border/40">
+              <div>Thu 18 Feb · 4:00 PM · Poolside Pavilion</div>
+              <div class="font-medium text-brand-charcoal">Internal cap: <strong>4 max</strong> · Attending: <strong>3</strong></div>
+            </div>
+            <div class="text-[10px] text-brand-muted flex items-center justify-between">
+              <span>Response deadline: 15 Feb 2027, 6:00 PM</span>
+              <span class="text-emerald-700 font-medium">Confirmed on 12 Feb, 11:42 AM IST</span>
+            </div>
+          </div>
+
+          <!-- Ceremony 2: Sangeet -->
+          <div class="paper-card rounded-xl p-3.5 border border-brand-border space-y-2 bg-brand-white">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#AF7AC5]"></span>
+                <span class="font-semibold text-brand-charcoal">Sangeet & Musical Night</span>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[12px] fill-icon">check_circle</span> Accepted (4 attending)
+              </span>
+            </div>
+            <div class="text-[11px] text-brand-muted flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-brand-border/40">
+              <div>Fri 19 Feb · 6:00 PM · Grand Ballroom</div>
+              <div class="font-medium text-brand-charcoal">Internal cap: <strong>6 max</strong> · Attending: <strong>4</strong></div>
+            </div>
+            <div class="text-[10px] text-brand-muted flex items-center justify-between">
+              <span>Response deadline: 16 Feb 2027, 6:00 PM</span>
+              <span class="text-emerald-700 font-medium">Confirmed on 13 Feb, 5:15 PM IST</span>
+            </div>
+          </div>
+
+          <!-- Ceremony 3: Wedding -->
+          <div class="paper-card rounded-xl p-3.5 border border-brand-border space-y-2 bg-brand-white">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#48C9B0]"></span>
+                <span class="font-semibold text-brand-charcoal">Vedic Wedding & Muhurtham</span>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[12px]">hourglass_top</span> Awaiting response
+              </span>
+            </div>
+            <div class="text-[11px] text-brand-muted flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-brand-border/40">
+              <div>Sat 20 Feb · 9:00 AM · Temple Mandapam</div>
+              <div class="font-medium text-brand-charcoal">Internal cap: <strong>5 max</strong> · Pending</div>
+            </div>
+            <div class="text-[10px] text-brand-muted flex items-center justify-between">
+              <span>Response deadline: 16 Feb 2027, 6:00 PM</span>
+              <span class="text-amber-700 font-medium">Link visited · No submission yet</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: CONFIDENTIAL PRIVATE LINK SHARING MODULE -->
+      <section class="paper-card rounded-xl p-4 border border-brand-border space-y-3 bg-brand-white shadow-subtle">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-brand-forest">link</span>
+            <h4 class="font-semibold text-brand-charcoal text-xs">Confidential Private Invitation Link</h4>
+          </div>
+          <span class="text-[10px] bg-brand-forestLight text-brand-forest font-semibold px-2 py-0.5 rounded">
+            No password needed
+          </span>
+        </div>
+
+        <p class="text-[11px] text-brand-muted leading-relaxed">
+          Share this unique URL directly with Elon Musk via your private messenger or SMS. The guest uses this single private link to manage responses across all ceremonies.
+        </p>
+
+        <!-- Link Display with Mask / Reveal Toggle -->
+        <div class="p-2.5 rounded-lg bg-brand-ivory border border-brand-border flex items-center justify-between gap-2">
+          <div class="font-mono text-xs text-brand-charcoal truncate select-all">
+            <span id="link-text">https://makemyevent.app/invite/pm-2027?token=••••••••9f2b</span>
+          </div>
+          <button type="button" onclick="toggleLinkReveal()" id="btn-reveal" class="text-[11px] text-brand-forest hover:underline font-semibold shrink-0">
+            Reveal
+          </button>
+        </div>
+
+        <!-- Copy and Share Actions -->
+        <div class="flex items-center gap-2 pt-1">
+          <button type="button" onclick="triggerCopyAction()" class="flex-1 h-9 rounded-lg bg-brand-forest text-brand-white font-semibold text-xs hover:bg-brand-forestDark transition shadow-sm flex items-center justify-center gap-1.5 active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[16px]">content_copy</span>
+            <span id="btn-copy-label">Copy private link</span>
+          </button>
+          <button type="button" onclick="triggerNativeShare()" class="h-9 px-3.5 rounded-lg border border-brand-border text-brand-charcoal hover:bg-brand-ivory font-semibold text-xs transition flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">share</span>
+            <span>Share</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- SECTION 4: SECURITY, TOKEN REPLACEMENT & REVOCATION ACCORDION -->
+      <section class="border border-brand-border rounded-xl overflow-hidden bg-brand-white">
+        <button type="button" onclick="toggleSecuritySection()" class="w-full px-4 py-3 bg-brand-ivory/50 flex items-center justify-between text-xs font-semibold text-brand-charcoal hover:bg-brand-ivory transition">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px] text-brand-muted">security</span>
+            <span>Link security & revocation controls</span>
+          </div>
+          <span id="sec-chevron" class="material-symbols-outlined text-[16px] text-brand-muted transition-transform">expand_more</span>
+        </button>
+
+        <div id="security-content" class="p-4 space-y-3 hidden border-t border-brand-border bg-brand-white text-xs">
+          <p class="text-[11px] text-brand-muted leading-relaxed">
+            If a link was forwarded by mistake or requires renewal, you can regenerate or revoke it immediately. Guests cannot access revoked tokens.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <!-- Replace Link Button -->
+            <button type="button" onclick="openReplaceConfirm()" class="p-2.5 rounded-lg border border-brand-border hover:bg-brand-ivory text-left space-y-0.5 transition">
+              <div class="font-semibold text-brand-charcoal flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px] text-brand-forest">refresh</span>
+                <span>Replace link</span>
+              </div>
+              <div class="text-[10px] text-brand-muted">Issues new token; immediately invalidates old URL.</div>
+            </button>
+
+            <!-- Revoke Link Button -->
+            <button type="button" onclick="openRevokeConfirm()" class="p-2.5 rounded-lg border border-rose-200 bg-rose-50/30 hover:bg-rose-50 text-left space-y-0.5 transition">
+              <div class="font-semibold text-brand-error flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">block</span>
+                <span>Revoke invitation</span>
+              </div>
+              <div class="text-[10px] text-brand-muted">Locks link; retains existing RSVPs for organizer reference.</div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: MINIMAL ACTIVITY & AUDIT TIMELINE -->
+      <section class="space-y-2 pt-1">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-muted block">Response Timeline (Organizer Audit)</span>
+        <div class="space-y-1.5 text-[11px] text-brand-muted">
+          <div class="flex items-center justify-between p-2 rounded bg-brand-ivory/50">
+            <span>Sangeet response submitted (4 people)</span>
+            <span class="text-brand-charcoal font-medium">13 Feb 2027, 5:15 PM</span>
+          </div>
+          <div class="flex items-center justify-between p-2 rounded bg-brand-ivory/50">
+            <span>Mehndi response submitted (3 people)</span>
+            <span class="text-brand-charcoal font-medium">12 Feb 2027, 11:42 AM</span>
+          </div>
+          <div class="flex items-center justify-between p-2 rounded bg-brand-ivory/50">
+            <span>Invitation generated by Pavithra Iyer</span>
+            <span class="text-brand-charcoal font-medium">10 Feb 2027, 09:30 AM</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Drawer Footer Actions -->
+    <footer class="h-16 px-6 border-t border-brand-border flex items-center justify-between bg-brand-white shrink-0">
+      <button type="button" onclick="closeDrawer()" class="px-4 py-2 rounded-lg border border-brand-border text-xs font-semibold text-brand-charcoal hover:bg-brand-ivory transition">
+        Close
+      </button>
+
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="alert('Opening Screen 2 in Edit Mode');" class="px-3.5 py-2 rounded-lg border border-brand-border bg-brand-white hover:bg-brand-ivory text-xs font-semibold text-brand-charcoal transition flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">edit</span>
+          <span>Edit invitation</span>
+        </button>
+        <button type="button" onclick="triggerCopyAction()" class="px-4 py-2 rounded-lg bg-brand-forest text-xs font-semibold text-brand-white hover:bg-brand-forestDark transition shadow-sm flex items-center gap-1 active:scale-[0.98]">
+          <span class="material-symbols-outlined text-[16px]">content_copy</span>
+          <span>Copy link</span>
+        </button>
+      </div>
+    </footer>
+  </aside>
+
+  <!-- CONFIRMATION MODAL: Revoke Invitation -->
+  <div id="revoke-modal" class="fixed inset-0 z-50 bg-[#202A29]/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="paper-card rounded-xl max-w-sm w-full p-5 shadow-elevation space-y-4">
+      <div class="flex items-center gap-2 text-brand-error font-serif text-lg font-semibold">
+        <span class="material-symbols-outlined">block</span>
+        <span>Revoke this invitation?</span>
+      </div>
+      <p class="text-xs text-brand-muted leading-relaxed">
+        The confidential link for <strong>Elon Musk & family</strong> will immediately stop working. Existing confirmed responses (3 for Mehndi, 4 for Sangeet) will be preserved for your records but excluded from current active counts.
+      </p>
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-brand-border">
+        <button onclick="closeRevokeModal()" class="px-3 py-1.5 rounded-lg border border-brand-border text-xs font-semibold hover:bg-brand-ivory">Cancel</button>
+        <button onclick="confirmRevokeAction()" class="px-3.5 py-1.5 rounded-lg bg-brand-error text-brand-white text-xs font-semibold hover:bg-rose-700">Yes, revoke link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION MODAL: Replace Token -->
+  <div id="replace-modal" class="fixed inset-0 z-50 bg-[#202A29]/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="paper-card rounded-xl max-w-sm w-full p-5 shadow-elevation space-y-4">
+      <div class="flex items-center gap-2 text-brand-forest font-serif text-lg font-semibold">
+        <span class="material-symbols-outlined text-brand-forest">refresh</span>
+        <span>Generate replacement link?</span>
+      </div>
+      <p class="text-xs text-brand-muted leading-relaxed">
+        A new private entropy token will be issued. Any guest accessing the previously shared URL will see a deactivated link notice.
+      </p>
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-brand-border">
+        <button onclick="closeReplaceModal()" class="px-3 py-1.5 rounded-lg border border-brand-border text-xs font-semibold hover:bg-brand-ivory">Cancel</button>
+        <button onclick="confirmReplaceAction()" class="px-3.5 py-1.5 rounded-lg bg-brand-forest text-brand-white text-xs font-semibold hover:bg-brand-forestDark">Generate new link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION MODAL: Host Manual Correction after Deadline -->
+  <div id="correction-modal" class="fixed inset-0 z-50 bg-[#202A29]/40 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="paper-card rounded-xl max-w-md w-full p-5 shadow-elevation space-y-4">
+      <div class="flex items-center gap-2 text-brand-forest font-serif text-lg font-semibold">
+        <span class="material-symbols-outlined text-brand-forest">edit_note</span>
+        <span>Manual RSVP Correction</span>
+      </div>
+      <p class="text-xs text-brand-muted leading-relaxed">
+        The response deadline for this event has passed. To adjust attendance numbers, enter verified offline instructions from the family.
+      </p>
+      <div class="space-y-2 text-xs">
+        <div>
+          <label class="font-semibold block text-brand-charcoal mb-1">Reason for post-deadline edit *</label>
+          <input type="text" placeholder="e.g. Phone confirmation with elder cousin" class="w-full h-9 px-3 rounded border border-brand-border text-xs"/>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-brand-border">
+        <button onclick="closeCorrectionModal()" class="px-3 py-1.5 rounded-lg border border-brand-border text-xs font-semibold hover:bg-brand-ivory">Cancel</button>
+        <button onclick="saveCorrectionAction()" class="px-3.5 py-1.5 rounded-lg bg-brand-forest text-brand-white text-xs font-semibold hover:bg-brand-forestDark">Apply correction</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast for Copy Action -->
+  <div id="copy-toast" class="fixed bottom-6 right-6 bg-brand-charcoal text-brand-white px-4 py-2.5 rounded-lg text-xs font-medium shadow-elevation hidden flex items-center gap-2 z-50">
+    <span class="material-symbols-outlined text-emerald-400 text-[18px]">done</span>
+    <span id="copy-toast-msg">Private invitation link copied to clipboard</span>
+  </div>
+
+  <script>
+    let isRevealed = false;
+
+    function setDetailState(state) {
+      const bannerRev = document.getElementById('banner-revoked');
+      const bannerPas = document.getElementById('banner-passed');
+      const badge = document.getElementById('header-status-badge');
+
+      bannerRev.classList.add('hidden');
+      bannerPas.classList.add('hidden');
+
+      // Update button highlights
+      ['act', 'rev', 'rep', 'pas'].forEach(b => {
+        document.getElementById(`tab-st-${b}`).className = "text-brand-muted hover:text-brand-charcoal";
+      });
+
+      if (state === 'active') {
+        document.getElementById('tab-st-act').className = "text-brand-forest font-bold";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800";
+        badge.textContent = "Active link";
+      } else if (state === 'revoked') {
+        document.getElementById('tab-st-rev').className = "text-brand-error font-bold";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-rose-100 text-rose-800";
+        badge.textContent = "Revoked link";
+        bannerRev.classList.remove('hidden');
+      } else if (state === 'replaced') {
+        document.getElementById('tab-st-rep').className = "text-brand-forest font-bold";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-blue-800";
+        badge.textContent = "Token replaced (v2)";
+      } else if (state === 'passed') {
+        document.getElementById('tab-st-pas').className = "text-brand-copperDark font-bold";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-semibold bg-brand-ivory border border-brand-border text-brand-muted";
+        badge.textContent = "Deadline passed";
+        bannerPas.classList.remove('hidden');
+      }
+    }
+
+    function toggleLinkReveal() {
+      isRevealed = !isRevealed;
+      const text = document.getElementById('link-text');
+      const btn = document.getElementById('btn-reveal');
+      if (isRevealed) {
+        text.textContent = "https://makemyevent.app/invite/pm-2027?token=e9f2b8a7c134";
+        btn.textContent = "Mask";
+      } else {
+        text.textContent = "https://makemyevent.app/invite/pm-2027?token=••••••••9f2b";
+        btn.textContent = "Reveal";
+      }
+    }
+
+    function triggerCopyAction() {
+      const toast = document.getElementById('copy-toast');
+      const label = document.getElementById('btn-copy-label');
+      label.textContent = "Copied!";
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        label.textContent = "Copy private link";
+        toast.classList.add('hidden');
+      }, 2500);
+    }
+
+    function triggerNativeShare() {
+      if (navigator.share) {
+        navigator.share({
+          title: "Pavithra & Manish's Wedding Invitation",
+          text: "Private wedding invitation for Elon Musk & family",
+          url: "https://makemyevent.app/invite/pm-2027?token=e9f2b8a7c134"
+        }).catch(() => {});
+      } else {
+        triggerCopyAction();
+      }
+    }
+
+    function toggleSecuritySection() {
+      const content = document.getElementById('security-content');
+      const chevron = document.getElementById('sec-chevron');
+      content.classList.toggle('hidden');
+      chevron.classList.toggle('rotate-180');
+    }
+
+    function openRevokeConfirm() {
+      document.getElementById('revoke-modal').classList.remove('hidden');
+    }
+    function closeRevokeModal() {
+      document.getElementById('revoke-modal').classList.add('hidden');
+    }
+    function confirmRevokeAction() {
+      closeRevokeModal();
+      setDetailState('revoked');
+    }
+
+    function openReplaceConfirm() {
+      document.getElementById('replace-modal').classList.remove('hidden');
+    }
+    function closeReplaceModal() {
+      document.getElementById('replace-modal').classList.add('hidden');
+    }
+    function confirmReplaceAction() {
+      closeReplaceModal();
+      setDetailState('replaced');
+      alert("Generated replacement URL with fresh entropy token. Previous token deactivated.");
+    }
+
+    function openCorrectionModal() {
+      document.getElementById('correction-modal').classList.remove('hidden');
+    }
+    function closeCorrectionModal() {
+      document.getElementById('correction-modal').classList.add('hidden');
+    }
+    function saveCorrectionAction() {
+      closeCorrectionModal();
+      alert("Host correction logged with audit reason. Updated ceremony attendee counts.");
+    }
+
+    function closeDrawer() {
+      alert("Closed recipient details drawer. Returning to main directory.");
+    }
+  </script>
+</body>
+</html>
+
