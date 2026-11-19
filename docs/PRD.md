@@ -286,3 +286,11 @@ Tasks distinguish All team tasks, My tasks and a selected owner explicitly. Empt
 ## Appearance modes — 16 November 2026
 
 Light and Dark apply across marketing, account, management and guest routes without changing layouts. Light is the default. The browser remembers an explicit preference; it is not account or wedding data. Desktop and public pages expose an Appearance control; mobile workspace users find Appearance in the account menu. Dark-mode artwork blends into the canvas without pale panels. The approved composition reference is design/dark-mode/REFERENCE.md.
+
+## Guided workspace tour
+
+After successful account creation or the first interactive sign-in for an account in a browser, open a short guided tour on Your weddings. People can skip or finish it and replay it from Your weddings or the account menu at any time. Store the seen preference per account in browser storage. The tour covers current wedding planning features and requires no sample records.
+
+## Contextual tour redesign
+
+The first screen introduces administrator, organizer, and guest roles. The tour then highlights Create wedding, Join with code, and the wedding list, before stepping through a read-only example of Dashboard, Functions, Team, Tasks, Notifications, Guests, Vendors, Finance, and Wedding details. Render the actual workspace page components against fictional records. Highlight the relevant control and dock a short explanation along the bottom of the page. Preserve the normal navigation, typography and layout throughout the tour. The example does not use wedding management routes or APIs. While the guide is open, only tour controls accept interaction. Take a tour belongs beside Appearance on desktop and near the theme choices on mobile. Gallery remains deferred.

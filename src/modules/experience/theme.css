@@ -98,6 +98,15 @@
   justify-content: flex-end;
   padding: 16px 24px 0;
 }
+.workspace-theme-desktop {
+  display: flex;
+  gap: 6px;
+}
+
+.account-theme-mobile > .secondary-action {
+  margin-top: 8px;
+}
+
 @media (max-width: 600px) {
   .workspace-theme-desktop {
     display: none;

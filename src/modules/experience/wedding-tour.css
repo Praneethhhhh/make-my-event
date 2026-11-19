@@ -1,0 +1,67 @@
+body:has(.tour-guide) {
+  padding-bottom: 12rem;
+}
+main.wedding-page[hidden] {
+  display: none;
+}
+.tour-guide {
+  position: fixed;
+  z-index: 80;
+  bottom: 0;
+  inset-inline: 0;
+  padding: 12px clamp(16px, 5vw, 80px) max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+.tour-guide h2 {
+  font: 600 1.35rem var(--font-editorial);
+  margin: 2px 0;
+}
+.tour-guide p {
+  max-width: 72ch;
+  font-size: 0.925rem;
+  line-height: 1.45;
+  margin: 0;
+}
+.tour-guide small {
+  color: var(--color-text-muted);
+}
+.tour-guide nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.tour-skip {
+  color: var(--color-text-muted);
+  padding: 8px;
+  text-decoration: underline;
+}
+[data-tour-current] {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  scroll-margin-block: 80px 13rem;
+}
+@media (max-width: 720px) {
+  .tour-guide {
+    display: grid;
+    gap: 6px;
+  }
+  .tour-guide nav {
+    justify-content: flex-end;
+  }
+  .tour-skip {
+    margin-right: auto;
+  }
+  body:has(.tour-guide) {
+    padding-bottom: 17rem;
+  }
+  [data-tour-current] {
+    scroll-margin-bottom: 16rem;
+  }
+}

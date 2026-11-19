@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
+import { WeddingTour } from "@/modules/experience/wedding-tour";
 import { WeddingHeader } from "./wedding-shell";
 import "./wedding.css";
 import "./wedding-selector.css";
@@ -15,6 +16,8 @@ type Card = {
   role: "ADMIN" | "ORGANIZER";
 };
 export function WeddingSelector() {
+  const [tourStep, setTourStep] = useState(-1);
+  const [accountId, setAccountId] = useState<string | null>(null);
   const [name, setName] = useState("Your family");
   const [cards, setCards] = useState<Card[]>([]);
   const [cursor, setCursor] = useState<string | null>(null);
@@ -45,6 +48,7 @@ export function WeddingSelector() {
         const account = (await me.json()).data.user;
         if (controller.signal.aborted) return;
         setName(account.displayName);
+        setAccountId(account.id);
         setCards(result.data);
         setCursor(result.page.nextCursor);
         setError("");
@@ -91,103 +95,140 @@ export function WeddingSelector() {
     setVersion((value) => value + 1);
   }
   return (
-    <main className="wedding-page">
-      <WeddingHeader displayName={name} />
-      <section className="wedding-selector">
-        <div className="selector-heading">
-          <div>
-            <p>YOUR CELEBRATIONS</p>
-            <h1>Your weddings</h1>
-            <p>Your celebrations, together.</p>
+    <>
+      {accountId && (
+        <WeddingTour
+          accountId={accountId}
+          step={tourStep}
+          setStep={setTourStep}
+        />
+      )}
+      <main
+        data-tour-ready={accountId ? true : undefined}
+        className="wedding-page"
+        hidden={tourStep >= 4}
+        inert={tourStep >= 0}
+      >
+        <WeddingHeader displayName={name} />
+
+        <section className="wedding-selector">
+          <div className="selector-heading">
+            <div>
+              <p>YOUR CELEBRATIONS</p>
+              <h1>Your weddings</h1>
+              <p>Your celebrations, together.</p>
+            </div>
+            <div className="selector-actions">
+              <Link
+                data-tour="create"
+                className="primary-action"
+                href="/weddings/new"
+              >
+                Create wedding
+              </Link>
+              <Link
+                data-tour="join"
+                className="secondary-action"
+                href="/weddings/join"
+              >
+                Join with code
+              </Link>
+            </div>
           </div>
-          <div className="selector-actions">
-            <Link className="primary-action" href="/weddings/new">
-              Create wedding
-            </Link>
-            <Link className="secondary-action" href="/weddings/join">
-              Join with code
-            </Link>
+          <form className="selector-search" onSubmit={submit}>
+            <label htmlFor="wedding-search">Search your weddings</label>
+            <div>
+              <input
+                id="wedding-search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                maxLength={100}
+                placeholder="Wedding title or couple names"
+              />
+              <button className="secondary-action" disabled={busy}>
+                Search
+              </button>
+            </div>
+          </form>
+          {error && (
+            <div role="alert" className="team-panel">
+              <p>{error}</p>
+              <button
+                className="secondary-action"
+                onClick={() => {
+                  setBusy(true);
+                  setVersion((value) => value + 1);
+                }}
+              >
+                Try again
+              </button>
+            </div>
+          )}
+          <div data-tour="directory">
+            {tourStep === 3 ? (
+              <div className="wedding-grid">
+                <article className="wedding-choice-card">
+                  <span className="team-role">Example wedding</span>
+                  <h2>Pavithra &amp; Manish</h2>
+                  <p>18–21 February 2027</p>
+                  <span className="primary-action">Open wedding</span>
+                </article>
+              </div>
+            ) : busy && !cards.length ? (
+              <p role="status">Loading your weddings…</p>
+            ) : cards.length ? (
+              <div className="wedding-grid">
+                {cards.map((card) => (
+                  <article className="wedding-choice-card" key={card.id}>
+                    <span className="team-role">
+                      {card.role === "ADMIN" ? "Administrator" : "Organizer"}
+                    </span>
+                    <h2>{card.title}</h2>
+                    <p>
+                      {card.coupleNames.first} &amp; {card.coupleNames.second}
+                    </p>
+                    <p>
+                      {card.startsOn} — {card.endsOn}
+                      <br />
+                      {card.timeZone}
+                    </p>
+                    <Link
+                      className="primary-action"
+                      href={`/weddings/${card.id}`}
+                    >
+                      Open wedding
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              !error && (
+                <section className="team-panel selector-empty">
+                  <h2>
+                    {search
+                      ? "No matching weddings"
+                      : "Your celebrations start here"}
+                  </h2>
+                  <p>
+                    {search
+                      ? "Try another title or name."
+                      : "Create a wedding or enter an invitation code shared by its administrator. You can be part of several weddings with one account."}
+                  </p>
+                </section>
+              )
+            )}
           </div>
-        </div>
-        <form className="selector-search" onSubmit={submit}>
-          <label htmlFor="wedding-search">Search your weddings</label>
-          <div>
-            <input
-              id="wedding-search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              maxLength={100}
-              placeholder="Wedding title or couple names"
-            />
-            <button className="secondary-action" disabled={busy}>
-              Search
-            </button>
-          </div>
-        </form>
-        {error && (
-          <div role="alert" className="team-panel">
-            <p>{error}</p>
+          {cursor && (
             <button
               className="secondary-action"
-              onClick={() => {
-                setBusy(true);
-                setVersion((value) => value + 1);
-              }}
+              disabled={busy}
+              onClick={() => void more()}
             >
-              Try again
+              {busy ? "Loading…" : "Load more weddings"}
             </button>
-          </div>
-        )}
-        {busy && !cards.length ? (
-          <p role="status">Loading your weddings…</p>
-        ) : cards.length ? (
-          <div className="wedding-grid">
-            {cards.map((card) => (
-              <article className="wedding-choice-card" key={card.id}>
-                <span className="team-role">
-                  {card.role === "ADMIN" ? "Administrator" : "Organizer"}
-                </span>
-                <h2>{card.title}</h2>
-                <p>
-                  {card.coupleNames.first} &amp; {card.coupleNames.second}
-                </p>
-                <p>
-                  {card.startsOn} — {card.endsOn}
-                  <br />
-                  {card.timeZone}
-                </p>
-                <Link className="primary-action" href={`/weddings/${card.id}`}>
-                  Open wedding
-                </Link>
-              </article>
-            ))}
-          </div>
-        ) : (
-          !error && (
-            <section className="team-panel selector-empty">
-              <h2>
-                {search
-                  ? "No matching weddings"
-                  : "Your celebrations start here"}
-              </h2>
-              <p>
-                {search
-                  ? "Try another title or name."
-                  : "Create a wedding or enter an invitation code shared by its administrator. You can be part of several weddings with one account."}
-              </p>
-            </section>
-          )
-        )}
-        {cursor && (
-          <button
-            className="secondary-action"
-            disabled={busy}
-            onClick={() => void more()}
-          >
-            {busy ? "Loading…" : "Load more weddings"}
-          </button>
-        )}
-      </section>
-    </main>
+          )}
+        </section>
+      </main>
+    </>
   );
 }

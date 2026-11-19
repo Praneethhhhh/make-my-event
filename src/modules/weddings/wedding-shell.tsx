@@ -2,7 +2,7 @@
 import { ThemeControl, ThemePicker } from "@/modules/experience/theme-control";
 import { UiIcon } from "@/modules/experience/ui-icon";
 import { BrandLockup } from "@/modules/experience/brand-lockup";
-import Link from "next/link";
+import { WorkspaceLink as Link } from "@/modules/weddings/workspace-link";
 import { useEffect, useId, useRef, useState } from "react";
 import { useWeddingScope } from "./wedding-scope";
 import "./wedding-selector.css";
@@ -104,6 +104,19 @@ export function WeddingHeader({ displayName }: { displayName: string }) {
     .map((part) => part[0])
     .join("")
     .toUpperCase();
+  function takeTour() {
+    const from = window.location.pathname;
+    if (from === "/weddings" && document.querySelector("[data-tour-ready]")) {
+      window.dispatchEvent(new Event("mme:take-tour"));
+      setOpen(false);
+      return;
+    }
+    // Full navigation respects the existing unsaved-draft guard.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+    window.location.assign(
+      `/weddings?tour=manual&tourFrom=${encodeURIComponent(from + location.search + location.hash)}`,
+    );
+  }
   return (
     <header className="wedding-header">
       <Link
@@ -116,6 +129,15 @@ export function WeddingHeader({ displayName }: { displayName: string }) {
       <div className="wedding-header-actions">
         <div className="workspace-theme-desktop">
           <ThemeControl />
+          <button
+            type="button"
+            className="theme-trigger"
+            aria-label="Take a tour"
+            title="Take a tour"
+            onClick={takeTour}
+          >
+            <UiIcon name="sparkle" />
+          </button>
         </div>
         <NotificationBell />
         <div
@@ -196,6 +218,13 @@ export function WeddingHeader({ displayName }: { displayName: string }) {
               </div>
               <div className="account-theme-mobile">
                 <ThemePicker />
+                <button
+                  type="button"
+                  className="secondary-action"
+                  onClick={takeTour}
+                >
+                  Take a tour
+                </button>
               </div>
               <div className="account-menu-group">
                 <button onClick={() => void signOut()} disabled={busy}>

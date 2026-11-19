@@ -28,12 +28,45 @@ for (const width of [390, 1440]) {
         .getByRole("button", { name: "Create account", exact: true })
         .click();
       await expect(page).toHaveURL(/\/weddings$/);
+      await expect(page.locator(".selector-heading h1")).toBeVisible();
+      const tour = page.getByRole("region", { name: "Wedding tour" });
+      await expect(tour).toBeVisible();
       await expect(
-        page.getByRole("heading", { name: "Your weddings" }),
+        tour.getByRole("heading", { name: "Welcome to Make My Event" }),
       ).toBeVisible();
+      await expect(
+        tour.getByText("Administrators", { exact: true }),
+      ).toBeVisible();
+      await tour.getByRole("button", { name: "Start tour" }).click();
+      await expect(
+        tour.getByRole("heading", { name: "Create wedding" }),
+      ).toBeFocused();
+      await page.screenshot({
+        path: `playwright-report/tour/spotlight-${width}.png`,
+        animations: "disabled",
+      });
+      const target = page.locator('[data-tour="create"]');
+      const rect = await target.boundingBox();
+      expect(rect).not.toBeNull();
+      await page.mouse.click(
+        rect!.x + rect!.width / 2,
+        rect!.y + rect!.height / 2,
+      );
+      await expect(page).toHaveURL(/\/weddings$/);
+      await expect(tour).toBeVisible();
+      await tour.getByRole("button", { name: "Next", exact: true }).click();
+      await expect(
+        tour.getByRole("heading", { name: "Join with code" }),
+      ).toBeFocused();
+      await tour.getByRole("button", { name: "Back", exact: true }).click();
+      await expect(
+        tour.getByRole("heading", { name: "Create wedding" }),
+      ).toBeFocused();
+      await tour.getByRole("button", { name: "Skip tour" }).click();
+      await expect(tour).not.toBeVisible();
       await page.reload();
       await expect(
-        page.getByRole("heading", { name: "Your weddings" }),
+        page.getByRole("heading", { name: "Your weddings", level: 1 }),
       ).toBeVisible();
       await page.getByRole("button", { name: "Account menu" }).click();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
@@ -67,8 +100,67 @@ for (const width of [390, 1440]) {
       await page.getByRole("button", { name: "Sign in", exact: true }).click();
       await expect(page).toHaveURL(/\/weddings$/);
       await expect(
-        page.getByRole("heading", { name: "Your weddings" }),
+        page.getByRole("heading", { name: "Your weddings", level: 1 }),
       ).toBeVisible();
+      await expect(tour).not.toBeVisible();
+      if (width === 390)
+        await page.getByRole("button", { name: "Account menu" }).click();
+      await page.getByRole("button", { name: "Take a tour" }).click();
+      await tour.getByRole("button", { name: "Start tour" }).click();
+      await tour.getByRole("button", { name: "Next", exact: true }).click();
+      await tour.getByRole("button", { name: "Next", exact: true }).click();
+      await tour.getByRole("button", { name: "Open example wedding" }).click();
+      const example = page.locator("[data-tour-workspace]");
+      await expect(example.locator(".dashboard-metric").first()).toBeVisible();
+      await page.screenshot({
+        path: `playwright-report/tour/example-${width}.png`,
+        animations: "disabled",
+      });
+      await expect(example).toHaveAttribute("inert", "");
+      await expect(example.locator("a[href]")).toHaveCount(0);
+      for (const title of [
+        "Functions",
+        "Team",
+        "Tasks",
+        "Notifications",
+        "Guests",
+        "Vendors",
+        "Finance",
+        "Wedding details",
+      ]) {
+        await tour.getByRole("button", { name: "Next", exact: true }).click();
+        await expect(
+          tour.getByRole("heading", { name: title, exact: true }),
+        ).toBeVisible();
+        const spotlight = example.locator("[data-tour-current]");
+        await expect(spotlight).toBeVisible();
+        if (title === "Team") {
+          await expect
+            .poll(async () => {
+              const target = await spotlight.boundingBox();
+              const guide = await tour.boundingBox();
+              return !!target && !!guide && target.y + target.height < guide.y;
+            })
+            .toBe(true);
+        }
+        if (title === "Guests") {
+          await expect(example.locator(".guest-directory-row")).toContainText(
+            "3 attending",
+          );
+        }
+      }
+      await tour.getByRole("button", { name: "Finish tour" }).click();
+      await expect(tour).not.toBeVisible();
+      expect(await database.collection("weddings").countDocuments()).toBe(0);
+      if (width === 390)
+        await page.getByRole("button", { name: "Account menu" }).click();
+      await page.getByRole("button", { name: "Take a tour" }).click();
+      await expect(
+        tour.getByRole("heading", { name: "Welcome to Make My Event" }),
+      ).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(tour).not.toBeVisible();
+
       await page.getByRole("button", { name: "Account menu" }).click();
       await page.getByRole("button", { name: "Sign out", exact: true }).click();
       await expect(

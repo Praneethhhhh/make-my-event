@@ -1,6 +1,6 @@
 "use client";
 import { UiIcon } from "@/modules/experience/ui-icon";
-import Link from "next/link";
+import { WorkspaceLink as Link } from "@/modules/weddings/workspace-link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { WeddingHeader } from "@/modules/weddings/wedding-shell";
 import { WorkspaceNav } from "@/modules/weddings/workspace-nav";

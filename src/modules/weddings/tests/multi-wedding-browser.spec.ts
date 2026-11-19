@@ -105,6 +105,7 @@ for (const width of [390, 1440]) {
         .getByRole("button", { name: "Create account", exact: true })
         .click();
       await expect(join).toHaveURL(/\/weddings$/);
+      await join.getByRole("button", { name: "Skip tour" }).click();
       await expect(
         join.getByRole("heading", { name: "Your celebrations start here" }),
       ).toBeVisible();

@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { WorkspaceLink as Link } from "@/modules/weddings/workspace-link";
 import { useState, useEffect, useRef } from "react";
 import { useOperations } from "@/modules/operations/use-operations";
 import { usePanelClean } from "@/modules/operations/operations-panel";

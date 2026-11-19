@@ -14,11 +14,13 @@ import { useRouter } from "next/navigation";
 type Scope = {
   weddingId: string;
   prefix: string;
+  readOnlyPreview?: boolean;
   fetch: typeof fetch;
   markClean: () => void;
   markDirty: () => void;
 };
 const Context = createContext<Scope | null>(null);
+export const WeddingClientProvider = Context.Provider;
 export function useWeddingScope() {
   return useContext(Context);
 }

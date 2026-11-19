@@ -107,7 +107,7 @@ export function AccountForm({ signIn = false }: { signIn?: boolean }) {
         userResponse.parse(result);
         setCheckingSession(true);
         // A fresh navigation clears prefetched signed-out pages after the API sets the cookie.
-        window.location.replace("/weddings");
+        window.location.replace("/weddings?tour=welcome");
       } else {
         if (result.error?.details?.fields)
           setFields(result.error.details.fields);

@@ -8,7 +8,7 @@ import { weddingInput } from "./wedding-validation";
 import { WeddingHeader } from "./wedding-shell";
 import "./wedding.css";
 import { WorkspaceNav } from "./workspace-nav";
-import Link from "next/link";
+import { WorkspaceLink as Link } from "@/modules/weddings/workspace-link";
 import type { z } from "zod";
 import { DeleteWedding } from "./delete-wedding";
 

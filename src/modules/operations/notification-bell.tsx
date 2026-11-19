@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { WorkspaceLink as Link } from "@/modules/weddings/workspace-link";
 import { useEffect, useState } from "react";
 import { useWeddingScope } from "@/modules/weddings/wedding-scope";
 import "./operations.css";

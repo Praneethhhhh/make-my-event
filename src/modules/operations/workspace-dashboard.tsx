@@ -1,6 +1,6 @@
 "use client";
 import { UiIcon } from "@/modules/experience/ui-icon";
-import Link from "next/link";
+import { WorkspaceLink as Link } from "@/modules/weddings/workspace-link";
 import { GuestResponses } from "@/modules/guests/guest-summary";
 import type { GuestSummary } from "@/modules/guests/guest-types";
 import { useEffect, useState } from "react";
